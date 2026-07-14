@@ -3856,10 +3856,9 @@ msgstr "Am Ende des Jahres wird die Aufzeichnung zurückgesetzt"
 #: app/templates/vehicles/form.html:225
 msgid "General Notes"
 msgstr "Allgemeine Notizen"
-W
 #: app/templates/vehicles/form.html:227
 msgid "Any additional notes about this vehicle..."
-msgstr "Zusätzliche Bemeerkungen zu diesem Fahrzeug..."
+msgstr "Zusätzliche Bemerkungen zu diesem Fahrzeug..."
 
 #: app/templates/vehicles/form.html:234
 msgid "Status"
