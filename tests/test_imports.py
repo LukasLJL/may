@@ -440,6 +440,49 @@ class TestCsvImportExecute:
 
 
 # ---------------------------------------------------------------------------
+# Locale-tolerant numeric handling on CSV import (issue #244)
+# ---------------------------------------------------------------------------
+
+class TestParseFloatValue:
+    """parse_float_value must accept locale decimal separators without
+    corrupting Anglo thousands-grouped values."""
+
+    def _parse(self, value):
+        from app.routes.api import parse_float_value
+        return parse_float_value(value)
+
+    def test_dot_decimal_unchanged(self):
+        assert self._parse('9.99') == 9.99
+
+    def test_comma_decimal(self):
+        # Previously imported as 999 (comma stripped) — a silent 100x error.
+        assert self._parse('9,99') == 9.99
+
+    def test_german_grouping(self):
+        assert self._parse('1.234,56') == 1234.56
+
+    def test_anglo_grouping(self):
+        assert self._parse('1,234.56') == 1234.56
+
+    def test_anglo_thousands_only(self):
+        # Odometer-style value: two or more digits before a comma with three
+        # after is thousands grouping, not a decimal.
+        assert self._parse('12,345') == 12345
+
+    def test_short_integer_part_is_decimal(self):
+        # German fuel price: 1,899 €/L.
+        assert self._parse('1,899') == 1.899
+
+    def test_currency_symbols_stripped(self):
+        assert self._parse('€1.234,56') == 1234.56
+        assert self._parse('$1,234.56') == 1234.56
+
+    def test_empty_returns_none(self):
+        assert self._parse('') is None
+        assert self._parse(None) is None
+
+
+# ---------------------------------------------------------------------------
 # Date-format handling on CSV import (issue #250)
 # ---------------------------------------------------------------------------
 

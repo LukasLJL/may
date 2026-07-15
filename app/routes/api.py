@@ -4,6 +4,7 @@ import io
 import json
 import logging
 import os
+import re
 import sqlite3
 import tempfile
 import traceback
@@ -20,6 +21,7 @@ from app.models import (
     TRIP_PURPOSES, CHARGER_TYPES
 )
 from app.services.tessie import TessieService
+from app.utils import parse_decimal
 from flask_babel import gettext as _
 from config import APP_VERSION
 
@@ -534,10 +536,10 @@ def api_create_fuel_log(vehicle_id):
         vehicle_id=vehicle_id,
         user_id=user.id,
         date=date,
-        odometer=float(data['odometer']),
-        volume=float(data['volume']) if data.get('volume') else None,
-        price_per_unit=float(data['price_per_unit']) if data.get('price_per_unit') else None,
-        total_cost=float(data['total_cost']) if data.get('total_cost') else None,
+        odometer=parse_decimal(data['odometer']),
+        volume=parse_decimal(data['volume']) if data.get('volume') else None,
+        price_per_unit=parse_decimal(data['price_per_unit']) if data.get('price_per_unit') else None,
+        total_cost=parse_decimal(data['total_cost']) if data.get('total_cost') else None,
         is_full_tank=data.get('is_full_tank', True),
         is_missed=data.get('is_missed', False),
         station=data.get('station'),
@@ -588,13 +590,13 @@ def api_update_fuel_log(log_id):
             return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD', 'code': 'validation_error'}), 400
 
     if 'odometer' in data:
-        log.odometer = float(data['odometer'])
+        log.odometer = parse_decimal(data['odometer'])
     if 'volume' in data:
-        log.volume = float(data['volume']) if data['volume'] else None
+        log.volume = parse_decimal(data['volume']) if data['volume'] else None
     if 'price_per_unit' in data:
-        log.price_per_unit = float(data['price_per_unit']) if data['price_per_unit'] else None
+        log.price_per_unit = parse_decimal(data['price_per_unit']) if data['price_per_unit'] else None
     if 'total_cost' in data:
-        log.total_cost = float(data['total_cost']) if data['total_cost'] else None
+        log.total_cost = parse_decimal(data['total_cost']) if data['total_cost'] else None
     if 'is_full_tank' in data:
         log.is_full_tank = data['is_full_tank']
     if 'is_missed' in data:
@@ -714,8 +716,8 @@ def api_create_expense(vehicle_id):
         date=date,
         category=data['category'],
         description=data['description'],
-        cost=float(data['cost']),
-        odometer=float(data['odometer']) if data.get('odometer') else None,
+        cost=parse_decimal(data['cost']),
+        odometer=parse_decimal(data['odometer']) if data.get('odometer') else None,
         vendor=data.get('vendor'),
         notes=data.get('notes')
     )
@@ -771,9 +773,9 @@ def api_update_expense(expense_id):
     if 'description' in data:
         expense.description = data['description']
     if 'cost' in data:
-        expense.cost = float(data['cost'])
+        expense.cost = parse_decimal(data['cost'])
     if 'odometer' in data:
-        expense.odometer = float(data['odometer']) if data['odometer'] else None
+        expense.odometer = parse_decimal(data['odometer']) if data['odometer'] else None
     if 'vendor' in data:
         expense.vendor = data['vendor']
     if 'notes' in data:
@@ -2845,16 +2847,29 @@ def parse_bool_value(value):
 
 
 def parse_float_value(value):
-    """Parse a float, stripping currency symbols and commas."""
-    if not value or not str(value).strip():
+    """Parse a CSV numeric value, stripping currency symbols and tolerating
+    locale separators (#244).
+
+    Uses :func:`app.utils.parse_decimal` (so ``9,99``, ``1.234,56`` and
+    ``1,234.56`` all parse correctly) with one CSV-specific refinement: a
+    single comma followed by exactly three digits with two or more digits
+    before it (e.g. ``12,345``) is read as Anglo thousands grouping, which is
+    how such values appear in exported odometer columns. A short integer part
+    (e.g. the German fuel price ``1,899``) still reads the comma as a decimal
+    separator.
+    """
+    if value is None or not str(value).strip():
         return None
     cleaned = str(value).strip()
-    for ch in ['$', '\u20ac', '\u00a3', '\u00a5', '\u20b9', ',']:
+    for ch in ['$', '\u20ac', '\u00a3', '\u00a5', '\u20b9']:
         cleaned = cleaned.replace(ch, '')
     cleaned = cleaned.strip()
     if not cleaned:
         return None
-    return float(cleaned)
+    m = re.fullmatch(r'(-?\d{2,}),(\d{3})', cleaned)
+    if m:
+        cleaned = m.group(1) + m.group(2)
+    return parse_decimal(cleaned)
 
 
 def parse_int_value(value):
