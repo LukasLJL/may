@@ -2773,24 +2773,48 @@ def auto_suggest_mappings(csv_columns, target_fields):
     return suggestions
 
 
-def parse_date_value(value, date_format='auto'):
-    """Parse a date string, optionally with a format hint."""
+def _ordered_slash_formats(prefer_mdy):
+    """Return ambiguous day/month date formats, preferred interpretation first.
+
+    ``strptime`` rejects out-of-range values, so listing the preferred order
+    first means a value that is unambiguous (e.g. a 31 in the day slot) still
+    falls through to the only interpretation that parses, without silently
+    reversing values that are valid under the preferred format.
+    """
+    dmy = ['%d/%m/%Y %H:%M:%S', '%d/%m/%Y %H:%M', '%d/%m/%Y',
+           '%d-%m-%Y', '%d.%m.%Y', '%d/%m/%y']
+    mdy = ['%m/%d/%Y %H:%M:%S', '%m/%d/%Y %H:%M', '%m/%d/%Y',
+           '%m-%d-%Y', '%m/%d/%y']
+    return (mdy + dmy) if prefer_mdy else (dmy + mdy)
+
+
+def parse_date_value(value, date_format='auto', user_date_format=None):
+    """Parse a date string, optionally with a format hint.
+
+    ``date_format`` is the format chosen on the import screen. When it is
+    ``'auto'`` the importing user's own ``date_format`` preference
+    (``user_date_format``) disambiguates slash-separated dates such as
+    ``12/01/2026`` (issue #250), so a US user's ``MM/DD/YYYY`` data is not
+    silently read as ``DD/MM/YYYY``. Unambiguous ISO dates (``YYYY-MM-DD``)
+    are always parsed first and are unaffected by the preference.
+    """
     if not value or not value.strip():
         return None
     value = value.strip()
 
+    iso_formats = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%Y/%m/%d']
+
     if date_format == 'DD/MM/YYYY':
-        formats = ['%d/%m/%Y %H:%M:%S', '%d/%m/%Y %H:%M', '%d/%m/%Y', '%d-%m-%Y', '%d.%m.%Y', '%d/%m/%y']
+        formats = _ordered_slash_formats(prefer_mdy=False)
     elif date_format == 'MM/DD/YYYY':
-        formats = ['%m/%d/%Y %H:%M:%S', '%m/%d/%Y %H:%M', '%m/%d/%Y', '%m-%d-%Y', '%m/%d/%y']
+        formats = _ordered_slash_formats(prefer_mdy=True)
     elif date_format == 'YYYY-MM-DD':
-        formats = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%Y/%m/%d']
+        formats = iso_formats
     else:
-        # Auto-detect: try unambiguous formats first
-        formats = ['%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M', '%Y-%m-%d', '%Y/%m/%d',
-                   '%d/%m/%Y %H:%M:%S', '%d/%m/%Y %H:%M', '%d/%m/%Y',
-                   '%m/%d/%Y %H:%M:%S', '%m/%d/%Y %H:%M', '%m/%d/%Y',
-                   '%d-%m-%Y', '%m-%d-%Y', '%d.%m.%Y', '%d/%m/%y', '%m/%d/%y']
+        # Auto-detect: unambiguous ISO first, then slash formats ordered by
+        # the importing user's preference so US dates are not reversed.
+        prefer_mdy = (user_date_format == 'MM/DD/YYYY')
+        formats = iso_formats + _ordered_slash_formats(prefer_mdy)
 
     for fmt in formats:
         try:
@@ -2850,9 +2874,9 @@ def _cleanup_temp_file(path):
         pass
 
 
-def create_record(data_type, mapped_row, vehicle_id, user_id, date_format):
+def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_date_format=None):
     """Create a model instance from a mapped CSV row."""
-    date_val = parse_date_value(mapped_row.get('date', ''), date_format)
+    date_val = parse_date_value(mapped_row.get('date', ''), date_format, user_date_format)
 
     if data_type == 'fuel_logs':
         if not date_val:
@@ -3092,7 +3116,7 @@ def csv_import_execute():
                 for csv_col, field_name in col_mapping.items():
                     mapped_row[field_name] = row.get(csv_col, '')
 
-                record = create_record(data_type, mapped_row, vehicle_id, current_user.id, date_format)
+                record = create_record(data_type, mapped_row, vehicle_id, current_user.id, date_format, current_user.date_format)
                 db.session.add(record)
                 imported += 1
             except (ValueError, KeyError) as e:
