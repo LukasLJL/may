@@ -623,3 +623,134 @@ class TestConsumptionUnavailableReason:
         db.session.commit()
         assert sample_vehicle.get_average_consumption() is not None
         assert sample_vehicle.get_consumption_unavailable_reason() is None
+
+
+class TestFuelStationSync:
+    """#252 — quick logs, delete counter, and per-fuel-type price series."""
+
+    def test_quick_log_appears_in_station_chart(
+            self, auth_client, sample_vehicle, sample_station):
+        """Defect 1: a quick log at a saved station records price history
+        (so it shows in the chart view) and bumps the usage counter."""
+        starting = sample_station.times_used or 0
+        auth_client.post('/fuel/quick', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'odometer': '30000',
+            'volume': '40',
+            'price_per_unit': '1.70',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        history = FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id, price_per_unit=1.70).first()
+        assert history is not None
+        assert history.date == date.today()
+
+        db.session.refresh(sample_station)
+        assert sample_station.times_used == starting + 1
+
+    def test_quick_log_matches_station_by_name(
+            self, auth_client, sample_vehicle, sample_station):
+        """Defect 1: a manually typed station name (no station_id) still
+        records price history via name match."""
+        auth_client.post('/fuel/quick', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'odometer': '31000',
+            'volume': '35',
+            'price_per_unit': '1.65',
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        history = FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id, price_per_unit=1.65).first()
+        assert history is not None
+
+    def test_delete_decrements_station_counter(
+            self, auth_client, sample_vehicle, sample_station):
+        """Defect 2: deleting a fuel log decrements the overview counter,
+        not just the chart's price-history row."""
+        auth_client.post('/fuel/quick', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'odometer': '32000',
+            'volume': '40',
+            'price_per_unit': '1.80',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+        db.session.refresh(sample_station)
+        assert sample_station.times_used == 1
+
+        log = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).order_by(
+            FuelLog.id.desc()).first()
+        auth_client.post(f'/fuel/{log.id}/delete', follow_redirects=True)
+
+        db.session.refresh(sample_station)
+        assert sample_station.times_used == 0
+        assert FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id).count() == 0
+
+    def test_edit_reassign_moves_counter(
+            self, auth_client, test_user, sample_vehicle, sample_station):
+        """Defect 2: reassigning a log's station decrements the old station
+        and increments the new one, so neither is over-counted."""
+        other = FuelStation(user_id=test_user.id, name='Esso Station', brand='Esso')
+        db.session.add(other)
+        db.session.commit()
+
+        # Log created at sample_station via quick (usage 1 + price history).
+        auth_client.post('/fuel/quick', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'odometer': '33000',
+            'volume': '40',
+            'price_per_unit': '1.90',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+        db.session.refresh(sample_station)
+        assert sample_station.times_used == 1
+
+        log = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).order_by(
+            FuelLog.id.desc()).first()
+
+        # Reassign to the other station via edit.
+        auth_client.post(f'/fuel/{log.id}/edit', data={
+            'date': log.date.isoformat(),
+            'odometer': '33000',
+            'volume': '40',
+            'price_per_unit': '1.90',
+            'station_id': str(other.id),
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        db.session.refresh(sample_station)
+        db.session.refresh(other)
+        assert sample_station.times_used == 0
+        assert other.times_used == 1
+
+    def test_price_history_separates_fuel_types(
+            self, auth_client, test_user, sample_station):
+        """Defect 3: the chart data keeps petrol and diesel as distinct
+        series rather than aggregating them into one price line."""
+        db.session.add_all([
+            FuelPriceHistory(station_id=sample_station.id, user_id=test_user.id,
+                             date=date(2024, 3, 1), fuel_type='petrol',
+                             price_per_unit=1.60),
+            FuelPriceHistory(station_id=sample_station.id, user_id=test_user.id,
+                             date=date(2024, 3, 2), fuel_type='diesel',
+                             price_per_unit=1.75),
+        ])
+        db.session.commit()
+
+        resp = auth_client.get(f'/stations/{sample_station.id}/prices')
+        assert resp.status_code == 200
+        html = resp.get_data(as_text=True)
+        # Both fuel types reach the template as distinct data...
+        assert '"fuel_type": "petrol"' in html
+        assert '"fuel_type": "diesel"' in html
+        # ...and the chart groups by fuel type instead of one flat series.
+        assert 'byType' in html
