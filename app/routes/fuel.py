@@ -231,6 +231,12 @@ def edit(log_id):
                 if station_id and existing_entry.station_id != station_id:
                     new_station = FuelStation.query.get(station_id)
                     if new_station:
+                        # Reassigning the log moves the usage count too (#252):
+                        # decrement the station we're leaving before bumping the
+                        # new one, so no station is over-counted.
+                        old_station = existing_entry.station
+                        if old_station and old_station.times_used:
+                            old_station.times_used = max(0, old_station.times_used - 1)
                         existing_entry.station_id = station_id
                         new_station.increment_usage()
         elif station_id and log.price_per_unit:
@@ -297,13 +303,21 @@ def delete(log_id):
         if os.path.exists(file_path):
             os.remove(file_path)
 
-    # Clean up matching fuel price history entries
+    # Clean up matching fuel price history entries and keep each affected
+    # station's usage counter in step with the chart view (#252): deleting a
+    # log must decrement the overview "used N times" counter, not just drop the
+    # price-history row the chart reads from.
     if log.price_per_unit and log.date:
-        FuelPriceHistory.query.filter(
+        entries = FuelPriceHistory.query.filter(
             FuelPriceHistory.user_id == current_user.id,
             FuelPriceHistory.date == log.date,
             FuelPriceHistory.price_per_unit == log.price_per_unit
-        ).delete()
+        ).all()
+        for entry in entries:
+            station = entry.station
+            if station and station.times_used:
+                station.times_used = max(0, station.times_used - 1)
+            db.session.delete(entry)
 
     db.session.delete(log)
     db.session.commit()
@@ -380,22 +394,40 @@ def quick():
             volume=volume,
             total_cost=total_cost,
             price_per_unit=price_per_unit,
+            fuel_type=request.form.get('fuel_type') or None,
             is_full_tank=request.form.get('is_full_tank') == 'on',
             station=request.form.get('station'),
         )
 
-        # Update station usage
-        station_name = request.form.get('station')
-        if station_name:
-            station = FuelStation.query.filter_by(
-                user_id=current_user.id,
-                name=station_name
-            ).first()
-            if station:
-                station.increment_usage()
-
         db.session.add(log)
         db.session.commit()
+
+        # Associate with a saved station the same way fuel.new() does (#252):
+        # record a FuelPriceHistory row and bump the usage counter together, so
+        # quick logs show up in the station chart view and keep the overview
+        # counter in step. Prefer the station_id sent by the dropdown; fall back
+        # to a name match for manually typed stations.
+        station_id = request.form.get('station_id', type=int)
+        station = None
+        if station_id:
+            station = FuelStation.query.get(station_id)
+        else:
+            station_name = request.form.get('station')
+            if station_name:
+                station = FuelStation.query.filter_by(
+                    user_id=current_user.id,
+                    name=station_name
+                ).first()
+        if station and log.price_per_unit:
+            db.session.add(FuelPriceHistory(
+                station_id=station.id,
+                user_id=current_user.id,
+                date=log.date,
+                fuel_type=log.fuel_type or vehicle.fuel_type or 'petrol',
+                price_per_unit=log.price_per_unit,
+            ))
+            station.increment_usage()
+            db.session.commit()
 
         flash(_('Fuel log added!'), 'success')
 
