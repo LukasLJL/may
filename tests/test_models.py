@@ -194,6 +194,35 @@ class TestVehicleOdometerUnit:
         assert abs(v.get_total_distance('mi') - 621.371) < 0.05
 
 
+class TestTessieOdometerUnit:
+    def _tessie_vehicle(self, test_user, monkeypatch, unit):
+        from app.services.tessie import TessieService
+        monkeypatch.setattr(TessieService, 'is_configured', staticmethod(lambda: True))
+        v = Vehicle(
+            owner_id=test_user.id,
+            name='Tesla', vehicle_type='car', fuel_type='electric',
+            odometer_unit=unit,
+            tessie_enabled=True, tessie_vin='5YJ3TEST', tessie_last_odometer=10000,
+        )
+        db.session.add(v)
+        db.session.commit()
+        return v
+
+    def test_default_unit_matches_vehicle_for_miles(self, app, test_user, monkeypatch):
+        # #245 — Tessie reports km; a miles vehicle must get miles back by
+        # default so the value is comparable with logged odometer readings.
+        v = self._tessie_vehicle(test_user, monkeypatch, 'mi')
+        assert v.get_last_odometer() == round(10000 * 0.621371)
+
+    def test_default_unit_matches_vehicle_for_km(self, app, test_user, monkeypatch):
+        v = self._tessie_vehicle(test_user, monkeypatch, 'km')
+        assert v.get_last_odometer() == 10000
+
+    def test_explicit_unit_still_wins(self, app, test_user, monkeypatch):
+        v = self._tessie_vehicle(test_user, monkeypatch, 'mi')
+        assert v.get_last_odometer(distance_unit='km') == 10000
+
+
 class TestVehicleRelationships:
     def test_vehicle_has_owner(self, sample_vehicle, test_user):
         assert sample_vehicle.owner.id == test_user.id

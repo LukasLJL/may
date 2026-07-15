@@ -404,15 +404,16 @@ class Vehicle(db.Model):
         Otherwise, returns the highest from fuel logs, trips, or charging sessions.
 
         Args:
-            distance_unit: If provided ('km' or 'mi'), converts Tessie odometer to this unit.
-                          Tessie odometer is stored in km internally.
+            distance_unit: If provided ('km' or 'mi'), converts Tessie odometer to
+                          this unit. When omitted, the vehicle's effective odometer
+                          unit is used so the result is comparable with logged
+                          odometer values, which are stored in that unit (#245).
+                          Tessie itself reports km internally.
         """
         # If Tessie is enabled, use Tessie odometer exclusively
         if self.uses_tessie_odometer() and self.tessie_last_odometer:
-            odometer = self.tessie_last_odometer
-            # Convert from km to user's unit if specified
-            if distance_unit == 'mi':
-                odometer = odometer * 0.621371
+            target = distance_unit or self.get_effective_odometer_unit()
+            odometer = _distance_in(self.tessie_last_odometer, 'km', target)
             return round(odometer)
 
         last_fuel = self.fuel_logs.order_by(FuelLog.odometer.desc()).first()
