@@ -299,30 +299,54 @@ class Vehicle(db.Model):
             return _distance_in(raw_distance, self.get_effective_odometer_unit(), distance_unit)
         return raw_distance
 
-    def get_average_consumption(self, consumption_unit=None, volume_unit='L'):
-        """Calculate average fuel consumption between the first and last
-        full-tank fill-ups.
+    def _valid_consumption_segments(self):
+        """Collect (distance, fuel) spans usable for the consumption average.
 
-        Sums every litre poured between those two anchors so partial fills
-        in the middle are counted (issue #169). Returns None when any log
-        in the range is flagged ``is_missed`` — we have no way to make the
-        figure honest in that case.
+        Each span runs between consecutive full-tank fill-ups, counting every
+        litre poured within it so partial fills are included (issue #169).
+        A span containing a log flagged ``is_missed`` is discarded — there is
+        no way to make that span honest — but spans either side of it remain
+        usable, so one missed fill-up doesn't invalidate the whole history
+        (issue #251).
+
+        Returns ``None`` when there are fewer than two full-tank anchors,
+        otherwise a (possibly empty) list of ``(distance, fuel)`` tuples.
         """
         full_logs = self.fuel_logs.filter_by(is_full_tank=True).order_by(FuelLog.odometer).all()
         if len(full_logs) < 2:
             return None
 
-        first_odo = full_logs[0].odometer
-        last_odo = full_logs[-1].odometer
         range_logs = self.fuel_logs.filter(
-            FuelLog.odometer > first_odo,
-            FuelLog.odometer <= last_odo,
-        ).all()
-        if any(log.is_missed for log in range_logs):
+            FuelLog.odometer > full_logs[0].odometer,
+            FuelLog.odometer <= full_logs[-1].odometer,
+        ).order_by(FuelLog.odometer).all()
+
+        segments = []
+        for start, end in zip(full_logs, full_logs[1:]):
+            span_logs = [log for log in range_logs
+                         if start.odometer < log.odometer <= end.odometer]
+            if any(log.is_missed for log in span_logs):
+                continue
+            fuel = sum(log.volume for log in span_logs if log.volume)
+            distance = end.odometer - start.odometer
+            if distance > 0 and fuel > 0:
+                segments.append((distance, fuel))
+        return segments
+
+    def get_average_consumption(self, consumption_unit=None, volume_unit='L'):
+        """Calculate average fuel consumption across full-tank fill-up spans.
+
+        Spans contaminated by a missed fill-up are excluded rather than
+        poisoning the whole figure (issue #251); the average covers every
+        remaining span, partial fills included (issue #169). Returns None
+        when no honest span exists.
+        """
+        segments = self._valid_consumption_segments()
+        if not segments:
             return None
 
-        total_fuel = sum(log.volume for log in range_logs if log.volume)
-        total_distance = last_odo - first_odo
+        total_distance = sum(distance for distance, _ in segments)
+        total_fuel = sum(fuel for _, fuel in segments)
 
         if total_distance > 0 and total_fuel > 0:
             odometer_unit = self.get_effective_odometer_unit()
@@ -348,28 +372,23 @@ class Vehicle(db.Model):
         helpful empty state instead of a bare dash (issue #214):
 
         - ``'insufficient_full_tanks'`` — fewer than two full-tank fill-ups
-        - ``'missed_fill_up'`` — a fill-up in the range is flagged missed
+        - ``'missed_fill_up'`` — every span is invalidated by a missed fill-up
         - ``'insufficient_data'`` — not enough distance/volume to calculate
         """
-        full_logs = self.fuel_logs.filter_by(is_full_tank=True).order_by(FuelLog.odometer).all()
-        if len(full_logs) < 2:
+        segments = self._valid_consumption_segments()
+        if segments is None:
             return 'insufficient_full_tanks'
+        if segments:
+            return None
 
-        first_odo = full_logs[0].odometer
-        last_odo = full_logs[-1].odometer
+        full_logs = self.fuel_logs.filter_by(is_full_tank=True).order_by(FuelLog.odometer).all()
         range_logs = self.fuel_logs.filter(
-            FuelLog.odometer > first_odo,
-            FuelLog.odometer <= last_odo,
+            FuelLog.odometer > full_logs[0].odometer,
+            FuelLog.odometer <= full_logs[-1].odometer,
         ).all()
         if any(log.is_missed for log in range_logs):
             return 'missed_fill_up'
-
-        total_fuel = sum(log.volume for log in range_logs if log.volume)
-        total_distance = last_odo - first_odo
-        if total_distance <= 0 or total_fuel <= 0:
-            return 'insufficient_data'
-
-        return None
+        return 'insufficient_data'
 
     def uses_tessie_odometer(self):
         """Check if this vehicle uses Tessie for odometer tracking"""
