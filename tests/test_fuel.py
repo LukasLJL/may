@@ -584,6 +584,36 @@ class TestConsumptionUnavailableReason:
         assert sample_vehicle.get_average_consumption() is None
         assert sample_vehicle.get_consumption_unavailable_reason() == 'missed_fill_up'
 
+    def test_missed_fill_up_only_invalidates_its_own_span(
+            self, app, test_user, sample_vehicle):
+        """#251 — one missed fill-up must not kill the whole average.
+
+        Spans between full tanks that don't contain the missed log stay
+        usable; only the contaminated span is excluded.
+        """
+        logs = [
+            FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
+                    date=date(2024, 1, 1), odometer=10000, volume=40, is_full_tank=True),
+            FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
+                    date=date(2024, 1, 10), odometer=10500, volume=40, is_full_tank=True),
+            # Contaminated span: missed fill-up between the next two anchors.
+            FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
+                    date=date(2024, 1, 15), odometer=10700, volume=20,
+                    is_full_tank=False, is_missed=True),
+            FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
+                    date=date(2024, 1, 20), odometer=11000, volume=45, is_full_tank=True),
+            FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
+                    date=date(2024, 1, 30), odometer=11500, volume=40, is_full_tank=True),
+        ]
+        db.session.add_all(logs)
+        db.session.commit()
+        # Valid spans: 10000->10500 (40 L / 500) and 11000->11500 (40 L / 500).
+        # The 10500->11000 span is excluded, so: 80 L / 1000 km = 8.0 L/100km.
+        avg = sample_vehicle.get_average_consumption()
+        assert avg is not None
+        assert abs(avg - 8.0) < 0.01
+        assert sample_vehicle.get_consumption_unavailable_reason() is None
+
     def test_reason_none_when_available(self, app, test_user, sample_vehicle):
         log1 = FuelLog(vehicle_id=sample_vehicle.id, user_id=test_user.id,
                        date=date(2024, 1, 1), odometer=10000, volume=40, is_full_tank=True)
