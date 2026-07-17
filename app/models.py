@@ -1223,6 +1223,8 @@ class RecurringExpense(db.Model):
             self.next_due = base_date + relativedelta(months=1)
         elif self.frequency == 'quarterly':
             self.next_due = base_date + relativedelta(months=3)
+        elif self.frequency == 'biannual':
+            self.next_due = base_date + relativedelta(months=6)
         elif self.frequency == 'yearly':
             self.next_due = base_date + relativedelta(years=1)
 
@@ -1546,7 +1548,12 @@ class FuelPriceHistory(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    station = db.relationship('FuelStation', backref=db.backref('price_history', lazy='dynamic'))
+    # Cascade so deleting a station removes its price rows rather than
+    # violating the NOT NULL station_id constraint with a 500 (#256).
+    station = db.relationship(
+        'FuelStation',
+        backref=db.backref('price_history', lazy='dynamic', cascade='all, delete-orphan'),
+    )
     user = db.relationship('User', backref=db.backref('fuel_price_history', lazy='dynamic'))
 
 
