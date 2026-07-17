@@ -45,7 +45,16 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="{{ APP_NAME }}">
     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    {# Tab icon: the uploaded branding logo when one is set, else the bundled
+       default (#259). Browsers accept PNG/JPEG/SVG here, no .ico needed. #}
+    {% if APP_LOGO %}
+    <link rel="icon" href="{{ url_for('api.uploaded_file', filename=APP_LOGO) }}">
+    <link rel="apple-touch-icon" href="{{ url_for('api.uploaded_file', filename=APP_LOGO) }}">
+    {% else %}
+    <link rel="icon" href="{{ url_for('static', filename='icons/icon.svg') }}" type="image/svg+xml">
+    <link rel="icon" href="{{ url_for('static', filename='icons/icon-96x96.png') }}" sizes="96x96" type="image/png">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/icon.svg') }}">
+    {% endif %}
 
     <!-- Tailwind CSS - Critical for styling, loaded first -->
     <script>
