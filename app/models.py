@@ -1546,7 +1546,12 @@ class FuelPriceHistory(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    station = db.relationship('FuelStation', backref=db.backref('price_history', lazy='dynamic'))
+    # Cascade so deleting a station removes its price rows rather than
+    # violating the NOT NULL station_id constraint with a 500 (#256).
+    station = db.relationship(
+        'FuelStation',
+        backref=db.backref('price_history', lazy='dynamic', cascade='all, delete-orphan'),
+    )
     user = db.relationship('User', backref=db.backref('fuel_price_history', lazy='dynamic'))
 
 
