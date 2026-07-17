@@ -1223,6 +1223,8 @@ class RecurringExpense(db.Model):
             self.next_due = base_date + relativedelta(months=1)
         elif self.frequency == 'quarterly':
             self.next_due = base_date + relativedelta(months=3)
+        elif self.frequency == 'biannual':
+            self.next_due = base_date + relativedelta(months=6)
         elif self.frequency == 'yearly':
             self.next_due = base_date + relativedelta(years=1)
 
