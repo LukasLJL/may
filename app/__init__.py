@@ -440,6 +440,21 @@ def _start_reminder_scheduler(app):
             except Exception as e:
                 logger.error(f"Error in reminder scheduler: {e}")
 
+            try:
+                with app.app_context():
+                    from app.services.recurring_processor import (
+                        process_due_recurring_expenses,
+                    )
+                    rec_stats = process_due_recurring_expenses()
+                    if rec_stats['generated'] > 0 or rec_stats['errors']:
+                        logger.info(
+                            f"Recurring expense check: {rec_stats['generated']} "
+                            f"generated, {rec_stats['skipped']} skipped, "
+                            f"{len(rec_stats['errors'])} errors"
+                        )
+            except Exception as e:
+                logger.error(f"Error in recurring expense scheduler: {e}")
+
             # Check every hour
             time.sleep(3600)
 

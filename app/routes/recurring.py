@@ -3,9 +3,9 @@ from flask_login import login_required, current_user
 from flask_babel import gettext as _
 from app import db
 from app.utils import parse_decimal
-from app.models import RecurringExpense, Vehicle, Expense, EXPENSE_CATEGORIES
+from app.models import RecurringExpense, Vehicle, EXPENSE_CATEGORIES
+from app.services.recurring_processor import generate_expense_for_period
 from datetime import date
-from dateutil.relativedelta import relativedelta
 
 bp = Blueprint('recurring', __name__, url_prefix='/recurring')
 
@@ -150,29 +150,9 @@ def generate(recurring_id):
         RecurringExpense.vehicle_id.in_(vehicle_ids)
     ).first_or_404()
 
-    # Create expense entry using the recurring expense's due date
-    expense = Expense(
-        vehicle_id=recurring.vehicle_id,
-        user_id=recurring.user_id,
-        date=recurring.next_due or date.today(),
-        category=recurring.category,
-        cost=recurring.amount or 0,
-        description=f"{recurring.name} (auto-generated)"
-    )
-
-    db.session.add(expense)
-
-    # Update next due date
-    if recurring.next_due:
-        if recurring.frequency == 'monthly':
-            recurring.next_due = recurring.next_due + relativedelta(months=1)
-        elif recurring.frequency == 'quarterly':
-            recurring.next_due = recurring.next_due + relativedelta(months=3)
-        elif recurring.frequency == 'biannual':
-            recurring.next_due = recurring.next_due + relativedelta(months=6)
-        elif recurring.frequency == 'yearly':
-            recurring.next_due = recurring.next_due + relativedelta(years=1)
-
+    # Create a single expense for the current period and advance the schedule,
+    # sharing the same logic as the background auto-generation processor.
+    generate_expense_for_period(recurring)
     db.session.commit()
 
     flash(_('Expense created for %(name)s.') % {'name': recurring.name}, 'success')
