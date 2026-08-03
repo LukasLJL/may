@@ -4115,7 +4115,7 @@ msgstr "Véhicules archivés"
 
 #: app/templates/vehicles/index.html:8
 msgid "Manage your cars, vans, motorbikes, and scooters"
-msgstr "Manage your cars, vans, motorbikes, and scooters"
+msgstr "Gérez vos voitures, utilitaires, motos et scooters"
 
 #: app/templates/vehicles/index.html:18
 msgid "Active Vehicles"
@@ -4296,7 +4296,7 @@ msgstr "Non défini"
 
 #: app/templates/vehicles/view.html:63
 msgid "Last Odometer"
-msgstr "Last Odometer"
+msgstr "Dernier kilométrage"
 
 #: app/templates/vehicles/view.html:111
 msgid "Avg. Consumption"
