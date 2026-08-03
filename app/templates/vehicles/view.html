@@ -53,7 +53,7 @@
                 </div>
                 <div>
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Fuel') }}</dt>
-                    <dd class="mt-1 text-sm text-gray-900 dark:text-white capitalize">{{ vehicle.fuel_type or _('Not set') }}</dd>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white ">{{ vehicle.fuel_type|fuel_type_label if vehicle.fuel_type else _('Not set') }}</dd>
                 </div>
                 <div>
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Registration') }}</dt>
@@ -574,7 +574,7 @@
         <dl class="divide-y divide-gray-200 dark:divide-gray-700">
             {% for spec in specs %}
             <div class="px-6 py-3 flex justify-between">
-                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ spec.label }}</dt>
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ spec|spec_label }}</dt>
                 <dd class="text-sm text-gray-900 dark:text-white">{{ spec.value }}</dd>
             </div>
             {% endfor %}
@@ -814,7 +814,7 @@
                         <p class="text-sm font-medium text-gray-900 dark:text-white break-words">{{ expense.description }}</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
                             {{ expense.date|format_date }} &middot;
-                            <span class="capitalize">{{ expense.category }}</span>
+                            <span>{{ expense.category|category_label }}</span>
                         </p>
                     </div>
                     <div class="flex items-center gap-3 ml-4">
@@ -914,7 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     data: {
                         labels: data.consumption.map(d => d.date),
                         datasets: [{
-                            label: 'Consumption ({{ current_user.consumption_unit }})',
+                            label: '{{ _("Consumption") }} ({{ current_user.consumption_unit }})',
                             data: data.consumption.map(d => d.consumption),
                             borderColor: 'rgb(14, 165, 233)',
                             backgroundColor: 'rgba(14, 165, 233, 0.1)',
