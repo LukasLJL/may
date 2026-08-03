@@ -65,6 +65,7 @@ class User(UserMixin, db.Model):
     notification_method = db.Column(db.String(20), default='email')  # email, webhook, ntfy, pushover, none
     webhook_url = db.Column(db.String(500))  # URL to POST notifications to
     ntfy_topic = db.Column(db.String(200))  # ntfy.sh topic or custom server URL
+    ntfy_token = db.Column(db.String(200))  # access token for authenticated ntfy servers (#90)
     pushover_user_key = db.Column(db.String(50))  # Pushover user key
 
     # Password reset
@@ -221,6 +222,9 @@ class Vehicle(db.Model):
     # Sharing — if True, all users on this instance can view and log against this vehicle
     is_shared = db.Column(db.Boolean, default=False, nullable=False)
 
+    # Default trip purpose pre-selected when logging a trip for this vehicle (#272)
+    default_trip_purpose = db.Column(db.String(20), default='business')
+
     # Relationships
     fuel_logs = db.relationship('FuelLog', backref='vehicle', lazy='dynamic',
                                 cascade='all, delete-orphan')
@@ -360,6 +364,8 @@ class Vehicle(db.Model):
                 return miles / gallons if gallons > 0 else None
             km = _distance_in(total_distance, odometer_unit, 'km')
             litres = _to_litres(total_fuel, volume_unit)
+            if consumption_unit == 'km/L':
+                return km / litres if litres > 0 else None
             return (litres / km) * 100  # L/100km
         return None
 
@@ -706,6 +712,8 @@ class FuelLog(db.Model):
                 return miles / gallons if gallons > 0 else None
             km = _distance_in(distance, odometer_unit, 'km')
             litres = _to_litres(volume_native, volume_unit)
+            if consumption_unit == 'km/L':
+                return km / litres if litres > 0 else None
             return (litres / km) * 100  # L/100km
         return None
 
@@ -1540,6 +1548,9 @@ class FuelPriceHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     station_id = db.Column(db.Integer, db.ForeignKey('fuel_stations.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # Exact link to the fuel log that produced this row (#254). Nullable:
+    # legacy rows and manually recorded station prices have no owning log.
+    fuel_log_id = db.Column(db.Integer, db.ForeignKey('fuel_logs.id'), nullable=True)
 
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     fuel_type = db.Column(db.String(20), nullable=False)  # petrol, diesel, premium, etc.
@@ -1555,6 +1566,9 @@ class FuelPriceHistory(db.Model):
         backref=db.backref('price_history', lazy='dynamic', cascade='all, delete-orphan'),
     )
     user = db.relationship('User', backref=db.backref('fuel_price_history', lazy='dynamic'))
+    fuel_log = db.relationship(
+        'FuelLog', backref=db.backref('price_history_entries', lazy='dynamic')
+    )
 
 
 class Note(db.Model):

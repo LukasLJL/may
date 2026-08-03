@@ -139,7 +139,8 @@ def test_notification():
         topic = request.form.get('ntfy_topic')
         if not topic:
             return jsonify({'success': False, 'error': 'Please enter an ntfy topic'})
-        success, error = NotificationService.send_ntfy(topic, title, message)
+        token = request.form.get('ntfy_token') or None
+        success, error = NotificationService.send_ntfy(topic, title, message, token=token)
     elif method == 'pushover':
         user_key = request.form.get('pushover_user_key')
         if not user_key:

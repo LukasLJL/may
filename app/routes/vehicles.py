@@ -8,7 +8,7 @@ from flask_babel import gettext as _
 from werkzeug.utils import secure_filename
 from app import db
 from app.utils import parse_decimal
-from app.models import Vehicle, VehicleSpec, VehiclePart, FuelLog, Expense, User, Reminder, MaintenanceSchedule, VEHICLE_TYPES, FUEL_TYPES, VEHICLE_SPEC_TYPES, REMINDER_TYPES, PART_TYPES, TRACKING_UNITS, ODOMETER_UNITS, AppSettings
+from app.models import Vehicle, VehicleSpec, VehiclePart, FuelLog, Expense, User, Reminder, MaintenanceSchedule, VEHICLE_TYPES, FUEL_TYPES, VEHICLE_SPEC_TYPES, REMINDER_TYPES, PART_TYPES, TRACKING_UNITS, ODOMETER_UNITS, TRIP_PURPOSES, AppSettings
 from app.services.tessie import TessieService
 
 bp = Blueprint('vehicles', __name__, url_prefix='/vehicles')
@@ -60,6 +60,7 @@ def new():
             notes=request.form.get('notes'),
             annual_mileage_limit=parse_decimal(request.form.get('annual_mileage_limit')) if request.form.get('annual_mileage_limit') else None,
             annual_mileage_start_date=datetime.strptime(request.form.get('annual_mileage_start_date'), '%Y-%m-%d').date() if request.form.get('annual_mileage_start_date') else None,
+            default_trip_purpose=request.form.get('default_trip_purpose') or 'business',
         )
 
         # Handle image upload
@@ -102,6 +103,7 @@ def new():
                            tracking_units=TRACKING_UNITS,
                            odometer_units=ODOMETER_UNITS,
                            spec_types=VEHICLE_SPEC_TYPES,
+                           trip_purposes=TRIP_PURPOSES,
                            tessie_configured=tessie_configured)
 
 
@@ -209,6 +211,7 @@ def edit(vehicle_id):
 
         vehicle.is_active = request.form.get('is_active') == 'on'
         vehicle.is_shared = request.form.get('is_shared') == 'on'
+        vehicle.default_trip_purpose = request.form.get('default_trip_purpose') or vehicle.default_trip_purpose or 'business'
 
         # Handle Tessie integration fields
         vehicle.tessie_vin = request.form.get('tessie_vin') or None
@@ -260,6 +263,7 @@ def edit(vehicle_id):
                            odometer_units=ODOMETER_UNITS,
                            spec_types=VEHICLE_SPEC_TYPES,
                            specs=specs,
+                           trip_purposes=TRIP_PURPOSES,
                            tessie_configured=tessie_configured)
 
 
