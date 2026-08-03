@@ -331,6 +331,11 @@ def notifications():
     current_user.notification_method = request.form.get('notification_method', 'email')
     current_user.webhook_url = webhook_url
     current_user.ntfy_topic = request.form.get('ntfy_topic') or None
+    # The saved token is never rendered back to the page; blank means keep (#90)
+    if request.form.get('clear_ntfy_token') == 'on':
+        current_user.ntfy_token = None
+    elif request.form.get('ntfy_token', '').strip():
+        current_user.ntfy_token = request.form.get('ntfy_token').strip()
     current_user.pushover_user_key = request.form.get('pushover_user_key') or None
     db.session.commit()
     flash(_('Notification preferences updated'), 'success')

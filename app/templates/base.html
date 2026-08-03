@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full {% if current_user.is_authenticated and current_user.dark_mode %}dark{% endif %}">
+<html lang="{{ CURRENT_LOCALE }}" dir="{{ 'rtl' if CURRENT_LOCALE == 'ar' else 'ltr' }}" class="h-full {% if current_user.is_authenticated and current_user.dark_mode %}dark{% endif %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -653,6 +653,13 @@
             return isNaN(parseFloat(out)) || !/^-?[0-9]*\.?[0-9]+$/.test(out) ? raw : out;
         }
         window.normaliseDecimalString = normaliseDecimalString;
+
+        // Locale-tolerant parseFloat for the inline auto-calculations, which
+        // run on every keystroke — before the blur/submit normalisation above
+        // has rewritten a comma decimal (#267, #269).
+        window.parseDecimal = function(value) {
+            return parseFloat(normaliseDecimalString(value));
+        };
 
         function isDecimalInput(el) {
             if (el.tagName !== 'INPUT') return false;

@@ -192,7 +192,7 @@
                     {% endif %}
                     <div>
                         <p class="text-sm font-medium text-gray-900 dark:text-white truncate" style="max-width: 120px;">{{ price.station.name }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 capitalize">{{ price.fuel_type }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ price.fuel_type|fuel_type_label }}</p>
                     </div>
                 </div>
                 <p class="text-sm font-semibold {% if loop.index == 1 %}text-green-600 dark:text-green-400{% else %}text-gray-900 dark:text-white{% endif %}">
@@ -239,7 +239,7 @@
                 <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ vehicle.name }}</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 truncate mt-0.5">{{ vehicle.make }} {{ vehicle.model }}{% if vehicle.year %} · {{ vehicle.year }}{% endif %}</p>
                 {% if vehicle.fuel_type %}
-                <span class="inline-block mt-1.5 text-xs px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 capitalize">{{ vehicle.fuel_type.replace('_', ' ') }}</span>
+                <span class="inline-block mt-1.5 text-xs px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 ">{{ vehicle.fuel_type|fuel_type_label }}</span>
                 {% endif %}
             </div>
         </a>
@@ -310,13 +310,13 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: {{ monthly_data.labels | tojson }},
             datasets: [
                 {
-                    label: 'Fuel',
+                    label: {{ _('Fuel')|tojson }},
                     data: {{ monthly_data.fuel | tojson }},
                     backgroundColor: 'rgba(250, 204, 21, 0.8)',
                     borderRadius: 4
                 },
                 {
-                    label: 'Expenses',
+                    label: {{ _('Expenses')|tojson }},
                     data: {{ monthly_data.expenses | tojson }},
                     backgroundColor: 'rgba(239, 68, 68, 0.8)',
                     borderRadius: 4

@@ -20,6 +20,7 @@ csrf = CSRFProtect()
 # Supported languages
 LANGUAGES = {
     'en': 'English',
+    'ar': 'العربية',
     'cs': 'Čeština',
     'de': 'Deutsch',
     'es': 'Español',
@@ -28,10 +29,12 @@ LANGUAGES = {
     'nl': 'Nederlands',
     'pt': 'Português',
     'pl': 'Polski',
+    'ru': 'Русский',
     'sv': 'Svenska',
     'da': 'Dansk',
     'no': 'Norsk',
     'fi': 'Suomi',
+    'tr': 'Türkçe',
     'ja': '日本語',
     'zh': '中文',
     'ko': '한국어'
@@ -280,8 +283,12 @@ def create_app(config_class=Config):
     app.config['BABEL_DEFAULT_LOCALE'] = 'en'
     app.config['BABEL_SUPPORTED_LOCALES'] = list(LANGUAGES.keys())
 
-    # Ensure data directories exist
-    os.makedirs(os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '')), exist_ok=True)
+    # Ensure data directories exist (the DB directory only applies to SQLite;
+    # a server-based DATABASE_URL like postgresql:// has no local path, #239)
+    if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite:///'):
+        db_dir = os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '', 1))
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     db.init_app(app)
@@ -322,6 +329,31 @@ def create_app(config_class=Config):
             'FLATPICKR_CSS_ASSET_URL': app.config.get('FLATPICKR_CSS_ASSET_URL', '/static/vendor/flatpickr.min.css'),
             'FLATPICKR_CSS_CDN_URL': app.config.get('FLATPICKR_CSS_CDN_URL', 'https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css'),
         }
+
+    # Map stored slugs (e.g. 'maintenance', 'petrol') to their translated
+    # display labels. Templates previously rendered the raw slug with CSS
+    # capitalisation, which bypassed translation entirely (#266).
+    @app.template_filter('category_label')
+    def category_label_filter(value):
+        from app.models import EXPENSE_CATEGORIES
+        return dict(EXPENSE_CATEGORIES).get(value) or (value or '').replace('_', ' ').title()
+
+    @app.template_filter('fuel_type_label')
+    def fuel_type_label_filter(value):
+        from app.models import FUEL_TYPES
+        return dict(FUEL_TYPES).get(value) or (value or '').replace('_', ' ').title()
+
+    @app.template_filter('spec_label')
+    def spec_label_filter(spec):
+        # Predefined spec labels were stamped into the DB in the locale active
+        # at save time; re-resolve them from spec_type so they follow the
+        # user's current language. Custom specs keep their stored label.
+        from app.models import VEHICLE_SPEC_TYPES
+        if spec.spec_type and spec.spec_type != 'custom':
+            label = dict(VEHICLE_SPEC_TYPES).get(spec.spec_type)
+            if label:
+                return label
+        return spec.label
 
     @app.template_filter('format_date')
     def format_date_filter(value, style='default'):
