@@ -286,7 +286,9 @@ def create_app(config_class=Config):
     # Ensure data directories exist (the DB directory only applies to SQLite;
     # a server-based DATABASE_URL like postgresql:// has no local path, #239)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite:///'):
-        os.makedirs(os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '')), exist_ok=True)
+        db_dir = os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '', 1))
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     db.init_app(app)
@@ -352,6 +354,30 @@ def create_app(config_class=Config):
             if label:
                 return label
         return spec.label
+
+    @app.template_filter('money')
+    def money_filter(value):
+        """Format a money amount per the user's separator/rounding prefs (#134).
+
+        'period' grouping implies the European convention, so the decimal
+        separator becomes a comma.
+        """
+        if value is None:
+            value = 0
+        sep = 'none'
+        decimals = 2
+        if current_user and current_user.is_authenticated:
+            sep = getattr(current_user, 'thousand_separator', None) or 'none'
+            if getattr(current_user, 'round_costs', False):
+                decimals = 0
+        s = f"{value:,.{decimals}f}"
+        if sep == 'none':
+            return s.replace(',', '')
+        if sep == 'space':
+            return s.replace(',', '\u202f')
+        if sep == 'period':
+            return s.replace('.', '\x00').replace(',', '.').replace('\x00', ',')
+        return s
 
     @app.template_filter('format_date')
     def format_date_filter(value, style='default'):

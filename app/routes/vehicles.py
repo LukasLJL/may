@@ -60,7 +60,9 @@ def new():
             notes=request.form.get('notes'),
             annual_mileage_limit=parse_decimal(request.form.get('annual_mileage_limit')) if request.form.get('annual_mileage_limit') else None,
             annual_mileage_start_date=datetime.strptime(request.form.get('annual_mileage_start_date'), '%Y-%m-%d').date() if request.form.get('annual_mileage_start_date') else None,
-            default_trip_purpose=request.form.get('default_trip_purpose') or 'business',
+            default_trip_purpose=(request.form.get('default_trip_purpose')
+                                  if request.form.get('default_trip_purpose') in dict(TRIP_PURPOSES)
+                                  else 'business'),
         )
 
         # Handle image upload
@@ -138,6 +140,8 @@ def view(vehicle_id):
         'total_distance': vehicle.get_total_distance(vehicle.get_effective_odometer_unit()),
         'avg_consumption': vehicle.get_average_consumption(current_user.consumption_unit, current_user.volume_unit),
         'cost_per_distance': vehicle.get_cost_per_distance(),
+        'total_fuel_volume': vehicle.get_total_fuel_volume(),
+        'total_co2_kg': vehicle.get_total_co2_kg(current_user.volume_unit),
         'fuel_logs_count': vehicle.fuel_logs.count(),
         'expenses_count': vehicle.expenses.count(),
         'charging_sessions_count': vehicle.charging_sessions.count(),
@@ -211,7 +215,9 @@ def edit(vehicle_id):
 
         vehicle.is_active = request.form.get('is_active') == 'on'
         vehicle.is_shared = request.form.get('is_shared') == 'on'
-        vehicle.default_trip_purpose = request.form.get('default_trip_purpose') or vehicle.default_trip_purpose or 'business'
+        submitted_purpose = request.form.get('default_trip_purpose')
+        if submitted_purpose in dict(TRIP_PURPOSES):
+            vehicle.default_trip_purpose = submitted_purpose
 
         # Handle Tessie integration fields
         vehicle.tessie_vin = request.form.get('tessie_vin') or None

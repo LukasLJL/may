@@ -58,6 +58,10 @@ class User(UserMixin, db.Model):
     currency = db.Column(db.String(10), default='USD')
     dark_mode = db.Column(db.Boolean, default=False)  # Dark mode preference
     date_format = db.Column(db.String(20), default='DD/MM/YYYY')  # DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, DD.MM.YYYY
+    # Number display (#134): grouping separator for large numbers and
+    # optional whole-number rounding for money amounts
+    thousand_separator = db.Column(db.String(10), default='none')  # none, space, comma, period
+    round_costs = db.Column(db.Boolean, default=False)
 
     # Notification preferences
     email_reminders = db.Column(db.Boolean, default=True)
@@ -256,6 +260,27 @@ class Vehicle(db.Model):
 
     def get_total_expense_cost(self):
         return sum(exp.cost for exp in self.expenses.all() if exp.cost)
+
+    def get_total_fuel_volume(self):
+        """Total fuel logged, in the unit the logs were entered in."""
+        return sum(log.volume for log in self.fuel_logs.all() if log.volume)
+
+    def get_total_co2_kg(self, volume_unit='L'):
+        """Estimated lifetime tailpipe CO2 in kg from logged fuel (#218).
+
+        Uses per-fuel-type DEFRA conversion factors; each log's own fuel
+        type wins (dual-fuel vehicles), falling back to the vehicle's.
+        Electric charging is not counted — grid intensity varies too much
+        to state honestly.
+        """
+        total = 0.0
+        for log in self.fuel_logs.all():
+            if not log.volume:
+                continue
+            fuel_type = log.fuel_type or self.fuel_type
+            factor = FUEL_CO2_KG_PER_LITRE.get(fuel_type, FUEL_CO2_KG_PER_LITRE['petrol'])
+            total += _to_litres(log.volume, volume_unit) * factor
+        return total
 
     def get_total_cost(self):
         return self.get_total_fuel_cost() + self.get_total_expense_cost() + self.get_total_charging_cost()
@@ -603,6 +628,22 @@ class Vehicle(db.Model):
                 'last_odometer': self.get_last_odometer()
             }
         }
+
+
+# Tailpipe CO2 emitted per litre of fuel burned, in kg — standard UK
+# DEFRA/BEIS conversion factors (#218). Zero-tailpipe types are listed
+# explicitly so unknown/custom types can fall back to the petrol factor.
+FUEL_CO2_KG_PER_LITRE = {
+    'petrol': 2.31,
+    'diesel': 2.68,
+    'lpg': 1.51,
+    'cng': 2.75,  # approximation: CNG is normally metered by kg, not litres
+    'e85': 1.61,
+    'hybrid': 2.31,
+    'plugin_hybrid': 2.31,
+    'electric': 0.0,
+    'hydrogen': 0.0,
+}
 
 
 def _to_litres(volume, volume_unit):

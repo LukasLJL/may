@@ -66,8 +66,15 @@ class TestTimeline:
         match = re.search(r'const chartData = (\{.*?\});', resp.get_data(as_text=True))
         assert match, 'chart data not found in timeline page'
         labels = json.loads(match.group(1))['labels']
-        assert len(labels) == 12
-        assert len(set(labels)) == 12
+        from datetime import datetime
+        expected = []
+        year, month = datetime.now().year, datetime.now().month
+        for _ in range(12):
+            expected.append(datetime(year, month, 1).strftime('%b %Y'))
+            month -= 1
+            if month == 0:
+                year, month = year - 1, 12
+        assert labels == list(reversed(expected))
 
     def test_timeline_other_user_vehicle_redirects(self, auth_client, admin_user):
         # Create a vehicle owned by admin
