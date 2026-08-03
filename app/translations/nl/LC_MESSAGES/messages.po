@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 17:43+0100\n"
+"POT-Creation-Date: 2026-08-03 20:52+0100\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: nl <LL@li.org>\n"
@@ -18,439 +18,439 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/models.py:923
+#: app/models.py:964
 msgid "Front Tire Size"
 msgstr "Maat voorband"
 
-#: app/models.py:924
+#: app/models.py:965
 msgid "Rear Tire Size"
 msgstr "Maat achterband"
 
-#: app/models.py:925
+#: app/models.py:966
 msgid "Wheel Size"
 msgstr "Velgmaat"
 
-#: app/models.py:926
+#: app/models.py:967
 msgid "Engine Oil Type"
 msgstr "Type motorolie"
 
-#: app/models.py:927
+#: app/models.py:968
 msgid "Oil Capacity"
 msgstr "Oliecapaciteit"
 
-#: app/models.py:928
+#: app/models.py:969
 msgid "Coolant Type"
 msgstr "Type koelvloeistof"
 
-#: app/models.py:929
+#: app/models.py:970
 msgid "Front Wiper Size"
 msgstr "Maat voorruitenwisser"
 
-#: app/models.py:930
+#: app/models.py:971
 msgid "Rear Wiper Size"
 msgstr "Maat achterruitenwisser"
 
-#: app/models.py:931
+#: app/models.py:972
 msgid "Battery Type"
 msgstr "Type accu"
 
-#: app/models.py:932
+#: app/models.py:973
 msgid "Spark Plug Type"
 msgstr "Type bougie"
 
-#: app/models.py:933
+#: app/models.py:974
 msgid "Air Filter Part #"
 msgstr "Onderdeelnr. luchtfilter"
 
-#: app/models.py:934
+#: app/models.py:975
 msgid "Cabin Filter Part #"
 msgstr "Onderdeelnr. cabinefilter"
 
-#: app/models.py:935
+#: app/models.py:976
 msgid "Front Brake Pads"
 msgstr "Voorremblokken"
 
-#: app/models.py:936
+#: app/models.py:977
 msgid "Rear Brake Pads"
 msgstr "Achterremblokken"
 
-#: app/models.py:937 app/models.py:1490
+#: app/models.py:978 app/models.py:1531
 msgid "Transmission Fluid"
 msgstr "Transmissieolie"
 
-#: app/models.py:938 app/models.py:1009 app/models.py:1062
-#: app/templates/auth/settings.html:177
+#: app/models.py:979 app/models.py:1050 app/models.py:1103
+#: app/templates/auth/settings.html:195
 msgid "Custom"
 msgstr "Aangepast"
 
-#: app/models.py:943 app/templates/auth/settings.html:409
-#: app/templates/auth/settings.html:475 app/templates/base.html:317
-#: app/templates/base.html:398
+#: app/models.py:984 app/templates/auth/settings.html:427
+#: app/templates/auth/settings.html:493 app/templates/base.html:317
+#: app/templates/base.html:404
 msgid "Maintenance"
 msgstr "Onderhoud"
 
-#: app/models.py:944
+#: app/models.py:985
 msgid "Repairs"
 msgstr "Reparaties"
 
-#: app/models.py:945
+#: app/models.py:986
 msgid "Inspection"
 msgstr "Keuring"
 
-#: app/models.py:946
+#: app/models.py:987
 msgid "Insurance"
 msgstr "Verzekering"
 
-#: app/models.py:947 app/models.py:1004
+#: app/models.py:988 app/models.py:1045
 msgid "Road Tax"
 msgstr "Wegenbelasting"
 
-#: app/models.py:948 app/templates/vehicles/view.html:59
+#: app/models.py:989 app/templates/vehicles/view.html:59
 msgid "Registration"
 msgstr "Registratie"
 
-#: app/models.py:949
+#: app/models.py:990
 msgid "Parking"
 msgstr "Parkeren"
 
-#: app/models.py:950
+#: app/models.py:991
 msgid "Tolls"
 msgstr "Tol"
 
-#: app/models.py:951
+#: app/models.py:992
 msgid "Cleaning"
 msgstr "Reiniging"
 
-#: app/models.py:952
+#: app/models.py:993
 msgid "Accessories"
 msgstr "Accessoires"
 
-#: app/models.py:953 app/models.py:970 app/models.py:996 app/models.py:1030
-#: app/models.py:1040 app/models.py:1074 app/models.py:1496
+#: app/models.py:994 app/models.py:1011 app/models.py:1037 app/models.py:1071
+#: app/models.py:1081 app/models.py:1115 app/models.py:1537
 msgid "Other"
 msgstr "Overig"
 
-#: app/models.py:958
+#: app/models.py:999
 msgid "Car"
 msgstr "Auto"
 
-#: app/models.py:959
+#: app/models.py:1000
 msgid "Van"
 msgstr "Bestelwagen"
 
-#: app/models.py:960
+#: app/models.py:1001
 msgid "Motorbike"
 msgstr "Motor"
 
-#: app/models.py:961
+#: app/models.py:1002
 msgid "Scooter"
 msgstr "Scooter"
 
-#: app/models.py:962
+#: app/models.py:1003
 msgid "Truck"
 msgstr "Vrachtwagen"
 
-#: app/models.py:963
+#: app/models.py:1004
 msgid "SUV"
 msgstr "SUV"
 
-#: app/models.py:964
+#: app/models.py:1005
 msgid "Hatchback"
 msgstr "Hatchback"
 
-#: app/models.py:965
+#: app/models.py:1006
 msgid "Station Wagon / Estate"
 msgstr "Stationwagen"
 
-#: app/models.py:966
+#: app/models.py:1007
 msgid "Pickup / Ute"
 msgstr "Pick-up"
 
-#: app/models.py:967
+#: app/models.py:1008
 msgid "Tractor"
 msgstr "Tractor"
 
-#: app/models.py:968
+#: app/models.py:1009
 msgid "ATV/UTV"
 msgstr "ATV/UTV"
 
-#: app/models.py:969
+#: app/models.py:1010
 msgid "Boat"
 msgstr "Boot"
 
-#: app/models.py:975
+#: app/models.py:1016
 msgid "Mileage (km/mi)"
 msgstr "Kilometerstand (km/mi)"
 
-#: app/models.py:976
+#: app/models.py:1017
 msgid "Hours"
 msgstr "Uren"
 
-#: app/models.py:981
+#: app/models.py:1022
 msgid "Kilometres (km)"
 msgstr "Kilometers (km)"
 
-#: app/models.py:982
+#: app/models.py:1023
 msgid "Miles (mi)"
 msgstr "Mijlen (mi)"
 
-#: app/models.py:987
+#: app/models.py:1028
 msgid "Petrol/Gasoline"
 msgstr "Benzine"
 
-#: app/models.py:988
+#: app/models.py:1029
 msgid "Diesel"
 msgstr "Diesel"
 
-#: app/models.py:989
+#: app/models.py:1030
 msgid "Electric"
 msgstr "Elektrisch"
 
-#: app/models.py:990
+#: app/models.py:1031
 msgid "Hybrid"
 msgstr "Hybride"
 
-#: app/models.py:991
+#: app/models.py:1032
 msgid "Plug-in Hybrid"
 msgstr "Plug-in hybride"
 
-#: app/models.py:992
+#: app/models.py:1033
 msgid "LPG"
 msgstr "LPG"
 
-#: app/models.py:993
+#: app/models.py:1034
 msgid "CNG"
 msgstr "CNG"
 
-#: app/models.py:994
+#: app/models.py:1035
 msgid "Hydrogen"
 msgstr "Waterstof"
 
-#: app/models.py:995
+#: app/models.py:1036
 msgid "E85/Flex Fuel"
 msgstr "E85/Flexfuel"
 
-#: app/models.py:1001
+#: app/models.py:1042
 msgid "MOT/Inspection"
 msgstr "APK/Keuring"
 
-#: app/models.py:1002
+#: app/models.py:1043
 msgid "Service Due"
 msgstr "Onderhoud verschuldigd"
 
-#: app/models.py:1003
+#: app/models.py:1044
 msgid "Insurance Renewal"
 msgstr "Verzekering verlengen"
 
-#: app/models.py:1005
+#: app/models.py:1046
 msgid "Registration Renewal"
 msgstr "Registratie verlengen"
 
-#: app/models.py:1006
+#: app/models.py:1047
 msgid "Warranty Expiry"
 msgstr "Garantie verloopt"
 
-#: app/models.py:1007
+#: app/models.py:1048
 msgid "Tire Change"
 msgstr "Bandenwissel"
 
-#: app/models.py:1008 app/models.py:1045
+#: app/models.py:1049 app/models.py:1086
 msgid "Oil Change"
 msgstr "Olieverversing"
 
-#: app/models.py:1016
+#: app/models.py:1057
 msgid "No Repeat"
 msgstr "Niet herhalen"
 
-#: app/models.py:1017
+#: app/models.py:1058
 msgid "Day(s)"
 msgstr "Dag(en)"
 
-#: app/models.py:1018
+#: app/models.py:1059
 msgid "Week(s)"
 msgstr "Week/weken"
 
-#: app/models.py:1019
+#: app/models.py:1060
 msgid "Month(s)"
 msgstr "Maand(en)"
 
-#: app/models.py:1020
+#: app/models.py:1061
 msgid "Year(s)"
 msgstr "Jaar/jaren"
 
-#: app/models.py:1025
+#: app/models.py:1066
 msgid "Business"
 msgstr "Zakelijk"
 
-#: app/models.py:1026
+#: app/models.py:1067
 msgid "Personal"
 msgstr "Privé"
 
-#: app/models.py:1027
+#: app/models.py:1068
 msgid "Commute"
 msgstr "Woon-werkverkeer"
 
-#: app/models.py:1028
+#: app/models.py:1069
 msgid "Medical"
 msgstr "Medisch"
 
-#: app/models.py:1029
+#: app/models.py:1070
 msgid "Charity"
 msgstr "Goed doel"
 
-#: app/models.py:1035
+#: app/models.py:1076
 msgid "Home Charging"
 msgstr "Thuis laden"
 
-#: app/models.py:1036
+#: app/models.py:1077
 msgid "Level 1"
 msgstr "Niveau 1"
 
-#: app/models.py:1037
+#: app/models.py:1078
 msgid "Level 2"
 msgstr "Niveau 2"
 
-#: app/models.py:1038
+#: app/models.py:1079
 msgid "DC Fast Charge"
 msgstr "DC snelladen"
 
-#: app/models.py:1039
+#: app/models.py:1080
 msgid "Tesla Supercharger"
 msgstr "Tesla Supercharger"
 
-#: app/models.py:1046 app/models.py:1482
+#: app/models.py:1087 app/models.py:1523
 msgid "Oil Filter"
 msgstr "Oliefilter"
 
-#: app/models.py:1047 app/models.py:1483
+#: app/models.py:1088 app/models.py:1524
 msgid "Air Filter"
 msgstr "Luchtfilter"
 
-#: app/models.py:1048
+#: app/models.py:1089
 msgid "Cabin/Pollen Filter"
 msgstr "Cabine-/pollenfilter"
 
-#: app/models.py:1049 app/models.py:1484
+#: app/models.py:1090 app/models.py:1525
 msgid "Fuel Filter"
 msgstr "Brandstoffilter"
 
-#: app/models.py:1050
+#: app/models.py:1091
 msgid "Spark Plugs"
 msgstr "Bougies"
 
-#: app/models.py:1051
+#: app/models.py:1092
 msgid "Brake Pads"
 msgstr "Remblokken"
 
-#: app/models.py:1052 app/models.py:1488
+#: app/models.py:1093 app/models.py:1529
 msgid "Brake Fluid"
 msgstr "Remvloeistof"
 
-#: app/models.py:1053
+#: app/models.py:1094
 msgid "Coolant Flush"
 msgstr "Koelvloeistof spoelen"
 
-#: app/models.py:1054
+#: app/models.py:1095
 msgid "Transmission Service"
 msgstr "Transmissieonderhoud"
 
-#: app/models.py:1055
+#: app/models.py:1096
 msgid "Timing Belt"
 msgstr "Distributieriem"
 
-#: app/models.py:1056
+#: app/models.py:1097
 msgid "Serpentine Belt"
 msgstr "Poly V-riem"
 
-#: app/models.py:1057
+#: app/models.py:1098
 msgid "Tire Rotation"
 msgstr "Banden wisselen"
 
-#: app/models.py:1058
+#: app/models.py:1099
 msgid "Wheel Alignment"
 msgstr "Wieluitlijning"
 
-#: app/models.py:1059
+#: app/models.py:1100
 msgid "Battery Check/Replace"
 msgstr "Accu controleren/vervangen"
 
-#: app/models.py:1060
+#: app/models.py:1101
 msgid "Wiper Blades"
 msgstr "Ruitenwissers"
 
-#: app/models.py:1061
+#: app/models.py:1102
 msgid "Full Service"
 msgstr "Grote beurt"
 
-#: app/models.py:1067
+#: app/models.py:1108
 msgid "Insurance Policy"
 msgstr "Verzekeringspolis"
 
-#: app/models.py:1068
+#: app/models.py:1109
 msgid "Registration/V5C"
 msgstr "Kentekenbewijs"
 
-#: app/models.py:1069
+#: app/models.py:1110
 msgid "MOT Certificate"
 msgstr "APK-certificaat"
 
-#: app/models.py:1070
+#: app/models.py:1111
 msgid "Service Record"
 msgstr "Onderhoudshistorie"
 
-#: app/models.py:1071
+#: app/models.py:1112
 msgid "Purchase Invoice"
 msgstr "Aankoopfactuur"
 
-#: app/models.py:1072
+#: app/models.py:1113
 msgid "Warranty Document"
 msgstr "Garantiebewijs"
 
-#: app/models.py:1073
+#: app/models.py:1114
 msgid "Owner's Manual"
 msgstr "Gebruikershandleiding"
 
-#: app/models.py:1481
+#: app/models.py:1522
 msgid "Engine Oil"
 msgstr "Motorolie"
 
-#: app/models.py:1485
+#: app/models.py:1526
 msgid "Cabin Filter"
 msgstr "Cabinefilter"
 
-#: app/models.py:1486
+#: app/models.py:1527
 msgid "Spark Plug"
 msgstr "Bougie"
 
-#: app/models.py:1487
+#: app/models.py:1528
 msgid "Brake Pad"
 msgstr "Remblok"
 
-#: app/models.py:1489
+#: app/models.py:1530
 msgid "Coolant"
 msgstr "Koelvloeistof"
 
-#: app/models.py:1491
+#: app/models.py:1532
 msgid "Battery"
 msgstr "Accu"
 
-#: app/models.py:1492
+#: app/models.py:1533
 msgid "Tire"
 msgstr "Band"
 
-#: app/models.py:1493
+#: app/models.py:1534
 msgid "Belt"
 msgstr "Riem"
 
-#: app/models.py:1494
+#: app/models.py:1535
 msgid "Wiper Blade"
 msgstr "Ruitenwisser"
 
-#: app/models.py:1495
+#: app/models.py:1536
 msgid "Light Bulb"
 msgstr "Gloeilamp"
 
-#: app/routes/allowance.py:31 app/routes/expenses.py:49 app/routes/fuel.py:53
+#: app/routes/allowance.py:31 app/routes/expenses.py:82 app/routes/fuel.py:53
 #: app/routes/fuel.py:377 app/routes/notes.py:31 app/routes/reminders.py:63
 #: app/routes/trips.py:67
 msgid "Please add a vehicle first"
@@ -461,9 +461,9 @@ msgstr "Voeg eerst een voertuig toe"
 #: app/routes/charging.py:123 app/routes/charging.py:173
 #: app/routes/documents.py:130 app/routes/documents.py:146
 #: app/routes/documents.py:165 app/routes/documents.py:205
-#: app/routes/expenses.py:58 app/routes/expenses.py:116
-#: app/routes/expenses.py:171 app/routes/expenses.py:195
-#: app/routes/expenses.py:200 app/routes/fuel.py:62 app/routes/fuel.py:182
+#: app/routes/expenses.py:91 app/routes/expenses.py:166
+#: app/routes/expenses.py:221 app/routes/expenses.py:245
+#: app/routes/expenses.py:250 app/routes/fuel.py:62 app/routes/fuel.py:182
 #: app/routes/fuel.py:305 app/routes/fuel.py:350 app/routes/fuel.py:355
 #: app/routes/fuel.py:391 app/routes/maintenance.py:106
 #: app/routes/maintenance.py:148 app/routes/maintenance.py:200
@@ -473,12 +473,12 @@ msgstr "Voeg eerst een voertuig toe"
 #: app/routes/reminders.py:247 app/routes/trips.py:75 app/routes/trips.py:139
 #: app/routes/trips.py:174 app/routes/trips.py:207 app/routes/trips.py:239
 #: app/routes/trips.py:250 app/routes/trips.py:279 app/routes/vehicles.py:119
-#: app/routes/vehicles.py:194 app/routes/vehicles.py:281
-#: app/routes/vehicles.py:303 app/routes/vehicles.py:334
-#: app/routes/vehicles.py:353 app/routes/vehicles.py:369
-#: app/routes/vehicles.py:386 app/routes/vehicles.py:451
-#: app/routes/vehicles.py:480 app/routes/vehicles.py:518
-#: app/routes/vehicles.py:556
+#: app/routes/vehicles.py:196 app/routes/vehicles.py:283
+#: app/routes/vehicles.py:305 app/routes/vehicles.py:336
+#: app/routes/vehicles.py:355 app/routes/vehicles.py:371
+#: app/routes/vehicles.py:388 app/routes/vehicles.py:453
+#: app/routes/vehicles.py:482 app/routes/vehicles.py:520
+#: app/routes/vehicles.py:558
 msgid "Access denied"
 msgstr "Toegang geweigerd"
 
@@ -498,20 +498,20 @@ msgstr "Kilometervergoeding succesvol bijgewerkt"
 msgid "Mileage allowance deleted successfully"
 msgstr "Kilometervergoeding succesvol verwijderd"
 
-#: app/routes/api.py:2151 app/routes/api.py:2364 app/routes/api.py:2539
+#: app/routes/api.py:2161 app/routes/api.py:2374 app/routes/api.py:2549
 msgid "No file uploaded"
 msgstr "Geen bestand geüpload"
 
-#: app/routes/api.py:2156 app/routes/api.py:2369 app/routes/api.py:2544
+#: app/routes/api.py:2166 app/routes/api.py:2379 app/routes/api.py:2554
 #: app/routes/documents.py:67 app/routes/documents.py:72
 msgid "No file selected"
 msgstr "Geen bestand geselecteerd"
 
-#: app/routes/api.py:2178
+#: app/routes/api.py:2188
 msgid "The uploaded file is not a valid SQLite database."
 msgstr "Het geüploade bestand is geen geldige SQLite-database."
 
-#: app/routes/api.py:2183
+#: app/routes/api.py:2193
 msgid ""
 "This does not appear to be a Hammond database — no vehicles, fillups, or "
 "expenses tables found."
@@ -519,7 +519,7 @@ msgstr ""
 "Dit lijkt geen Hammond-database te zijn — geen voertuigen, tankbeurten of "
 "uitgaventabellen gevonden."
 
-#: app/routes/api.py:2332
+#: app/routes/api.py:2342
 #, python-format
 msgid ""
 "Hammond import complete: %(vehicles)s vehicles, %(fuel_logs)s fuel logs, "
@@ -528,7 +528,7 @@ msgstr ""
 "Hammond-import voltooid: %(vehicles)s voertuigen, %(fuel_logs)s "
 "tanklogboeken, %(expenses)s uitgaven geïmporteerd."
 
-#: app/routes/api.py:2334
+#: app/routes/api.py:2344
 #, python-format
 msgid ""
 "(%(total_skipped)s records skipped due to errors — check server logs for "
@@ -537,7 +537,7 @@ msgstr ""
 "(%(total_skipped)s records overgeslagen vanwege fouten — controleer de "
 "serverlogboeken voor details.)"
 
-#: app/routes/api.py:2341
+#: app/routes/api.py:2351
 #, python-format
 msgid ""
 "Import failed due to a database error. Check that the file is a valid "
@@ -546,13 +546,13 @@ msgstr ""
 "Import mislukt door een databasefout. Controleer of het bestand een geldige "
 "Hammond-database is. Fout: %(error)s"
 
-#: app/routes/api.py:2346 app/routes/api.py:2490 app/routes/api.py:2662
-#: app/routes/api.py:3157
+#: app/routes/api.py:2356 app/routes/api.py:2500 app/routes/api.py:2672
+#: app/routes/api.py:3167
 #, python-format
 msgid "Import failed: %(error)s"
 msgstr "Import mislukt: %(error)s"
 
-#: app/routes/api.py:2486
+#: app/routes/api.py:2496
 #, python-format
 msgid ""
 "Clarkson import complete: %(vehicles)s vehicles, %(fuel_logs)s fuel logs"
@@ -560,7 +560,7 @@ msgstr ""
 "Clarkson-import voltooid: %(vehicles)s voertuigen, %(fuel_logs)s "
 "tanklogboeken"
 
-#: app/routes/api.py:2658
+#: app/routes/api.py:2668
 #, python-format
 msgid ""
 "Fuelly import complete: %(vehicles)s new vehicles, %(fuel_logs)s fuel logs"
@@ -568,40 +568,40 @@ msgstr ""
 "Fuelly-import voltooid: %(vehicles)s nieuwe voertuigen, %(fuel_logs)s "
 "tanklogboeken"
 
-#: app/routes/api.py:3010
+#: app/routes/api.py:3020
 msgid "Please add a vehicle before importing data."
 msgstr "Voeg eerst een voertuig toe voordat u gegevens importeert."
 
-#: app/routes/api.py:3023
+#: app/routes/api.py:3033
 msgid "Invalid data type selected."
 msgstr "Ongeldig gegevenstype geselecteerd."
 
-#: app/routes/api.py:3028 app/routes/api.py:3103
+#: app/routes/api.py:3038 app/routes/api.py:3113
 msgid "Vehicle not found."
 msgstr "Voertuig niet gevonden."
 
-#: app/routes/api.py:3032
+#: app/routes/api.py:3042
 msgid "No CSV file uploaded."
 msgstr "Geen CSV-bestand geüpload."
 
-#: app/routes/api.py:3043
+#: app/routes/api.py:3053
 msgid "CSV file has no column headers."
 msgstr "CSV-bestand heeft geen kolomkoppen."
 
-#: app/routes/api.py:3084
+#: app/routes/api.py:3094
 #, python-format
 msgid "Failed to parse CSV file: %(error)s"
 msgstr "Kan CSV-bestand niet verwerken: %(error)s"
 
-#: app/routes/api.py:3098
+#: app/routes/api.py:3108
 msgid "Invalid data type."
 msgstr "Ongeldig gegevenstype."
 
-#: app/routes/api.py:3107
+#: app/routes/api.py:3117
 msgid "CSV file expired. Please upload again."
 msgstr "CSV-bestand verlopen. Upload het opnieuw."
 
-#: app/routes/api.py:3145
+#: app/routes/api.py:3155
 #, python-format
 msgid "CSV import complete: %(count)s %(label)s imported."
 msgstr "CSV-import voltooid: %(count)s %(label)s geïmporteerd."
@@ -628,8 +628,8 @@ msgstr ""
 msgid "Invalid or expired reset link. Please request a new one."
 msgstr "Ongeldige of verlopen herstellink. Vraag een nieuwe aan."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:236
-#: app/routes/auth.py:542 app/routes/auth.py:578
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
+#: app/routes/auth.py:544 app/routes/auth.py:580
 msgid "Passwords do not match"
 msgstr "Wachtwoorden komen niet overeen"
 
@@ -641,7 +641,7 @@ msgstr "Uw wachtwoord is hersteld. Log in."
 msgid "New account registration is currently disabled."
 msgstr "Registratie van nieuwe accounts is momenteel uitgeschakeld."
 
-#: app/routes/auth.py:180 app/routes/auth.py:587
+#: app/routes/auth.py:180 app/routes/auth.py:589
 msgid "Username already exists"
 msgstr "Gebruikersnaam bestaat al"
 
@@ -657,79 +657,79 @@ msgstr "Registratie geslaagd! Log in."
 msgid "You have been logged out."
 msgstr "U bent uitgelogd."
 
-#: app/routes/auth.py:226 app/routes/auth.py:534
+#: app/routes/auth.py:228 app/routes/auth.py:536
 msgid "Email already in use by another account"
 msgstr "E-mailadres is al in gebruik door een ander account"
 
-#: app/routes/auth.py:248
+#: app/routes/auth.py:250
 msgid "Settings updated successfully"
 msgstr "Instellingen succesvol bijgewerkt"
 
-#: app/routes/auth.py:326
+#: app/routes/auth.py:328
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Ongeldige webhook-URL: %(error)s"
 
-#: app/routes/auth.py:341
+#: app/routes/auth.py:343
 msgid "Notification preferences updated"
 msgstr "Meldingsvoorkeuren bijgewerkt"
 
-#: app/routes/auth.py:366
+#: app/routes/auth.py:368
 msgid "Menu preferences updated"
 msgstr "Menuvoorkeuren bijgewerkt"
 
-#: app/routes/auth.py:391
+#: app/routes/auth.py:393
 msgid "Notification settings updated"
 msgstr "Meldingsinstellingen bijgewerkt"
 
-#: app/routes/auth.py:420
+#: app/routes/auth.py:422
 msgid "Branding settings updated successfully"
 msgstr "Huisstijlinstellingen succesvol bijgewerkt"
 
-#: app/routes/auth.py:436
+#: app/routes/auth.py:438
 msgid "Logo removed successfully"
 msgstr "Logo succesvol verwijderd"
 
-#: app/routes/auth.py:449
+#: app/routes/auth.py:451
 msgid "DVLA settings updated"
 msgstr "DVLA-instellingen bijgewerkt"
 
-#: app/routes/auth.py:462
+#: app/routes/auth.py:464
 msgid "Tessie settings updated"
 msgstr "Tessie-instellingen bijgewerkt"
 
-#: app/routes/auth.py:475
+#: app/routes/auth.py:477
 msgid "Registration settings updated"
 msgstr "Registratie-instellingen bijgewerkt"
 
-#: app/routes/auth.py:499
+#: app/routes/auth.py:501
 msgid "Cannot remove admin status from the last administrator."
 msgstr "Kan de beheerdersstatus van de laatste beheerder niet verwijderen."
 
-#: app/routes/auth.py:504
+#: app/routes/auth.py:506
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "Beheerderstatus bijgewerkt voor %(username)s"
 
-#: app/routes/auth.py:517
+#: app/routes/auth.py:519
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "Gebruiker %(username)s verwijderd"
 
-#: app/routes/auth.py:555
+#: app/routes/auth.py:557
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "Gebruiker %(username)s succesvol bijgewerkt"
 
-#: app/routes/auth.py:574
+#: app/routes/auth.py:576
 msgid "Username, email, and password are required"
 msgstr "Gebruikersnaam, e-mailadres en wachtwoord zijn vereist"
 
-#: app/routes/auth.py:591
+#: app/routes/auth.py:593
 msgid "Email already in use"
 msgstr "E-mailadres is al in gebruik"
 
-#: app/routes/auth.py:599
+#: app/routes/auth.py:601
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "Gebruiker %(username)s succesvol aangemaakt"
@@ -774,23 +774,23 @@ msgstr "Document bijgewerkt"
 msgid "Document \"%(title)s\" deleted"
 msgstr "Document \"%(title)s\" verwijderd"
 
-#: app/routes/expenses.py:95
+#: app/routes/expenses.py:142
 msgid "Expense added successfully"
 msgstr "Uitgave succesvol toegevoegd"
 
-#: app/routes/expenses.py:130
+#: app/routes/expenses.py:180
 msgid "Invalid data submitted. Please check the date and cost fields."
 msgstr "Ongeldige gegevens ingediend. Controleer de datum- en kostenvelden."
 
-#: app/routes/expenses.py:153
+#: app/routes/expenses.py:203
 msgid "Expense updated successfully"
 msgstr "Uitgave succesvol bijgewerkt"
 
-#: app/routes/expenses.py:184
+#: app/routes/expenses.py:234
 msgid "Expense deleted successfully"
 msgstr "Uitgave succesvol verwijderd"
 
-#: app/routes/expenses.py:209 app/routes/fuel.py:364
+#: app/routes/expenses.py:259 app/routes/fuel.py:364
 msgid "Attachment deleted"
 msgstr "Bijlage verwijderd"
 
@@ -961,104 +961,106 @@ msgstr "Sjabloon verwijderd"
 msgid "Vehicle \"%(name)s\" added successfully"
 msgstr "Voertuig \"%(name)s\" succesvol toegevoegd"
 
-#: app/routes/vehicles.py:257
+#: app/routes/vehicles.py:259
 msgid "Vehicle updated successfully"
 msgstr "Voertuig succesvol bijgewerkt"
 
-#: app/routes/vehicles.py:292
+#: app/routes/vehicles.py:294
 msgid "Vehicle deleted successfully"
 msgstr "Voertuig succesvol verwijderd"
 
-#: app/routes/vehicles.py:311
+#: app/routes/vehicles.py:313
 msgid "User not found"
 msgstr "Gebruiker niet gevonden"
 
-#: app/routes/vehicles.py:313
+#: app/routes/vehicles.py:315
 msgid "You are already the owner"
 msgstr "U bent al de eigenaar"
 
-#: app/routes/vehicles.py:315
+#: app/routes/vehicles.py:317
 msgid "Vehicle already shared with this user"
 msgstr "Voertuig is al gedeeld met deze gebruiker"
 
-#: app/routes/vehicles.py:319
+#: app/routes/vehicles.py:321
 #, python-format
 msgid "Vehicle shared with %(username)s"
 msgstr "Voertuig gedeeld met %(username)s"
 
-#: app/routes/vehicles.py:341
+#: app/routes/vehicles.py:343
 #, python-format
 msgid "Sharing removed for %(username)s"
 msgstr "Deling verwijderd voor %(username)s"
 
-#: app/routes/vehicles.py:358
+#: app/routes/vehicles.py:360
 #, python-format
 msgid "Vehicle \"%(name)s\" has been archived"
 msgstr "Voertuig \"%(name)s\" is gearchiveerd"
 
-#: app/routes/vehicles.py:374
+#: app/routes/vehicles.py:376
 #, python-format
 msgid "Vehicle \"%(name)s\" has been restored"
 msgstr "Voertuig \"%(name)s\" is hersteld"
 
-#: app/routes/vehicles.py:392
+#: app/routes/vehicles.py:394
 msgid "PDF generation is not available. Please install weasyprint."
 msgstr "PDF-generatie is niet beschikbaar. Installeer weasyprint."
 
-#: app/routes/vehicles.py:500
+#: app/routes/vehicles.py:502
 #, python-format
 msgid "Part \"%(name)s\" added successfully"
 msgstr "Onderdeel \"%(name)s\" succesvol toegevoegd"
 
-#: app/routes/vehicles.py:523 app/routes/vehicles.py:561
+#: app/routes/vehicles.py:525 app/routes/vehicles.py:563
 msgid "Part not found"
 msgstr "Onderdeel niet gevonden"
 
-#: app/routes/vehicles.py:538
+#: app/routes/vehicles.py:540
 msgid "Part updated successfully"
 msgstr "Onderdeel succesvol bijgewerkt"
 
-#: app/routes/vehicles.py:567
+#: app/routes/vehicles.py:569
 msgid "Part deleted successfully"
 msgstr "Onderdeel succesvol verwijderd"
 
-#: app/templates/auth/settings.html:403 app/templates/base.html:271
-#: app/templates/base.html:378 app/templates/dashboard.html:2
+#: app/templates/auth/settings.html:421 app/templates/base.html:271
+#: app/templates/base.html:383 app/templates/dashboard.html:2
 #: app/templates/dashboard.html:11
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: app/templates/auth/settings.html:404 app/templates/auth/settings.html:455
-#: app/templates/base.html:275 app/templates/base.html:380
+#: app/templates/auth/settings.html:422 app/templates/auth/settings.html:473
+#: app/templates/base.html:275 app/templates/base.html:385
 #: app/templates/dashboard.html:27 app/templates/vehicles/index.html:2
 #: app/templates/vehicles/index.html:7
 msgid "Vehicles"
 msgstr "Voertuigen"
 
-#: app/templates/auth/settings.html:405 app/templates/auth/settings.html:460
-#: app/templates/base.html:280 app/templates/base.html:383
+#: app/templates/auth/settings.html:423 app/templates/auth/settings.html:478
+#: app/templates/base.html:280 app/templates/base.html:388
 #: app/templates/fuel/index.html:2 app/templates/fuel/index.html:7
-#: app/templates/vehicles/view.html:754
+#: app/templates/search/index.html:64 app/templates/vehicles/view.html:789
 msgid "Fuel Logs"
 msgstr "Tanklogboeken"
 
-#: app/templates/auth/settings.html:407 app/templates/auth/settings.html:465
-#: app/templates/base.html:285 app/templates/base.html:386
-#: app/templates/dashboard.html:319 app/templates/expenses/index.html:2
-#: app/templates/expenses/index.html:7 app/templates/timeline/index.html:108
-#: app/templates/vehicles/view.html:805
+#: app/templates/auth/settings.html:425 app/templates/auth/settings.html:483
+#: app/templates/base.html:285 app/templates/base.html:391
+#: app/templates/dashboard.html:382 app/templates/expenses/index.html:2
+#: app/templates/expenses/index.html:7 app/templates/expenses/index.html:123
+#: app/templates/search/index.html:43 app/templates/timeline/index.html:108
+#: app/templates/vehicles/view.html:841
 msgid "Expenses"
 msgstr "Uitgaven"
 
-#: app/templates/auth/settings.html:408 app/templates/auth/settings.html:470
-#: app/templates/base.html:290 app/templates/base.html:389
+#: app/templates/auth/settings.html:426 app/templates/auth/settings.html:488
+#: app/templates/base.html:290 app/templates/base.html:394
 #: app/templates/reminders/index.html:2 app/templates/reminders/index.html:7
 msgid "Reminders"
 msgstr "Herinneringen"
 
-#: app/templates/auth/settings.html:413 app/templates/auth/settings.html:495
-#: app/templates/base.html:295 app/templates/base.html:392
-#: app/templates/trips/index.html:2 app/templates/trips/index.html:7
+#: app/templates/auth/settings.html:431 app/templates/auth/settings.html:513
+#: app/templates/base.html:295 app/templates/base.html:398
+#: app/templates/search/index.html:124 app/templates/trips/index.html:2
+#: app/templates/trips/index.html:7
 msgid "Trips"
 msgstr "Ritten"
 
@@ -1066,63 +1068,71 @@ msgstr "Ritten"
 msgid "More"
 msgstr "Meer"
 
-#: app/templates/base.html:320 app/templates/base.html:401
+#: app/templates/base.html:320 app/templates/base.html:407
 msgid "Recurring"
 msgstr "Terugkerend"
 
-#: app/templates/auth/settings.html:411 app/templates/auth/settings.html:485
-#: app/templates/base.html:323 app/templates/base.html:404
+#: app/templates/auth/settings.html:429 app/templates/auth/settings.html:503
+#: app/templates/base.html:323 app/templates/base.html:410
 #: app/templates/documents/index.html:2 app/templates/documents/index.html:7
+#: app/templates/search/index.html:85
 msgid "Documents"
 msgstr "Documenten"
 
-#: app/templates/auth/settings.html:412 app/templates/auth/settings.html:490
-#: app/templates/base.html:326 app/templates/base.html:407
+#: app/templates/auth/settings.html:430 app/templates/auth/settings.html:508
+#: app/templates/base.html:326 app/templates/base.html:413
 #: app/templates/stations/index.html:2 app/templates/stations/index.html:7
 msgid "Fuel Stations"
 msgstr "Tankstations"
 
-#: app/templates/auth/settings.html:414 app/templates/auth/settings.html:500
-#: app/templates/base.html:329 app/templates/base.html:395
+#: app/templates/auth/settings.html:432 app/templates/auth/settings.html:518
+#: app/templates/base.html:329 app/templates/base.html:401
 msgid "EV Charging"
 msgstr "EV-laden"
 
 #: app/templates/allowance/index.html:2 app/templates/allowance/index.html:7
-#: app/templates/auth/settings.html:415 app/templates/auth/settings.html:505
-#: app/templates/base.html:332 app/templates/base.html:410
-#: app/templates/dashboard.html:140 app/templates/vehicles/view.html:94
+#: app/templates/auth/settings.html:433 app/templates/auth/settings.html:523
+#: app/templates/base.html:332 app/templates/base.html:416
+#: app/templates/dashboard.html:158 app/templates/vehicles/view.html:94
 msgid "Mileage Allowance"
 msgstr "Kilometervergoeding"
 
-#: app/templates/auth/settings.html:416 app/templates/auth/settings.html:510
-#: app/templates/base.html:335 app/templates/base.html:413
-#: app/templates/charging/form.html:144 app/templates/expenses/form.html:77
+#: app/templates/auth/settings.html:434 app/templates/auth/settings.html:528
+#: app/templates/base.html:335 app/templates/base.html:419
+#: app/templates/charging/form.html:144 app/templates/expenses/form.html:98
 #: app/templates/fuel/form.html:143 app/templates/notes/index.html:2
-#: app/templates/notes/index.html:7 app/templates/stations/form.html:74
-#: app/templates/trips/form.html:117 app/templates/trips/template_form.html:76
+#: app/templates/notes/index.html:7 app/templates/search/index.html:106
+#: app/templates/stations/form.html:74 app/templates/trips/form.html:117
+#: app/templates/trips/template_form.html:76
 #: app/templates/vehicles/form.html:222
 #: app/templates/vehicles/part_form.html:87
-#: app/templates/vehicles/view.html:588
+#: app/templates/vehicles/view.html:605
 msgid "Notes"
 msgstr "Notities"
 
-#: app/templates/auth/settings.html:406 app/templates/base.html:337
-#: app/templates/base.html:347 app/templates/base.html:415
+#: app/templates/auth/settings.html:424 app/templates/base.html:337
+#: app/templates/base.html:347 app/templates/base.html:421
 #: app/templates/fuel/quick.html:2 app/templates/fuel/quick.html:7
 msgid "Quick Fuel Entry"
 msgstr "Snel tanken"
 
-#: app/templates/base.html:351 app/templates/dashboard.html:313
+#: app/templates/base.html:351 app/templates/dashboard.html:376
 #: app/templates/timeline/index.html:102 app/templates/vehicles/view.html:55
 msgid "Fuel"
 msgstr "Brandstof"
 
+#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/search/index.html:2 app/templates/search/index.html:6
+#: app/templates/search/index.html:32
+msgid "Search"
+msgstr "Zoeken"
+
 #: app/templates/auth/settings.html:2 app/templates/auth/settings.html:6
-#: app/templates/base.html:354 app/templates/base.html:416
+#: app/templates/base.html:359 app/templates/base.html:422
 msgid "Settings"
 msgstr "Instellingen"
 
-#: app/templates/base.html:361 app/templates/base.html:421
+#: app/templates/base.html:366 app/templates/base.html:427
 msgid "Logout"
 msgstr "Uitloggen"
 
@@ -1151,60 +1161,70 @@ msgstr "Totale afstand"
 msgid "Cost per"
 msgstr "Kosten per"
 
-#: app/templates/dashboard.html:158 app/templates/vehicles/view.html:99
+#: app/templates/charging/form.html:135 app/templates/charging/index.html:26
+#: app/templates/dashboard.html:139 app/templates/fuel/form.html:88
+#: app/templates/fuel/quick.html:75
+msgid "Total Cost"
+msgstr "Totale kosten"
+
+#: app/templates/dashboard.html:176 app/templates/vehicles/view.html:99
 msgid "Net Cost"
 msgstr "Nettokosten"
 
-#: app/templates/dashboard.html:171
+#: app/templates/dashboard.html:189
 msgid "Monthly Spending"
 msgstr "Maandelijkse uitgaven"
 
-#: app/templates/dashboard.html:180 app/templates/stations/cheapest.html:2
+#: app/templates/dashboard.html:198 app/templates/stations/cheapest.html:2
 #: app/templates/stations/cheapest.html:7 app/templates/stations/index.html:16
 msgid "Cheapest Fuel"
 msgstr "Goedkoopste brandstof"
 
-#: app/templates/dashboard.html:181 app/templates/dashboard.html:258
-#: app/templates/dashboard.html:282 app/templates/vehicles/view.html:498
-#: app/templates/vehicles/view.html:608 app/templates/vehicles/view.html:666
+#: app/templates/dashboard.html:199 app/templates/dashboard.html:286
+#: app/templates/dashboard.html:310 app/templates/vehicles/view.html:515
+#: app/templates/vehicles/view.html:625 app/templates/vehicles/view.html:683
 msgid "View all"
 msgstr "Alles bekijken"
 
-#: app/templates/dashboard.html:205
+#: app/templates/dashboard.html:223
 msgid "No price data yet. Add fuel stations and log fuel to track prices."
 msgstr ""
 "Nog geen prijsgegevens. Voeg tankstations toe en registreer tankbeurten om "
 "prijzen bij te houden."
 
-#: app/templates/dashboard.html:213
+#: app/templates/dashboard.html:230
+msgid "Expenses by Category"
+msgstr "Uitgaven per categorie"
+
+#: app/templates/dashboard.html:241
 msgid "Your Vehicles"
 msgstr "Uw voertuigen"
 
-#: app/templates/dashboard.html:214
+#: app/templates/dashboard.html:242
 msgid "Add"
 msgstr "Toevoegen"
 
-#: app/templates/dashboard.html:249
+#: app/templates/dashboard.html:277
 msgid "No vehicles yet."
 msgstr "Nog geen voertuigen."
 
-#: app/templates/dashboard.html:249
+#: app/templates/dashboard.html:277
 msgid "Add your first vehicle"
 msgstr "Voeg uw eerste voertuig toe"
 
-#: app/templates/dashboard.html:257
+#: app/templates/dashboard.html:285
 msgid "Recent Fuel Logs"
 msgstr "Recente tanklogboeken"
 
-#: app/templates/dashboard.html:275 app/templates/vehicles/view.html:799
+#: app/templates/dashboard.html:303 app/templates/vehicles/view.html:835
 msgid "No fuel logs yet."
 msgstr "Nog geen tanklogboeken."
 
-#: app/templates/dashboard.html:281
+#: app/templates/dashboard.html:309
 msgid "Recent Expenses"
 msgstr "Recente uitgaven"
 
-#: app/templates/dashboard.html:299 app/templates/vehicles/view.html:843
+#: app/templates/dashboard.html:327 app/templates/vehicles/view.html:879
 msgid "No expenses yet."
 msgstr "Nog geen uitgaven."
 
@@ -1226,7 +1246,7 @@ msgstr "Terug naar kilometervergoeding"
 #: app/templates/charging/form.html:16 app/templates/charging/index.html:36
 #: app/templates/documents/form.html:21 app/templates/expenses/form.html:16
 #: app/templates/expenses/index.html:27 app/templates/fuel/form.html:16
-#: app/templates/fuel/index.html:26 app/templates/fuel/index.html:111
+#: app/templates/fuel/index.html:26 app/templates/fuel/index.html:113
 #: app/templates/fuel/quick.html:15 app/templates/maintenance/form.html:20
 #: app/templates/notes/form.html:16 app/templates/notes/index.html:27
 #: app/templates/recurring/form.html:21 app/templates/reminders/form.html:26
@@ -1238,7 +1258,7 @@ msgstr "Voertuig"
 #: app/templates/allowance/form.html:30 app/templates/allowance/index.html:25
 #: app/templates/charging/form.html:32 app/templates/expenses/form.html:30
 #: app/templates/expenses/index.html:26 app/templates/fuel/form.html:37
-#: app/templates/fuel/index.html:25 app/templates/fuel/index.html:110
+#: app/templates/fuel/index.html:25 app/templates/fuel/index.html:112
 #: app/templates/maintenance/form.html:100 app/templates/notes/form.html:30
 #: app/templates/notes/index.html:26 app/templates/trips/form.html:59
 #: app/templates/trips/report.html:98
@@ -1252,7 +1272,7 @@ msgstr "Bedrag"
 
 #: app/templates/allowance/form.html:44 app/templates/allowance/index.html:28
 #: app/templates/auth/settings.html:126 app/templates/trips/form.html:89
-#: app/templates/trips/report.html:102 app/templates/vehicles/view.html:448
+#: app/templates/trips/report.html:102 app/templates/vehicles/view.html:465
 msgid "Distance"
 msgstr "Afstand"
 
@@ -1280,7 +1300,7 @@ msgid "e.g., June client visits"
 msgstr "bijv. Klantbezoeken juni"
 
 #: app/templates/allowance/form.html:73 app/templates/charging/form.html:154
-#: app/templates/documents/form.html:122 app/templates/expenses/form.html:105
+#: app/templates/documents/form.html:122 app/templates/expenses/form.html:126
 #: app/templates/fuel/form.html:171 app/templates/maintenance/form.html:156
 #: app/templates/maintenance/index.html:157 app/templates/notes/form.html:63
 #: app/templates/recurring/form.html:128 app/templates/reminders/form.html:126
@@ -1292,8 +1312,8 @@ msgid "Cancel"
 msgstr "Annuleren"
 
 #: app/templates/allowance/form.html:77 app/templates/auth/edit_user.html:74
-#: app/templates/auth/settings.html:194 app/templates/charging/form.html:158
-#: app/templates/documents/form.html:126 app/templates/expenses/form.html:109
+#: app/templates/auth/settings.html:212 app/templates/charging/form.html:158
+#: app/templates/documents/form.html:126 app/templates/expenses/form.html:130
 #: app/templates/fuel/form.html:175 app/templates/maintenance/form.html:160
 #: app/templates/notes/form.html:67 app/templates/recurring/form.html:132
 #: app/templates/stations/form.html:105 app/templates/trips/form.html:131
@@ -1311,16 +1331,16 @@ msgstr ""
 "lopende kosten"
 
 #: app/templates/allowance/index.html:30 app/templates/expenses/index.html:32
-#: app/templates/fuel/index.html:31 app/templates/fuel/index.html:116
+#: app/templates/fuel/index.html:32 app/templates/fuel/index.html:118
 #: app/templates/notes/index.html:30
 msgid "Actions"
 msgstr "Acties"
 
 #: app/templates/allowance/index.html:48 app/templates/documents/view.html:30
-#: app/templates/expenses/index.html:60 app/templates/fuel/index.html:59
-#: app/templates/fuel/index.html:139 app/templates/maintenance/index.html:83
+#: app/templates/expenses/index.html:60 app/templates/fuel/index.html:61
+#: app/templates/fuel/index.html:141 app/templates/maintenance/index.html:83
 #: app/templates/notes/index.html:52 app/templates/stations/index.html:65
-#: app/templates/vehicles/view.html:40 app/templates/vehicles/view.html:440
+#: app/templates/vehicles/view.html:40 app/templates/vehicles/view.html:457
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -1329,8 +1349,8 @@ msgid "Delete this allowance entry?"
 msgstr "Deze vergoeding verwijderen?"
 
 #: app/templates/allowance/index.html:52 app/templates/documents/form.html:114
-#: app/templates/expenses/form.html:91 app/templates/expenses/index.html:64
-#: app/templates/fuel/form.html:157 app/templates/fuel/index.html:63
+#: app/templates/expenses/form.html:112 app/templates/expenses/index.html:64
+#: app/templates/fuel/form.html:157 app/templates/fuel/index.html:65
 #: app/templates/notes/index.html:56 app/templates/recurring/form.html:120
 #: app/templates/stations/form.html:93
 msgid "Delete"
@@ -1367,14 +1387,14 @@ msgstr "Accountgegevens"
 
 #: app/templates/auth/create_user.html:27 app/templates/auth/edit_user.html:28
 #: app/templates/auth/login.html:18 app/templates/auth/register.html:18
-#: app/templates/auth/settings.html:212
+#: app/templates/auth/settings.html:230
 msgid "Username"
 msgstr "Gebruikersnaam"
 
 #: app/templates/auth/create_user.html:33 app/templates/auth/edit_user.html:33
 #: app/templates/auth/forgot_password.html:20
-#: app/templates/auth/register.html:24 app/templates/auth/settings.html:216
-#: app/templates/auth/settings.html:1228
+#: app/templates/auth/register.html:24 app/templates/auth/settings.html:234
+#: app/templates/auth/settings.html:1246
 msgid "Email"
 msgstr "E-mail"
 
@@ -1412,11 +1432,11 @@ msgstr "Laat leeg om het huidige wachtwoord te behouden"
 
 #: app/templates/auth/edit_user.html:58
 #: app/templates/auth/reset_password.html:18
-#: app/templates/auth/settings.html:341
+#: app/templates/auth/settings.html:359
 msgid "New Password"
 msgstr "Nieuw wachtwoord"
 
-#: app/templates/auth/edit_user.html:63 app/templates/auth/settings.html:347
+#: app/templates/auth/edit_user.html:63 app/templates/auth/settings.html:365
 msgid "Confirm New Password"
 msgstr "Nieuw wachtwoord bevestigen"
 
@@ -1496,7 +1516,7 @@ msgstr "Eenheden en waarden"
 msgid "Account & Security"
 msgstr "Account en beveiliging"
 
-#: app/templates/auth/settings.html:34 app/templates/auth/settings.html:392
+#: app/templates/auth/settings.html:34 app/templates/auth/settings.html:410
 msgid "Menu & Navigation"
 msgstr "Menu en navigatie"
 
@@ -1508,8 +1528,8 @@ msgstr "Import / Export"
 msgid "API"
 msgstr "API"
 
-#: app/templates/auth/settings.html:58 app/templates/auth/settings.html:325
-#: app/templates/auth/settings.html:749
+#: app/templates/auth/settings.html:58 app/templates/auth/settings.html:343
+#: app/templates/auth/settings.html:767
 msgid "Integrations"
 msgstr "Integraties"
 
@@ -1521,7 +1541,7 @@ msgstr "Meldingen"
 msgid "Branding"
 msgstr "Huisstijl"
 
-#: app/templates/auth/settings.html:84 app/templates/auth/settings.html:1629
+#: app/templates/auth/settings.html:84 app/templates/auth/settings.html:1647
 msgid "About"
 msgstr "Over"
 
@@ -1546,149 +1566,173 @@ msgstr "Volume"
 msgid "Fuel Consumption"
 msgstr "Brandstofverbruik"
 
-#: app/templates/auth/settings.html:158
+#: app/templates/auth/settings.html:156
+msgid "Thousand Separator"
+msgstr "Duizendtalscheidingsteken"
+
+#: app/templates/auth/settings.html:159 app/templates/vehicles/form.html:72
+msgid "None"
+msgstr "Geen"
+
+#: app/templates/auth/settings.html:160
+msgid "Space"
+msgstr "Spatie"
+
+#: app/templates/auth/settings.html:161
+msgid "Comma"
+msgstr "Komma"
+
+#: app/templates/auth/settings.html:162
+msgid "Period"
+msgstr "Punt"
+
+#: app/templates/auth/settings.html:170
+msgid "Round costs to whole numbers"
+msgstr "Kosten afronden op hele getallen"
+
+#: app/templates/auth/settings.html:176
 msgid "Currency"
 msgstr "Valuta"
 
-#: app/templates/auth/settings.html:180
+#: app/templates/auth/settings.html:198
 msgid "Custom Currency"
 msgstr "Aangepaste valuta"
 
-#: app/templates/auth/settings.html:183
+#: app/templates/auth/settings.html:201
 msgid "e.g. ZAR, R, CHF"
 msgstr "bijv. ZAR, R, CHF"
 
-#: app/templates/auth/settings.html:185
+#: app/templates/auth/settings.html:203
 msgid "Enter a currency code or symbol to display"
 msgstr "Voer een valutacode of -symbool in om weer te geven"
 
-#: app/templates/auth/settings.html:206
+#: app/templates/auth/settings.html:224
 msgid "Account Information"
 msgstr "Accountinformatie"
 
-#: app/templates/auth/settings.html:207
+#: app/templates/auth/settings.html:225
 msgid "Your account details"
 msgstr "Uw accountgegevens"
 
-#: app/templates/auth/settings.html:221
+#: app/templates/auth/settings.html:239
 msgid "Member Since"
 msgstr "Lid sinds"
 
-#: app/templates/auth/settings.html:228
+#: app/templates/auth/settings.html:246
 msgid "Save Email"
 msgstr "E-mail opslaan"
 
-#: app/templates/auth/settings.html:236
+#: app/templates/auth/settings.html:254
 msgid "Appearance"
 msgstr "Uiterlijk"
 
-#: app/templates/auth/settings.html:237
+#: app/templates/auth/settings.html:255
 msgid "Customize how the app looks"
 msgstr "Pas het uiterlijk van de app aan"
 
-#: app/templates/auth/settings.html:243
+#: app/templates/auth/settings.html:261
 msgid "Dark Mode"
 msgstr "Donkere modus"
 
-#: app/templates/auth/settings.html:244
+#: app/templates/auth/settings.html:262
 msgid "Use dark theme for the interface"
 msgstr "Gebruik een donker thema voor de interface"
 
-#: app/templates/auth/settings.html:259
+#: app/templates/auth/settings.html:277
 msgid "User Management"
 msgstr "Gebruikersbeheer"
 
-#: app/templates/auth/settings.html:260
+#: app/templates/auth/settings.html:278
 msgid "Manage users and permissions"
 msgstr "Beheer gebruikers en rechten"
 
-#: app/templates/auth/settings.html:266 app/templates/auth/users.html:2
+#: app/templates/auth/settings.html:284 app/templates/auth/users.html:2
 msgid "Users"
 msgstr "Gebruikers"
 
-#: app/templates/auth/settings.html:267
+#: app/templates/auth/settings.html:285
 msgid "View and manage all users"
 msgstr "Bekijk en beheer alle gebruikers"
 
-#: app/templates/auth/settings.html:271
+#: app/templates/auth/settings.html:289
 msgid "Manage Users"
 msgstr "Gebruikers beheren"
 
-#: app/templates/auth/settings.html:277
+#: app/templates/auth/settings.html:295
 msgid "Allow Registration"
 msgstr "Registratie toestaan"
 
-#: app/templates/auth/settings.html:278
+#: app/templates/auth/settings.html:296
 msgid "Allow new users to create accounts"
 msgstr "Nieuwe gebruikers toestaan om accounts aan te maken"
 
-#: app/templates/auth/settings.html:312
+#: app/templates/auth/settings.html:330
 msgid "Admin Settings"
 msgstr "Beheerdersinstellingen"
 
-#: app/templates/auth/settings.html:313
+#: app/templates/auth/settings.html:331
 msgid "Configure system-wide settings for all users:"
 msgstr "Configureer systeembrede instellingen voor alle gebruikers:"
 
-#: app/templates/auth/settings.html:317
+#: app/templates/auth/settings.html:335
 msgid "SMTP / Notifications"
 msgstr "SMTP / Meldingen"
 
-#: app/templates/auth/settings.html:321
+#: app/templates/auth/settings.html:339
 msgid "Branding / Appearance"
 msgstr "Huisstijl / Uiterlijk"
 
-#: app/templates/auth/settings.html:334
+#: app/templates/auth/settings.html:352
 msgid "Change Password"
 msgstr "Wachtwoord wijzigen"
 
-#: app/templates/auth/settings.html:335
+#: app/templates/auth/settings.html:353
 msgid "Update your password to keep your account secure"
 msgstr "Werk uw wachtwoord bij om uw account veilig te houden"
 
-#: app/templates/auth/settings.html:357
+#: app/templates/auth/settings.html:375
 msgid "Update Password"
 msgstr "Wachtwoord bijwerken"
 
-#: app/templates/auth/settings.html:365 app/templates/vehicles/view.html:851
+#: app/templates/auth/settings.html:383 app/templates/vehicles/view.html:887
 msgid "Danger Zone"
 msgstr "Gevarenzone"
 
-#: app/templates/auth/settings.html:366
+#: app/templates/auth/settings.html:384
 msgid "Irreversible actions"
 msgstr "Onomkeerbare acties"
 
-#: app/templates/auth/settings.html:372 app/templates/auth/settings.html:377
+#: app/templates/auth/settings.html:390 app/templates/auth/settings.html:395
 msgid "Delete Account"
 msgstr "Account verwijderen"
 
-#: app/templates/auth/settings.html:373
+#: app/templates/auth/settings.html:391
 msgid "Permanently delete your account and all data"
 msgstr "Verwijder uw account en alle gegevens permanent"
 
-#: app/templates/auth/settings.html:393
+#: app/templates/auth/settings.html:411
 msgid "Customize which menu items to show and your start page"
 msgstr "Kies welke menu-items worden weergegeven en uw startpagina"
 
-#: app/templates/auth/settings.html:399
+#: app/templates/auth/settings.html:417
 msgid "Start Page"
 msgstr "Startpagina"
 
-#: app/templates/auth/settings.html:400
+#: app/templates/auth/settings.html:418
 msgid "Which page to show when you log in"
 msgstr "Welke pagina weergeven bij het inloggen"
 
-#: app/templates/auth/settings.html:410 app/templates/auth/settings.html:480
+#: app/templates/auth/settings.html:428 app/templates/auth/settings.html:498
 #: app/templates/recurring/index.html:2 app/templates/recurring/index.html:7
 msgid "Recurring Expenses"
 msgstr "Terugkerende uitgaven"
 
-#: app/templates/auth/settings.html:422
+#: app/templates/auth/settings.html:440
 #: app/templates/trips/template_form.html:27
 msgid "Default Vehicle"
 msgstr "Standaardvoertuig"
 
-#: app/templates/auth/settings.html:423
+#: app/templates/auth/settings.html:441
 msgid ""
 "Pre-selected vehicle when adding fuel logs, expenses, trips, and charging "
 "sessions"
@@ -1696,51 +1740,51 @@ msgstr ""
 "Vooraf geselecteerd voertuig bij het toevoegen van tanklogboeken, uitgaven, "
 "ritten en laadsessies"
 
-#: app/templates/auth/settings.html:426
+#: app/templates/auth/settings.html:444
 msgid "No default"
 msgstr "Geen standaard"
 
-#: app/templates/auth/settings.html:436
+#: app/templates/auth/settings.html:454
 msgid "Quick Entry Button"
 msgstr "Snelle invoerknop"
 
-#: app/templates/auth/settings.html:437
+#: app/templates/auth/settings.html:455
 msgid "Show a quick fuel entry button in the navigation bar for rapid logging"
 msgstr "Toon een snelle tankknop in de navigatiebalk voor snel registreren"
 
-#: app/templates/auth/settings.html:448
+#: app/templates/auth/settings.html:466
 msgid "Show Menu Items"
 msgstr "Menu-items weergeven"
 
-#: app/templates/auth/settings.html:449
+#: app/templates/auth/settings.html:467
 msgid "Choose which items appear in the navigation menu"
 msgstr "Kies welke items in het navigatiemenu worden weergegeven"
 
-#: app/templates/auth/settings.html:519 app/templates/auth/settings.html:1334
+#: app/templates/auth/settings.html:537 app/templates/auth/settings.html:1352
 msgid "Save Preferences"
 msgstr "Voorkeuren opslaan"
 
-#: app/templates/auth/settings.html:532
+#: app/templates/auth/settings.html:550
 msgid "Import Data"
 msgstr "Gegevens importeren"
 
-#: app/templates/auth/settings.html:533
+#: app/templates/auth/settings.html:551
 msgid "Import your data from other fuel tracking applications"
 msgstr "Importeer uw gegevens uit andere brandstofregistratie-applicaties"
 
-#: app/templates/auth/settings.html:612
+#: app/templates/auth/settings.html:630
 msgid "Export Data"
 msgstr "Gegevens exporteren"
 
-#: app/templates/auth/settings.html:613
+#: app/templates/auth/settings.html:631
 msgid "Download your data for backup or migration"
 msgstr "Download uw gegevens voor back-up of migratie"
 
-#: app/templates/auth/settings.html:619
+#: app/templates/auth/settings.html:637
 msgid "Export as CSV"
 msgstr "Exporteren als CSV"
 
-#: app/templates/auth/settings.html:620
+#: app/templates/auth/settings.html:638
 msgid ""
 "Download all your vehicles, fuel logs, and expenses as CSV files (ZIP "
 "archive)"
@@ -1748,27 +1792,27 @@ msgstr ""
 "Download al uw voertuigen, tanklogboeken en uitgaven als CSV-bestanden (ZIP-"
 "archief)"
 
-#: app/templates/auth/settings.html:624
+#: app/templates/auth/settings.html:642
 msgid "Download CSV"
 msgstr "CSV downloaden"
 
-#: app/templates/auth/settings.html:630
+#: app/templates/auth/settings.html:648
 msgid "Export as JSON"
 msgstr "Exporteren als JSON"
 
-#: app/templates/auth/settings.html:631
+#: app/templates/auth/settings.html:649
 msgid "Download a complete backup of your data in JSON format"
 msgstr "Download een volledige back-up van uw gegevens in JSON-formaat"
 
-#: app/templates/auth/settings.html:635
+#: app/templates/auth/settings.html:653
 msgid "Download JSON"
 msgstr "JSON downloaden"
 
-#: app/templates/auth/settings.html:641
+#: app/templates/auth/settings.html:659
 msgid "Full Backup"
 msgstr "Volledige back-up"
 
-#: app/templates/auth/settings.html:642
+#: app/templates/auth/settings.html:660
 msgid ""
 "Download all data and files (images, documents, attachments) as a ZIP "
 "archive"
@@ -1776,48 +1820,48 @@ msgstr ""
 "Download alle gegevens en bestanden (afbeeldingen, documenten, bijlagen) als"
 " een ZIP-archief"
 
-#: app/templates/auth/settings.html:646
+#: app/templates/auth/settings.html:664
 msgid "Download ZIP"
 msgstr "ZIP downloaden"
 
-#: app/templates/auth/settings.html:662
+#: app/templates/auth/settings.html:680
 msgid "API Access"
 msgstr "API-toegang"
 
-#: app/templates/auth/settings.html:663
+#: app/templates/auth/settings.html:681
 msgid "Generate API keys to connect external applications"
 msgstr "Genereer API-sleutels om externe applicaties te verbinden"
 
-#: app/templates/auth/settings.html:665
+#: app/templates/auth/settings.html:683
 msgid "View API Docs"
 msgstr "API-documentatie bekijken"
 
-#: app/templates/auth/settings.html:674
+#: app/templates/auth/settings.html:692
 msgid "Your API Key"
 msgstr "Uw API-sleutel"
 
-#: app/templates/auth/settings.html:693 app/templates/auth/settings.html:730
-#: app/templates/auth/settings.html:884 app/templates/auth/settings.html:898
+#: app/templates/auth/settings.html:711 app/templates/auth/settings.html:748
+#: app/templates/auth/settings.html:902 app/templates/auth/settings.html:916
 msgid "Copy"
 msgstr "Kopiëren"
 
-#: app/templates/auth/settings.html:696
+#: app/templates/auth/settings.html:714
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: app/templates/auth/settings.html:700
+#: app/templates/auth/settings.html:718
 msgid "Regenerate Key"
 msgstr "Sleutel opnieuw genereren"
 
-#: app/templates/auth/settings.html:704
+#: app/templates/auth/settings.html:722
 msgid "Revoke Key"
 msgstr "Sleutel intrekken"
 
-#: app/templates/auth/settings.html:711
+#: app/templates/auth/settings.html:729
 msgid "API Key"
 msgstr "API-sleutel"
 
-#: app/templates/auth/settings.html:712
+#: app/templates/auth/settings.html:730
 msgid ""
 "Generate an API key to access May programmatically. You can use it to "
 "integrate with other applications or build your own tools."
@@ -1826,95 +1870,95 @@ msgstr ""
 "gebruiken om te integreren met andere applicaties of uw eigen tools te "
 "bouwen."
 
-#: app/templates/auth/settings.html:715
+#: app/templates/auth/settings.html:733
 msgid "Generate API Key"
 msgstr "API-sleutel genereren"
 
-#: app/templates/auth/settings.html:724
+#: app/templates/auth/settings.html:742
 msgid "API Key Generated"
 msgstr "API-sleutel gegenereerd"
 
-#: app/templates/auth/settings.html:725
+#: app/templates/auth/settings.html:743
 msgid "Copy your API key now. For security, it won't be shown in full again."
 msgstr ""
 "Kopieer uw API-sleutel nu. Om veiligheidsredenen wordt deze niet opnieuw "
 "volledig weergegeven."
 
-#: app/templates/auth/settings.html:736
+#: app/templates/auth/settings.html:754
 msgid "Done"
 msgstr "Gereed"
 
-#: app/templates/auth/settings.html:750
+#: app/templates/auth/settings.html:768
 msgid "Connect May with external services and applications"
 msgstr "Verbind May met externe diensten en applicaties"
 
-#: app/templates/auth/settings.html:764
+#: app/templates/auth/settings.html:782
 msgid "Calendar"
 msgstr "Kalender"
 
-#: app/templates/auth/settings.html:767
+#: app/templates/auth/settings.html:785
 msgid "Subscribe to reminders in your calendar app"
 msgstr "Abonneer u op herinneringen in uw kalender-app"
 
-#: app/templates/auth/settings.html:769 app/templates/auth/settings.html:790
+#: app/templates/auth/settings.html:787 app/templates/auth/settings.html:808
 msgid "Ready"
 msgstr "Gereed"
 
-#: app/templates/auth/settings.html:771 app/templates/auth/settings.html:792
+#: app/templates/auth/settings.html:789 app/templates/auth/settings.html:810
 msgid "Requires API key"
 msgstr "Vereist API-sleutel"
 
-#: app/templates/auth/settings.html:785 app/templates/auth/settings.html:950
+#: app/templates/auth/settings.html:803 app/templates/auth/settings.html:968
 msgid "Home Assistant"
 msgstr "Home Assistant"
 
-#: app/templates/auth/settings.html:788 app/templates/auth/settings.html:951
+#: app/templates/auth/settings.html:806 app/templates/auth/settings.html:969
 msgid "Create sensors and automations for your vehicles"
 msgstr "Maak sensoren en automatiseringen voor uw voertuigen"
 
-#: app/templates/auth/settings.html:807
+#: app/templates/auth/settings.html:825
 msgid "DVLA"
 msgstr "DVLA"
 
-#: app/templates/auth/settings.html:808 app/templates/auth/settings.html:830
-#: app/templates/auth/settings.html:1350
+#: app/templates/auth/settings.html:826 app/templates/auth/settings.html:848
+#: app/templates/auth/settings.html:1368
 msgid "Admin"
 msgstr "Beheerder"
 
-#: app/templates/auth/settings.html:811 app/templates/auth/settings.html:1046
+#: app/templates/auth/settings.html:829 app/templates/auth/settings.html:1064
 msgid "Look up UK vehicle MOT and tax status"
 msgstr "Zoek de MOT- en belastingstatus van een Brits voertuig op"
 
-#: app/templates/auth/settings.html:813 app/templates/auth/settings.html:835
+#: app/templates/auth/settings.html:831 app/templates/auth/settings.html:853
 msgid "Configured"
 msgstr "Geconfigureerd"
 
-#: app/templates/auth/settings.html:815 app/templates/auth/settings.html:837
+#: app/templates/auth/settings.html:833 app/templates/auth/settings.html:855
 msgid "Not configured"
 msgstr "Niet geconfigureerd"
 
-#: app/templates/auth/settings.html:829
+#: app/templates/auth/settings.html:847
 msgid "Tessie"
 msgstr "Tessie"
 
-#: app/templates/auth/settings.html:833
+#: app/templates/auth/settings.html:851
 msgid "Sync Tesla vehicle odometer and battery"
 msgstr "Synchroniseer Tesla-kilometerstand en batterij"
 
-#: app/templates/auth/settings.html:851 app/templates/auth/settings.html:937
-#: app/templates/auth/settings.html:1032 app/templates/auth/settings.html:1103
+#: app/templates/auth/settings.html:869 app/templates/auth/settings.html:955
+#: app/templates/auth/settings.html:1050 app/templates/auth/settings.html:1121
 msgid "Back to Integrations"
 msgstr "Terug naar integraties"
 
-#: app/templates/auth/settings.html:864
+#: app/templates/auth/settings.html:882
 msgid "Calendar Subscription"
 msgstr "Kalenderabonnement"
 
-#: app/templates/auth/settings.html:865
+#: app/templates/auth/settings.html:883
 msgid "Subscribe to your reminders in any calendar app"
 msgstr "Abonneer u op uw herinneringen in elke kalender-app"
 
-#: app/templates/auth/settings.html:873
+#: app/templates/auth/settings.html:891
 msgid ""
 "Add this calendar to Apple Calendar, Google Calendar, Outlook, or any other "
 "calendar app that supports iCal subscriptions."
@@ -1922,59 +1966,59 @@ msgstr ""
 "Voeg deze kalender toe aan Apple Calendar, Google Calendar, Outlook of een "
 "andere kalender-app die iCal-abonnementen ondersteunt."
 
-#: app/templates/auth/settings.html:876
+#: app/templates/auth/settings.html:894
 msgid "Webcal URL"
 msgstr "Webcal-URL"
 
-#: app/templates/auth/settings.html:877
+#: app/templates/auth/settings.html:895
 msgid "Use this URL for most calendar apps (Apple Calendar, Outlook, etc.)"
 msgstr ""
 "Gebruik deze URL voor de meeste kalender-apps (Apple Calendar, Outlook, "
 "enz.)"
 
-#: app/templates/auth/settings.html:890
+#: app/templates/auth/settings.html:908
 msgid "HTTPS URL"
 msgstr "HTTPS-URL"
 
-#: app/templates/auth/settings.html:891
+#: app/templates/auth/settings.html:909
 msgid "Use this URL for Google Calendar"
 msgstr "Gebruik deze URL voor Google Calendar"
 
-#: app/templates/auth/settings.html:904
+#: app/templates/auth/settings.html:922
 msgid "What's included in the calendar?"
 msgstr "Wat is er opgenomen in de kalender?"
 
-#: app/templates/auth/settings.html:906
+#: app/templates/auth/settings.html:924
 msgid "Maintenance schedules"
 msgstr "Onderhoudsschema's"
 
-#: app/templates/auth/settings.html:907
+#: app/templates/auth/settings.html:925
 msgid "Recurring expense due dates"
 msgstr "Vervaldatums van terugkerende uitgaven"
 
-#: app/templates/auth/settings.html:908
+#: app/templates/auth/settings.html:926
 msgid "Document expiry dates"
 msgstr "Vervaldatums van documenten"
 
-#: app/templates/auth/settings.html:909
+#: app/templates/auth/settings.html:927
 msgid "Custom reminders"
 msgstr "Aangepaste herinneringen"
 
-#: app/templates/auth/settings.html:918 app/templates/auth/settings.html:1012
+#: app/templates/auth/settings.html:936 app/templates/auth/settings.html:1030
 msgid "API Key Required"
 msgstr "API-sleutel vereist"
 
-#: app/templates/auth/settings.html:919
+#: app/templates/auth/settings.html:937
 msgid "Generate an API key in the API section to enable calendar integration."
 msgstr ""
 "Genereer een API-sleutel in het API-gedeelte om kalenderintegratie in te "
 "schakelen."
 
-#: app/templates/auth/settings.html:922 app/templates/auth/settings.html:1016
+#: app/templates/auth/settings.html:940 app/templates/auth/settings.html:1034
 msgid "Go to API Settings"
 msgstr "Ga naar API-instellingen"
 
-#: app/templates/auth/settings.html:959
+#: app/templates/auth/settings.html:977
 msgid ""
 "Add the following configuration to your Home Assistant configuration.yaml to"
 " create vehicle sensors."
@@ -1982,50 +2026,50 @@ msgstr ""
 "Voeg de volgende configuratie toe aan uw Home Assistant configuration.yaml "
 "om voertuigsensoren aan te maken."
 
-#: app/templates/auth/settings.html:962
+#: app/templates/auth/settings.html:980
 msgid "REST Sensor Configuration"
 msgstr "REST-sensorconfiguratie"
 
-#: app/templates/auth/settings.html:978
+#: app/templates/auth/settings.html:996
 msgid "Copy configuration"
 msgstr "Configuratie kopiëren"
 
-#: app/templates/auth/settings.html:982
+#: app/templates/auth/settings.html:1000
 msgid "Available API Endpoints"
 msgstr "Beschikbare API-eindpunten"
 
-#: app/templates/auth/settings.html:986
+#: app/templates/auth/settings.html:1004
 msgid "API health check"
 msgstr "API-statuscontrole"
 
-#: app/templates/auth/settings.html:990
+#: app/templates/auth/settings.html:1008
 msgid "List all vehicles"
 msgstr "Alle voertuigen weergeven"
 
-#: app/templates/auth/settings.html:994
+#: app/templates/auth/settings.html:1012
 msgid "Vehicle statistics"
 msgstr "Voertuigstatistieken"
 
-#: app/templates/auth/settings.html:998
+#: app/templates/auth/settings.html:1016
 msgid "Upcoming reminders"
 msgstr "Komende herinneringen"
 
-#: app/templates/auth/settings.html:1002
+#: app/templates/auth/settings.html:1020
 msgid "Combined summary"
 msgstr "Gecombineerd overzicht"
 
-#: app/templates/auth/settings.html:1013
+#: app/templates/auth/settings.html:1031
 msgid ""
 "Generate an API key in the API section to enable Home Assistant integration."
 msgstr ""
 "Genereer een API-sleutel in het API-gedeelte om Home Assistant-integratie in"
 " te schakelen."
 
-#: app/templates/auth/settings.html:1045
+#: app/templates/auth/settings.html:1063
 msgid "DVLA Vehicle Lookup"
 msgstr "DVLA-voertuigopzoeking"
 
-#: app/templates/auth/settings.html:1054
+#: app/templates/auth/settings.html:1072
 msgid ""
 "The DVLA Vehicle Enquiry Service allows you to look up MOT status, tax "
 "status, and vehicle details for UK registered vehicles. This enables "
@@ -2036,52 +2080,52 @@ msgstr ""
 "Koninkrijk geregistreerde voertuigen. Dit maakt automatische invulling van "
 "voertuiginformatie mogelijk bij het toevoegen van nieuwe voertuigen."
 
-#: app/templates/auth/settings.html:1058
+#: app/templates/auth/settings.html:1076
 msgid "How to get an API key"
 msgstr "Hoe u een API-sleutel verkrijgt"
 
-#: app/templates/auth/settings.html:1060
+#: app/templates/auth/settings.html:1078
 msgid "Visit the"
 msgstr "Bezoek het"
 
-#: app/templates/auth/settings.html:1060
+#: app/templates/auth/settings.html:1078
 msgid "DVLA Developer Portal"
 msgstr "DVLA Developer Portal"
 
-#: app/templates/auth/settings.html:1061
+#: app/templates/auth/settings.html:1079
 msgid "Register for a free account"
 msgstr "Registreer voor een gratis account"
 
-#: app/templates/auth/settings.html:1062
+#: app/templates/auth/settings.html:1080
 msgid "Subscribe to the Vehicle Enquiry Service API"
 msgstr "Abonneer u op de Vehicle Enquiry Service API"
 
-#: app/templates/auth/settings.html:1063
+#: app/templates/auth/settings.html:1081
 msgid "Copy your API key and paste it below"
 msgstr "Kopieer uw API-sleutel en plak deze hieronder"
 
-#: app/templates/auth/settings.html:1070
+#: app/templates/auth/settings.html:1088
 msgid "DVLA API Key"
 msgstr "DVLA API-sleutel"
 
-#: app/templates/auth/settings.html:1078 app/templates/auth/settings.html:1158
-#: app/templates/auth/settings.html:1435
+#: app/templates/auth/settings.html:1096 app/templates/auth/settings.html:1176
+#: app/templates/auth/settings.html:1453
 msgid "Test"
 msgstr "Testen"
 
-#: app/templates/auth/settings.html:1087
+#: app/templates/auth/settings.html:1105
 msgid "Save DVLA Settings"
 msgstr "DVLA-instellingen opslaan"
 
-#: app/templates/auth/settings.html:1116 app/templates/vehicles/form.html:268
+#: app/templates/auth/settings.html:1134 app/templates/vehicles/form.html:268
 msgid "Tessie Integration"
 msgstr "Tessie-integratie"
 
-#: app/templates/auth/settings.html:1117
+#: app/templates/auth/settings.html:1135
 msgid "Sync Tesla vehicle data via Tessie"
 msgstr "Synchroniseer Tesla-voertuiggegevens via Tessie"
 
-#: app/templates/auth/settings.html:1125
+#: app/templates/auth/settings.html:1143
 msgid ""
 "Tessie allows you to automatically sync odometer readings, battery level, "
 "and range from your Tesla vehicles. When enabled for a vehicle, odometer "
@@ -2092,144 +2136,144 @@ msgstr ""
 "ingeschakeld voor een voertuig, wordt het bijhouden van de kilometerstand "
 "automatisch."
 
-#: app/templates/auth/settings.html:1129
+#: app/templates/auth/settings.html:1147
 msgid "Important"
 msgstr "Belangrijk"
 
-#: app/templates/auth/settings.html:1131
+#: app/templates/auth/settings.html:1149
 msgid "Tessie subscription required ($6.99/month per vehicle)"
 msgstr "Tessie-abonnement vereist ($6,99/maand per voertuig)"
 
-#: app/templates/auth/settings.html:1132
+#: app/templates/auth/settings.html:1150
 msgid "Your Tesla must be connected to Tessie"
 msgstr "Uw Tesla moet verbonden zijn met Tessie"
 
-#: app/templates/auth/settings.html:1133
+#: app/templates/auth/settings.html:1151
 msgid "When enabled, manual odometer entry is disabled"
 msgstr ""
 "Wanneer ingeschakeld, is handmatige invoer van de kilometerstand "
 "uitgeschakeld"
 
-#: app/templates/auth/settings.html:1138
+#: app/templates/auth/settings.html:1156
 msgid "How to get an API token"
 msgstr "Hoe u een API-token verkrijgt"
 
-#: app/templates/auth/settings.html:1140
+#: app/templates/auth/settings.html:1158
 msgid "Sign up at"
 msgstr "Registreer op"
 
-#: app/templates/auth/settings.html:1141
+#: app/templates/auth/settings.html:1159
 msgid "Connect your Tesla account"
 msgstr "Verbind uw Tesla-account"
 
-#: app/templates/auth/settings.html:1142
+#: app/templates/auth/settings.html:1160
 msgid "Go to Settings and create an API token"
 msgstr "Ga naar Instellingen en maak een API-token aan"
 
-#: app/templates/auth/settings.html:1143
+#: app/templates/auth/settings.html:1161
 msgid "Paste the token below"
 msgstr "Plak het token hieronder"
 
-#: app/templates/auth/settings.html:1150
+#: app/templates/auth/settings.html:1168
 msgid "Tessie API Token"
 msgstr "Tessie API-token"
 
-#: app/templates/auth/settings.html:1167
+#: app/templates/auth/settings.html:1185
 msgid "Save Tessie Settings"
 msgstr "Tessie-instellingen opslaan"
 
-#: app/templates/auth/settings.html:1186
+#: app/templates/auth/settings.html:1204
 msgid "Notification Preferences"
 msgstr "Meldingsvoorkeuren"
 
-#: app/templates/auth/settings.html:1187
+#: app/templates/auth/settings.html:1205
 msgid "Configure how you receive reminders about your vehicles"
 msgstr "Configureer hoe u herinneringen over uw voertuigen ontvangt"
 
-#: app/templates/auth/settings.html:1194
+#: app/templates/auth/settings.html:1212
 msgid "Enable Reminders"
 msgstr "Herinneringen inschakelen"
 
-#: app/templates/auth/settings.html:1195
+#: app/templates/auth/settings.html:1213
 msgid "Receive notifications for upcoming reminders"
 msgstr "Ontvang meldingen voor komende herinneringen"
 
-#: app/templates/auth/settings.html:1207
+#: app/templates/auth/settings.html:1225
 msgid "Default Reminder Lead Time"
 msgstr "Standaard herinneringstermijn"
 
-#: app/templates/auth/settings.html:1208
+#: app/templates/auth/settings.html:1226
 msgid "How many days before the due date should you be notified?"
 msgstr "Hoeveel dagen voor de vervaldatum wilt u een melding ontvangen?"
 
-#: app/templates/auth/settings.html:1211 app/templates/reminders/form.html:108
+#: app/templates/auth/settings.html:1229 app/templates/reminders/form.html:108
 msgid "On the due date"
 msgstr "Op de vervaldatum"
 
-#: app/templates/auth/settings.html:1212 app/templates/reminders/form.html:109
+#: app/templates/auth/settings.html:1230 app/templates/reminders/form.html:109
 msgid "1 day before"
 msgstr "1 dag van tevoren"
 
-#: app/templates/auth/settings.html:1213 app/templates/reminders/form.html:110
+#: app/templates/auth/settings.html:1231 app/templates/reminders/form.html:110
 msgid "3 days before"
 msgstr "3 dagen van tevoren"
 
-#: app/templates/auth/settings.html:1214 app/templates/reminders/form.html:111
+#: app/templates/auth/settings.html:1232 app/templates/reminders/form.html:111
 msgid "1 week before"
 msgstr "1 week van tevoren"
 
-#: app/templates/auth/settings.html:1215 app/templates/reminders/form.html:112
+#: app/templates/auth/settings.html:1233 app/templates/reminders/form.html:112
 msgid "2 weeks before"
 msgstr "2 weken van tevoren"
 
-#: app/templates/auth/settings.html:1216 app/templates/reminders/form.html:113
+#: app/templates/auth/settings.html:1234 app/templates/reminders/form.html:113
 msgid "1 month before"
 msgstr "1 maand van tevoren"
 
-#: app/templates/auth/settings.html:1222
+#: app/templates/auth/settings.html:1240
 msgid "Notification Method"
 msgstr "Meldingsmethode"
 
-#: app/templates/auth/settings.html:1223
+#: app/templates/auth/settings.html:1241
 msgid "Choose how you want to receive notifications"
 msgstr "Kies hoe u meldingen wilt ontvangen"
 
-#: app/templates/auth/settings.html:1228 app/templates/auth/settings.html:1232
+#: app/templates/auth/settings.html:1246 app/templates/auth/settings.html:1250
 msgid "not configured"
 msgstr "niet geconfigureerd"
 
-#: app/templates/auth/settings.html:1230
+#: app/templates/auth/settings.html:1248
 msgid "ntfy (Push Notifications)"
 msgstr "ntfy (pushmeldingen)"
 
-#: app/templates/auth/settings.html:1232 app/templates/auth/settings.html:1448
+#: app/templates/auth/settings.html:1250 app/templates/auth/settings.html:1466
 msgid "Pushover"
 msgstr "Pushover"
 
-#: app/templates/auth/settings.html:1234
+#: app/templates/auth/settings.html:1252
 msgid "Webhook (HTTP POST)"
 msgstr "Webhook (HTTP POST)"
 
-#: app/templates/auth/settings.html:1244
+#: app/templates/auth/settings.html:1262
 msgid "Notifications will be sent to"
 msgstr "Meldingen worden verzonden naar"
 
-#: app/templates/auth/settings.html:1251
+#: app/templates/auth/settings.html:1269
 msgid "Email not configured. Ask an administrator to configure SMTP settings."
 msgstr ""
 "E-mail niet geconfigureerd. Vraag een beheerder om de SMTP-instellingen te "
 "configureren."
 
-#: app/templates/auth/settings.html:1260
+#: app/templates/auth/settings.html:1278
 msgid "is a simple pub-sub notification service. Enter your topic below."
 msgstr ""
 "is een eenvoudige pub-sub-meldingsdienst. Voer hieronder uw onderwerp in."
 
-#: app/templates/auth/settings.html:1263
+#: app/templates/auth/settings.html:1281
 msgid "ntfy Topic or Server URL"
 msgstr "ntfy-onderwerp of server-URL"
 
-#: app/templates/auth/settings.html:1268
+#: app/templates/auth/settings.html:1286
 msgid ""
 "For ntfy.sh, just enter your topic name. For self-hosted, enter the full "
 "URL."
@@ -2237,15 +2281,15 @@ msgstr ""
 "Voer voor ntfy.sh alleen uw onderwerpnaam in. Voer voor een eigen server de "
 "volledige URL in."
 
-#: app/templates/auth/settings.html:1271
+#: app/templates/auth/settings.html:1289
 msgid "ntfy Access Token"
 msgstr "ntfy-toegangstoken"
 
-#: app/templates/auth/settings.html:1273
+#: app/templates/auth/settings.html:1291
 msgid "Token saved — enter a new one to replace it"
 msgstr "Token opgeslagen — voer een nieuwe in om deze te vervangen"
 
-#: app/templates/auth/settings.html:1276
+#: app/templates/auth/settings.html:1294
 msgid ""
 "Optional — only needed for self-hosted ntfy servers with authentication "
 "enabled. Leave blank to keep the saved token."
@@ -2253,106 +2297,106 @@ msgstr ""
 "Optioneel — alleen nodig voor eigen ntfy-servers met authenticatie "
 "ingeschakeld. Laat leeg om het opgeslagen token te behouden."
 
-#: app/templates/auth/settings.html:1281
+#: app/templates/auth/settings.html:1299
 msgid "Remove the saved token"
 msgstr "Verwijder het opgeslagen token"
 
-#: app/templates/auth/settings.html:1291
+#: app/templates/auth/settings.html:1309
 msgid "sends notifications to your devices. Enter your User Key below."
 msgstr "stuurt meldingen naar uw apparaten. Voer hieronder uw User Key in."
 
-#: app/templates/auth/settings.html:1294
+#: app/templates/auth/settings.html:1312
 msgid "Pushover User Key"
 msgstr "Pushover User Key"
 
-#: app/templates/auth/settings.html:1299
+#: app/templates/auth/settings.html:1317
 msgid "Find your User Key on your Pushover dashboard."
 msgstr "Vind uw User Key op uw Pushover-dashboard."
 
-#: app/templates/auth/settings.html:1306
+#: app/templates/auth/settings.html:1324
 msgid "Notifications will be sent as JSON POST requests to your webhook URL."
 msgstr ""
 "Meldingen worden als JSON POST-verzoeken naar uw webhook-URL verzonden."
 
-#: app/templates/auth/settings.html:1309
+#: app/templates/auth/settings.html:1327
 msgid "Webhook URL"
 msgstr "Webhook-URL"
 
-#: app/templates/auth/settings.html:1314
+#: app/templates/auth/settings.html:1332
 #, python-brace-format
 msgid "JSON payload: {title, message, reminder_id, vehicle_name, due_date}"
 msgstr "JSON-payload: {title, message, reminder_id, vehicle_name, due_date}"
 
-#: app/templates/auth/settings.html:1325
+#: app/templates/auth/settings.html:1343
 msgid "Send Test Notification"
 msgstr "Testmelding verzenden"
 
-#: app/templates/auth/settings.html:1349
+#: app/templates/auth/settings.html:1367
 msgid "Notification Services"
 msgstr "Meldingsdiensten"
 
-#: app/templates/auth/settings.html:1352
+#: app/templates/auth/settings.html:1370
 msgid "Configure notification services available to all users"
 msgstr ""
 "Configureer meldingsdiensten die beschikbaar zijn voor alle gebruikers"
 
-#: app/templates/auth/settings.html:1365
+#: app/templates/auth/settings.html:1383
 msgid "Email (SMTP)"
 msgstr "E-mail (SMTP)"
 
-#: app/templates/auth/settings.html:1377
+#: app/templates/auth/settings.html:1395
 msgid "SMTP Host"
 msgstr "SMTP-host"
 
-#: app/templates/auth/settings.html:1384
+#: app/templates/auth/settings.html:1402
 msgid "SMTP Port"
 msgstr "SMTP-poort"
 
-#: app/templates/auth/settings.html:1391
+#: app/templates/auth/settings.html:1409
 msgid "SMTP Username"
 msgstr "SMTP-gebruikersnaam"
 
-#: app/templates/auth/settings.html:1398
+#: app/templates/auth/settings.html:1416
 msgid "SMTP Password"
 msgstr "SMTP-wachtwoord"
 
-#: app/templates/auth/settings.html:1405
+#: app/templates/auth/settings.html:1423
 msgid "Sender Email"
 msgstr "Afzender-e-mail"
 
-#: app/templates/auth/settings.html:1412
+#: app/templates/auth/settings.html:1430
 msgid "Sender Name"
 msgstr "Afzendernaam"
 
-#: app/templates/auth/settings.html:1425
+#: app/templates/auth/settings.html:1443
 msgid "Use TLS"
 msgstr "TLS gebruiken"
 
-#: app/templates/auth/settings.html:1431
+#: app/templates/auth/settings.html:1449
 msgid "Use SSL"
 msgstr "SSL gebruiken"
 
-#: app/templates/auth/settings.html:1459
+#: app/templates/auth/settings.html:1477
 msgid "sends push notifications to iOS and Android devices."
 msgstr "stuurt pushmeldingen naar iOS- en Android-apparaten."
 
-#: app/templates/auth/settings.html:1462
+#: app/templates/auth/settings.html:1480
 msgid "Application Token"
 msgstr "Applicatietoken"
 
-#: app/templates/auth/settings.html:1467
+#: app/templates/auth/settings.html:1485
 msgid "Create an application at pushover.net to get your token"
 msgstr "Maak een applicatie aan op pushover.net om uw token te verkrijgen"
 
-#: app/templates/auth/settings.html:1477
+#: app/templates/auth/settings.html:1495
 msgid "ntfy"
 msgstr "ntfy"
 
-#: app/templates/auth/settings.html:1478 app/templates/auth/settings.html:1493
+#: app/templates/auth/settings.html:1496 app/templates/auth/settings.html:1511
 msgid "Always available"
 msgstr "Altijd beschikbaar"
 
-#: app/templates/auth/settings.html:1482
+#: app/templates/auth/settings.html:1500
 msgid ""
 "is a free, open-source notification service that requires no admin "
 "configuration. Users can set their own topic."
@@ -2360,11 +2404,11 @@ msgstr ""
 "is een gratis, open-source meldingsdienst die geen beheerderconfiguratie "
 "vereist. Gebruikers kunnen hun eigen onderwerp instellen."
 
-#: app/templates/auth/settings.html:1492
+#: app/templates/auth/settings.html:1510
 msgid "Webhook"
 msgstr "Webhook"
 
-#: app/templates/auth/settings.html:1496
+#: app/templates/auth/settings.html:1514
 msgid ""
 "Webhooks allow users to integrate with any service that accepts HTTP POST "
 "requests (Home Assistant, Discord, Slack, etc.)"
@@ -2372,147 +2416,147 @@ msgstr ""
 "Webhooks stellen gebruikers in staat om te integreren met elke dienst die "
 "HTTP POST-verzoeken accepteert (Home Assistant, Discord, Slack, enz.)"
 
-#: app/templates/auth/settings.html:1503
+#: app/templates/auth/settings.html:1521
 msgid "Save Notification Settings"
 msgstr "Meldingsinstellingen opslaan"
 
-#: app/templates/auth/settings.html:1514
+#: app/templates/auth/settings.html:1532
 msgid "Manage Reminders"
 msgstr "Herinneringen beheren"
 
-#: app/templates/auth/settings.html:1515
+#: app/templates/auth/settings.html:1533
 msgid "View and manage your upcoming reminders"
 msgstr "Bekijk en beheer uw komende herinneringen"
 
-#: app/templates/auth/settings.html:1520
+#: app/templates/auth/settings.html:1538
 msgid "View all reminders"
 msgstr "Alle herinneringen bekijken"
 
-#: app/templates/auth/settings.html:1537
+#: app/templates/auth/settings.html:1555
 msgid "Application Branding"
 msgstr "Applicatiehuisstijl"
 
-#: app/templates/auth/settings.html:1538
+#: app/templates/auth/settings.html:1556
 msgid "Customize how May appears to all users"
 msgstr "Pas aan hoe May eruitziet voor alle gebruikers"
 
-#: app/templates/auth/settings.html:1544
+#: app/templates/auth/settings.html:1562
 msgid "Application Name"
 msgstr "Applicatienaam"
 
-#: app/templates/auth/settings.html:1552
+#: app/templates/auth/settings.html:1570
 msgid "Tagline"
 msgstr "Slogan"
 
-#: app/templates/auth/settings.html:1560
+#: app/templates/auth/settings.html:1578
 msgid "Primary Color"
 msgstr "Primaire kleur"
 
-#: app/templates/auth/settings.html:1572
+#: app/templates/auth/settings.html:1590
 msgid "Logo"
 msgstr "Logo"
 
-#: app/templates/auth/settings.html:1576 app/templates/auth/settings.html:1577
+#: app/templates/auth/settings.html:1594 app/templates/auth/settings.html:1595
 msgid "Current logo"
 msgstr "Huidig logo"
 
-#: app/templates/auth/settings.html:1589
+#: app/templates/auth/settings.html:1607
 msgid "Remove Logo"
 msgstr "Logo verwijderen"
 
-#: app/templates/auth/settings.html:1594
+#: app/templates/auth/settings.html:1612
 msgid "Are you sure you want to remove the logo?"
 msgstr "Weet u zeker dat u het logo wilt verwijderen?"
 
-#: app/templates/auth/settings.html:1617
+#: app/templates/auth/settings.html:1635
 msgid "Save Branding"
 msgstr "Huisstijl opslaan"
 
-#: app/templates/auth/settings.html:1630
+#: app/templates/auth/settings.html:1648
 msgid "Version information and updates"
 msgstr "Versie-informatie en updates"
 
-#: app/templates/auth/settings.html:1637
+#: app/templates/auth/settings.html:1655
 msgid "Current Version"
 msgstr "Huidige versie"
 
-#: app/templates/auth/settings.html:1660
+#: app/templates/auth/settings.html:1678
 msgid "Check for Updates"
 msgstr "Controleren op updates"
 
-#: app/templates/auth/settings.html:1661
+#: app/templates/auth/settings.html:1679
 msgid "Click to check for newer versions"
 msgstr "Klik om te controleren op nieuwere versies"
 
-#: app/templates/auth/settings.html:1668
+#: app/templates/auth/settings.html:1686
 msgid "Check Now"
 msgstr "Nu controleren"
 
-#: app/templates/auth/settings.html:1679
+#: app/templates/auth/settings.html:1697
 msgid "Update Available"
 msgstr "Update beschikbaar"
 
-#: app/templates/auth/settings.html:1681
+#: app/templates/auth/settings.html:1699
 msgid "Version"
 msgstr "Versie"
 
-#: app/templates/auth/settings.html:1681
+#: app/templates/auth/settings.html:1699
 msgid "is available"
 msgstr "is beschikbaar"
 
-#: app/templates/auth/settings.html:1685
+#: app/templates/auth/settings.html:1703
 msgid "View Release Notes"
 msgstr "Release-opmerkingen bekijken"
 
-#: app/templates/auth/settings.html:1692
+#: app/templates/auth/settings.html:1710
 msgid "To update (Docker):"
 msgstr "Om bij te werken (Docker):"
 
-#: app/templates/auth/settings.html:1695
+#: app/templates/auth/settings.html:1713
 msgid "Or use Watchtower for automatic updates."
 msgstr "Of gebruik Watchtower voor automatische updates."
 
-#: app/templates/auth/settings.html:1707
+#: app/templates/auth/settings.html:1725
 msgid "You are running the latest version"
 msgstr "U gebruikt de nieuwste versie"
 
-#: app/templates/auth/settings.html:1714
+#: app/templates/auth/settings.html:1732
 msgid "Resources"
 msgstr "Bronnen"
 
-#: app/templates/auth/settings.html:1721
+#: app/templates/auth/settings.html:1739
 msgid "Source Code"
 msgstr "Broncode"
 
-#: app/templates/auth/settings.html:1728
+#: app/templates/auth/settings.html:1746
 msgid "Report an Issue"
 msgstr "Een probleem melden"
 
-#: app/templates/auth/settings.html:1735
+#: app/templates/auth/settings.html:1753
 msgid "All Releases"
 msgstr "Alle releases"
 
-#: app/templates/auth/settings.html:1742
+#: app/templates/auth/settings.html:1760
 msgid "Documentation"
 msgstr "Documentatie"
 
-#: app/templates/auth/settings.html:2150
+#: app/templates/auth/settings.html:2168
 msgid "Checking..."
 msgstr "Controleren..."
 
-#: app/templates/auth/settings.html:2162
+#: app/templates/auth/settings.html:2180
 msgid "A newer version is available"
 msgstr "Er is een nieuwere versie beschikbaar"
 
-#: app/templates/auth/settings.html:2167
+#: app/templates/auth/settings.html:2185
 msgid "Last checked just now"
 msgstr "Laatst gecontroleerd zojuist"
 
-#: app/templates/auth/settings.html:2171
+#: app/templates/auth/settings.html:2189
 msgid "Could not check for updates"
 msgstr "Kan niet controleren op updates"
 
-#: app/templates/auth/settings.html:2176
+#: app/templates/auth/settings.html:2194
 msgid "Error checking for updates"
 msgstr "Fout bij het controleren op updates"
 
@@ -2545,7 +2589,7 @@ msgstr "Starttijd"
 msgid "End Time"
 msgstr "Eindtijd"
 
-#: app/templates/charging/form.html:64 app/templates/fuel/index.html:115
+#: app/templates/charging/form.html:64 app/templates/fuel/index.html:117
 msgid "Location"
 msgstr "Locatie"
 
@@ -2563,10 +2607,10 @@ msgstr "bijv. ChargePoint, Electrify America"
 
 #: app/templates/charging/form.html:81 app/templates/expenses/form.html:62
 #: app/templates/expenses/index.html:30 app/templates/fuel/form.html:45
-#: app/templates/fuel/index.html:27 app/templates/fuel/index.html:112
+#: app/templates/fuel/index.html:27 app/templates/fuel/index.html:114
 #: app/templates/fuel/quick.html:34 app/templates/maintenance/form.html:106
 #: app/templates/notes/form.html:37 app/templates/notes/index.html:29
-#: app/templates/vehicles/view.html:332
+#: app/templates/vehicles/view.html:349
 msgid "Odometer"
 msgstr "Kilometerstand"
 
@@ -2587,8 +2631,8 @@ msgid "End SOC"
 msgstr "Eind SOC"
 
 #: app/templates/charging/form.html:125 app/templates/expenses/form.html:55
-#: app/templates/expenses/index.html:31 app/templates/fuel/index.html:29
-#: app/templates/fuel/index.html:114
+#: app/templates/expenses/index.html:31 app/templates/fuel/index.html:30
+#: app/templates/fuel/index.html:116
 msgid "Cost"
 msgstr "Kosten"
 
@@ -2596,12 +2640,8 @@ msgstr "Kosten"
 msgid "Cost per kWh"
 msgstr "Kosten per kWh"
 
-#: app/templates/charging/form.html:135 app/templates/charging/index.html:26
-#: app/templates/fuel/form.html:88 app/templates/fuel/quick.html:75
-msgid "Total Cost"
-msgstr "Totale kosten"
-
 #: app/templates/charging/index.html:2 app/templates/charging/index.html:7
+#: app/templates/search/index.html:144
 msgid "Charging Sessions"
 msgstr "Laadsessies"
 
@@ -2757,8 +2797,8 @@ msgid "Edit Expense"
 msgstr "Uitgave bewerken"
 
 #: app/templates/expenses/form.html:2 app/templates/expenses/form.html:8
-#: app/templates/expenses/form.html:109 app/templates/expenses/index.html:15
-#: app/templates/expenses/index.html:107 app/templates/vehicles/view.html:175
+#: app/templates/expenses/form.html:130 app/templates/expenses/index.html:15
+#: app/templates/expenses/index.html:107 app/templates/vehicles/view.html:192
 msgid "Add Expense"
 msgstr "Uitgave toevoegen"
 
@@ -2783,11 +2823,25 @@ msgstr "Leverancier / dienstverlener"
 msgid "e.g., Local Garage"
 msgstr "bijv. Lokale garage"
 
-#: app/templates/expenses/form.html:83 app/templates/fuel/form.html:149
+#: app/templates/expenses/form.html:85
+msgid "Mark Maintenance as Performed"
+msgstr "Onderhoud markeren als uitgevoerd"
+
+#: app/templates/expenses/form.html:88
+msgid "— none —"
+msgstr "— geen —"
+
+#: app/templates/expenses/form.html:93
+msgid "Optional — records the schedule as performed on the expense date"
+msgstr ""
+"Optioneel — registreert het onderhoudsschema als uitgevoerd op de "
+"uitgavendatum"
+
+#: app/templates/expenses/form.html:104 app/templates/fuel/form.html:149
 msgid "Receipt / Attachment"
 msgstr "Bon / bijlage"
 
-#: app/templates/expenses/form.html:90 app/templates/fuel/form.html:156
+#: app/templates/expenses/form.html:111 app/templates/fuel/form.html:156
 msgid "Delete this attachment?"
 msgstr "Deze bijlage verwijderen?"
 
@@ -2795,7 +2849,7 @@ msgstr "Deze bijlage verwijderen?"
 msgid "Track maintenance, repairs, insurance, and other costs"
 msgstr "Houd onderhoud, reparaties, verzekering en andere kosten bij"
 
-#: app/templates/expenses/index.html:62 app/templates/vehicles/view.html:828
+#: app/templates/expenses/index.html:62 app/templates/vehicles/view.html:864
 msgid "Delete this expense?"
 msgstr "Deze uitgave verwijderen?"
 
@@ -2815,13 +2869,26 @@ msgstr "Geen uitgaven"
 msgid "Start tracking your vehicle expenses."
 msgstr "Begin met het bijhouden van uw voertuiguitgaven."
 
+#: app/templates/expenses/index.html:117
+msgid "Spend by Vendor"
+msgstr "Uitgaven per leverancier"
+
+#: app/templates/expenses/index.html:122
+#: app/templates/maintenance/index.html:146
+msgid "Vendor"
+msgstr "Leverancier"
+
+#: app/templates/expenses/index.html:124 app/templates/trips/report.html:126
+msgid "Total"
+msgstr "Totaal"
+
 #: app/templates/fuel/form.html:2 app/templates/fuel/form.html:8
 msgid "Edit Fuel Log"
 msgstr "Tanklogboek bewerken"
 
 #: app/templates/fuel/form.html:2 app/templates/fuel/form.html:8
 #: app/templates/fuel/form.html:175 app/templates/fuel/index.html:15
-#: app/templates/fuel/index.html:85 app/templates/vehicles/view.html:151
+#: app/templates/fuel/index.html:87 app/templates/vehicles/view.html:168
 msgid "Add Fuel Log"
 msgstr "Tanklogboek toevoegen"
 
@@ -2844,6 +2911,7 @@ msgstr ""
 "Tessie."
 
 #: app/templates/fuel/form.html:70 app/templates/fuel/quick.html:65
+#: app/templates/vehicles/view.html:1019
 msgid "Price per"
 msgstr "Prijs per"
 
@@ -2891,44 +2959,48 @@ msgstr "Gemiste tankbeurt (onvolledige gegevens)"
 msgid "Track your fuel fill-ups and consumption"
 msgstr "Houd uw tankbeurten en verbruik bij"
 
-#: app/templates/fuel/index.html:30 app/templates/vehicles/view.html:917
+#: app/templates/fuel/index.html:29
+msgid "Price/Unit"
+msgstr "Prijs/eenheid"
+
+#: app/templates/fuel/index.html:31 app/templates/vehicles/view.html:985
 msgid "Consumption"
 msgstr "Verbruik"
 
-#: app/templates/fuel/index.html:47
+#: app/templates/fuel/index.html:48
 msgid "Full"
 msgstr "Vol"
 
-#: app/templates/fuel/index.html:50
+#: app/templates/fuel/index.html:51
 msgid "Missed"
 msgstr "Gemist"
 
-#: app/templates/fuel/index.html:61 app/templates/vehicles/view.html:784
+#: app/templates/fuel/index.html:63 app/templates/vehicles/view.html:820
 msgid "Delete this fuel log?"
 msgstr "Dit tanklogboek verwijderen?"
 
-#: app/templates/fuel/index.html:77
+#: app/templates/fuel/index.html:79
 msgid "No fuel logs"
 msgstr "Geen tanklogboeken"
 
-#: app/templates/fuel/index.html:78
+#: app/templates/fuel/index.html:80
 msgid "Start tracking your fuel fill-ups."
 msgstr "Begin met het bijhouden van uw tankbeurten."
 
-#: app/templates/fuel/index.html:94
+#: app/templates/fuel/index.html:96
 msgid "Charging History"
 msgstr "Laadgeschiedenis"
 
-#: app/templates/fuel/index.html:95
+#: app/templates/fuel/index.html:97
 msgid "Sessions logged for your electric and plug-in hybrid vehicles"
 msgstr ""
 "Geregistreerde sessies voor uw elektrische en plug-in hybride voertuigen"
 
-#: app/templates/fuel/index.html:102
+#: app/templates/fuel/index.html:104
 msgid "Add Charging Session"
 msgstr "Laadsessie toevoegen"
 
-#: app/templates/fuel/index.html:113
+#: app/templates/fuel/index.html:115
 msgid "kWh"
 msgstr "kWh"
 
@@ -3131,10 +3203,6 @@ msgstr "Uitgave aanmaken"
 #: app/templates/maintenance/index.html:141
 msgid "Actual Cost"
 msgstr "Werkelijke kosten"
-
-#: app/templates/maintenance/index.html:146
-msgid "Vendor"
-msgstr "Leverancier"
 
 #: app/templates/maintenance/index.html:161
 msgid "Complete"
@@ -3342,7 +3410,7 @@ msgid "Keep track of important dates for your vehicles"
 msgstr "Houd belangrijke data voor uw voertuigen bij"
 
 #: app/templates/reminders/index.html:16
-#: app/templates/reminders/index.html:138 app/templates/vehicles/view.html:182
+#: app/templates/reminders/index.html:138 app/templates/vehicles/view.html:199
 msgid "Add Reminder"
 msgstr "Herinnering toevoegen"
 
@@ -3358,7 +3426,7 @@ msgstr "Toon voltooide"
 msgid "Clear filters"
 msgstr "Filters wissen"
 
-#: app/templates/reminders/index.html:63 app/templates/vehicles/view.html:620
+#: app/templates/reminders/index.html:63 app/templates/vehicles/view.html:637
 msgid "Overdue"
 msgstr "Verlopen"
 
@@ -3381,6 +3449,51 @@ msgstr "Geen herinneringen"
 #: app/templates/reminders/index.html:131
 msgid "Get started by adding a reminder for your vehicle."
 msgstr "Begin door een herinnering voor uw voertuig toe te voegen."
+
+#: app/templates/search/index.html:7
+msgid "Find expenses, fuel logs, documents, notes, and trips"
+msgstr "Zoek uitgaven, tanklogboeken, documenten, notities en ritten"
+
+#: app/templates/search/index.html:13
+msgid "Search term"
+msgstr "Zoekterm"
+
+#: app/templates/search/index.html:15
+msgid "e.g. brake pads, invoice, garage name"
+msgstr "bijv. remblokken, factuur, garagenaam"
+
+#: app/templates/search/index.html:19
+msgid "From"
+msgstr "Van"
+
+#: app/templates/search/index.html:24
+msgid "To"
+msgstr "Tot"
+
+#: app/templates/search/index.html:38
+#, python-format
+msgid "%(count)s results"
+msgstr "%(count)s resultaten"
+
+#: app/templates/search/index.html:71
+msgid "Fuel Log"
+msgstr "Tanklogboek"
+
+#: app/templates/search/index.html:131
+msgid "Trip"
+msgstr "Rit"
+
+#: app/templates/search/index.html:151
+msgid "Charging Session"
+msgstr "Laadsessie"
+
+#: app/templates/search/index.html:167
+msgid "No results"
+msgstr "Geen resultaten"
+
+#: app/templates/search/index.html:168
+msgid "Try a different search term or a wider date range."
+msgstr "Probeer een andere zoekterm of een bredere periode."
 
 #: app/templates/stations/cheapest.html:6
 #: app/templates/stations/prices.html:11
@@ -3512,7 +3625,7 @@ msgid "Prices are automatically recorded when you log fuel at this station."
 msgstr ""
 "Prijzen worden automatisch geregistreerd wanneer u bij dit station tankt."
 
-#: app/templates/timeline/index.html:2 app/templates/vehicles/view.html:196
+#: app/templates/timeline/index.html:2 app/templates/vehicles/view.html:213
 msgid "Timeline"
 msgstr "Tijdlijn"
 
@@ -3550,7 +3663,7 @@ msgstr "Rit bewerken"
 
 #: app/templates/trips/form.html:2 app/templates/trips/form.html:8
 #: app/templates/trips/form.html:131 app/templates/trips/index.html:30
-#: app/templates/vehicles/view.html:168
+#: app/templates/vehicles/view.html:185
 msgid "Log Trip"
 msgstr "Rit registreren"
 
@@ -3683,10 +3796,6 @@ msgstr "Afstand per doel"
 msgid "All Trips"
 msgstr "Alle ritten"
 
-#: app/templates/trips/report.html:126
-msgid "Total"
-msgstr "Totaal"
-
 #: app/templates/trips/report.html:134
 msgid "No trips logged for"
 msgstr "Geen ritten geregistreerd voor"
@@ -3814,10 +3923,6 @@ msgstr ""
 msgid "Secondary Fuel Type"
 msgstr "Secundair brandstoftype"
 
-#: app/templates/vehicles/form.html:72
-msgid "None"
-msgstr "Geen"
-
 #: app/templates/vehicles/form.html:77
 msgid ""
 "Optional. Use for vehicles with a secondary fluid to track, e.g. AdBlue "
@@ -3866,7 +3971,7 @@ msgstr "Kenteken"
 msgid "e.g., ABC 123"
 msgstr "bijv. ABC 123"
 
-#: app/templates/vehicles/form.html:128 app/templates/vehicles/view.html:376
+#: app/templates/vehicles/form.html:128 app/templates/vehicles/view.html:393
 msgid "VIN"
 msgstr "VIN"
 
@@ -3882,7 +3987,7 @@ msgstr "Foto"
 msgid "Vehicle Image"
 msgstr "Voertuigafbeelding"
 
-#: app/templates/vehicles/form.html:155 app/templates/vehicles/view.html:572
+#: app/templates/vehicles/form.html:155 app/templates/vehicles/view.html:589
 msgid "Specifications"
 msgstr "Specificaties"
 
@@ -4031,7 +4136,7 @@ msgstr "Onderdeel bewerken"
 #: app/templates/vehicles/part_form.html:2
 #: app/templates/vehicles/part_form.html:8
 #: app/templates/vehicles/part_form.html:102
-#: app/templates/vehicles/parts.html:19 app/templates/vehicles/view.html:715
+#: app/templates/vehicles/parts.html:19 app/templates/vehicles/view.html:732
 msgid "Add Part"
 msgstr "Onderdeel toevoegen"
 
@@ -4112,7 +4217,7 @@ msgid "Link to purchase this part"
 msgstr "Link om dit onderdeel te kopen"
 
 #: app/templates/vehicles/parts.html:2 app/templates/vehicles/parts.html:11
-#: app/templates/vehicles/view.html:663
+#: app/templates/vehicles/view.html:680
 msgid "Parts & Consumables"
 msgstr "Onderdelen en verbruiksartikelen"
 
@@ -4203,184 +4308,204 @@ msgstr "Vereist minstens twee volle tankbeurten."
 msgid "Avg. Charging"
 msgstr "Gem. laden"
 
-#: app/templates/vehicles/view.html:160
+#: app/templates/vehicles/view.html:143
+msgid "Fuel Used"
+msgstr "Gebruikte brandstof"
+
+#: app/templates/vehicles/view.html:148
+msgid "CO₂ Emissions"
+msgstr "CO₂-uitstoot"
+
+#: app/templates/vehicles/view.html:151
+msgid "tonnes (estimated)"
+msgstr "ton (geschat)"
+
+#: app/templates/vehicles/view.html:154
+msgid "kg (estimated)"
+msgstr "kg (geschat)"
+
+#: app/templates/vehicles/view.html:177
 msgid "Add Charging"
 msgstr "Lading toevoegen"
 
-#: app/templates/vehicles/view.html:189
+#: app/templates/vehicles/view.html:206
 msgid "Parts"
 msgstr "Onderdelen"
 
-#: app/templates/vehicles/view.html:208
+#: app/templates/vehicles/view.html:225
 msgid "DVLA Status"
 msgstr "DVLA-status"
 
-#: app/templates/vehicles/view.html:215 app/templates/vehicles/view.html:324
+#: app/templates/vehicles/view.html:232 app/templates/vehicles/view.html:341
 msgid "Refresh"
 msgstr "Vernieuwen"
 
-#: app/templates/vehicles/view.html:222
+#: app/templates/vehicles/view.html:239
 msgid "MOT Status"
 msgstr "MOT-status"
 
-#: app/templates/vehicles/view.html:240
+#: app/templates/vehicles/view.html:257
 msgid "MOT Expiry"
 msgstr "MOT-vervaldatum"
 
-#: app/templates/vehicles/view.html:250
+#: app/templates/vehicles/view.html:267
 msgid "Tax Status"
 msgstr "Belastingstatus"
 
-#: app/templates/vehicles/view.html:268
+#: app/templates/vehicles/view.html:285
 msgid "Tax Due"
 msgstr "Belasting verschuldigd"
 
-#: app/templates/vehicles/view.html:279 app/templates/vehicles/view.html:381
+#: app/templates/vehicles/view.html:296 app/templates/vehicles/view.html:398
 msgid "Last updated"
 msgstr "Laatst bijgewerkt"
 
-#: app/templates/vehicles/view.html:283
+#: app/templates/vehicles/view.html:300
 msgid "No DVLA data available for this vehicle."
 msgstr "Geen DVLA-gegevens beschikbaar voor dit voertuig."
 
-#: app/templates/vehicles/view.html:289
+#: app/templates/vehicles/view.html:306
 msgid "Fetch from DVLA"
 msgstr "Ophalen bij DVLA"
 
-#: app/templates/vehicles/view.html:306
+#: app/templates/vehicles/view.html:323
 msgid "Tessie Status"
 msgstr "Tessie-status"
 
-#: app/templates/vehicles/view.html:308
+#: app/templates/vehicles/view.html:325
 msgid "Live"
 msgstr "Live"
 
-#: app/templates/vehicles/view.html:317
+#: app/templates/vehicles/view.html:334
 msgid "Import Charges"
 msgstr "Ladingen importeren"
 
-#: app/templates/vehicles/view.html:346
+#: app/templates/vehicles/view.html:363
 msgid "Battery Level"
 msgstr "Batterijniveau"
 
-#: app/templates/vehicles/view.html:362
+#: app/templates/vehicles/view.html:379
 msgid "Est. Range"
 msgstr "Gesch. bereik"
 
-#: app/templates/vehicles/view.html:385
+#: app/templates/vehicles/view.html:402
 msgid "No Tessie data available for this vehicle yet."
 msgstr "Nog geen Tessie-gegevens beschikbaar voor dit voertuig."
 
-#: app/templates/vehicles/view.html:391
+#: app/templates/vehicles/view.html:408
 msgid "Fetch from Tessie"
 msgstr "Ophalen bij Tessie"
 
-#: app/templates/vehicles/view.html:406
+#: app/templates/vehicles/view.html:423
 msgid ""
 "This vehicle is archived. It won't appear in regular lists or calculations."
 msgstr ""
 "Dit voertuig is gearchiveerd. Het verschijnt niet in reguliere lijsten of "
 "berekeningen."
 
-#: app/templates/vehicles/view.html:420
+#: app/templates/vehicles/view.html:437
 msgid "Annual Mileage"
 msgstr "Jaarkilometrage"
 
-#: app/templates/vehicles/view.html:425
+#: app/templates/vehicles/view.html:442
 msgid "Over limit"
 msgstr "Boven limiet"
 
-#: app/templates/vehicles/view.html:429
+#: app/templates/vehicles/view.html:446
 msgid "Approaching limit"
 msgstr "Nadert limiet"
 
-#: app/templates/vehicles/view.html:433
+#: app/templates/vehicles/view.html:450
 msgid "On pace"
 msgstr "Op schema"
 
-#: app/templates/vehicles/view.html:437
+#: app/templates/vehicles/view.html:454
 msgid "Over pace"
 msgstr "Boven schema"
 
-#: app/templates/vehicles/view.html:453 app/templates/vehicles/view.html:460
+#: app/templates/vehicles/view.html:470 app/templates/vehicles/view.html:477
 msgid "Time elapsed"
 msgstr "Verstreken tijd"
 
-#: app/templates/vehicles/view.html:460
+#: app/templates/vehicles/view.html:477
 msgid "of year elapsed"
 msgstr "van het jaar verstreken"
 
-#: app/templates/vehicles/view.html:469
+#: app/templates/vehicles/view.html:486
 msgid "remaining"
 msgstr "resterend"
 
-#: app/templates/vehicles/view.html:473
+#: app/templates/vehicles/view.html:490
 msgid "days remaining"
 msgstr "dagen resterend"
 
-#: app/templates/vehicles/view.html:477
+#: app/templates/vehicles/view.html:494
 msgid "projected year-end"
 msgstr "geschat jaareinde"
 
-#: app/templates/vehicles/view.html:481
+#: app/templates/vehicles/view.html:498
 msgid "expected at this point"
 msgstr "verwacht op dit punt"
 
-#: app/templates/vehicles/view.html:496
+#: app/templates/vehicles/view.html:513
 msgid "Upcoming Reminders"
 msgstr "Aankomende herinneringen"
 
-#: app/templates/vehicles/view.html:508
+#: app/templates/vehicles/view.html:525
 msgid "Mark as completed"
 msgstr "Markeer als voltooid"
 
-#: app/templates/vehicles/view.html:535
+#: app/templates/vehicles/view.html:552
 #, python-format
 msgid "%(days)s days overdue"
 msgstr "%(days)s dagen te laat"
 
-#: app/templates/vehicles/view.html:537
+#: app/templates/vehicles/view.html:554
 msgid "Due today"
 msgstr "Vandaag verschuldigd"
 
-#: app/templates/vehicles/view.html:539
+#: app/templates/vehicles/view.html:556
 msgid "Due tomorrow"
 msgstr "Morgen verschuldigd"
 
-#: app/templates/vehicles/view.html:541
+#: app/templates/vehicles/view.html:558
 #, python-format
 msgid "In %(days)s days"
 msgstr "Over %(days)s dagen"
 
-#: app/templates/vehicles/view.html:606
+#: app/templates/vehicles/view.html:623
 msgid "Upcoming Maintenance"
 msgstr "Aankomend onderhoud"
 
-#: app/templates/vehicles/view.html:622
+#: app/templates/vehicles/view.html:639
 msgid "Due soon"
 msgstr "Binnenkort verschuldigd"
 
-#: app/templates/vehicles/view.html:656
+#: app/templates/vehicles/view.html:673
 msgid "Toggle section"
 msgstr "Sectie in-/uitklappen"
 
-#: app/templates/vehicles/view.html:709
+#: app/templates/vehicles/view.html:726
 msgid "No parts added yet."
 msgstr "Nog geen onderdelen toegevoegd."
 
-#: app/templates/vehicles/view.html:743
+#: app/templates/vehicles/view.html:761
 msgid "Fuel Consumption Trend"
 msgstr "Brandstofverbruikstrend"
 
-#: app/templates/vehicles/view.html:767
+#: app/templates/vehicles/view.html:774
+msgid "Fuel Price Trend"
+msgstr "Brandstofprijstrend"
+
+#: app/templates/vehicles/view.html:803
 msgid "(Full)"
 msgstr "(Vol)"
 
-#: app/templates/vehicles/view.html:859
+#: app/templates/vehicles/view.html:895
 msgid "Archive this vehicle"
 msgstr "Dit voertuig archiveren"
 
-#: app/templates/vehicles/view.html:860
+#: app/templates/vehicles/view.html:896
 msgid ""
 "Archived vehicles won't appear in regular lists or calculations. You can "
 "restore them later."
@@ -4388,30 +4513,30 @@ msgstr ""
 "Gearchiveerde voertuigen verschijnen niet in reguliere lijsten of "
 "berekeningen. U kunt ze later herstellen."
 
-#: app/templates/vehicles/view.html:862
+#: app/templates/vehicles/view.html:898
 msgid "Restore this vehicle"
 msgstr "Dit voertuig herstellen"
 
-#: app/templates/vehicles/view.html:863
+#: app/templates/vehicles/view.html:899
 msgid ""
 "Restore this vehicle to make it active again and include it in calculations."
 msgstr ""
 "Herstel dit voertuig om het weer actief te maken en op te nemen in "
 "berekeningen."
 
-#: app/templates/vehicles/view.html:871
+#: app/templates/vehicles/view.html:907
 msgid "Archive Vehicle"
 msgstr "Voertuig archiveren"
 
-#: app/templates/vehicles/view.html:879
+#: app/templates/vehicles/view.html:915
 msgid "Restore Vehicle"
 msgstr "Voertuig herstellen"
 
-#: app/templates/vehicles/view.html:889
+#: app/templates/vehicles/view.html:925
 msgid "Delete this vehicle"
 msgstr "Dit voertuig verwijderen"
 
-#: app/templates/vehicles/view.html:890
+#: app/templates/vehicles/view.html:926
 msgid ""
 "Once you delete a vehicle, there is no going back. This will also delete all"
 " associated fuel logs and expenses."
@@ -4419,16 +4544,28 @@ msgstr ""
 "Zodra u een voertuig verwijdert, is er geen weg terug. Dit verwijdert ook "
 "alle bijbehorende tanklogboeken en uitgaven."
 
-#: app/templates/vehicles/view.html:893
+#: app/templates/vehicles/view.html:929
 msgid ""
 "Are you sure you want to delete this vehicle? This action cannot be undone."
 msgstr ""
 "Weet u zeker dat u dit voertuig wilt verwijderen? Deze actie kan niet "
 "ongedaan worden gemaakt."
 
-#: app/templates/vehicles/view.html:897
+#: app/templates/vehicles/view.html:933
 msgid "Delete Vehicle"
 msgstr "Voertuig verwijderen"
+
+#: app/templates/vehicles/view.html:1009
+msgid ""
+"Not enough data to show consumption trend. Add more fuel logs with full tank"
+" fills."
+msgstr ""
+"Niet genoeg gegevens om verbruikstrend te tonen. Voeg meer tanklogboeken toe"
+" met volle tankbeurten."
+
+#: app/templates/vehicles/view.html:1043
+msgid "No fuel prices recorded yet."
+msgstr "Nog geen brandstofprijzen geregistreerd."
 
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "Per kwartaal (elke 3 maanden)"
