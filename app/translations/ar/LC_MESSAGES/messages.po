@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-08-03 16:49+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ar <LL@li.org>\n"
@@ -624,8 +624,8 @@ msgstr ""
 msgid "Invalid or expired reset link. Please request a new one."
 msgstr "رابط إعادة التعيين غير صالح أو منتهي الصلاحية. يرجى طلب رابط جديد."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "كلمتا المرور غير متطابقتين"
 
@@ -637,7 +637,7 @@ msgstr "تمت إعادة تعيين كلمة المرور الخاصة بك. ي
 msgid "New account registration is currently disabled."
 msgstr "تسجيل الحسابات الجديدة معطل حالياً."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "اسم المستخدم موجود بالفعل"
 
@@ -653,79 +653,79 @@ msgstr "تم التسجيل بنجاح! يرجى تسجيل الدخول."
 msgid "You have been logged out."
 msgstr "تم تسجيل خروجك."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "البريد الإلكتروني مستخدم بالفعل من قبل حساب آخر"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "تم تحديث الإعدادات بنجاح"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "رابط webhook غير صالح: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "تم تحديث تفضيلات الإشعارات"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "تم تحديث تفضيلات القائمة"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "تم تحديث إعدادات الإشعارات"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "تم تحديث إعدادات العلامة التجارية بنجاح"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "تمت إزالة الشعار بنجاح"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "تم تحديث إعدادات DVLA"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "تم تحديث إعدادات Tessie"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "تم تحديث إعدادات التسجيل"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr "لا يمكن إزالة صلاحية المسؤول من آخر مسؤول متبقٍ."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "تم تحديث صلاحية المسؤول للمستخدم %(username)s"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "تم حذف المستخدم %(username)s"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "تم تحديث المستخدم %(username)s بنجاح"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "اسم المستخدم والبريد الإلكتروني وكلمة المرور مطلوبة"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "البريد الإلكتروني مستخدم بالفعل"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "تم إنشاء المستخدم %(username)s بنجاح"
@@ -1115,7 +1115,7 @@ msgstr "إدخال وقود سريع"
 msgid "Fuel"
 msgstr "الوقود"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3405,8 +3405,10 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "ابدأ بإضافة تذكير لمركبتك."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "البحث في المصروفات وسجلات الوقود والمستندات والملاحظات والرحلات"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr ""
+"البحث في المصروفات وسجلات الوقود والمستندات والملاحظات والرحلات وجلسات الشحن"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

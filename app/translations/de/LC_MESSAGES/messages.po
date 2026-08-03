@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: May 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-04-28 12:00+0000\n"
 "Last-Translator: FleischpiratLanguage: de\n"
 "Language-Team: German\n"
@@ -633,8 +633,8 @@ msgstr ""
 "Ungültiger oder abgelaufener Link zum Zurücksetzen. Bitte fordern Sie einen "
 "neuen an."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "Passwörter stimmen nicht überein"
 
@@ -646,7 +646,7 @@ msgstr "Ihr Passwort wurde zurückgesetzt. Bitte melden Sie sich an."
 msgid "New account registration is currently disabled."
 msgstr "Die Registrierung neuer Konten ist derzeit deaktiviert."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "Benutzername existiert bereits"
 
@@ -662,80 +662,80 @@ msgstr "Registrierung erfolgreich! Bitte melden Sie sich an."
 msgid "You have been logged out."
 msgstr "Sie wurden abgemeldet."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "E-Mail-Adresse wird bereits von einem anderen Konto verwendet"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "Einstellungen erfolgreich aktualisiert"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Ungültige Webhook-URL: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "Benachrichtigungseinstellungen aktualisiert"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "Menüeinstellungen aktualisiert"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "Benachrichtigungseinstellungen aktualisiert"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "Branding-Einstellungen erfolgreich aktualisiert"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "Logo erfolgreich entfernt"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "DVLA-Einstellungen aktualisiert"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "Tessie-Einstellungen aktualisiert"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "Registrierungseinstellungen aktualisiert"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr ""
 "Der Admin-Status kann nicht vom letzten Administrator entfernt werden."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "Administratorstatus für %(username)s aktualisiert"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "Benutzer %(username)s gelöscht"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "Benutzer %(username)s erfolgreich aktualisiert"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "Benutzername, E-Mail und Passwort sind erforderlich"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "E-Mail-Adresse wird bereits verwendet"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "Benutzer %(username)s erfolgreich erstellt"
@@ -1130,7 +1130,7 @@ msgstr "Schnelltanken"
 msgid "Fuel"
 msgstr "Kraftstoff"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3469,8 +3469,11 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "Fügen Sie Ihr erstes Fahrzeug hinzu, um zu beginnen."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "Ausgaben, Tankprotokolle, Dokumente, Notizen und Fahrten finden"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr ""
+"Ausgaben, Tankprotokolle, Dokumente, Notizen, Fahrten und Ladevorgänge "
+"finden"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

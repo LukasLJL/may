@@ -690,7 +690,7 @@ class FuelLog(db.Model):
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     odometer = db.Column(db.Float, nullable=False)  # stored in km
     volume = db.Column(db.Float)  # stored in liters
-    price_per_unit = db.Column(db.Float)  # price per liter
+    price_per_unit = db.Column(db.Float)  # price per the user's volume unit, as entered
     discount_per_unit = db.Column(db.Float)  # optional loyalty discount per liter (issue #209)
     total_cost = db.Column(db.Float)
 

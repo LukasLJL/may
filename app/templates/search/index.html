@@ -4,7 +4,7 @@
 {% block content %}
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ _('Search') }}</h1>
-    <p class="text-gray-500 dark:text-gray-400">{{ _('Find expenses, fuel logs, documents, notes, and trips') }}</p>
+    <p class="text-gray-500 dark:text-gray-400">{{ _('Find expenses, fuel logs, documents, notes, trips, and charging sessions') }}</p>
 </div>
 
 <form method="GET" class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-8">
@@ -71,7 +71,7 @@
                     <p class="text-sm font-medium text-gray-900 dark:text-white">{{ log.station or _('Fuel Log') }}</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400">{{ log.vehicle.name }} &middot; {{ log.date|format_date }}{% if log.volume %} &middot; {{ "%.1f"|format(log.volume) }} {{ current_user.volume_unit }}{% endif %}</p>
                 </div>
-                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ log.total_cost|money }} {{ current_user.currency }}</span>
+                <span class="text-sm font-medium text-gray-900 dark:text-white">{% if log.total_cost is not none %}{{ log.total_cost|money }} {{ current_user.currency }}{% else %}-{% endif %}</span>
             </a>
         </li>
         {% endfor %}
@@ -151,7 +151,7 @@
                     <p class="text-sm font-medium text-gray-900 dark:text-white">{{ session.location or _('Charging Session') }}</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400">{{ session.vehicle.name }} &middot; {{ session.date|format_date }}</p>
                 </div>
-                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ session.total_cost|money }} {{ current_user.currency }}</span>
+                <span class="text-sm font-medium text-gray-900 dark:text-white">{% if session.total_cost is not none %}{{ session.total_cost|money }} {{ current_user.currency }}{% else %}-{% endif %}</span>
             </a>
         </li>
         {% endfor %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: May\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-03-08 17:23+0000\n"
 "Last-Translator: javlk <jv.vlk83@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/may/may-0-15-0/cs/>\n"
@@ -627,8 +627,8 @@ msgstr ""
 msgid "Invalid or expired reset link. Please request a new one."
 msgstr "Neplatný nebo vypršelý odkaz pro reset. Požádejte o nový."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
 
@@ -640,7 +640,7 @@ msgstr "Vaše heslo bylo resetováno. Přihlaste se prosím."
 msgid "New account registration is currently disabled."
 msgstr "Registrace nového účtu je momentálně zakázána."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "Uživatelské jméno již existuje"
 
@@ -656,79 +656,79 @@ msgstr "Registrace úspěšná! Prosím, přihlaste se."
 msgid "You have been logged out."
 msgstr "Byli jste odhlášeni."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "E-mail již používá jiný účet"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "Nastavení bylo úspěšně aktualizováno"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Neplatná URL adresa webhooku: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "Předvolby oznámení byly aktualizovány"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "Předvolby nabídky byly aktualizovány"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "Nastavení oznámení aktualizováno"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "Nastavení brandingu bylo úspěšně aktualizováno"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "Logo bylo úspěšně odstraněno"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "Nastavení DVLA aktualizováno"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "Nastavení Tessie bylo aktualizováno"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "Nastavení registrace aktualizováno"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr "Poslednímu administrátorovi nelze odebrat status administrátora."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "Stav administrátora byl aktualizován pro %(username)s"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "Uživatel %(username)s byl smazán"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "Uživatel %(username)s byl úspěšně aktualizován"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "Uživatelské jméno, e-mail a heslo jsou vyžadovány"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "E-mail se již používá"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "Uživatel %(username)s byl úspěšně vytvořen"
@@ -1121,7 +1121,7 @@ msgstr "Rychlý vstup paliva"
 msgid "Fuel"
 msgstr "Palivo"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3445,8 +3445,11 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "Začněte přidáním připomenutí pro své vozidlo."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "Najít výdaje, záznamy o palivu, dokumenty, poznámky a výlety"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr ""
+"Najít výdaje, záznamy o palivu, dokumenty, poznámky, výlety a záznamy o "
+"nabíjení"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

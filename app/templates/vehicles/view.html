@@ -141,7 +141,7 @@
     {% if vehicle.uses_fuel() and stats.total_fuel_volume %}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Fuel Used') }}</dt>
-        <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{{ "{:,.0f}".format(stats.total_fuel_volume) }}</dd>
+        <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{{ stats.total_fuel_volume|groupnum }}</dd>
         <dd class="text-sm text-gray-500 dark:text-gray-400">{{ current_user.volume_unit }}</dd>
     </div>
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
@@ -805,7 +805,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <div class="text-right">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ log.total_cost or 0|money }} {{ current_user.currency }}</p>
+                            <p class="text-sm font-medium text-gray-900 dark:text-white">{{ (log.total_cost or 0)|money }} {{ current_user.currency }}</p>
                             {% set consumption = log.get_consumption(current_user.consumption_unit, current_user.volume_unit) %}
                             {% if consumption %}
                             <p class="text-sm text-gray-500 dark:text-gray-400">{{ "%.1f"|format(consumption) }} {{ current_user.consumption_unit }}</p>

@@ -211,7 +211,9 @@ def settings():
         current_user.distance_unit = request.form.get('distance_unit', 'km')
         current_user.volume_unit = request.form.get('volume_unit', 'L')
         current_user.consumption_unit = request.form.get('consumption_unit', 'L/100km')
-        current_user.thousand_separator = request.form.get('thousand_separator', 'none')
+        submitted_separator = request.form.get('thousand_separator', 'none')
+        if submitted_separator in ('none', 'space', 'comma', 'period'):
+            current_user.thousand_separator = submitted_separator
         current_user.round_costs = request.form.get('round_costs') == 'on'
         currency = (request.form.get('currency', 'USD') or 'USD').strip()
         if currency == 'custom':

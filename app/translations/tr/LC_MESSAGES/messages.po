@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-08-03 16:49+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: tr <LL@li.org>\n"
@@ -631,8 +631,8 @@ msgstr ""
 "Geçersiz veya süresi dolmuş sıfırlama bağlantısı. Lütfen yeni bir tane "
 "isteyin."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "Parolalar eşleşmiyor"
 
@@ -644,7 +644,7 @@ msgstr "Parolanız sıfırlandı. Lütfen giriş yapın."
 msgid "New account registration is currently disabled."
 msgstr "Yeni hesap kaydı şu anda devre dışı."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "Bu kullanıcı adı zaten kullanılıyor"
 
@@ -660,79 +660,79 @@ msgstr "Kayıt başarılı! Lütfen giriş yapın."
 msgid "You have been logged out."
 msgstr "Oturumunuz kapatıldı."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "Bu e-posta başka bir hesap tarafından kullanılıyor"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "Ayarlar başarıyla güncellendi"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Geçersiz webhook URL'si: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "Bildirim tercihleri güncellendi"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "Menü tercihleri güncellendi"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "Bildirim ayarları güncellendi"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "Marka ayarları başarıyla güncellendi"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "Logo başarıyla kaldırıldı"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "DVLA ayarları güncellendi"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "Tessie ayarları güncellendi"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "Kayıt ayarları güncellendi"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr "Son yöneticinin yönetici yetkisi kaldırılamaz."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "%(username)s için yönetici durumu güncellendi"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "%(username)s kullanıcısı silindi"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "%(username)s kullanıcısı başarıyla güncellendi"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "Kullanıcı adı, e-posta ve parola gereklidir"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "Bu e-posta zaten kullanılıyor"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "%(username)s kullanıcısı başarıyla oluşturuldu"
@@ -1126,7 +1126,7 @@ msgstr "Hızlı Yakıt Girişi"
 msgid "Fuel"
 msgstr "Yakıt"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3446,8 +3446,11 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "Aracınız için bir hatırlatıcı ekleyerek başlayın."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "Giderleri, yakıt kayıtlarını, belgeleri, notları ve yolculukları bul"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr ""
+"Giderleri, yakıt kayıtlarını, belgeleri, notları, yolculukları ve şarj "
+"seanslarını bul"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

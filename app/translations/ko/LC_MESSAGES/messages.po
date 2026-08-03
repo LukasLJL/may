@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: ko <LL@li.org>\n"
@@ -615,8 +615,8 @@ msgstr "해당 이메일의 계정이 존재하면 비밀번호 재설정 링크
 msgid "Invalid or expired reset link. Please request a new one."
 msgstr "유효하지 않거나 만료된 재설정 링크입니다. 새로 요청하십시오."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "비밀번호가 일치하지 않습니다"
 
@@ -628,7 +628,7 @@ msgstr "비밀번호가 재설정되었습니다. 로그인하십시오."
 msgid "New account registration is currently disabled."
 msgstr "새 계정 등록이 현재 비활성화되어 있습니다."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "이미 존재하는 사용자 이름입니다"
 
@@ -644,79 +644,79 @@ msgstr "등록이 완료되었습니다! 로그인하십시오."
 msgid "You have been logged out."
 msgstr "로그아웃되었습니다."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "다른 계정에서 이미 사용 중인 이메일입니다"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "설정이 성공적으로 업데이트되었습니다"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "잘못된 Webhook URL: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "알림 환경설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "메뉴 환경설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "알림 설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "브랜딩 설정이 성공적으로 업데이트되었습니다"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "로고가 성공적으로 삭제되었습니다"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "DVLA 설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "Tessie 설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "등록 설정이 업데이트되었습니다"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr "마지막 관리자의 관리자 상태는 제거할 수 없습니다."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "%(username)s의 관리자 상태가 업데이트되었습니다"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "사용자 %(username)s이(가) 삭제되었습니다"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "사용자 %(username)s이(가) 성공적으로 업데이트되었습니다"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "사용자 이름, 이메일 및 비밀번호가 필요합니다"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "이미 사용 중인 이메일입니다"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "사용자 %(username)s이(가) 성공적으로 생성되었습니다"
@@ -1105,7 +1105,7 @@ msgstr "빠른 주유 입력"
 msgid "Fuel"
 msgstr "연료"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3375,8 +3375,9 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "차량에 대한 알림을 추가하여 시작하십시오."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "지출, 주유 기록, 문서, 메모, 주행 검색"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr "지출, 주유 기록, 문서, 메모, 주행, 충전 세션 검색"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

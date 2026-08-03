@@ -379,6 +379,23 @@ def create_app(config_class=Config):
             return s.replace('.', '\x00').replace(',', '.').replace('\x00', ',')
         return s
 
+    @app.template_filter('groupnum')
+    def groupnum_filter(value, decimals=0):
+        """Group a non-currency number per the user's separator pref (#134)."""
+        if value is None:
+            value = 0
+        sep = 'none'
+        if current_user and current_user.is_authenticated:
+            sep = getattr(current_user, 'thousand_separator', None) or 'none'
+        s = f"{value:,.{decimals}f}"
+        if sep == 'none':
+            return s.replace(',', '')
+        if sep == 'space':
+            return s.replace(',', '\u202f')
+        if sep == 'period':
+            return s.replace('.', '\x00').replace(',', '.').replace('\x00', ',')
+        return s
+
     @app.template_filter('format_date')
     def format_date_filter(value, style='default'):
         if value is None:

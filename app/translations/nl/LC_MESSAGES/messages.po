@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 20:52+0100\n"
+"POT-Creation-Date: 2026-08-03 21:10+0100\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: nl <LL@li.org>\n"
@@ -628,8 +628,8 @@ msgstr ""
 msgid "Invalid or expired reset link. Please request a new one."
 msgstr "Ongeldige of verlopen herstellink. Vraag een nieuwe aan."
 
-#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:238
-#: app/routes/auth.py:544 app/routes/auth.py:580
+#: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
+#: app/routes/auth.py:546 app/routes/auth.py:582
 msgid "Passwords do not match"
 msgstr "Wachtwoorden komen niet overeen"
 
@@ -641,7 +641,7 @@ msgstr "Uw wachtwoord is hersteld. Log in."
 msgid "New account registration is currently disabled."
 msgstr "Registratie van nieuwe accounts is momenteel uitgeschakeld."
 
-#: app/routes/auth.py:180 app/routes/auth.py:589
+#: app/routes/auth.py:180 app/routes/auth.py:591
 msgid "Username already exists"
 msgstr "Gebruikersnaam bestaat al"
 
@@ -657,79 +657,79 @@ msgstr "Registratie geslaagd! Log in."
 msgid "You have been logged out."
 msgstr "U bent uitgelogd."
 
-#: app/routes/auth.py:228 app/routes/auth.py:536
+#: app/routes/auth.py:230 app/routes/auth.py:538
 msgid "Email already in use by another account"
 msgstr "E-mailadres is al in gebruik door een ander account"
 
-#: app/routes/auth.py:250
+#: app/routes/auth.py:252
 msgid "Settings updated successfully"
 msgstr "Instellingen succesvol bijgewerkt"
 
-#: app/routes/auth.py:328
+#: app/routes/auth.py:330
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Ongeldige webhook-URL: %(error)s"
 
-#: app/routes/auth.py:343
+#: app/routes/auth.py:345
 msgid "Notification preferences updated"
 msgstr "Meldingsvoorkeuren bijgewerkt"
 
-#: app/routes/auth.py:368
+#: app/routes/auth.py:370
 msgid "Menu preferences updated"
 msgstr "Menuvoorkeuren bijgewerkt"
 
-#: app/routes/auth.py:393
+#: app/routes/auth.py:395
 msgid "Notification settings updated"
 msgstr "Meldingsinstellingen bijgewerkt"
 
-#: app/routes/auth.py:422
+#: app/routes/auth.py:424
 msgid "Branding settings updated successfully"
 msgstr "Huisstijlinstellingen succesvol bijgewerkt"
 
-#: app/routes/auth.py:438
+#: app/routes/auth.py:440
 msgid "Logo removed successfully"
 msgstr "Logo succesvol verwijderd"
 
-#: app/routes/auth.py:451
+#: app/routes/auth.py:453
 msgid "DVLA settings updated"
 msgstr "DVLA-instellingen bijgewerkt"
 
-#: app/routes/auth.py:464
+#: app/routes/auth.py:466
 msgid "Tessie settings updated"
 msgstr "Tessie-instellingen bijgewerkt"
 
-#: app/routes/auth.py:477
+#: app/routes/auth.py:479
 msgid "Registration settings updated"
 msgstr "Registratie-instellingen bijgewerkt"
 
-#: app/routes/auth.py:501
+#: app/routes/auth.py:503
 msgid "Cannot remove admin status from the last administrator."
 msgstr "Kan de beheerdersstatus van de laatste beheerder niet verwijderen."
 
-#: app/routes/auth.py:506
+#: app/routes/auth.py:508
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "Beheerderstatus bijgewerkt voor %(username)s"
 
-#: app/routes/auth.py:519
+#: app/routes/auth.py:521
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "Gebruiker %(username)s verwijderd"
 
-#: app/routes/auth.py:557
+#: app/routes/auth.py:559
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "Gebruiker %(username)s succesvol bijgewerkt"
 
-#: app/routes/auth.py:576
+#: app/routes/auth.py:578
 msgid "Username, email, and password are required"
 msgstr "Gebruikersnaam, e-mailadres en wachtwoord zijn vereist"
 
-#: app/routes/auth.py:593
+#: app/routes/auth.py:595
 msgid "Email already in use"
 msgstr "E-mailadres is al in gebruik"
 
-#: app/routes/auth.py:601
+#: app/routes/auth.py:603
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "Gebruiker %(username)s succesvol aangemaakt"
@@ -1121,7 +1121,7 @@ msgstr "Snel tanken"
 msgid "Fuel"
 msgstr "Brandstof"
 
-#: app/templates/base.html:354 app/templates/base.html:395
+#: app/templates/base.html:354 app/templates/base.html:396
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
@@ -3451,8 +3451,10 @@ msgid "Get started by adding a reminder for your vehicle."
 msgstr "Begin door een herinnering voor uw voertuig toe te voegen."
 
 #: app/templates/search/index.html:7
-msgid "Find expenses, fuel logs, documents, notes, and trips"
-msgstr "Zoek uitgaven, tanklogboeken, documenten, notities en ritten"
+msgid ""
+"Find expenses, fuel logs, documents, notes, trips, and charging sessions"
+msgstr ""
+"Zoek uitgaven, tanklogboeken, documenten, notities, ritten en laadsessies"
 
 #: app/templates/search/index.html:13
 msgid "Search term"

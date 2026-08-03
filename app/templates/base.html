@@ -392,8 +392,8 @@
                     {% endif %}
                     {% if current_user.show_menu_reminders is not defined or current_user.show_menu_reminders %}
                     <a href="{{ url_for('reminders.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Reminders') }}</a>
-                    <a href="{{ url_for('search.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Search') }}</a>
                     {% endif %}
+                    <a href="{{ url_for('search.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Search') }}</a>
                     {% if current_user.show_menu_trips is not defined or current_user.show_menu_trips %}
                     <a href="{{ url_for('trips.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Trips') }}</a>
                     {% endif %}
