@@ -1270,11 +1270,17 @@
                                     <div>
                                         <label for="ntfy_token" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('ntfy Access Token') }}</label>
                                         <input type="password" name="ntfy_token" id="ntfy_token"
-                                               value="{{ current_user.ntfy_token or '' }}"
-                                               placeholder="tk_..."
+                                               placeholder="{% if current_user.ntfy_token %}{{ _('Token saved — enter a new one to replace it') }}{% else %}tk_...{% endif %}"
                                                autocomplete="off"
                                                class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
-                                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ _('Optional — only needed for self-hosted ntfy servers with authentication enabled.') }}</p>
+                                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ _('Optional — only needed for self-hosted ntfy servers with authentication enabled. Leave blank to keep the saved token.') }}</p>
+                                        {% if current_user.ntfy_token %}
+                                        <div class="mt-2 flex items-center">
+                                            <input type="checkbox" name="clear_ntfy_token" id="clear_ntfy_token"
+                                                   class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary-600 focus:ring-primary-500">
+                                            <label for="clear_ntfy_token" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">{{ _('Remove the saved token') }}</label>
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
 

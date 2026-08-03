@@ -93,6 +93,10 @@ class NotificationService:
         if not topic:
             return False, "ntfy topic not configured"
 
+        # Never leak the access token over an unencrypted connection.
+        if token and topic.startswith('http://'):
+            return False, "Refusing to send the ntfy access token over plain HTTP - use an https:// server URL"
+
         try:
             # Determine URL - if it looks like a URL, use it directly
             if topic.startswith('http://') or topic.startswith('https://'):

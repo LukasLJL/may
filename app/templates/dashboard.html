@@ -310,13 +310,13 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: {{ monthly_data.labels | tojson }},
             datasets: [
                 {
-                    label: '{{ _("Fuel") }}',
+                    label: {{ _('Fuel')|tojson }},
                     data: {{ monthly_data.fuel | tojson }},
                     backgroundColor: 'rgba(250, 204, 21, 0.8)',
                     borderRadius: 4
                 },
                 {
-                    label: '{{ _("Expenses") }}',
+                    label: {{ _('Expenses')|tojson }},
                     data: {{ monthly_data.expenses | tojson }},
                     backgroundColor: 'rgba(239, 68, 68, 0.8)',
                     borderRadius: 4

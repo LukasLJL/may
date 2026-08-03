@@ -286,7 +286,9 @@ def create_app(config_class=Config):
     # Ensure data directories exist (the DB directory only applies to SQLite;
     # a server-based DATABASE_URL like postgresql:// has no local path, #239)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite:///'):
-        os.makedirs(os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '')), exist_ok=True)
+        db_dir = os.path.dirname(app.config['SQLALCHEMY_DATABASE_URI'].replace('sqlite:///', '', 1))
+        if db_dir:
+            os.makedirs(db_dir, exist_ok=True)
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     db.init_app(app)

@@ -99,19 +99,19 @@ document.addEventListener('DOMContentLoaded', function() {
             labels: chartData.labels,
             datasets: [
                 {
-                    label: '{{ _("Fuel") }}',
+                    label: {{ _('Fuel')|tojson }},
                     data: chartData.fuel,
                     backgroundColor: 'rgba(234, 179, 8, 0.8)',
                     borderRadius: 4
                 },
                 {
-                    label: '{{ _("Expenses") }}',
+                    label: {{ _('Expenses')|tojson }},
                     data: chartData.expenses,
                     backgroundColor: 'rgba(239, 68, 68, 0.8)',
                     borderRadius: 4
                 },
                 {
-                    label: '{{ _("Charging") }}',
+                    label: {{ _('Charging')|tojson }},
                     data: chartData.charging,
                     backgroundColor: 'rgba(34, 197, 94, 0.8)',
                     borderRadius: 4

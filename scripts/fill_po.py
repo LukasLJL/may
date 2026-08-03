@@ -17,7 +17,10 @@ import json
 import re
 import sys
 
-import polib
+try:
+    import polib
+except ImportError:  # dev-only dependency, not part of the runtime image
+    sys.exit("polib is required: uv pip install --python venv/bin/python polib")
 
 PLACEHOLDER_RE = re.compile(r'%\([^)]+\)[sdf]|%[sdf]|\{[^}]*\}')
 
@@ -33,7 +36,11 @@ def needs_work(entry):
 
 
 def main():
+    if len(sys.argv) < 3:
+        sys.exit(__doc__)
     cmd, lang = sys.argv[1], sys.argv[2]
+    if cmd == 'apply' and len(sys.argv) < 4:
+        sys.exit('apply requires a JSON file argument')
     po = polib.pofile(po_path(lang))
 
     if cmd == 'dump':
@@ -46,7 +53,7 @@ def main():
         pending = sum(1 for e in po if needs_work(e))
         print(f'{lang}: {pending} entries need work')
     elif cmd == 'apply':
-        with open(sys.argv[3]) as f:
+        with open(sys.argv[3], encoding='utf-8') as f:
             translations = json.load(f)
         filled = skipped = 0
         for e in po:
