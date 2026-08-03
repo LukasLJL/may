@@ -355,6 +355,47 @@ def create_app(config_class=Config):
                 return label
         return spec.label
 
+    @app.template_filter('money')
+    def money_filter(value):
+        """Format a money amount per the user's separator/rounding prefs (#134).
+
+        'period' grouping implies the European convention, so the decimal
+        separator becomes a comma.
+        """
+        if value is None:
+            value = 0
+        sep = 'none'
+        decimals = 2
+        if current_user and current_user.is_authenticated:
+            sep = getattr(current_user, 'thousand_separator', None) or 'none'
+            if getattr(current_user, 'round_costs', False):
+                decimals = 0
+        s = f"{value:,.{decimals}f}"
+        if sep == 'none':
+            return s.replace(',', '')
+        if sep == 'space':
+            return s.replace(',', '\u202f')
+        if sep == 'period':
+            return s.replace('.', '\x00').replace(',', '.').replace('\x00', ',')
+        return s
+
+    @app.template_filter('groupnum')
+    def groupnum_filter(value, decimals=0):
+        """Group a non-currency number per the user's separator pref (#134)."""
+        if value is None:
+            value = 0
+        sep = 'none'
+        if current_user and current_user.is_authenticated:
+            sep = getattr(current_user, 'thousand_separator', None) or 'none'
+        s = f"{value:,.{decimals}f}"
+        if sep == 'none':
+            return s.replace(',', '')
+        if sep == 'space':
+            return s.replace(',', '\u202f')
+        if sep == 'period':
+            return s.replace('.', '\x00').replace(',', '.').replace('\x00', ',')
+        return s
+
     @app.template_filter('format_date')
     def format_date_filter(value, style='default'):
         if value is None:
@@ -366,7 +407,7 @@ def create_app(config_class=Config):
         fmt = formats.get(style, formats['default'])
         return value.strftime(fmt)
 
-    from app.routes import main, auth, vehicles, fuel, expenses, api, reminders, maintenance, documents, stations, recurring, homeassistant, calendar, trips, charging, notes, allowance
+    from app.routes import main, auth, vehicles, fuel, expenses, api, reminders, maintenance, documents, stations, recurring, homeassistant, calendar, trips, charging, notes, allowance, search
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(vehicles.bp)
@@ -384,6 +425,7 @@ def create_app(config_class=Config):
     app.register_blueprint(charging.bp)
     app.register_blueprint(notes.bp)
     app.register_blueprint(allowance.bp)
+    app.register_blueprint(search.bp)
 
     # Health check endpoint for container orchestration
     @app.route('/health')
