@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from datetime import datetime, timedelta
 from sqlalchemy import func
 from app import db
-from app.models import Vehicle, FuelLog, Expense, ChargingSession, FuelPriceHistory, FuelStation, MileageAllowance
+from app.models import Vehicle, FuelLog, Expense, ChargingSession, FuelPriceHistory, FuelStation, MileageAllowance, EXPENSE_CATEGORIES
 
 bp = Blueprint('main', __name__)
 
@@ -225,7 +225,7 @@ def timeline(vehicle_id):
             'date': expense.date,
             'type': 'expense',
             'title': expense.description,
-            'description': expense.category.capitalize(),
+            'description': str(dict(EXPENSE_CATEGORIES).get(expense.category, expense.category.capitalize())),
             'cost': expense.cost or 0,
             'odometer': expense.odometer
         })
@@ -243,15 +243,25 @@ def timeline(vehicle_id):
     # Sort by date descending
     timeline_events.sort(key=lambda x: x['date'], reverse=True)
 
-    # Prepare chart data - monthly costs
+    # Prepare chart data - monthly costs for the last 12 calendar months.
+    # Walk real calendar months rather than 30-day steps: fixed-size steps
+    # drift against month boundaries, duplicating some months and skipping
+    # others in the chart (#270).
     chart_data = {'labels': [], 'fuel': [], 'expenses': [], 'charging': []}
-    for i in range(11, -1, -1):
-        date = datetime.now() - timedelta(days=i * 30)
-        month_start = date.replace(day=1)
-        if date.month == 12:
-            month_end = date.replace(year=date.year + 1, month=1, day=1)
+    today = datetime.now()
+    months = []
+    year, month = today.year, today.month
+    for _ in range(12):
+        months.append((year, month))
+        month -= 1
+        if month == 0:
+            year, month = year - 1, 12
+    for year, month in reversed(months):
+        month_start = datetime(year, month, 1)
+        if month == 12:
+            month_end = datetime(year + 1, 1, 1)
         else:
-            month_end = date.replace(month=date.month + 1, day=1)
+            month_end = datetime(year, month + 1, 1)
 
         chart_data['labels'].append(month_start.strftime('%b %Y'))
 
