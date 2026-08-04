@@ -1000,7 +1000,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         scales: {
                             y: {
-                                beginAtZero: false
+                                beginAtZero: false,
+                                title: {
+                                    display: true,
+                                    text: {{ current_user.consumption_unit|tojson }}
+                                }
                             }
                         }
                     }
@@ -1034,7 +1038,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         },
                         scales: {
                             y: {
-                                beginAtZero: false
+                                beginAtZero: false,
+                                title: {
+                                    display: true,
+                                    text: {{ (current_user.currency + '/' + current_user.volume_unit)|tojson }}
+                                }
                             }
                         }
                     }

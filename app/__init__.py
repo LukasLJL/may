@@ -453,10 +453,24 @@ def create_app(config_class=Config):
         # at — issue #166 stalled on triage because nothing in the worker
         # boot trace identified the image version.
         _log_startup_banner(app)
+        from sqlalchemy import inspect as _sa_inspect
+        _fresh_db = 'users' not in _sa_inspect(db.engine).get_table_names()
         db.create_all()
-        # Stamp alembic_version for pre-Flask-Migrate databases so future
-        # `flask db upgrade` runs apply only pending migrations.
-        _bootstrap_alembic_version(app)
+        if _fresh_db:
+            # A fresh database just received the complete current schema from
+            # create_all(), so stamp head: replaying historical migrations on
+            # top of it re-adds existing columns, and the batch rebuild in
+            # 42b26bf6d488 crashes with a CircularDependencyError (#278).
+            from flask_migrate import stamp
+            try:
+                stamp()
+                app.logger.info('Stamped alembic head for fresh database')
+            except Exception as e:
+                app.logger.warning(f'Could not stamp alembic head: {e}')
+        else:
+            # Stamp alembic_version for pre-Flask-Migrate databases so future
+            # `flask db upgrade` runs apply only pending migrations.
+            _bootstrap_alembic_version(app)
         # Run schema migrations for new columns on existing tables
         _run_schema_migrations(app)
         # Create default admin user if no users exist
