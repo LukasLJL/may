@@ -25,6 +25,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   specifications, fuel logs and expenses. Vehicles with no parts recorded are
   unchanged. ([#235](https://github.com/dannymcc/may/issues/235))
 
+### Fixed
+
+- Hybrid fill-ups no longer appear as a "hybrid" series in the fuel station
+  price charts. Hybrid is how a vehicle is driven, not what goes in the tank,
+  so a fill-up is now recorded against petrol by default; the fuel type
+  selector on the fuel form is offered for hybrids and plug-in hybrids so
+  diesel hybrid owners can pick diesel instead. Changing a saved log's fuel
+  type now moves its price history row to match. Existing price history is
+  left as it stands. ([#268](https://github.com/dannymcc/may/issues/268))
+
 ## [0.28.0] - 2026-08-23
 
 ### Added

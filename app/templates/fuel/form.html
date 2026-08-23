@@ -224,10 +224,24 @@ function updateFuelTypeSelector(selectedOption) {
     const primaryFuel = selectedOption.getAttribute('data-primary-fuel') || '';
     const secondaryFuel = selectedOption.getAttribute('data-secondary-fuel') || '';
     const fuelLabels = {{ dict(fuel_types)|tojson }};
+    // A hybrid isn't a fuel, so offer the fuels one can actually burn (#268).
+    // Petrol comes first as the common case; diesel hybrid owners pick diesel
+    // and the station price charts then show the right series.
+    const propulsionFuels = {
+        'hybrid': ['petrol', 'diesel'],
+        'plugin_hybrid': ['petrol', 'diesel']
+    };
 
+    let choices = [];
     if (secondaryFuel) {
-        fuelTypeSelect.innerHTML = '';
-        [primaryFuel, secondaryFuel].forEach(function(value) {
+        choices = [primaryFuel, secondaryFuel];
+    } else if (propulsionFuels[primaryFuel]) {
+        choices = propulsionFuels[primaryFuel];
+    }
+
+    fuelTypeSelect.innerHTML = '';
+    if (choices.length) {
+        choices.forEach(function(value) {
             const opt = document.createElement('option');
             opt.value = value;
             opt.textContent = fuelLabels[value] || value;
@@ -239,7 +253,6 @@ function updateFuelTypeSelector(selectedOption) {
         fuelTypeField.classList.remove('hidden');
     } else {
         fuelTypeField.classList.add('hidden');
-        fuelTypeSelect.innerHTML = '';
     }
 }
 

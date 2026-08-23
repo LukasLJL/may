@@ -1037,6 +1037,28 @@ FUEL_TYPES = [
     ('other', _l('Other'))
 ]
 
+# Some vehicle "fuel types" describe how the vehicle is propelled rather than
+# what goes in the tank. Station price history is charted per fuel type, so a
+# hybrid fill-up has to be recorded against the fuel it actually burns (#268).
+# Diesel hybrids are the rarer case, so petrol is the default; owners of one
+# can pick diesel per fill-up with the fuel type selector on the fuel form.
+PROPULSION_TO_FUEL = {
+    'hybrid': 'petrol',
+    'plugin_hybrid': 'petrol',
+}
+
+
+def resolve_price_fuel_type(log_fuel_type, vehicle_fuel_type):
+    """Return the fuel type to record on a station price history row.
+
+    The fuel type chosen on the log wins; otherwise the vehicle's own fuel
+    type is used. Either way a propulsion type is mapped to the fuel it
+    burns so the station price charts only ever show real fuels.
+    """
+    fuel_type = log_fuel_type or vehicle_fuel_type
+    return PROPULSION_TO_FUEL.get(fuel_type, fuel_type) or 'petrol'
+
+
 # Reminder types
 REMINDER_TYPES = [
     ('mot', _l('MOT/Inspection')),

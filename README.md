@@ -190,6 +190,7 @@ Track every fill-up with:
 - Total cost and price per unit
 - Full tank indicator for accurate consumption calculations
 - Automatic MPG/L per 100km calculations
+- Fuel type selection for vehicles that take more than one fuel, including hybrids (petrol or diesel), so station price charts stay grouped by the fuel actually bought
 
 ### Expenses
 Categorize all vehicle-related costs:

@@ -2,7 +2,9 @@ import re
 import pytest
 from datetime import date
 from app import db
-from app.models import FuelLog, FuelStation, FuelPriceHistory, Vehicle
+from app.models import (
+    FuelLog, FuelStation, FuelPriceHistory, Vehicle, resolve_price_fuel_type,
+)
 
 
 class TestFuelIndex:
@@ -783,3 +785,124 @@ class TestFuelStationSync:
         assert '"fuel_type": "diesel"' in html
         # ...and the chart groups by fuel type instead of one flat series.
         assert 'byType' in html
+
+
+@pytest.fixture
+def hybrid_vehicle(app, test_user):
+    vehicle = Vehicle(
+        owner_id=test_user.id,
+        name='Hybrid Car',
+        vehicle_type='car',
+        fuel_type='hybrid',
+        odometer_unit='km',
+    )
+    db.session.add(vehicle)
+    db.session.commit()
+    return vehicle
+
+
+class TestPriceHistoryFuelType:
+    """Issue #268: hybrid is a propulsion type, not a fuel, so it must never
+    become its own series in the station price charts."""
+
+    def test_resolve_price_fuel_type(self):
+        assert resolve_price_fuel_type(None, 'hybrid') == 'petrol'
+        assert resolve_price_fuel_type(None, 'plugin_hybrid') == 'petrol'
+        assert resolve_price_fuel_type(None, 'diesel') == 'diesel'
+        assert resolve_price_fuel_type('diesel', 'hybrid') == 'diesel'
+        # An explicitly logged 'hybrid' is still mapped to a real fuel.
+        assert resolve_price_fuel_type('hybrid', 'hybrid') == 'petrol'
+        # No fuel type anywhere falls back to petrol, as before.
+        assert resolve_price_fuel_type(None, None) == 'petrol'
+
+    def test_hybrid_fill_up_records_petrol(
+            self, auth_client, hybrid_vehicle, sample_station):
+        auth_client.post('/fuel/new', data={
+            'vehicle_id': str(hybrid_vehicle.id),
+            'date': '2024-04-01',
+            'odometer': '20000',
+            'volume': '35',
+            'price_per_unit': '1.55',
+            'total_cost': '54.25',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        history = FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id, price_per_unit=1.55).first()
+        assert history is not None
+        assert history.fuel_type == 'petrol'
+
+    def test_hybrid_quick_log_records_petrol(
+            self, auth_client, hybrid_vehicle, sample_station):
+        auth_client.post('/fuel/quick', data={
+            'vehicle_id': str(hybrid_vehicle.id),
+            'odometer': '21000',
+            'volume': '30',
+            'price_per_unit': '1.58',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        history = FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id, price_per_unit=1.58).first()
+        assert history is not None
+        assert history.fuel_type == 'petrol'
+
+    def test_explicit_fuel_type_wins_for_hybrid(
+            self, auth_client, hybrid_vehicle, sample_station):
+        """A diesel hybrid owner picks diesel on the form and it sticks."""
+        auth_client.post('/fuel/new', data={
+            'vehicle_id': str(hybrid_vehicle.id),
+            'date': '2024-04-02',
+            'odometer': '22000',
+            'volume': '40',
+            'price_per_unit': '1.72',
+            'total_cost': '68.80',
+            'fuel_type': 'diesel',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        history = FuelPriceHistory.query.filter_by(
+            station_id=sample_station.id, price_per_unit=1.72).first()
+        assert history is not None
+        assert history.fuel_type == 'diesel'
+
+    def test_edit_updates_price_history_fuel_type(
+            self, auth_client, hybrid_vehicle, sample_station):
+        auth_client.post('/fuel/new', data={
+            'vehicle_id': str(hybrid_vehicle.id),
+            'date': '2024-04-03',
+            'odometer': '23000',
+            'volume': '38',
+            'price_per_unit': '1.60',
+            'total_cost': '60.80',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        log = FuelLog.query.filter_by(vehicle_id=hybrid_vehicle.id).order_by(
+            FuelLog.id.desc()).first()
+        history = FuelPriceHistory.query.filter_by(fuel_log_id=log.id).first()
+        assert history.fuel_type == 'petrol'
+
+        auth_client.post(f'/fuel/{log.id}/edit', data={
+            'vehicle_id': str(hybrid_vehicle.id),
+            'date': '2024-04-03',
+            'odometer': '23000',
+            'volume': '38',
+            'price_per_unit': '1.60',
+            'total_cost': '60.80',
+            'fuel_type': 'diesel',
+            'station_id': str(sample_station.id),
+            'station': sample_station.name,
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+
+        db.session.refresh(history)
+        assert history.fuel_type == 'diesel'
