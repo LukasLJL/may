@@ -313,6 +313,28 @@
     </table>
     {% endif %}
 
+    {% if parts %}
+    <h3>Parts ({{ parts|length }})</h3>
+    <table>
+        <tr>
+            <th style="width: 25%">Part</th>
+            <th style="width: 20%">Type</th>
+            <th>Specification</th>
+            <th class="text-right">Quantity</th>
+            <th>Part Number</th>
+        </tr>
+        {% for part in parts %}
+        <tr>
+            <td>{{ part.name }}</td>
+            <td>{{ part_type_labels.get(part.part_type, part.part_type) if part_type_labels else part.part_type }}</td>
+            <td>{{ part.specification or '-' }}</td>
+            <td class="text-right">{% if part.quantity %}{{ part.quantity }}{% if part.unit %} {{ part.unit }}{% endif %}{% else %}-{% endif %}</td>
+            <td>{{ part.part_number or '-' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
     {% if vehicle.notes %}
     <div class="notes">
         <div class="notes-title">Notes</div>
