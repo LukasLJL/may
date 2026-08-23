@@ -480,6 +480,7 @@ def report(vehicle_id):
     fuel_logs = vehicle.fuel_logs.order_by(FuelLog.date.desc(), FuelLog.odometer.desc()).all()
     expenses = vehicle.expenses.order_by(Expense.date.desc()).all()
     specs = vehicle.specs.all()
+    parts = vehicle.parts.order_by(VehiclePart.part_type, VehiclePart.name).all()
 
     # Calculate statistics
     stats = {
@@ -511,6 +512,8 @@ def report(vehicle_id):
         fuel_logs=fuel_logs,
         expenses=expenses,
         specs=specs,
+        parts=parts,
+        part_type_labels=dict(PART_TYPES),
         stats=stats,
         user=current_user,
         branding=branding,

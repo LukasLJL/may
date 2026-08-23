@@ -180,7 +180,7 @@ Add and manage your vehicles with detailed information:
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle
-- **PDF Report**: The "PDF" button downloads a summary of the vehicle, its fuel logs and its expenses. "PDF + Receipts" does the same and appends the receipt images attached to those entries, which is the version to hand to an accountant or employer. Non-image attachments (PDF scans, for example) are listed at the end of the report rather than embedded.
+- **PDF Report**: The "PDF" button downloads a summary of the vehicle, its specifications, its parts and consumables, its fuel logs and its expenses. "PDF + Receipts" does the same and appends the receipt images attached to those entries, which is the version to hand to an accountant or employer. Non-image attachments (PDF scans, for example) are listed at the end of the report rather than embedded.
 
 ### Fuel Logs
 Track every fill-up with:
