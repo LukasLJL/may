@@ -237,6 +237,8 @@ Save your favorite stations:
 - Quick selection during fuel logging
 - Track prices at different stations
 - Notes and location information
+- UK stations can pull live prices from the government fuel price feeds
+  (see [UK Fuel Prices](#uk-fuel-prices))
 
 ### Notifications
 Configure your preferred notification method:
@@ -251,6 +253,7 @@ Administrators can configure:
 - **SMTP Settings**: Email server for notifications
 - **Pushover**: Application token for push notifications
 - **DVLA API**: API key for UK vehicle lookups ([get one here](https://developer-portal.driver-vehicle-licensing.api.gov.uk/))
+- **UK Fuel Prices**: live forecourt prices for saved stations (see below)
 - **Branding**: Custom logo, app name, tagline, and primary color
 - **User Management**: Create, edit, and manage user accounts
 
@@ -268,6 +271,33 @@ Vehicles, fuel logs, expenses, trips, and charging sessions can all be read and
 created through the API. See the API documentation at `/api/docs` when logged in.
 
 ## 🔗 Integrations
+
+### UK Fuel Prices
+
+UK retailers publish their forecourt prices as open JSON feeds under the
+government [fuel price transparency scheme](https://www.gov.uk/guidance/access-the-latest-fuel-prices-and-forecourt-data-via-api-or-email).
+May can read those feeds and record the prices against your saved stations, so
+price history and Cheapest Fuel stay current without manual entry. No API key is
+needed.
+
+To use it:
+
+1. An admin enables it in **Settings → Integrations → UK Fuel Prices**.
+2. Give each saved station its postcode — that is what stations are matched on.
+   Where a postcode covers more than one forecourt, coordinates (if set) and
+   then brand break the tie.
+3. Prices refresh in the background every six hours, and on demand with the
+   **Update UK Prices** button on the Fuel Stations page or on a single
+   station's price history.
+
+Prices are stored one row per station, fuel type and day, so re-running the
+refresh updates the day's entry rather than adding duplicates. Premium grades
+are recorded separately (E5 as "Petrol Premium", SDV as "Diesel Premium").
+
+The built-in retailer list follows the gov.uk guidance page. Retailers join and
+leave the scheme, so the settings panel takes an optional override — one feed
+per line, either `Retailer name|https://...` or a bare URL. A feed that is
+unreachable is reported and the rest still apply.
 
 ### Home Assistant
 Create vehicle sensors in Home Assistant:

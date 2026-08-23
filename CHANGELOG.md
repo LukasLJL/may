@@ -23,6 +23,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   editing an expense, and the expandable row in the expense list links to each
   one. Files rejected for an unsupported extension are now reported rather than
   dropped silently. ([#234](https://github.com/dannymcc/may/issues/234))
+- UK fuel prices. Admins can switch on the government fuel price feeds in
+  Settings → Integrations → UK Fuel Prices; saved stations are then matched to
+  forecourts by postcode and their prices recorded, feeding the existing price
+  history and Cheapest Fuel screens. Refreshes run every six hours in the
+  background, or on demand from the Fuel Stations page. No API key is needed,
+  and the retailer feed list can be overridden.
+  ([#258](https://github.com/dannymcc/may/issues/258))
 - API v1 endpoints for trips and charging sessions: list, create, read, update
   and delete under `/api/v1/vehicles/{id}/trips`, `/api/v1/trips/{id}`,
   `/api/v1/vehicles/{id}/charging` and `/api/v1/charging/{id}`, plus
