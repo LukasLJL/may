@@ -21,6 +21,9 @@ from app.models import (
     TRIP_PURPOSES, CHARGER_TYPES
 )
 from app.services.tessie import TessieService
+from app.services.backup_restore import (
+    BackupError, SECTION_LABELS, describe_backup, read_backup, restore_backup
+)
 from app.utils import parse_decimal
 from flask_babel import gettext as _
 from config import APP_VERSION
@@ -3604,5 +3607,103 @@ def csv_import_execute():
         flash(_('Import failed: %(error)s') % {'error': str(e)}, 'error')
     finally:
         _cleanup_temp_file(temp_file)
+
+    return redirect(url_for('auth.settings') + '#integrations')
+
+
+# =============================================================================
+# May Backup Restore (JSON export or full ZIP backup)
+# =============================================================================
+
+BACKUP_RESTORE_SESSION_KEY = 'backup_restore_temp_file'
+
+
+def _save_backup_upload(file):
+    """Save an uploaded backup to a temp file and return its path."""
+    suffix = '.zip' if (file.filename or '').lower().endswith('.zip') else '.json'
+    tmp_dir = current_app.instance_path if os.path.isdir(current_app.instance_path) else None
+    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False, dir=tmp_dir) as tmp:
+        file.save(tmp.name)
+        return tmp.name
+
+
+@bp.route('/import/backup')
+@login_required
+def backup_restore_upload():
+    """Backup restore - step 1: upload form."""
+    return render_template('import/backup_upload.html')
+
+
+@bp.route('/import/backup/preview', methods=['POST'])
+@login_required
+def backup_restore_preview():
+    """Backup restore - step 2: show what would be added before anything is written."""
+    if 'file' not in request.files or not request.files['file'].filename:
+        flash(_('No backup file uploaded.'), 'error')
+        return redirect(url_for('api.backup_restore_upload'))
+
+    # Drop any backup left over from an abandoned restore
+    _cleanup_temp_file(session.pop(BACKUP_RESTORE_SESSION_KEY, None))
+
+    tmp_path = _save_backup_upload(request.files['file'])
+
+    try:
+        data, zip_path = read_backup(tmp_path)
+        summary = restore_backup(
+            data, current_user,
+            zip_path=zip_path,
+            upload_folder=current_app.config['UPLOAD_FOLDER'],
+            dry_run=True
+        )
+    except BackupError as e:
+        _cleanup_temp_file(tmp_path)
+        flash(str(e), 'error')
+        return redirect(url_for('api.backup_restore_upload'))
+    except Exception as e:
+        _cleanup_temp_file(tmp_path)
+        logger.error("Backup restore preview failed: %s\n%s", e, traceback.format_exc())
+        flash(_('Could not read that backup: %(error)s') % {'error': e}, 'error')
+        return redirect(url_for('api.backup_restore_upload'))
+
+    session[BACKUP_RESTORE_SESSION_KEY] = tmp_path
+
+    return render_template('import/backup_preview.html',
+                           summary=summary,
+                           section_labels=SECTION_LABELS,
+                           backup_info=describe_backup(data),
+                           is_full_backup=zip_path is not None)
+
+
+@bp.route('/import/backup/execute', methods=['POST'])
+@login_required
+def backup_restore_execute():
+    """Backup restore - step 3: merge the backup into the current account."""
+    tmp_path = session.pop(BACKUP_RESTORE_SESSION_KEY, None)
+
+    if not tmp_path or not os.path.exists(tmp_path):
+        flash(_('The uploaded backup has expired. Please upload it again.'), 'error')
+        return redirect(url_for('api.backup_restore_upload'))
+
+    try:
+        data, zip_path = read_backup(tmp_path)
+        summary = restore_backup(
+            data, current_user,
+            zip_path=zip_path,
+            upload_folder=current_app.config['UPLOAD_FOLDER'],
+            dry_run=False
+        )
+        logger.info("Backup restore finished for user %s: %s added, %s already present",
+                    current_user.id, summary['total_added'], summary['total_skipped'])
+        flash(_('Backup restored: %(added)s records added, %(skipped)s already present and left alone.') % {
+            'added': summary['total_added'], 'skipped': summary['total_skipped']}, 'success')
+    except BackupError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('api.backup_restore_upload'))
+    except Exception as e:
+        db.session.rollback()
+        logger.error("Backup restore failed: %s\n%s", e, traceback.format_exc())
+        flash(_('Restore failed: %(error)s') % {'error': e}, 'error')
+    finally:
+        _cleanup_temp_file(tmp_path)
 
     return redirect(url_for('auth.settings') + '#integrations')

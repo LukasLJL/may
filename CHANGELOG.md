@@ -12,6 +12,15 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ### Added
 
+- Restoring a May backup. Settings → Integrations → Import Data now has a
+  "Restore May Backup" option that accepts both the JSON export and the full
+  backup ZIP produced by the export page, so data can be moved from an old
+  instance into a new one. Documents, attachments and vehicle images come
+  across from a full backup ZIP; a JSON export carries the records only.
+  The restore always merges into the signed-in account: nothing is deleted or
+  overwritten, and records already present are skipped rather than duplicated.
+  A preview showing exactly what will be added is displayed before anything is
+  written. ([#265](https://github.com/dannymcc/may/issues/265))
 - UK fuel prices. Admins can switch on the government fuel price feeds in
   Settings → Integrations → UK Fuel Prices; saved stations are then matched to
   forecourts by postcode and their prices recorded, feeding the existing price
