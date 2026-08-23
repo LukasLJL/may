@@ -25,6 +25,7 @@ LANGUAGES = {
     'de': 'Deutsch',
     'es': 'Español',
     'fr': 'Français',
+    'hu': 'Magyar',
     'it': 'Italiano',
     'nl': 'Nederlands',
     'pt': 'Português',

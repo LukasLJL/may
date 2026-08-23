@@ -409,7 +409,7 @@ May is available in the following languages:
 | Portuguese (Português) | `pt` | Korean (한국어) | `ko` |
 | Polish (Polski) | `pl` | Czech (Čeština) | `cs` |
 | Russian (Русский) | `ru` | Turkish (Türkçe) | `tr` |
-| Arabic (العربية) | `ar` | | |
+| Arabic (العربية) | `ar` | Hungarian (Magyar) | `hu` |
 
 You can change your language in **Settings > Units & Values > Language**.
 

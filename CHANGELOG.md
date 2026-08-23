@@ -10,6 +10,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- Hungarian is selectable again. The translation was merged but the language
+  was never added to the list the settings picker and Babel read from, so it
+  could not be chosen and never rendered.
+  ([#300](https://github.com/dannymcc/may/issues/300))
+
 ## [0.33.0] - 2026-08-23
 
 ### Added
