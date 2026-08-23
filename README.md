@@ -306,14 +306,16 @@ May is available in the following languages:
 
 | Language | Code | Language | Code |
 |----------|------|----------|------|
-| English | `en` | Swedish | `sv` |
+| English | `en` | Swedish (Svenska) | `sv` |
 | German (Deutsch) | `de` | Danish (Dansk) | `da` |
 | Spanish (Español) | `es` | Norwegian (Norsk) | `no` |
 | French (Français) | `fr` | Finnish (Suomi) | `fi` |
 | Italian (Italiano) | `it` | Japanese (日本語) | `ja` |
 | Dutch (Nederlands) | `nl` | Chinese (中文) | `zh` |
 | Portuguese (Português) | `pt` | Korean (한국어) | `ko` |
-| Polish (Polski) | `pl` | | |
+| Polish (Polski) | `pl` | Czech (Čeština) | `cs` |
+| Russian (Русский) | `ru` | Turkish (Türkçe) | `tr` |
+| Arabic (العربية) | `ar` | | |
 
 You can change your language in **Settings > Units & Values > Language**.
 
