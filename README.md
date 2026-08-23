@@ -43,7 +43,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **🌍 Internationalization**: Available in multiple languages (English, German, Spanish, French, and more)
 - **🎨 Custom Branding**: Personalize with your own logo, colors, and app name
 - **🌙 Dark Mode**: Toggle between light and dark themes
-- **📥 Import/Export**: Import from Fuelly CSV, export all data as JSON or CSV
+- **📥 Import/Export**: Restore a May backup (JSON export or full ZIP) into another instance, import from Fuelly CSV, export all data as JSON or CSV
 - **🇬🇧 DVLA Integration**: Look up UK vehicle MOT and tax status automatically
 - **⛽ UK Fuel Prices**: Pull live forecourt prices for your saved UK stations from the government fuel price feeds, no API key needed
 - **📱 PWA Support**: Install as a mobile app with offline capabilities
@@ -177,7 +177,7 @@ Add and manage your vehicles with detailed information:
 - Make, model, year, and registration
 - Fuel type and tank capacity
 - Custom specifications and notes
-- Photo upload support
+- **Photo Gallery**: Upload as many photos per vehicle as you like from the "Photos" section on the vehicle page. Any of them can be set as the main photo — the one shown on the dashboard and vehicle list — and the vehicle page steps through the rest with left/right arrows
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle
@@ -189,6 +189,7 @@ Track every fill-up with:
 - Total cost and price per unit
 - Full tank indicator for accurate consumption calculations
 - Automatic MPG/L per 100km calculations
+- Fuel type selection for vehicles that take more than one fuel, including hybrids (petrol or diesel), so station price charts stay grouped by the fuel actually bought
 
 ### Expenses
 Categorize all vehicle-related costs:
@@ -248,6 +249,21 @@ Configure your preferred notification method:
 - **Pushover**: iOS/Android push notifications
 - **Webhook**: HTTP POST for Home Assistant, Discord, Slack, etc.
 
+### Import & Restore
+**Settings → Integrations → Import Data** holds the import options, including
+**Restore May Backup** for moving data from another May instance:
+
+- It takes either file the export page produces — the JSON export (`.json`) or
+  the full backup (`.zip`). A full backup also brings across documents,
+  attachments and vehicle images; a JSON export carries the records only.
+- The restore merges into the account you are signed in as. Nothing is deleted
+  or overwritten, and records already present are skipped rather than
+  duplicated, so running the same backup twice is harmless.
+- A preview of exactly what will be added is shown before anything is written,
+  and nothing is saved until you confirm it.
+
+Imports from Hammond and Fuelly live in the same place.
+
 ## 🔧 Admin Settings
 
 Administrators can configure:
@@ -284,10 +300,15 @@ needed.
 To use it:
 
 1. An admin enables it in **Settings → Integrations → UK Fuel Prices**.
-2. Give each saved station its postcode — that is what stations are matched on.
-   Where a postcode covers more than one forecourt, coordinates (if set) and
-   then brand break the tie.
-3. Prices refresh in the background every six hours, and on demand with the
+2. Give each saved station its postcode — that is what stations are matched on
+   the first time. Where a postcode covers more than one forecourt, coordinates
+   (if set) and then brand break the tie.
+3. Once a station has been matched, May remembers which forecourt it stands for
+   and goes straight to it on later refreshes, so a station keeps reporting the
+   same forecourt even if its postcode is edited. A remembered forecourt that
+   drops out of the feed is reported as unmatched rather than quietly resolving
+   to a different one.
+4. Prices refresh in the background every six hours, and on demand with the
    **Update UK Prices** button on the Fuel Stations page or on a single
    station's price history.
 

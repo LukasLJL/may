@@ -28,6 +28,42 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def _upload_path(filename):
+    return os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+
+
+def _delete_upload(filename):
+    """Remove an uploaded file, ignoring one that has already gone."""
+    if not filename:
+        return
+    path = _upload_path(filename)
+    if os.path.exists(path):
+        os.remove(path)
+
+
+def _delete_unused_upload(filename):
+    """Remove an uploaded file unless a gallery photo still points at it.
+
+    The main image and the gallery share the uploads folder, and setting a
+    gallery photo as the main image reuses its file (#147), so a file may be
+    referenced by both.
+    """
+    if not filename:
+        return
+    if Attachment.query.filter_by(filename=filename).first():
+        return
+    _delete_upload(filename)
+
+
+def _vehicle_photos(vehicle):
+    """Gallery photos for a vehicle, oldest first (#147)."""
+    return vehicle.attachments.order_by(Attachment.id).all()
+
+
+def _owns_vehicle(vehicle):
+    return vehicle.owner_id == current_user.id or current_user.is_admin
+
+
 @bp.route('/')
 @login_required
 def index():
@@ -191,6 +227,8 @@ def view(vehicle_id):
                            today=today,
                            dvla_configured=dvla_configured,
                            tessie_configured=tessie_configured,
+                           photos=_vehicle_photos(vehicle),
+                           can_edit=_owns_vehicle(vehicle),
                            annual_mileage_stats=vehicle.get_annual_mileage_stats())
 
 
@@ -235,11 +273,8 @@ def edit(vehicle_id):
         if 'image' in request.files:
             file = request.files['image']
             if file and file.filename and allowed_file(file.filename):
-                # Delete old image
-                if vehicle.image_filename:
-                    old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], vehicle.image_filename)
-                    if os.path.exists(old_path):
-                        os.remove(old_path)
+                # Delete the old image, unless it is also a gallery photo
+                _delete_unused_upload(vehicle.image_filename)
 
                 filename = f"{uuid.uuid4().hex}_{secure_filename(file.filename)}"
                 file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
@@ -291,16 +326,141 @@ def delete(vehicle_id):
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.index'))
 
-    # Delete image
-    if vehicle.image_filename:
-        old_path = os.path.join(current_app.config['UPLOAD_FOLDER'], vehicle.image_filename)
-        if os.path.exists(old_path):
-            os.remove(old_path)
+    # Delete the main image and every gallery photo (#147)
+    _delete_upload(vehicle.image_filename)
+    for photo in _vehicle_photos(vehicle):
+        _delete_upload(photo.filename)
 
     db.session.delete(vehicle)
     db.session.commit()
     flash(_('Vehicle deleted successfully'), 'success')
     return redirect(url_for('vehicles.index'))
+
+
+@bp.route('/<int:vehicle_id>/photos', methods=['POST'])
+@login_required
+def add_photos(vehicle_id):
+    """Add one or more photos to a vehicle's gallery (#147).
+
+    Photos are stored as attachments against the vehicle, which is the same
+    record type used for fuel and expense receipts, so they are already
+    covered by the backup export.
+    """
+    vehicle = Vehicle.query.get_or_404(vehicle_id)
+
+    if not _owns_vehicle(vehicle):
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('vehicles.index'))
+
+    skipped = []
+    saved = 0
+    for file in request.files.getlist('photo'):
+        if not file or not file.filename:
+            continue
+        if not allowed_file(file.filename):
+            skipped.append(file.filename)
+            continue
+
+        filename = f"{uuid.uuid4().hex}_{secure_filename(file.filename)}"
+        path = _upload_path(filename)
+        file.save(path)
+
+        db.session.add(Attachment(
+            filename=filename,
+            original_filename=file.filename,
+            file_type=file.filename.rsplit('.', 1)[1].lower(),
+            file_size=os.path.getsize(path) if os.path.exists(path) else None,
+            vehicle_id=vehicle.id
+        ))
+        saved += 1
+
+        # A vehicle with no picture yet gets its first photo as the main one
+        if not vehicle.image_filename:
+            vehicle.image_filename = filename
+
+    db.session.commit()
+
+    if skipped:
+        flash(_('These files were not saved because the file type is not '
+                'supported: %(names)s') % {'names': ', '.join(skipped)}, 'warning')
+    if saved == 1:
+        flash(_('Photo added'), 'success')
+    elif saved:
+        flash(_('%(count)s photos added') % {'count': saved}, 'success')
+    elif not skipped:
+        flash(_('No photos were selected'), 'info')
+
+    return redirect(url_for('vehicles.view', vehicle_id=vehicle.id) + '#photos')
+
+
+@bp.route('/<int:vehicle_id>/photos/<int:attachment_id>/primary', methods=['POST'])
+@login_required
+def set_primary_photo(vehicle_id, attachment_id):
+    """Use a gallery photo as the vehicle's main picture (#147)."""
+    vehicle = Vehicle.query.get_or_404(vehicle_id)
+
+    if not _owns_vehicle(vehicle):
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('vehicles.index'))
+
+    photo = Attachment.query.get_or_404(attachment_id)
+    if photo.vehicle_id != vehicle.id:
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('vehicles.view', vehicle_id=vehicle.id))
+
+    previous = vehicle.image_filename
+    if previous and previous != photo.filename and not Attachment.query.filter_by(
+            filename=previous).first():
+        # The outgoing main image was uploaded through the vehicle form and is
+        # not in the gallery. Keep it as a photo rather than losing it.
+        original = previous.split('_', 1)[1] if '_' in previous else previous
+        extension = original.rsplit('.', 1)[1].lower() if '.' in original else None
+        path = _upload_path(previous)
+        db.session.add(Attachment(
+            filename=previous,
+            original_filename=original,
+            file_type=extension,
+            file_size=os.path.getsize(path) if os.path.exists(path) else None,
+            vehicle_id=vehicle.id
+        ))
+
+    vehicle.image_filename = photo.filename
+    db.session.commit()
+    flash(_('Main photo updated'), 'success')
+    return redirect(url_for('vehicles.view', vehicle_id=vehicle.id) + '#photos')
+
+
+@bp.route('/<int:vehicle_id>/photos/<int:attachment_id>/delete', methods=['POST'])
+@login_required
+def delete_photo(vehicle_id, attachment_id):
+    """Remove a gallery photo (#147)."""
+    vehicle = Vehicle.query.get_or_404(vehicle_id)
+
+    if not _owns_vehicle(vehicle):
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('vehicles.index'))
+
+    photo = Attachment.query.get_or_404(attachment_id)
+    if photo.vehicle_id != vehicle.id:
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('vehicles.view', vehicle_id=vehicle.id))
+
+    was_main = vehicle.image_filename == photo.filename
+    filename = photo.filename
+
+    db.session.delete(photo)
+    db.session.flush()
+
+    if was_main:
+        # Fall back to another photo so the vehicle keeps a picture
+        remaining = _vehicle_photos(vehicle)
+        vehicle.image_filename = remaining[0].filename if remaining else None
+
+    db.session.commit()
+    _delete_unused_upload(filename)
+
+    flash(_('Photo deleted'), 'success')
+    return redirect(url_for('vehicles.view', vehicle_id=vehicle.id) + '#photos')
 
 
 @bp.route('/<int:vehicle_id>/share', methods=['GET', 'POST'])

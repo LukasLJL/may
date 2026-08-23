@@ -548,11 +548,22 @@
                     <div class="bg-white dark:bg-gray-800 shadow rounded-lg divide-y divide-gray-200 dark:divide-gray-700">
                         <div class="p-6">
                             <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ _('Import Data') }}</h2>
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ _('Import your data from other fuel tracking applications') }}</p>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ _('Restore a May backup, or import your data from other fuel tracking applications') }}</p>
                         </div>
 
                         <div class="p-6 space-y-4">
                             <div class="flex items-center justify-between py-3">
+                                <div>
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-white">{{ _('Restore May Backup') }}</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Restore a JSON export (.json) or full backup (.zip) from another May instance') }}</p>
+                                </div>
+                                <a href="{{ url_for('api.backup_restore_upload') }}"
+                                   class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 dark:bg-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
+                                    {{ _('Restore') }}
+                                </a>
+                            </div>
+
+                            <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-white">Hammond</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">Import from Hammond SQLite database (.db file)</p>

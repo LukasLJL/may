@@ -6,7 +6,10 @@ from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 from app import db
 from app.utils import parse_decimal
-from app.models import Vehicle, FuelLog, Attachment, FuelStation, FuelPriceHistory, FUEL_TYPES
+from app.models import (
+    Vehicle, FuelLog, Attachment, FuelStation, FuelPriceHistory, FUEL_TYPES,
+    resolve_price_fuel_type,
+)
 from app.security import (
     validate_file_upload, secure_filename_with_uuid, validate_positive_number,
     get_safe_redirect_url
@@ -131,7 +134,7 @@ def new():
                     user_id=current_user.id,
                     fuel_log_id=log.id,
                     date=log.date,
-                    fuel_type=log.fuel_type or vehicle.fuel_type or 'petrol',
+                    fuel_type=resolve_price_fuel_type(log.fuel_type, vehicle.fuel_type),
                     price_per_unit=log.price_per_unit
                 )
                 db.session.add(price_history)
@@ -240,6 +243,12 @@ def edit(log_id):
             else:
                 existing_entry.price_per_unit = log.price_per_unit
                 existing_entry.date = log.date
+                # Keep the charted fuel type in step with the log (#268):
+                # changing a fill-up from petrol to diesel has to move the
+                # price row onto the diesel series too.
+                existing_entry.fuel_type = resolve_price_fuel_type(
+                    log.fuel_type, log.vehicle.fuel_type
+                )
                 if station_id and existing_entry.station_id != station_id:
                     new_station = FuelStation.query.get(station_id)
                     if new_station:
@@ -259,7 +268,7 @@ def edit(log_id):
                     user_id=current_user.id,
                     fuel_log_id=log.id,
                     date=log.date,
-                    fuel_type=log.fuel_type or log.vehicle.fuel_type or 'petrol',
+                    fuel_type=resolve_price_fuel_type(log.fuel_type, log.vehicle.fuel_type),
                     price_per_unit=log.price_per_unit,
                 ))
                 new_station.increment_usage()
@@ -445,7 +454,7 @@ def quick():
                 user_id=current_user.id,
                 fuel_log_id=log.id,
                 date=log.date,
-                fuel_type=log.fuel_type or vehicle.fuel_type or 'petrol',
+                fuel_type=resolve_price_fuel_type(log.fuel_type, vehicle.fuel_type),
                 price_per_unit=log.price_per_unit,
             ))
             station.increment_usage()

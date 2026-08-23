@@ -8,6 +8,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This file starts at 0.28.0. Notes for earlier releases are on the
 [GitHub releases page](https://github.com/dannymcc/may/releases).
 
+## [0.30.0] - 2026-08-23
+
+### Added
+
+- Restoring a May backup. Settings → Integrations → Import Data now has a
+  "Restore May Backup" option that accepts both the JSON export and the full
+  backup ZIP produced by the export page, so data can be moved from an old
+  instance into a new one. Documents, attachments and vehicle images come
+  across from a full backup ZIP; a JSON export carries the records only.
+  The restore always merges into the signed-in account: nothing is deleted or
+  overwritten, and records already present are skipped rather than duplicated.
+  A preview showing exactly what will be added is displayed before anything is
+  written. ([#265](https://github.com/dannymcc/may/issues/265))
+- A photo gallery for vehicles. The vehicle page has a "Photos" section that
+  takes as many photos as you like, several at a time; any of them can be made
+  the main photo shown on the dashboard and vehicle list, and the header image
+  steps through the rest with left and right arrows. Photos are stored as
+  attachments against the vehicle, so they are already covered by the full
+  backup export. Deleting a vehicle removes its photos; deleting the main one
+  falls back to another photo, or clears the image if none are left.
+  ([#147](https://github.com/dannymcc/may/issues/147))
+
+### Changed
+
+- Saved fuel stations now remember which forecourt a live price feed matched
+  them to, rather than re-deriving it from postcode and address on every
+  refresh. A station therefore keeps reporting the same forecourt after its
+  postcode is edited, and a forecourt that drops out of the feed is reported as
+  unmatched instead of quietly resolving to a different one. This is
+  groundwork for the Tankerkönig integration; live German prices are not
+  available yet. ([#155](https://github.com/dannymcc/may/issues/155))
+
+### Fixed
+
+- Hybrid fill-ups no longer appear as a "hybrid" series in the fuel station
+  price charts. Hybrid is how a vehicle is driven, not what goes in the tank,
+  so a fill-up is now recorded against petrol by default; the fuel type
+  selector on the fuel form is offered for hybrids and plug-in hybrids so
+  diesel hybrid owners can pick diesel instead. Changing a saved log's fuel
+  type now moves its price history row to match. Existing price history is
+  left as it stands. ([#268](https://github.com/dannymcc/may/issues/268))
+
 ## [0.29.0] - 2026-08-23
 
 ### Added
