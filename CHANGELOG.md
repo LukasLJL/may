@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This file starts at 0.28.0. Notes for earlier releases are on the
 [GitHub releases page](https://github.com/dannymcc/may/releases).
 
-## [0.31.0] - 2026-08-23
+## [0.32.0] - 2026-08-23
 
 ### Added
 
@@ -22,13 +22,6 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   hidden rather than left to fail. What an account can see is unchanged and
   still follows vehicle ownership and sharing.
   ([#285](https://github.com/dannymcc/may/issues/285))
-- Fuel level on trips. A trip can now record the fuel gauge reading at each
-  end, as a percentage of a full tank, alongside the odometer readings. Where
-  the vehicle has a tank capacity set, May works out the fuel used on the trip
-  from the two readings and shows it on the trip list and while the trip is
-  being logged, giving a per-trip picture of consumption rather than only one
-  per fill-up. Both readings are optional, are carried in the API, CSV import
-  and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
 - Notes and attachments on the vehicle timeline. Each timeline entry now shows
   the note recorded against it, and fuel logs and expenses list their
   attachments as links, so the timeline can be read without opening every
@@ -41,6 +34,23 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   fuel logs, trips and charging sessions were considered, so registering
   maintenance left the last reading unchanged.
   ([#286](https://github.com/dannymcc/may/issues/286))
+
+### Changed
+
+- The API documentation page now describes what an API key may do under each
+  role, and lists the `permission_denied` error code alongside `forbidden`.
+
+## [0.31.0] - 2026-08-23
+
+### Added
+
+- Fuel level on trips. A trip can now record the fuel gauge reading at each
+  end, as a percentage of a full tank, alongside the odometer readings. Where
+  the vehicle has a tank capacity set, May works out the fuel used on the trip
+  from the two readings and shows it on the trip list and while the trip is
+  being logged, giving a per-trip picture of consumption rather than only one
+  per fill-up. Both readings are optional, are carried in the API, CSV import
+  and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
 
 ### Changed
 
