@@ -409,7 +409,7 @@ May is available in the following languages:
 | Portuguese (Português) | `pt` | Korean (한국어) | `ko` |
 | Polish (Polski) | `pl` | Czech (Čeština) | `cs` |
 | Russian (Русский) | `ru` | Turkish (Türkçe) | `tr` |
-| Arabic (العربية) | `ar` | | |
+| Arabic (العربية) | `ar` | Hungarian (Magyar) | `hu` |
 
 You can change your language in **Settings > Units & Values > Language**.
 
@@ -420,6 +420,19 @@ Translations were generated with AI assistance and may contain inaccuracies. If 
 1. Translation files are located in `app/translations/<lang>/LC_MESSAGES/messages.po`
 2. Edit the `msgstr` value for any incorrect entry
 3. Submit a pull request with your fix
+
+### Adding a Language
+
+A new catalogue is not offered until the language is registered:
+
+1. Create `app/translations/<lang>/LC_MESSAGES/messages.po` from
+   `app/translations/messages.pot` and translate it
+2. Compile it with `pybabel compile -d app/translations` so a `messages.mo`
+   sits beside the `.po`
+3. Add the code and its native name to `LANGUAGES` in `app/__init__.py` — this
+   is what the settings picker and the browser language negotiation read, so a
+   catalogue that is not listed there can never be selected
+4. Add the language to the table above
 
 ## 🛠️ Tech Stack
 

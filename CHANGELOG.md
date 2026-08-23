@@ -10,6 +10,26 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.33.1] - 2026-08-23
+
+### Fixed
+
+- Hungarian can now be chosen. The translation contributed by
+  [@burgatshow](https://github.com/burgatshow) in
+  [#290](https://github.com/dannymcc/may/pull/290) is now complete, but the
+  language code was never added to the list the settings picker and Babel read
+  from, so it did not appear in Settings and was never negotiated for browsers
+  asking for it. ([#300](https://github.com/dannymcc/may/issues/300))
+
+### Changed
+
+- The supported languages table in the README now lists Hungarian, and the
+  README explains that a new catalogue must also be registered in `LANGUAGES`
+  before it can be selected.
+- A test checks that every translation catalogue shipped in
+  `app/translations/` is listed in `LANGUAGES` and that every listed language
+  has a compiled catalogue behind it, so the two cannot drift apart again.
+
 ## [0.33.0] - 2026-08-23
 
 ### Added
