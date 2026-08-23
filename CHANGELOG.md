@@ -20,6 +20,14 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   per fill-up. Both readings are optional, are carried in the API, CSV import
   and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
 
+### Fixed
+
+- An odometer recorded against an expense, such as the reading taken at an oil
+  change, now counts towards the vehicle's latest odometer. Previously only
+  fuel logs, trips and charging sessions were considered, so registering
+  maintenance left the last reading unchanged.
+  ([#286](https://github.com/dannymcc/may/issues/286))
+
 ### Changed
 
 - The README feature list now mentions trip logging, which was missing from it.

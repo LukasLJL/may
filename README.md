@@ -202,7 +202,7 @@ Categorize all vehicle-related costs:
 - Accessories
 - Other expenses
 
-Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it.
+Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it. An odometer recorded against an expense counts towards the vehicle's latest reading, alongside fuel logs, trips and charging sessions.
 
 ### Trips
 Log journeys for mileage and tax records:

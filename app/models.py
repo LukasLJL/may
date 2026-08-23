@@ -432,7 +432,9 @@ class Vehicle(db.Model):
         """Get the most recent odometer reading.
 
         If Tessie is enabled for this vehicle, returns the Tessie odometer.
-        Otherwise, returns the highest from fuel logs, trips, or charging sessions.
+        Otherwise, returns the highest from fuel logs, trips, charging sessions
+        or expenses. Expenses count because a maintenance entry such as an oil
+        change records the odometer at the time of the work (#286).
 
         Args:
             distance_unit: If provided ('km' or 'mi'), converts Tessie odometer to
@@ -457,7 +459,11 @@ class Vehicle(db.Model):
             ChargingSession.odometer.desc()).first()
         charge_odo = last_charge.odometer if last_charge else 0
 
-        return max(fuel_odo, trip_odo, charge_odo)
+        last_expense = self.expenses.filter(Expense.odometer.isnot(None)).order_by(
+            Expense.odometer.desc()).first()
+        expense_odo = last_expense.odometer if last_expense else 0
+
+        return max(fuel_odo, trip_odo, charge_odo, expense_odo)
 
     def get_total_charging_cost(self):
         """Get total cost of all charging sessions"""
