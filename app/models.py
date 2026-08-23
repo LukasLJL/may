@@ -1297,9 +1297,28 @@ class RecurringExpense(db.Model):
         return today <= self.next_due <= today + timedelta(days=days)
 
 
+#: Price sources a station can be linked to. The key is stored in
+#: ``FuelStation.price_source``; the value is a human-readable label.
+PRICE_SOURCES = {
+    'uk_fuel_prices': 'UK Fuel Price Scheme',
+    'tankerkoenig': 'Tankerkönig',
+}
+
+
 class FuelStation(db.Model):
     """Favorite fuel stations"""
     __tablename__ = 'fuel_stations'
+
+    # A station may be linked to at most one forecourt per price source, and
+    # a forecourt to at most one of a user's stations. NULLs compare as
+    # distinct in SQLite, so unlinked stations are unaffected.
+    __table_args__ = (
+        db.Index(
+            'ix_fuel_stations_source_external_id',
+            'user_id', 'price_source', 'external_id',
+            unique=True,
+        ),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
@@ -1324,6 +1343,14 @@ class FuelStation(db.Model):
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # Live price provider this station stands for, if any. ``price_source``
+    # is a key from PRICE_SOURCES and ``external_id`` the provider's own id
+    # for the forecourt (a UK scheme site_id, a Tankerkönig station uuid,
+    # ...). Recording identity as stations are matched avoids having to
+    # re-derive it later from addresses and postcodes.
+    price_source = db.Column(db.String(30))
+    external_id = db.Column(db.String(64))
+
     # Relationships
     user = db.relationship('User', backref=db.backref('fuel_stations', lazy='dynamic'))
 
@@ -1331,6 +1358,48 @@ class FuelStation(db.Model):
         """Increment usage counter when station is used"""
         self.times_used = (self.times_used or 0) + 1
         self.last_used = datetime.utcnow()
+
+    @property
+    def price_source_label(self):
+        """Human-readable name of the linked price source, or None"""
+        if not self.price_source:
+            return None
+        return PRICE_SOURCES.get(self.price_source, self.price_source)
+
+    @classmethod
+    def find_by_external_id(cls, user_id, price_source, external_id):
+        """Return the user's station linked to a provider forecourt, or None"""
+        if not price_source or not external_id:
+            return None
+        return cls.query.filter_by(
+            user_id=user_id,
+            price_source=price_source,
+            external_id=str(external_id),
+        ).first()
+
+    def link_price_source(self, price_source, external_id):
+        """Link this station to a provider forecourt if that is unambiguous.
+
+        Does nothing when the station is already linked or when another of
+        the user's stations holds the same identity, so the unique index can
+        never be tripped by a heuristic match.
+
+        Returns:
+            bool: True if the link was recorded
+        """
+        if not price_source or not external_id:
+            return False
+        if self.price_source or self.external_id:
+            return False
+
+        external_id = str(external_id)
+        clash = self.find_by_external_id(self.user_id, price_source, external_id)
+        if clash is not None and clash is not self:
+            return False
+
+        self.price_source = price_source
+        self.external_id = external_id
+        return True
 
 
 class Document(db.Model):

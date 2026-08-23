@@ -284,10 +284,15 @@ needed.
 To use it:
 
 1. An admin enables it in **Settings → Integrations → UK Fuel Prices**.
-2. Give each saved station its postcode — that is what stations are matched on.
-   Where a postcode covers more than one forecourt, coordinates (if set) and
-   then brand break the tie.
-3. Prices refresh in the background every six hours, and on demand with the
+2. Give each saved station its postcode — that is what stations are matched on
+   the first time. Where a postcode covers more than one forecourt, coordinates
+   (if set) and then brand break the tie.
+3. Once a station has been matched, May remembers which forecourt it stands for
+   and goes straight to it on later refreshes, so a station keeps reporting the
+   same forecourt even if its postcode is edited. A remembered forecourt that
+   drops out of the feed is reported as unmatched rather than quietly resolving
+   to a different one.
+4. Prices refresh in the background every six hours, and on demand with the
    **Update UK Prices** button on the Fuel Stations page or on a single
    station's price history.
 

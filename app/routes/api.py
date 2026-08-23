@@ -2069,6 +2069,8 @@ def export_json():
             'longitude': station.longitude,
             'notes': station.notes,
             'is_favorite': station.is_favorite,
+            'price_source': station.price_source,
+            'external_id': station.external_id,
             'times_used': station.times_used,
             'last_used': station.last_used.isoformat() if station.last_used else None,
             'created_at': station.created_at.isoformat() if station.created_at else None
@@ -2394,6 +2396,8 @@ def export_full_backup():
             'longitude': station.longitude,
             'notes': station.notes,
             'is_favorite': station.is_favorite,
+            'price_source': station.price_source,
+            'external_id': station.external_id,
             'times_used': station.times_used,
             'last_used': station.last_used.isoformat() if station.last_used else None,
             'created_at': station.created_at.isoformat() if station.created_at else None

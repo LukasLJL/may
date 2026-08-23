@@ -258,6 +258,27 @@ def _run_schema_migrations(app):
                         f'Could not create {kind.lower()} {index_name}: {e}'
                     )
 
+            # Multi-column indexes declared in __table_args__ are not covered
+            # by the per-column pass above.
+            existing_cols = {col['name'] for col in inspector.get_columns(table.name)}
+            for index in table.indexes:
+                if index.name in existing_indexes:
+                    continue
+                index_cols = [c.name for c in index.columns]
+                if len(index_cols) < 2 or not existing_cols.issuperset(index_cols):
+                    continue
+                kind = 'UNIQUE INDEX' if index.unique else 'INDEX'
+                try:
+                    conn.execute(text(
+                        f'CREATE {kind} {index.name} ON {table.name} '
+                        f'({", ".join(index_cols)})'
+                    ))
+                    app.logger.info(f'Created {kind.lower()} {index.name}')
+                except Exception as e:
+                    app.logger.warning(
+                        f'Could not create {kind.lower()} {index.name}: {e}'
+                    )
+
 
 def get_locale():
     """Select the best language for the user"""
