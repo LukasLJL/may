@@ -45,6 +45,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **🌙 Dark Mode**: Toggle between light and dark themes
 - **📥 Import/Export**: Import from Fuelly CSV, export all data as JSON or CSV
 - **🇬🇧 DVLA Integration**: Look up UK vehicle MOT and tax status automatically
+- **⛽ UK Fuel Prices**: Pull live forecourt prices for your saved UK stations from the government fuel price feeds, no API key needed
 - **📱 PWA Support**: Install as a mobile app with offline capabilities
 - **🔌 REST API**: Full API access for integrations and automation
 - **🏠 Home Assistant Integration**: Create sensors and automations for your vehicles
