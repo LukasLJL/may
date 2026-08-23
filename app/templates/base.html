@@ -334,7 +334,9 @@
                                         {% if current_user.show_menu_notes is not defined or current_user.show_menu_notes %}
                                         <a href="{{ url_for('notes.index') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Notes') }}</a>
                                         {% endif %}
+                                        {% if can_write('fuel') %}
                                         <a href="{{ url_for('fuel.quick') }}" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Quick Fuel Entry') }}</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -344,12 +346,14 @@
                     <div class="hidden sm:ml-6 sm:flex sm:items-center space-x-2">
                         <!-- Quick Entry Button -->
                         {% if current_user.show_quick_entry %}
+                        {% if can_write('fuel') %}
                         <a href="{{ url_for('fuel.quick') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md shadow-sm" title="{{ _('Quick Fuel Entry') }}">
                             <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
                             <span>{{ _('Fuel') }}</span>
                         </a>
+                        {% endif %}
                         {% endif %}
                         <a href="{{ url_for('search.index') }}" class="p-2 text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white" title="{{ _('Search') }}">
                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -418,7 +422,9 @@
                     {% if current_user.show_menu_notes is not defined or current_user.show_menu_notes %}
                     <a href="{{ url_for('notes.index') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Notes') }}</a>
                     {% endif %}
+                    {% if can_write('fuel') %}
                     <a href="{{ url_for('fuel.quick') }}" class="block px-4 py-2 text-base font-medium text-primary-600 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Quick Fuel Entry') }}</a>
+                    {% endif %}
                     <a href="{{ url_for('auth.settings') }}" class="block px-4 py-2 text-base font-medium text-gray-500 dark:text-gray-400 dark:text-gray-300 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">{{ _('Settings') }}</a>
                     <a href="{{ url_for('auth.logout') }}" class="flex items-center gap-2 px-4 py-2 text-base font-medium text-red-500 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-700">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -231,6 +231,19 @@
                                     <p class="mt-1 text-sm text-gray-900 dark:text-white">{{ current_user.username }}</p>
                                 </div>
                                 <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Role') }}</label>
+                                    <p class="mt-1 text-sm text-gray-900 dark:text-white">{{ current_user.role_label }}</p>
+                                    {% if not current_user.is_admin and not current_user.has_full_write_access %}
+                                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                                        {% if current_user.is_read_only %}
+                                        {{ _('Your account can see the data but cannot change it. Ask an administrator if you need more access.') }}
+                                        {% else %}
+                                        {{ _('Your account can record fuel fill-ups and charging sessions. Ask an administrator if you need more access.') }}
+                                        {% endif %}
+                                    </p>
+                                    {% endif %}
+                                </div>
+                                <div>
                                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Email') }}</label>
                                     <input type="email" name="email" id="email" value="{{ current_user.email }}"
                                            class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">

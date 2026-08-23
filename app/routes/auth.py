@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_babel import gettext as _
 from werkzeug.utils import secure_filename
 from app import db
-from app.models import User, AppSettings
+from app.models import User, AppSettings, USER_ROLES, USER_ROLE_DESCRIPTIONS, ROLE_EDITOR, ROLE_WRITE_SCOPES
 from app.security import (
     get_safe_redirect_url, validate_password_strength,
     validate_webhook_url, admin_required
@@ -562,7 +562,8 @@ def edit_user(user_id):
             existing = User.query.filter(User.email == new_email, User.id != user.id).first()
             if existing:
                 flash(_('Email already in use by another account'), 'error')
-                return render_template('auth/edit_user.html', user=user)
+                return render_template('auth/edit_user.html', user=user, roles=USER_ROLES,
+                                       role_descriptions=USER_ROLE_DESCRIPTIONS)
             user.email = new_email
 
         new_password = request.form.get('new_password', '').strip()
@@ -570,22 +571,29 @@ def edit_user(user_id):
             confirm_password = request.form.get('confirm_new_password', '')
             if new_password != confirm_password:
                 flash(_('Passwords do not match'), 'error')
-                return render_template('auth/edit_user.html', user=user)
+                return render_template('auth/edit_user.html', user=user, roles=USER_ROLES,
+                                       role_descriptions=USER_ROLE_DESCRIPTIONS)
             is_valid, error_msg = validate_password_strength(new_password)
             if not is_valid:
                 flash(error_msg, 'error')
-                return render_template('auth/edit_user.html', user=user)
+                return render_template('auth/edit_user.html', user=user, roles=USER_ROLES,
+                                       role_descriptions=USER_ROLE_DESCRIPTIONS)
             user.set_password(new_password)
 
         is_admin = request.form.get('is_admin') == 'on'
         if user.id != current_user.id:
             user.is_admin = is_admin
 
+        role = request.form.get('role', ROLE_EDITOR)
+        if role in ROLE_WRITE_SCOPES:
+            user.role = role
+
         db.session.commit()
         flash(_('User %(username)s updated successfully') % {'username': user.username}, 'success')
         return redirect(url_for('auth.users'))
 
-    return render_template('auth/edit_user.html', user=user)
+    return render_template('auth/edit_user.html', user=user, roles=USER_ROLES,
+                           role_descriptions=USER_ROLE_DESCRIPTIONS)
 
 
 @bp.route('/users/create', methods=['GET', 'POST'])
@@ -599,29 +607,37 @@ def create_user():
         password = request.form.get('password', '')
         confirm_password = request.form.get('confirm_password', '')
         is_admin = request.form.get('is_admin') == 'on'
+        role = request.form.get('role', ROLE_EDITOR)
+        if role not in ROLE_WRITE_SCOPES:
+            role = ROLE_EDITOR
 
         if not username or not email or not password:
             flash(_('Username, email, and password are required'), 'error')
-            return render_template('auth/create_user.html')
+            return render_template('auth/create_user.html', roles=USER_ROLES,
+                                   role_descriptions=USER_ROLE_DESCRIPTIONS)
 
         if password != confirm_password:
             flash(_('Passwords do not match'), 'error')
-            return render_template('auth/create_user.html')
+            return render_template('auth/create_user.html', roles=USER_ROLES,
+                                   role_descriptions=USER_ROLE_DESCRIPTIONS)
 
         is_valid, error_msg = validate_password_strength(password)
         if not is_valid:
             flash(error_msg, 'error')
-            return render_template('auth/create_user.html')
+            return render_template('auth/create_user.html', roles=USER_ROLES,
+                                   role_descriptions=USER_ROLE_DESCRIPTIONS)
 
         if User.query.filter_by(username=username).first():
             flash(_('Username already exists'), 'error')
-            return render_template('auth/create_user.html')
+            return render_template('auth/create_user.html', roles=USER_ROLES,
+                                   role_descriptions=USER_ROLE_DESCRIPTIONS)
 
         if User.query.filter_by(email=email).first():
             flash(_('Email already in use'), 'error')
-            return render_template('auth/create_user.html')
+            return render_template('auth/create_user.html', roles=USER_ROLES,
+                                   role_descriptions=USER_ROLE_DESCRIPTIONS)
 
-        user = User(username=username, email=email, is_admin=is_admin)
+        user = User(username=username, email=email, is_admin=is_admin, role=role)
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
@@ -629,7 +645,8 @@ def create_user():
         flash(_('User %(username)s created successfully') % {'username': username}, 'success')
         return redirect(url_for('auth.users'))
 
-    return render_template('auth/create_user.html')
+    return render_template('auth/create_user.html', roles=USER_ROLES,
+                           role_descriptions=USER_ROLE_DESCRIPTIONS)
 
 
 @bp.route('/check-updates')

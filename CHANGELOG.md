@@ -12,6 +12,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ### Added
 
+- User roles. Each account now carries a role that an administrator sets when
+  creating or editing the user: Editor (full access, the default and what
+  every existing account keeps), Contributor (may record fuel fill-ups and
+  charging sessions, everything else read-only) or Viewer (may see the data
+  but change nothing). Administrators are unaffected and always have full
+  access. The rules are applied to the web interface, the REST API and the
+  Home Assistant endpoints alike, and controls the account cannot use are
+  hidden rather than left to fail. What an account can see is unchanged and
+  still follows vehicle ownership and sharing.
+  ([#285](https://github.com/dannymcc/may/issues/285))
 - Fuel level on trips. A trip can now record the fuel gauge reading at each
   end, as a percentage of a full tank, alongside the odometer readings. Where
   the vehicle has a tank capacity set, May works out the fuel used on the trip

@@ -36,6 +36,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **📁 Document Storage**: Store important documents (insurance, registration, manuals) per vehicle
 - **⛽ Favorite Stations**: Save and quickly select your preferred fuel stations
 - **👥 Multi-User**: Share vehicles between family members or team members
+- **🔐 User Roles**: Give each account full access, fuel-and-charging only, or read-only
 - **📊 Analytics Dashboard**: View spending trends and consumption statistics with interactive charts
 - **📎 Attachment Support**: Upload receipts and documents to fuel logs and expenses
 - **📄 PDF Reports**: Generate comprehensive vehicle reports for record-keeping, optionally with receipt images attached
@@ -281,7 +282,28 @@ Administrators can configure:
 - **DVLA API**: API key for UK vehicle lookups ([get one here](https://developer-portal.driver-vehicle-licensing.api.gov.uk/))
 - **UK Fuel Prices**: live forecourt prices for saved stations (see below)
 - **Branding**: Custom logo, app name, tagline, and primary color
-- **User Management**: Create, edit, and manage user accounts
+- **User Management**: Create, edit, and manage user accounts, including each account's role
+
+## 🔐 User Roles
+
+Every account has a role, set by an administrator when the account is created
+or from Settings → Users → Edit:
+
+| Role | What the account can do |
+| --- | --- |
+| **Editor** | Full control of the vehicles and data the account can see. This is the default, and matches how May behaved before roles existed. |
+| **Contributor** | Record fuel fill-ups and charging sessions. Everything else — expenses, maintenance, trips, reminders, vehicles — is read-only. Suited to drivers. |
+| **Viewer** | See everything the account has access to, but change nothing. Suited to a vehicle owner who only wants the figures. |
+
+Administrators always have full access whatever role is stored against them.
+Roles decide what an account may *change*; what it can *see* is still governed
+by vehicle ownership and sharing, so a driver only sees the vehicles shared
+with them.
+
+Roles apply everywhere, not just in the browser: the REST API and the Home
+Assistant endpoints refuse writes the account's role does not cover, returning
+`403` with a `permission_denied` code. Every account can still manage its own
+settings, password, notifications and API key.
 
 ## 🔌 API
 
