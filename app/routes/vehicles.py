@@ -6,10 +6,11 @@ from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, flash, request, current_app, Response
 from flask_login import login_required, current_user
 from flask_babel import gettext as _
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 from app import db
 from app.utils import parse_decimal
-from app.models import Vehicle, VehicleSpec, VehiclePart, FuelLog, Expense, User, Reminder, MaintenanceSchedule, Attachment, VEHICLE_TYPES, FUEL_TYPES, VEHICLE_SPEC_TYPES, REMINDER_TYPES, PART_TYPES, TRACKING_UNITS, ODOMETER_UNITS, TRIP_PURPOSES, AppSettings
+from app.models import Vehicle, VehicleSpec, VehiclePart, FuelLog, Expense, User, Reminder, MaintenanceSchedule, Attachment, VEHICLE_TYPES, FUEL_TYPES, VEHICLE_SPEC_TYPES, REMINDER_TYPES, PART_TYPES, TRACKING_UNITS, ODOMETER_UNITS, TRIP_PURPOSES, EXPENSE_CATEGORIES, AppSettings
 from app.services.tessie import TessieService
 
 bp = Blueprint('vehicles', __name__, url_prefix='/vehicles')
@@ -191,6 +192,18 @@ def view(vehicle_id):
         'charging_sessions_count': vehicle.charging_sessions.count(),
     }
 
+    # Expenses grouped by category for this vehicle only (#287),
+    # with labels translated server-side like the dashboard chart
+    category_rows = db.session.query(
+        Expense.category, func.sum(Expense.cost)
+    ).filter(
+        Expense.vehicle_id == vehicle.id
+    ).group_by(Expense.category).all()
+    expenses_by_category = {
+        str(dict(EXPENSE_CATEGORIES).get(cat, (cat or '').capitalize())): round(total, 2)
+        for cat, total in category_rows if total
+    }
+
     # Get reminders for this vehicle (not completed, ordered by due date)
     reminders = vehicle.reminders.filter_by(is_completed=False).order_by(Reminder.due_date).all()
 
@@ -219,6 +232,7 @@ def view(vehicle_id):
                            recent_expenses=recent_expenses,
                            specs=specs,
                            stats=stats,
+                           expenses_by_category=expenses_by_category,
                            reminders=reminders,
                            reminder_types=REMINDER_TYPES,
                            parts=parts,

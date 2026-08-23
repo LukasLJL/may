@@ -186,6 +186,7 @@ Add and manage your vehicles with detailed information:
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle
 - **PDF Report**: The "PDF" button downloads a summary of the vehicle, its specifications, its parts and consumables, its fuel logs and its expenses. "PDF + Receipts" does the same and appends the receipt images attached to those entries, which is the version to hand to an accountant or employer. Non-image attachments (PDF scans, for example) are listed at the end of the report rather than embedded.
 - **Service Timeline**: Combined history of fuel, expenses, and charging, including any notes recorded against an entry and links to its attachments
+- **Expenses by Category**: A collapsible bar chart on the vehicle page breaking that vehicle's expenses down by category, alongside the dashboard chart covering the whole fleet. Vehicles with no expenses recorded do not show it.
 
 ### Fuel Logs
 Track every fill-up with:

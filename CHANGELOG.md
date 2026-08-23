@@ -26,6 +26,11 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ### Added
 
+- An expenses-by-category chart on each vehicle page, breaking that vehicle's
+  spending down the way the dashboard chart does for the fleet as a whole. It
+  sits with the other vehicle charts, remembers whether it was collapsed, and
+  is shown for electric vehicles as well. Vehicles with no expenses recorded
+  do not show it. ([#287](https://github.com/dannymcc/may/issues/287))
 - User roles. Each account now carries a role that an administrator sets when
   creating or editing the user: Editor (full access, the default and what
   every existing account keeps), Contributor (may record fuel fill-ups and
