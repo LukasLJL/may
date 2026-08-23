@@ -177,7 +177,6 @@ Add and manage your vehicles with detailed information:
 - Make, model, year, and registration
 - Fuel type and tank capacity
 - Custom specifications and notes
-- Photo upload support
 - **Photo Gallery**: Upload as many photos per vehicle as you like from the "Photos" section on the vehicle page. Any of them can be set as the main photo — the one shown on the dashboard and vehicle list — and the vehicle page steps through the rest with left/right arrows
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
@@ -249,6 +248,21 @@ Configure your preferred notification method:
 - **ntfy**: Free push notifications via ntfy.sh or self-hosted
 - **Pushover**: iOS/Android push notifications
 - **Webhook**: HTTP POST for Home Assistant, Discord, Slack, etc.
+
+### Import & Restore
+**Settings → Integrations → Import Data** holds the import options, including
+**Restore May Backup** for moving data from another May instance:
+
+- It takes either file the export page produces — the JSON export (`.json`) or
+  the full backup (`.zip`). A full backup also brings across documents,
+  attachments and vehicle images; a JSON export carries the records only.
+- The restore merges into the account you are signed in as. Nothing is deleted
+  or overwritten, and records already present are skipped rather than
+  duplicated, so running the same backup twice is harmless.
+- A preview of exactly what will be added is shown before anything is written,
+  and nothing is saved until you confirm it.
+
+Imports from Hammond and Fuelly live in the same place.
 
 ## 🔧 Admin Settings
 
