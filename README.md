@@ -178,6 +178,7 @@ Add and manage your vehicles with detailed information:
 - Fuel type and tank capacity
 - Custom specifications and notes
 - Photo upload support
+- **Photo Gallery**: Upload as many photos per vehicle as you like from the "Photos" section on the vehicle page. Any of them can be set as the main photo — the one shown on the dashboard and vehicle list — and the vehicle page steps through the rest with left/right arrows
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle

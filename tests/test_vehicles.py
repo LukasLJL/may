@@ -527,3 +527,283 @@ class TestVehicleReportParts:
 
         assert resp.status_code == 200
         assert 'Parts (' not in rendered['html']
+
+
+class TestVehiclePhotos:
+    """#147 — a vehicle keeps a gallery of photos, stored as attachments."""
+
+    @staticmethod
+    def _file(name='photo.png', content=b'fake-image'):
+        import io
+        return (io.BytesIO(content), name)
+
+    def _upload(self, client, vehicle_id, *files, follow_redirects=True):
+        return client.post(
+            f'/vehicles/{vehicle_id}/photos',
+            data={'photo': list(files) or [self._file()]},
+            content_type='multipart/form-data',
+            follow_redirects=follow_redirects,
+        )
+
+    @staticmethod
+    def _add_photo(vehicle, filename='existing.png', upload_folder=None):
+        from app.models import Attachment
+        if upload_folder:
+            (upload_folder / filename).write_bytes(b'fake-image')
+        photo = Attachment(filename=filename, original_filename=filename,
+                           file_type='png', vehicle_id=vehicle.id)
+        db.session.add(photo)
+        db.session.commit()
+        return photo
+
+    def test_upload_requires_auth(self, client, sample_vehicle):
+        resp = self._upload(client, sample_vehicle.id, follow_redirects=False)
+        assert resp.status_code == 302
+        assert '/auth/login' in resp.headers['Location']
+
+    def test_upload_stores_photos(self, auth_client, app, tmp_path, sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+
+        resp = self._upload(auth_client, sample_vehicle.id,
+                            self._file('front.png'), self._file('rear.jpg'))
+
+        assert resp.status_code == 200
+        photos = Attachment.query.filter_by(vehicle_id=sample_vehicle.id).all()
+        assert len(photos) == 2
+        assert {p.original_filename for p in photos} == {'front.png', 'rear.jpg'}
+        for photo in photos:
+            assert (tmp_path / photo.filename).exists()
+        assert b'2 photos added' in resp.data
+
+    def test_upload_without_a_file_says_so(self, auth_client, app, tmp_path,
+                                           sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+
+        resp = auth_client.post(f'/vehicles/{sample_vehicle.id}/photos',
+                                data={'photo': []},
+                                content_type='multipart/form-data',
+                                follow_redirects=True)
+
+        assert resp.status_code == 200
+        assert b'No photos were selected' in resp.data
+        assert Attachment.query.filter_by(vehicle_id=sample_vehicle.id).count() == 0
+
+    def test_first_photo_becomes_main_image(self, auth_client, app, tmp_path,
+                                            sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        assert sample_vehicle.image_filename is None
+
+        self._upload(auth_client, sample_vehicle.id, self._file('front.png'))
+
+        db.session.refresh(sample_vehicle)
+        photo = Attachment.query.filter_by(vehicle_id=sample_vehicle.id).one()
+        assert sample_vehicle.image_filename == photo.filename
+
+    def test_upload_keeps_existing_main_image(self, auth_client, app, tmp_path,
+                                              sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        sample_vehicle.image_filename = 'chosen.png'
+        db.session.commit()
+
+        self._upload(auth_client, sample_vehicle.id, self._file('front.png'))
+
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename == 'chosen.png'
+
+    def test_unsupported_file_type_is_skipped(self, auth_client, app, tmp_path,
+                                              sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+
+        resp = self._upload(auth_client, sample_vehicle.id,
+                            self._file('manual.pdf'), self._file('front.png'))
+
+        assert resp.status_code == 200
+        photos = Attachment.query.filter_by(vehicle_id=sample_vehicle.id).all()
+        assert [p.original_filename for p in photos] == ['front.png']
+        assert b'manual.pdf' in resp.data
+
+    def test_non_owner_cannot_upload(self, client, app, tmp_path, sample_vehicle):
+        from app.models import Attachment, User
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        sample_vehicle.is_shared = True
+        other = User(username='other_user', email='other@example.com')
+        other.set_password('OtherPass123!')
+        db.session.add(other)
+        db.session.commit()
+        client.post('/auth/login', data={'username': 'other_user',
+                                         'password': 'OtherPass123!'},
+                    follow_redirects=True)
+
+        self._upload(client, sample_vehicle.id, self._file('front.png'))
+
+        assert Attachment.query.filter_by(vehicle_id=sample_vehicle.id).count() == 0
+
+    def test_view_lists_photos(self, auth_client, app, tmp_path, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        self._add_photo(sample_vehicle, 'existing.png', tmp_path)
+
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+
+        assert resp.status_code == 200
+        assert b'existing.png' in resp.data
+        assert b'Photos' in resp.data
+
+    def test_view_shows_carousel_arrows_for_several_photos(self, auth_client, app,
+                                                           tmp_path, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        sample_vehicle.image_filename = 'main.png'
+        db.session.commit()
+        self._add_photo(sample_vehicle, 'second.png', tmp_path)
+
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+
+        assert b'stepVehicleCarousel' in resp.data
+        assert b'1 / 2' in resp.data
+
+    def test_view_omits_carousel_arrows_for_single_photo(self, auth_client, app,
+                                                         tmp_path, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        sample_vehicle.image_filename = 'main.png'
+        db.session.commit()
+
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+
+        assert b'stepVehicleCarousel' not in resp.data
+
+    def test_set_primary_photo(self, auth_client, app, tmp_path, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        photo = self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+
+        resp = auth_client.post(
+            f'/vehicles/{sample_vehicle.id}/photos/{photo.id}/primary',
+            follow_redirects=True)
+
+        assert resp.status_code == 200
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename == 'gallery.png'
+
+    def test_set_primary_keeps_previous_main_image_in_gallery(self, auth_client, app,
+                                                              tmp_path, sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        (tmp_path / 'abc123_old.png').write_bytes(b'fake-image')
+        sample_vehicle.image_filename = 'abc123_old.png'
+        db.session.commit()
+        photo = self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/photos/{photo.id}/primary',
+                         follow_redirects=True)
+
+        kept = Attachment.query.filter_by(filename='abc123_old.png').one()
+        assert kept.vehicle_id == sample_vehicle.id
+        assert kept.original_filename == 'old.png'
+        assert (tmp_path / 'abc123_old.png').exists()
+
+    def test_photo_of_another_vehicle_is_rejected(self, auth_client, app, tmp_path,
+                                                  test_user, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        other = Vehicle(owner_id=test_user.id, name='Other Car', vehicle_type='car')
+        db.session.add(other)
+        db.session.commit()
+        photo = self._add_photo(other, 'other.png', tmp_path)
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/photos/{photo.id}/primary',
+                         follow_redirects=True)
+
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename is None
+
+    def test_delete_photo_removes_record_and_file(self, auth_client, app, tmp_path,
+                                                  sample_vehicle):
+        from app.models import Attachment
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        photo = self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+
+        resp = auth_client.post(
+            f'/vehicles/{sample_vehicle.id}/photos/{photo.id}/delete',
+            follow_redirects=True)
+
+        assert resp.status_code == 200
+        assert Attachment.query.get(photo.id) is None
+        assert not (tmp_path / 'gallery.png').exists()
+
+    def test_deleting_main_photo_falls_back_to_another(self, auth_client, app,
+                                                       tmp_path, sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        first = self._add_photo(sample_vehicle, 'first.png', tmp_path)
+        self._add_photo(sample_vehicle, 'second.png', tmp_path)
+        sample_vehicle.image_filename = 'first.png'
+        db.session.commit()
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/photos/{first.id}/delete',
+                         follow_redirects=True)
+
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename == 'second.png'
+
+    def test_deleting_last_photo_clears_main_image(self, auth_client, app, tmp_path,
+                                                   sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        photo = self._add_photo(sample_vehicle, 'only.png', tmp_path)
+        sample_vehicle.image_filename = 'only.png'
+        db.session.commit()
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/photos/{photo.id}/delete',
+                         follow_redirects=True)
+
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename is None
+
+    def test_new_main_image_upload_keeps_gallery_file(self, auth_client, app,
+                                                      tmp_path, sample_vehicle):
+        """Replacing the main image must not delete a file the gallery still uses."""
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+        sample_vehicle.image_filename = 'gallery.png'
+        db.session.commit()
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/edit', data={
+            'name': sample_vehicle.name,
+            'vehicle_type': 'car',
+            'tracking_unit': 'mileage',
+            'image': self._file('new.png'),
+        }, content_type='multipart/form-data', follow_redirects=True)
+
+        db.session.refresh(sample_vehicle)
+        assert sample_vehicle.image_filename != 'gallery.png'
+        assert (tmp_path / 'gallery.png').exists()
+
+    def test_deleting_vehicle_removes_photo_files(self, auth_client, app, tmp_path,
+                                                  sample_vehicle):
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+
+        auth_client.post(f'/vehicles/{sample_vehicle.id}/delete',
+                         follow_redirects=True)
+
+        assert not (tmp_path / 'gallery.png').exists()
+
+    def test_viewer_without_edit_rights_sees_no_controls(self, client, app, tmp_path,
+                                                         sample_vehicle):
+        from app.models import User
+        app.config['UPLOAD_FOLDER'] = str(tmp_path)
+        sample_vehicle.is_shared = True
+        db.session.commit()
+        self._add_photo(sample_vehicle, 'gallery.png', tmp_path)
+        other = User(username='other_user', email='other@example.com')
+        other.set_password('OtherPass123!')
+        db.session.add(other)
+        db.session.commit()
+        client.post('/auth/login', data={'username': 'other_user',
+                                         'password': 'OtherPass123!'},
+                    follow_redirects=True)
+
+        resp = client.get(f'/vehicles/{sample_vehicle.id}')
+
+        assert resp.status_code == 200
+        assert b'gallery.png' in resp.data
+        assert b'Set as main' not in resp.data
