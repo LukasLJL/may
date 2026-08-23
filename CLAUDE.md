@@ -47,6 +47,7 @@ may/
 ├── app/
 │   ├── __init__.py          # App factory, blueprint registration
 │   ├── models.py             # SQLAlchemy models (User, Vehicle, FuelLog, etc.)
+│   ├── permissions.py        # Role-based write guard (before_request hook)
 │   ├── routes/               # Blueprint route handlers
 │   │   ├── main.py           # Dashboard, timeline
 │   │   ├── auth.py           # Login, register, settings

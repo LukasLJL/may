@@ -289,6 +289,23 @@ class TestExpenseCategories:
         assert resp.status_code == 200
         assert b'12345' in resp.data
 
+    def test_maintenance_odometer_updates_last_odometer(self, auth_client, sample_vehicle):
+        # #286 — the odometer logged with a maintenance expense should show up
+        # as the vehicle's latest reading.
+        resp = auth_client.post('/expenses/new', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'date': '2024-03-05',
+            'category': 'maintenance',
+            'description': 'Oil change',
+            'cost': '75.00',
+            'odometer': '23450',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+
+        resp = auth_client.get(f'/api/vehicles/{sample_vehicle.id}/last-odometer')
+        assert resp.status_code == 200
+        assert resp.get_json()['odometer'] == 23450
+
     def test_expense_list_shows_expandable_details(self, auth_client, test_user, sample_vehicle):
         expense = Expense(
             vehicle_id=sample_vehicle.id,

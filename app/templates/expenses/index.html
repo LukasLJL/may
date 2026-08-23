@@ -7,6 +7,7 @@
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ _('Expenses') }}</h1>
         <p class="text-gray-500 dark:text-gray-400">{{ _('Track maintenance, repairs, insurance, and other costs') }}</p>
     </div>
+    {% if can_write('expenses') %}
     <a href="{{ url_for('expenses.new') }}"
        class="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
         <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -14,6 +15,7 @@
         </svg>
         {{ _('Add Expense') }}
     </a>
+    {% endif %}
 </div>
 
 {% if expenses %}
@@ -58,12 +60,16 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ expense.cost|money }} {{ current_user.currency }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium" onclick="event.stopPropagation()">
+                        {% if can_write('expenses') %}
                         <a href="{{ url_for('expenses.edit', expense_id=expense.id) }}" class="text-primary-600 hover:text-primary-900 mr-3">{{ _('Edit') }}</a>
+                        {% endif %}
+                        {% if can_write('expenses') %}
                         <form method="POST" action="{{ url_for('expenses.delete', expense_id=expense.id) }}" class="inline"
                               onsubmit="return confirm('{{ _('Delete this expense?') }}');">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <button type="submit" class="text-red-600 hover:text-red-900">{{ _('Delete') }}</button>
                         </form>
+                        {% endif %}
                     </td>
                 </tr>
                 {% if has_details %}
@@ -110,6 +116,7 @@
     <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ _('No expenses') }}</h3>
     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ _('Start tracking your vehicle expenses.') }}</p>
     <div class="mt-6">
+        {% if can_write('expenses') %}
         <a href="{{ url_for('expenses.new') }}"
            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
             <svg class="-ml-1 mr-2 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,6 +124,7 @@
             </svg>
             {{ _('Add Expense') }}
         </a>
+        {% endif %}
     </div>
 </div>
 {% endif %}

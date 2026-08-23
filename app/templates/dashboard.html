@@ -239,7 +239,9 @@
 <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mt-8">
     <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-medium text-gray-900 dark:text-white">{{ _('Your Vehicles') }}</h2>
+        {% if can_write('vehicles') %}
         <a href="{{ url_for('vehicles.new') }}" class="text-sm text-primary-600 hover:text-primary-500">+ {{ _('Add') }}</a>
+        {% endif %}
     </div>
     {% if vehicles %}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -274,7 +276,9 @@
         {% endfor %}
     </div>
     {% else %}
-    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('No vehicles yet.') }} <a href="{{ url_for('vehicles.new') }}" class="text-primary-600 hover:text-primary-500">{{ _('Add your first vehicle') }}</a></p>
+{% if can_write('vehicles') %}
+<a href="{{ url_for('vehicles.new') }}" class="text-primary-600 hover:text-primary-500">{{ _('Add your first vehicle') }}</a>
+{% endif %}</p>
     {% endif %}
 </div>
 

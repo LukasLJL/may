@@ -8,6 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This file starts at 0.28.0. Notes for earlier releases are on the
 [GitHub releases page](https://github.com/dannymcc/may/releases).
 
+## [0.32.0] - 2026-08-23
+
+### Added
+
+- User roles. Each account now carries a role that an administrator sets when
+  creating or editing the user: Editor (full access, the default and what
+  every existing account keeps), Contributor (may record fuel fill-ups and
+  charging sessions, everything else read-only) or Viewer (may see the data
+  but change nothing). Administrators are unaffected and always have full
+  access. The rules are applied to the web interface, the REST API and the
+  Home Assistant endpoints alike, and controls the account cannot use are
+  hidden rather than left to fail. What an account can see is unchanged and
+  still follows vehicle ownership and sharing.
+  ([#285](https://github.com/dannymcc/may/issues/285))
+- Notes and attachments on the vehicle timeline. Each timeline entry now shows
+  the note recorded against it, and fuel logs and expenses list their
+  attachments as links, so the timeline can be read without opening every
+  entry in turn. ([#284](https://github.com/dannymcc/may/issues/284))
+
+### Fixed
+
+- An odometer recorded against an expense, such as the reading taken at an oil
+  change, now counts towards the vehicle's latest odometer. Previously only
+  fuel logs, trips and charging sessions were considered, so registering
+  maintenance left the last reading unchanged.
+  ([#286](https://github.com/dannymcc/may/issues/286))
+
+### Changed
+
+- The API documentation page now describes what an API key may do under each
+  role, and lists the `permission_denied` error code alongside `forbidden`.
+
 ## [0.31.0] - 2026-08-23
 
 ### Added

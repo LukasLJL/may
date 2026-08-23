@@ -36,6 +36,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **📁 Document Storage**: Store important documents (insurance, registration, manuals) per vehicle
 - **⛽ Favorite Stations**: Save and quickly select your preferred fuel stations
 - **👥 Multi-User**: Share vehicles between family members or team members
+- **🔐 User Roles**: Give each account full access, fuel-and-charging only, or read-only
 - **📊 Analytics Dashboard**: View spending trends and consumption statistics with interactive charts
 - **📎 Attachment Support**: Upload receipts and documents to fuel logs and expenses
 - **📄 PDF Reports**: Generate comprehensive vehicle reports for record-keeping, optionally with receipt images attached
@@ -183,6 +184,7 @@ Add and manage your vehicles with detailed information:
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle
 - **PDF Report**: The "PDF" button downloads a summary of the vehicle, its specifications, its parts and consumables, its fuel logs and its expenses. "PDF + Receipts" does the same and appends the receipt images attached to those entries, which is the version to hand to an accountant or employer. Non-image attachments (PDF scans, for example) are listed at the end of the report rather than embedded.
+- **Service Timeline**: Combined history of fuel, expenses, and charging, including any notes recorded against an entry and links to its attachments
 
 ### Fuel Logs
 Track every fill-up with:
@@ -202,7 +204,7 @@ Categorize all vehicle-related costs:
 - Accessories
 - Other expenses
 
-Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it.
+Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it. An odometer recorded against an expense counts towards the vehicle's latest reading, alongside fuel logs, trips and charging sessions.
 
 ### Trips
 Log journeys for mileage and tax records:
@@ -280,7 +282,28 @@ Administrators can configure:
 - **DVLA API**: API key for UK vehicle lookups ([get one here](https://developer-portal.driver-vehicle-licensing.api.gov.uk/))
 - **UK Fuel Prices**: live forecourt prices for saved stations (see below)
 - **Branding**: Custom logo, app name, tagline, and primary color
-- **User Management**: Create, edit, and manage user accounts
+- **User Management**: Create, edit, and manage user accounts, including each account's role
+
+## 🔐 User Roles
+
+Every account has a role, set by an administrator when the account is created
+or from Settings → Users → Edit:
+
+| Role | What the account can do |
+| --- | --- |
+| **Editor** | Full control of the vehicles and data the account can see. This is the default, and matches how May behaved before roles existed. |
+| **Contributor** | Record fuel fill-ups and charging sessions. Everything else — expenses, maintenance, trips, reminders, vehicles — is read-only. Suited to drivers. |
+| **Viewer** | See everything the account has access to, but change nothing. Suited to a vehicle owner who only wants the figures. |
+
+Administrators always have full access whatever role is stored against them.
+Roles decide what an account may *change*; what it can *see* is still governed
+by vehicle ownership and sharing, so a driver only sees the vehicles shared
+with them.
+
+Roles apply everywhere, not just in the browser: the REST API and the Home
+Assistant endpoints refuse writes the account's role does not cover, returning
+`403` with a `permission_denied` code. Every account can still manage its own
+settings, password, notifications and API key.
 
 ## 🔌 API
 

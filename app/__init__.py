@@ -448,6 +448,11 @@ def create_app(config_class=Config):
     app.register_blueprint(allowance.bp)
     app.register_blueprint(search.bp)
 
+    # Per-user permissions (#285) — refuse writes the account's role does not
+    # cover, and expose can_write() to templates.
+    from app.permissions import register_permission_hooks
+    register_permission_hooks(app)
+
     # Health check endpoint for container orchestration
     @app.route('/health')
     def health_check():

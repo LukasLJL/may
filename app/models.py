@@ -33,6 +33,45 @@ def get_currency_symbol(currency_code):
     return CURRENCY_SYMBOLS.get(code, currency_code)
 
 
+# User roles (#285). Roles sit below the admin flag: an administrator always
+# has full access, and every other account carries one of these roles.
+#
+#   editor      - the historic behaviour: full control of the data for every
+#                 vehicle the account can see. This is the default.
+#   contributor - may record fuel fill-ups and charging sessions, and nothing
+#                 else. Intended for drivers.
+#   viewer      - may read everything the account can see, but change nothing.
+ROLE_EDITOR = 'editor'
+ROLE_CONTRIBUTOR = 'contributor'
+ROLE_VIEWER = 'viewer'
+
+USER_ROLES = [
+    (ROLE_EDITOR, _l('Editor')),
+    (ROLE_CONTRIBUTOR, _l('Contributor')),
+    (ROLE_VIEWER, _l('Viewer')),
+]
+
+USER_ROLE_DESCRIPTIONS = {
+    ROLE_EDITOR: _l('Full access to the vehicles and data this account can see.'),
+    ROLE_CONTRIBUTOR: _l('Can record fuel fill-ups and charging sessions. Everything else is read-only.'),
+    ROLE_VIEWER: _l('Read-only. Can see the data but cannot change anything.'),
+}
+
+# The areas of the application a role may write to. Every write route belongs
+# to exactly one of these scopes; see app/permissions.py for the mapping.
+WRITE_SCOPES = (
+    'vehicles', 'fuel', 'charging', 'expenses', 'maintenance', 'trips',
+    'reminders', 'documents', 'notes', 'stations', 'recurring', 'allowance',
+    'import',
+)
+
+ROLE_WRITE_SCOPES = {
+    ROLE_EDITOR: set(WRITE_SCOPES),
+    ROLE_CONTRIBUTOR: {'fuel', 'charging'},
+    ROLE_VIEWER: set(),
+}
+
+
 # Association table for vehicle sharing
 vehicle_users = db.Table('vehicle_users',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
@@ -48,6 +87,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+    role = db.Column(db.String(20), default=ROLE_EDITOR)  # editor, contributor, viewer (#285)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # User preferences
@@ -110,6 +150,41 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    @property
+    def effective_role(self):
+        """The role in force for this account (#285).
+
+        Administrators always have full access whatever is stored against
+        them, and an account with no role set (every account predating the
+        feature) is treated as an editor so behaviour is unchanged.
+        """
+        if self.is_admin:
+            return 'admin'
+        return self.role if self.role in ROLE_WRITE_SCOPES else ROLE_EDITOR
+
+    @property
+    def role_label(self):
+        """Translated label for the account's role, for display."""
+        if self.is_admin:
+            return _l('Administrator')
+        return dict(USER_ROLES).get(self.effective_role, self.effective_role)
+
+    def can_write(self, scope):
+        """Whether this account may add, change or delete data in ``scope``."""
+        if self.is_admin:
+            return True
+        return scope in ROLE_WRITE_SCOPES.get(self.effective_role, set())
+
+    @property
+    def has_full_write_access(self):
+        """Whether this account may write everywhere (admin or editor)."""
+        return self.is_admin or self.effective_role == ROLE_EDITOR
+
+    @property
+    def is_read_only(self):
+        """Whether this account may not write anywhere at all."""
+        return not self.is_admin and not ROLE_WRITE_SCOPES.get(self.effective_role)
 
     def get_all_vehicles(self):
         """Get all vehicles user has access to (owned + explicitly shared + instance-shared), sorted by make/model"""
@@ -432,7 +507,9 @@ class Vehicle(db.Model):
         """Get the most recent odometer reading.
 
         If Tessie is enabled for this vehicle, returns the Tessie odometer.
-        Otherwise, returns the highest from fuel logs, trips, or charging sessions.
+        Otherwise, returns the highest from fuel logs, trips, charging sessions
+        or expenses. Expenses count because a maintenance entry such as an oil
+        change records the odometer at the time of the work (#286).
 
         Args:
             distance_unit: If provided ('km' or 'mi'), converts Tessie odometer to
@@ -457,7 +534,11 @@ class Vehicle(db.Model):
             ChargingSession.odometer.desc()).first()
         charge_odo = last_charge.odometer if last_charge else 0
 
-        return max(fuel_odo, trip_odo, charge_odo)
+        last_expense = self.expenses.filter(Expense.odometer.isnot(None)).order_by(
+            Expense.odometer.desc()).first()
+        expense_odo = last_expense.odometer if last_expense else 0
+
+        return max(fuel_odo, trip_odo, charge_odo, expense_odo)
 
     def get_total_charging_cost(self):
         """Get total cost of all charging sessions"""

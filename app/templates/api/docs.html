@@ -50,6 +50,9 @@
 <pre class="text-green-700 dark:text-green-400 text-sm"><code>curl -X GET "{{ request.host_url }}api/v1/vehicles" \
   -H "Authorization: Bearer may_your_api_key_here"</code></pre>
                 </div>
+
+                <h3 class="font-medium text-gray-900 dark:text-white mt-6 mb-2">Roles</h3>
+                <p class="text-gray-600 dark:text-gray-400">A key carries the role of the account that created it. A Contributor key may create, update and delete fuel logs and charging sessions only; a Viewer key may read but not write. Refused writes return <code>403</code> with the code <code>permission_denied</code>.</p>
             </div>
         </div>
     </section>
@@ -666,7 +669,7 @@
                             <tr class="border-b"><td class="py-2 pr-4">201</td><td class="py-2 pr-4">-</td><td class="py-2">Created successfully</td></tr>
                             <tr class="border-b"><td class="py-2 pr-4">400</td><td class="py-2 pr-4"><code>invalid_request</code>, <code>validation_error</code></td><td class="py-2">Bad request or validation failed</td></tr>
                             <tr class="border-b"><td class="py-2 pr-4">401</td><td class="py-2 pr-4"><code>missing_api_key</code>, <code>invalid_api_key</code></td><td class="py-2">Authentication required or failed</td></tr>
-                            <tr class="border-b"><td class="py-2 pr-4">403</td><td class="py-2 pr-4"><code>forbidden</code></td><td class="py-2">Permission denied</td></tr>
+                            <tr class="border-b"><td class="py-2 pr-4">403</td><td class="py-2 pr-4"><code>forbidden</code>, <code>permission_denied</code></td><td class="py-2">Permission denied. <code>permission_denied</code> means the account's role does not allow this change</td></tr>
                             <tr><td class="py-2 pr-4">404</td><td class="py-2 pr-4"><code>not_found</code></td><td class="py-2">Resource not found</td></tr>
                         </tbody>
                     </table>
