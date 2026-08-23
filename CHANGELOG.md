@@ -19,6 +19,10 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   being logged, giving a per-trip picture of consumption rather than only one
   per fill-up. Both readings are optional, are carried in the API, CSV import
   and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
+- Notes and attachments on the vehicle timeline. Each timeline entry now shows
+  the note recorded against it, and fuel logs and expenses list their
+  attachments as links, so the timeline can be read without opening every
+  entry in turn. ([#284](https://github.com/dannymcc/may/issues/284))
 
 ### Fixed
 
