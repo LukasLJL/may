@@ -29,6 +29,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **⚡ Quick Entry Mode**: Rapid fuel logging with a streamlined interface
 - **💰 Expense Tracking**: Monitor maintenance, insurance, repairs, tax, and other costs by category
 - **🔄 Recurring Expenses**: Track regular payments like insurance, tax, and subscriptions
+- **🧭 Trip Logging**: Log journeys for mileage and tax records, with optional fuel gauge readings for a per-trip view of consumption
 - **🔧 Maintenance Schedules**: Plan and track scheduled maintenance with mileage/date intervals
 - **📅 Reminders**: Set up recurring reminders for MOT, service, insurance, and tax renewals
 - **🔔 Multi-Channel Notifications**: Get reminded via Email, ntfy, Pushover, or Webhooks

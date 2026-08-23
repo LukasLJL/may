@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This file starts at 0.28.0. Notes for earlier releases are on the
 [GitHub releases page](https://github.com/dannymcc/may/releases).
 
-## [0.30.0] - 2026-08-23
+## [0.31.0] - 2026-08-23
 
 ### Added
 
@@ -19,6 +19,15 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   being logged, giving a per-trip picture of consumption rather than only one
   per fill-up. Both readings are optional, are carried in the API, CSV import
   and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
+
+### Changed
+
+- The README feature list now mentions trip logging, which was missing from it.
+
+## [0.30.0] - 2026-08-23
+
+### Added
+
 - Restoring a May backup. Settings → Integrations → Import Data now has a
   "Restore May Backup" option that accepts both the JSON export and the full
   backup ZIP produced by the export page, so data can be moved from an old
