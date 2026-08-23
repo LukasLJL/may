@@ -1,6 +1,9 @@
+import json
+import re
 import pytest
+from datetime import date
 from app import db
-from app.models import Vehicle
+from app.models import Vehicle, Expense
 
 
 class TestVehicleIndex:
@@ -59,6 +62,59 @@ class TestVehicleView:
     def test_view_404_for_nonexistent(self, auth_client):
         resp = auth_client.get('/vehicles/99999')
         assert resp.status_code == 404
+
+
+class TestVehicleExpenseChart:
+    """Per-vehicle expense breakdown chart (#287)."""
+
+    def _add_expense(self, vehicle, user, category, cost):
+        expense = Expense(
+            vehicle_id=vehicle.id,
+            user_id=user.id,
+            date=date(2024, 3, 1),
+            category=category,
+            description=f'{category} spend',
+            cost=cost,
+        )
+        db.session.add(expense)
+        db.session.commit()
+        return expense
+
+    def _chart_data(self, body):
+        """The category totals handed to the chart, as rendered into the page."""
+        match = re.search(r'const categoryData = (\{.*?\});', body, re.DOTALL)
+        assert match, 'chart data not found in page'
+        return json.loads(match.group(1))
+
+    def test_chart_shows_categories(self, auth_client, sample_vehicle, test_user):
+        self._add_expense(sample_vehicle, test_user, 'maintenance', 100.0)
+        self._add_expense(sample_vehicle, test_user, 'insurance', 250.5)
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+        assert resp.status_code == 200
+        body = resp.data.decode()
+        assert 'canvas id="expensesChart"' in body
+        assert self._chart_data(body) == {'Maintenance': 100.0, 'Insurance': 250.5}
+
+    def test_chart_excludes_other_vehicles(self, auth_client, sample_vehicle, test_user):
+        self._add_expense(sample_vehicle, test_user, 'maintenance', 100.0)
+        other = Vehicle(
+            owner_id=test_user.id,
+            name='Other Car',
+            vehicle_type='car',
+            fuel_type='petrol',
+        )
+        db.session.add(other)
+        db.session.commit()
+        self._add_expense(other, test_user, 'insurance', 250.5)
+
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+        assert resp.status_code == 200
+        assert self._chart_data(resp.data.decode()) == {'Maintenance': 100.0}
+
+    def test_no_chart_without_expenses(self, auth_client, sample_vehicle):
+        resp = auth_client.get(f'/vehicles/{sample_vehicle.id}')
+        assert resp.status_code == 200
+        assert b'canvas id="expensesChart"' not in resp.data
 
 
 class TestVehicleEdit:

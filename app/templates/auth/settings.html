@@ -536,6 +536,11 @@
                                         <span class="ml-3 text-sm text-gray-700 dark:text-gray-300">{{ _('Mileage Allowance') }}</span>
                                     </label>
                                     <label class="flex items-center">
+                                        <input type="checkbox" name="show_menu_tires" {% if current_user.show_menu_tires is not defined or current_user.show_menu_tires %}checked{% endif %}
+                                               class="rounded border-gray-300 dark:border-gray-600 text-primary-600 focus:ring-primary-500">
+                                        <span class="ml-3 text-sm text-gray-700 dark:text-gray-300">{{ _('Tires') }}</span>
+                                    </label>
+                                    <label class="flex items-center">
                                         <input type="checkbox" name="show_menu_notes" {% if current_user.show_menu_notes is not defined or current_user.show_menu_notes %}checked{% endif %}
                                                class="rounded border-gray-300 dark:border-gray-600 text-primary-600 focus:ring-primary-500">
                                         <span class="ml-3 text-sm text-gray-700 dark:text-gray-300">{{ _('Notes') }}</span>

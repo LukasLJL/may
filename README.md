@@ -31,6 +31,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **🔄 Recurring Expenses**: Track regular payments like insurance, tax, and subscriptions
 - **🧭 Trip Logging**: Log journeys for mileage and tax records, with optional fuel gauge readings for a per-trip view of consumption
 - **🔧 Maintenance Schedules**: Plan and track scheduled maintenance with mileage/date intervals
+- **🛞 Tire Sets**: Record each set of tires going on and off the vehicle, with the distance covered per set worked out for you
 - **📅 Reminders**: Set up recurring reminders for MOT, service, insurance, and tax renewals
 - **🔔 Multi-Channel Notifications**: Get reminded via Email, ntfy, Pushover, or Webhooks
 - **📁 Document Storage**: Store important documents (insurance, registration, manuals) per vehicle
@@ -185,6 +186,7 @@ Add and manage your vehicles with detailed information:
 - **Parts & Consumables**: Collapsible section on the vehicle page remembers your expand/collapse preference per vehicle
 - **PDF Report**: The "PDF" button downloads a summary of the vehicle, its specifications, its parts and consumables, its fuel logs and its expenses. "PDF + Receipts" does the same and appends the receipt images attached to those entries, which is the version to hand to an accountant or employer. Non-image attachments (PDF scans, for example) are listed at the end of the report rather than embedded.
 - **Service Timeline**: Combined history of fuel, expenses, and charging, including any notes recorded against an entry and links to its attachments
+- **Expenses by Category**: A collapsible bar chart on the vehicle page breaking that vehicle's expenses down by category, alongside the dashboard chart covering the whole fleet. Vehicles with no expenses recorded do not show it.
 
 ### Fuel Logs
 Track every fill-up with:
@@ -227,6 +229,15 @@ Plan regular maintenance tasks:
 - Track completion history
 - Automatic reminder generation
 - Link to expenses when completed
+
+### Tire Sets
+Track summer, winter and all-season sets separately:
+- Record a set with its type, size, purchase date, purchase odometer and cost
+- Put a set on or take it off with a date and odometer reading; fitting a set
+  automatically takes the set currently on the vehicle off at the same reading
+- The distance covered on each set is the sum of every period it spent fitted,
+  measured against the vehicle's latest odometer reading while it is still on
+- Retire a set when it is worn out or sold; the history stays
 
 ### Recurring Expenses
 Track regular payments:
