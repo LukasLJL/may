@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This file starts at 0.28.0. Notes for earlier releases are on the
 [GitHub releases page](https://github.com/dannymcc/may/releases).
 
+## [Unreleased]
+
+### Added
+
+- Tire sets. A vehicle can now own several sets of tires — summer, winter,
+  all-season — each with its type, size, purchase date, purchase odometer and
+  cost. Putting a set on or taking it off records the date and the odometer
+  reading, and the distance covered on each set is the sum of every period it
+  spent fitted, counting up to the vehicle's latest reading while the set is
+  still on. Fitting a set takes whichever set is on the vehicle off at the
+  same reading, so a seasonal swap is one action. Sets can be retired when
+  worn out or sold, and the area can be hidden from the menu like the others.
+  ([#293](https://github.com/dannymcc/may/issues/293))
+
 ## [0.32.0] - 2026-08-23
 
 ### Added

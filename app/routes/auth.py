@@ -376,6 +376,7 @@ def menu_preferences():
     current_user.show_menu_charging = request.form.get('show_menu_charging') == 'on'
     current_user.show_menu_notes = request.form.get('show_menu_notes') == 'on'
     current_user.show_menu_allowance = request.form.get('show_menu_allowance') == 'on'
+    current_user.show_menu_tires = request.form.get('show_menu_tires') == 'on'
     current_user.show_quick_entry = request.form.get('show_quick_entry') == 'on'
     db.session.commit()
     flash(_('Menu preferences updated'), 'success')

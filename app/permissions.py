@@ -37,6 +37,7 @@ BLUEPRINT_SCOPES = {
     'stations': 'stations',
     'recurring': 'recurring',
     'allowance': 'allowance',
+    'tires': 'tires',
 }
 
 # Endpoints whose scope cannot be inferred from their blueprint.

@@ -428,7 +428,7 @@ def create_app(config_class=Config):
         fmt = formats.get(style, formats['default'])
         return value.strftime(fmt)
 
-    from app.routes import main, auth, vehicles, fuel, expenses, api, reminders, maintenance, documents, stations, recurring, homeassistant, calendar, trips, charging, notes, allowance, search
+    from app.routes import main, auth, vehicles, fuel, expenses, api, reminders, maintenance, documents, stations, recurring, homeassistant, calendar, trips, charging, notes, allowance, search, tires
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(vehicles.bp)
@@ -447,6 +447,7 @@ def create_app(config_class=Config):
     app.register_blueprint(notes.bp)
     app.register_blueprint(allowance.bp)
     app.register_blueprint(search.bp)
+    app.register_blueprint(tires.bp)
 
     # Per-user permissions (#285) — refuse writes the account's role does not
     # cover, and expose can_write() to templates.

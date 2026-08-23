@@ -62,7 +62,7 @@ USER_ROLE_DESCRIPTIONS = {
 WRITE_SCOPES = (
     'vehicles', 'fuel', 'charging', 'expenses', 'maintenance', 'trips',
     'reminders', 'documents', 'notes', 'stations', 'recurring', 'allowance',
-    'import',
+    'tires', 'import',
 )
 
 ROLE_WRITE_SCOPES = {
@@ -135,6 +135,7 @@ class User(UserMixin, db.Model):
     show_menu_charging = db.Column(db.Boolean, default=True)
     show_menu_notes = db.Column(db.Boolean, default=True)  # issue #204
     show_menu_allowance = db.Column(db.Boolean, default=True)  # issue #208
+    show_menu_tires = db.Column(db.Boolean, default=True)  # issue #293
     show_quick_entry = db.Column(db.Boolean, default=False)  # Show quick entry button in navbar
 
     # Relationships
@@ -539,6 +540,13 @@ class Vehicle(db.Model):
         expense_odo = last_expense.odometer if last_expense else 0
 
         return max(fuel_odo, trip_odo, charge_odo, expense_odo)
+
+    def get_fitted_tire_set(self):
+        """The tire set currently on this vehicle, or None (#293)."""
+        for tire_set in self.tire_sets.all():
+            if tire_set.is_fitted:
+                return tire_set
+        return None
 
     def get_total_charging_cost(self):
         """Get total cost of all charging sessions"""
@@ -1218,6 +1226,14 @@ DOCUMENT_TYPES = [
     ('other', _l('Other')),
 ]
 
+# Tire set types (#293)
+TIRE_TYPES = [
+    ('summer', _l('Summer')),
+    ('winter', _l('Winter')),
+    ('all_season', _l('All Season')),
+    ('other', _l('Other')),
+]
+
 
 class MaintenanceSchedule(db.Model):
     """Predefined maintenance schedules with mileage/time intervals"""
@@ -1879,4 +1895,144 @@ class MileageAllowance(db.Model):
             'rate_per_unit': self.rate_per_unit,
             'amount': self.amount,
             'created_at': self.created_at.isoformat() if self.created_at else None,
+        }
+
+
+class TireSet(db.Model):
+    """A set of tires owned for a vehicle (issue #293).
+
+    Seasonal sets come on and off a vehicle repeatedly, so the distance a set
+    has covered is the sum of the distances of every period it spent fitted —
+    see :class:`TireFitment`. Odometer values are stored in the vehicle's
+    odometer unit, as they are everywhere else.
+    """
+    __tablename__ = 'tire_sets'
+
+    id = db.Column(db.Integer, primary_key=True)
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    name = db.Column(db.String(100), nullable=False)  # "Michelin Alpin 6"
+    tire_type = db.Column(db.String(20), nullable=False, default='all_season')
+    size = db.Column(db.String(50))  # "205/55 R16 91H"
+
+    purchase_date = db.Column(db.Date)
+    purchase_odometer = db.Column(db.Float)  # vehicle odometer when the set was bought
+    cost = db.Column(db.Float)
+
+    notes = db.Column(db.Text)
+    is_retired = db.Column(db.Boolean, default=False)  # worn out, sold, scrapped
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Relationships
+    vehicle = db.relationship('Vehicle', backref=db.backref('tire_sets', lazy='dynamic', cascade='all, delete-orphan'))
+    user = db.relationship('User', backref=db.backref('tire_sets', lazy='dynamic'))
+
+    @property
+    def type_label(self):
+        return dict(TIRE_TYPES).get(self.tire_type, self.tire_type)
+
+    @property
+    def current_fitment(self):
+        """The open fitment period — fitted and not yet taken off — if any."""
+        return self.fitments.filter(
+            TireFitment.removed_odometer.is_(None)
+        ).order_by(TireFitment.fitted_date.desc(), TireFitment.id.desc()).first()
+
+    @property
+    def is_fitted(self):
+        return self.current_fitment is not None
+
+    def get_distance(self, current_odometer=None):
+        """Total distance covered on this set, in the vehicle's odometer unit.
+
+        A closed period contributes its removed minus fitted reading; an open
+        period is measured against the vehicle's latest odometer reading.
+        Periods that would count backwards (a reading entered out of order)
+        contribute nothing rather than a negative distance.
+        """
+        total = 0.0
+        for fitment in self.fitments.all():
+            if fitment.fitted_odometer is None:
+                continue
+            end = fitment.removed_odometer
+            if end is None:
+                if current_odometer is None:
+                    current_odometer = self.vehicle.get_last_odometer() if self.vehicle else 0
+                end = current_odometer
+            total += max(0.0, (end or 0) - fitment.fitted_odometer)
+        return total
+
+    def to_dict(self):
+        """Serialize the tire set to a dictionary"""
+        return {
+            'id': self.id,
+            'vehicle_id': self.vehicle_id,
+            'name': self.name,
+            'tire_type': self.tire_type,
+            'size': self.size,
+            'purchase_date': self.purchase_date.isoformat() if self.purchase_date else None,
+            'purchase_odometer': self.purchase_odometer,
+            'cost': self.cost,
+            'notes': self.notes,
+            'is_retired': self.is_retired,
+            'is_fitted': self.is_fitted,
+            'distance': self.get_distance(),
+            'fitments': [f.to_dict() for f in self.fitments.all()],
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+        }
+
+
+class TireFitment(db.Model):
+    """One period a tire set spent fitted to its vehicle (issue #293).
+
+    A period with no removal reading is the set currently on the vehicle.
+    """
+    __tablename__ = 'tire_fitments'
+
+    id = db.Column(db.Integer, primary_key=True)
+    tire_set_id = db.Column(db.Integer, db.ForeignKey('tire_sets.id'), nullable=False)
+
+    fitted_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    fitted_odometer = db.Column(db.Float, nullable=False)
+    removed_date = db.Column(db.Date)
+    removed_odometer = db.Column(db.Float)
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Relationships
+    tire_set = db.relationship(
+        'TireSet',
+        backref=db.backref(
+            'fitments',
+            lazy='dynamic',
+            cascade='all, delete-orphan',
+            order_by='TireFitment.fitted_date.desc(), TireFitment.id.desc()',
+        ),
+    )
+
+    def get_distance(self, current_odometer=None):
+        """Distance covered during this period, in the vehicle's odometer unit."""
+        if self.fitted_odometer is None:
+            return 0.0
+        end = self.removed_odometer
+        if end is None:
+            if current_odometer is None:
+                vehicle = self.tire_set.vehicle if self.tire_set else None
+                current_odometer = vehicle.get_last_odometer() if vehicle else 0
+            end = current_odometer
+        return max(0.0, (end or 0) - self.fitted_odometer)
+
+    def to_dict(self):
+        """Serialize the fitment period to a dictionary"""
+        return {
+            'id': self.id,
+            'tire_set_id': self.tire_set_id,
+            'fitted_date': self.fitted_date.isoformat() if self.fitted_date else None,
+            'fitted_odometer': self.fitted_odometer,
+            'removed_date': self.removed_date.isoformat() if self.removed_date else None,
+            'removed_odometer': self.removed_odometer,
+            'distance': self.get_distance(),
         }
