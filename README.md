@@ -188,7 +188,7 @@ Categorize all vehicle-related costs:
 - Accessories
 - Other expenses
 
-Record odometer readings alongside costs, and expand any expense row to see vendor and notes details inline.
+Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it.
 
 ### Reminders
 Never miss important dates:
