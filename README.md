@@ -128,22 +128,32 @@ Copy `.env.example` to `.env` and configure:
 # Secret key for session encryption
 SECRET_KEY=your-secure-random-string
 
-# Database location (default: SQLite)
-DATABASE_URL=sqlite:///data/may.db
+# Database location (optional, defaults to SQLite in the app's data folder)
+# Note the slashes: sqlite:///path is relative, sqlite:////path is absolute.
+DATABASE_URL=sqlite:////srv/may/data/may.db
 # PostgreSQL is also supported:
 # DATABASE_URL=postgresql://user:password@host:5432/may
 
-# Upload folder for attachments
-UPLOAD_FOLDER=/app/data/uploads
+# Upload folder for attachments (optional)
+UPLOAD_FOLDER=/srv/may/data/uploads
 ```
+
+The `.env` file must sit next to `config.py` in the application directory, and
+it is read when May starts. Variables set in the real environment take
+precedence over `.env`.
+
+Under Docker Compose, `.env` is only used for `${VAR}` substitution in
+`docker-compose.yml` (for example `SECRET_KEY`). `DATABASE_URL` and
+`UPLOAD_FOLDER` are set in the compose `environment:` block, so changing them
+in `.env` has no effect — edit `docker-compose.yml` instead.
 
 ### Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `SECRET_KEY` | Session encryption key | Random |
-| `DATABASE_URL` | Database connection string (SQLite or PostgreSQL) | `sqlite:///data/may.db` |
-| `UPLOAD_FOLDER` | Path for file uploads | `/app/data/uploads` |
+| `DATABASE_URL` | Database connection string (SQLite or PostgreSQL) | SQLite at `data/may.db` inside the application directory (`/app/data/may.db` in Docker) |
+| `UPLOAD_FOLDER` | Path for file uploads | `data/uploads` inside the application directory (`/app/data/uploads` in Docker) |
 | `PUID` | User ID the container runs as (linuxserver.io convention) | `1000` |
 | `PGID` | Group ID the container runs as (linuxserver.io convention) | `1000` |
 | `TAILWIND_ASSET_URL` | Local Tailwind Play CDN JS path | `/static/vendor/tailwindcss.js` |

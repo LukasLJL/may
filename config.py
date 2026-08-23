@@ -1,7 +1,14 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 basedir = Path(__file__).parent.absolute()
+
+# Load the .env file sitting next to this module before anything reads the
+# environment (#297). Values already present in the real environment win, so
+# Docker deployments that set these via compose are unaffected.
+load_dotenv(basedir / '.env')
 
 
 APP_VERSION = '0.27.1'
