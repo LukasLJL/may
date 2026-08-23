@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from flask_babel import gettext as _
 from app import db
-from app.utils import parse_decimal
+from app.utils import parse_decimal, parse_fuel_level
 from flask import jsonify
 from app.models import Vehicle, Trip, TripTemplate, TRIP_PURPOSES
 
@@ -78,12 +78,21 @@ def new():
         date_str = request.form.get('date')
         date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else datetime.now().date()
 
+        try:
+            start_fuel_level = parse_fuel_level(request.form.get('start_fuel_level'))
+            end_fuel_level = parse_fuel_level(request.form.get('end_fuel_level'))
+        except (ValueError, TypeError):
+            flash(_('Fuel levels must be a percentage between 0 and 100.'), 'error')
+            return redirect(url_for('trips.new', vehicle_id=vehicle_id))
+
         trip = Trip(
             vehicle_id=vehicle_id,
             user_id=current_user.id,
             date=date,
             start_odometer=parse_decimal(request.form.get('start_odometer')),
             end_odometer=parse_decimal(request.form.get('end_odometer')) if request.form.get('end_odometer') else None,
+            start_fuel_level=start_fuel_level,
+            end_fuel_level=end_fuel_level,
             purpose=request.form.get('purpose'),
             description=request.form.get('description'),
             start_location=request.form.get('start_location'),
@@ -140,10 +149,19 @@ def edit(trip_id):
         return redirect(url_for('trips.index'))
 
     if request.method == 'POST':
+        try:
+            start_fuel_level = parse_fuel_level(request.form.get('start_fuel_level'))
+            end_fuel_level = parse_fuel_level(request.form.get('end_fuel_level'))
+        except (ValueError, TypeError):
+            flash(_('Fuel levels must be a percentage between 0 and 100.'), 'error')
+            return redirect(url_for('trips.edit', trip_id=trip.id))
+
         date_str = request.form.get('date')
         trip.date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else trip.date
         trip.start_odometer = parse_decimal(request.form.get('start_odometer'))
         trip.end_odometer = parse_decimal(request.form.get('end_odometer')) if request.form.get('end_odometer') else None
+        trip.start_fuel_level = start_fuel_level
+        trip.end_fuel_level = end_fuel_level
         trip.purpose = request.form.get('purpose')
         trip.description = request.form.get('description')
         trip.start_location = request.form.get('start_location')

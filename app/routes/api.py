@@ -24,7 +24,7 @@ from app.services.tessie import TessieService
 from app.services.backup_restore import (
     BackupError, SECTION_LABELS, describe_backup, read_backup, restore_backup
 )
-from app.utils import parse_decimal
+from app.utils import parse_decimal, parse_fuel_level
 from flask_babel import gettext as _
 from config import APP_VERSION
 
@@ -886,7 +886,8 @@ def api_create_trip(vehicle_id):
     Create a trip
 
     Required fields: date, start_odometer, purpose
-    Optional fields: end_odometer, description, start_location, end_location, notes
+    Optional fields: end_odometer, start_fuel_level, end_fuel_level, description,
+    start_location, end_location, notes
     """
     user = get_api_user()
     vehicle = Vehicle.query.get_or_404(vehicle_id)
@@ -921,12 +922,23 @@ def api_create_trip(vehicle_id):
     except ValueError:
         return jsonify({'error': 'Odometer values must be numeric', 'code': 'validation_error'}), 400
 
+    try:
+        start_fuel_level = parse_fuel_level(data.get('start_fuel_level'))
+        end_fuel_level = parse_fuel_level(data.get('end_fuel_level'))
+    except (ValueError, TypeError):
+        return jsonify({
+            'error': 'Fuel levels must be a percentage between 0 and 100',
+            'code': 'validation_error'
+        }), 400
+
     trip = Trip(
         vehicle_id=vehicle_id,
         user_id=user.id,
         date=date,
         start_odometer=start_odometer,
         end_odometer=end_odometer,
+        start_fuel_level=start_fuel_level,
+        end_fuel_level=end_fuel_level,
         purpose=data['purpose'],
         description=data.get('description'),
         start_location=data.get('start_location'),
@@ -992,6 +1004,18 @@ def api_update_trip(trip_id):
             trip.end_odometer = parse_decimal(data['end_odometer'])
     except ValueError:
         return jsonify({'error': 'Odometer values must be numeric', 'code': 'validation_error'}), 400
+
+    try:
+        if 'start_fuel_level' in data:
+            trip.start_fuel_level = parse_fuel_level(data['start_fuel_level'])
+        if 'end_fuel_level' in data:
+            trip.end_fuel_level = parse_fuel_level(data['end_fuel_level'])
+    except (ValueError, TypeError):
+        db.session.rollback()
+        return jsonify({
+            'error': 'Fuel levels must be a percentage between 0 and 100',
+            'code': 'validation_error'
+        }), 400
 
     if 'description' in data:
         trip.description = data['description']
@@ -1721,7 +1745,8 @@ def export_csv():
         writer = csv.writer(trips_csv)
         writer.writerow([
             'id', 'vehicle_id', 'vehicle_name', 'date', 'start_odometer', 'end_odometer',
-            'distance', 'distance_unit', 'purpose', 'description', 'start_location', 'end_location',
+            'distance', 'distance_unit', 'start_fuel_level', 'end_fuel_level',
+            'purpose', 'description', 'start_location', 'end_location',
             'notes', 'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
@@ -1731,6 +1756,7 @@ def export_csv():
                     trip.id, vehicle.id, vehicle.name,
                     trip.date.isoformat() if trip.date else '',
                     trip.start_odometer, trip.end_odometer, trip.distance, odometer_unit,
+                    trip.start_fuel_level, trip.end_fuel_level,
                     trip.purpose, trip.description,
                     trip.start_location, trip.end_location,
                     trip.notes,
@@ -2013,6 +2039,8 @@ def export_json():
                 'start_odometer': trip.start_odometer,
                 'end_odometer': trip.end_odometer,
                 'distance': trip.distance,
+                'start_fuel_level': trip.start_fuel_level,
+                'end_fuel_level': trip.end_fuel_level,
                 'purpose': trip.purpose,
                 'description': trip.description,
                 'start_location': trip.start_location,
@@ -2340,6 +2368,8 @@ def export_full_backup():
                 'start_odometer': trip.start_odometer,
                 'end_odometer': trip.end_odometer,
                 'distance': trip.distance,
+                'start_fuel_level': trip.start_fuel_level,
+                'end_fuel_level': trip.end_fuel_level,
                 'purpose': trip.purpose,
                 'description': trip.description,
                 'start_location': trip.start_location,
@@ -3145,6 +3175,8 @@ def get_import_fields(data_type):
             {'name': 'date', 'label': 'Date', 'required': True, 'type': 'date'},
             {'name': 'start_odometer', 'label': 'Start Odometer', 'required': True, 'type': 'float'},
             {'name': 'end_odometer', 'label': 'End Odometer', 'required': True, 'type': 'float'},
+            {'name': 'start_fuel_level', 'label': 'Start Fuel Level %', 'required': False, 'type': 'float'},
+            {'name': 'end_fuel_level', 'label': 'End Fuel Level %', 'required': False, 'type': 'float'},
             {'name': 'purpose', 'label': 'Purpose', 'required': True, 'type': 'str'},
             {'name': 'description', 'label': 'Description', 'required': False, 'type': 'str'},
             {'name': 'start_location', 'label': 'Start Location', 'required': False, 'type': 'str'},
@@ -3188,6 +3220,8 @@ _COLUMN_ALIASES = {
     'start_odometer': ['start odometer', 'start odo', 'start miles', 'start km', 'odometer start'],
     'end_odometer': ['end odometer', 'end odo', 'end miles', 'end km', 'odometer end'],
     'purpose': ['purpose', 'trip purpose', 'reason', 'trip type'],
+    'start_fuel_level': ['start fuel level', 'start fuel', 'fuel start', 'start tank', 'start fuel %'],
+    'end_fuel_level': ['end fuel level', 'end fuel', 'fuel end', 'end tank', 'end fuel %'],
     'start_location': ['start location', 'from', 'origin', 'departure'],
     'end_location': ['end location', 'to', 'destination', 'arrival'],
     'start_time': ['start time', 'time start', 'begin time'],
@@ -3398,6 +3432,8 @@ def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_
             raise ValueError('Missing or invalid start odometer')
         if end_odo is None:
             raise ValueError('Missing or invalid end odometer')
+        start_fuel = parse_fuel_level(parse_float_value(mapped_row.get('start_fuel_level')))
+        end_fuel = parse_fuel_level(parse_float_value(mapped_row.get('end_fuel_level')))
         purpose = mapped_row.get('purpose', '').strip().lower()
         valid_purposes = [p[0] for p in TRIP_PURPOSES]
         if purpose not in valid_purposes:
@@ -3408,6 +3444,8 @@ def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_
             date=date_val,
             start_odometer=start_odo,
             end_odometer=end_odo,
+            start_fuel_level=start_fuel,
+            end_fuel_level=end_fuel,
             purpose=purpose,
             description=mapped_row.get('description', '').strip() or None,
             start_location=mapped_row.get('start_location', '').strip() or None,

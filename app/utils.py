@@ -64,6 +64,21 @@ def parse_decimal(value, default=None):
     return float(s)
 
 
+def parse_fuel_level(value, default=None):
+    """Parse a fuel gauge reading as a percentage of a full tank (#273).
+
+    Accepts the same locale variations as :func:`parse_decimal`. Empty / missing
+    input returns ``default``. Anything outside 0-100 raises ``ValueError``, so
+    callers can report it alongside their other validation failures.
+    """
+    level = parse_decimal(value, default)
+    if level is None:
+        return default
+    if level < 0 or level > 100:
+        raise ValueError(f"Fuel level {level!r} is outside 0-100")
+    return level
+
+
 # Locales whose calendars conventionally start the week on Sunday. Everything
 # else (the ISO 8601 default used across most of Europe) starts on Monday.
 _SUNDAY_FIRST_LOCALES = {'en', 'ja', 'ko', 'zh', 'pt'}
