@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.33.0] - 2026-08-23
+
 ### Added
 
 - Tire sets. A vehicle can now own several sets of tires — summer, winter,
@@ -21,16 +23,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   same reading, so a seasonal swap is one action. Sets can be retired when
   worn out or sold, and the area can be hidden from the menu like the others.
   ([#293](https://github.com/dannymcc/may/issues/293))
-
-## [0.32.0] - 2026-08-23
-
-### Added
-
 - An expenses-by-category chart on each vehicle page, breaking that vehicle's
   spending down the way the dashboard chart does for the fleet as a whole. It
   sits with the other vehicle charts, remembers whether it was collapsed, and
   is shown for electric vehicles as well. Vehicles with no expenses recorded
   do not show it. ([#287](https://github.com/dannymcc/may/issues/287))
+
+## [0.32.0] - 2026-08-23
+
+### Added
+
 - User roles. Each account now carries a role that an administrator sets when
   creating or editing the user: Editor (full access, the default and what
   every existing account keeps), Contributor (may record fuel fill-ups and
