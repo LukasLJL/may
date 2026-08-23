@@ -253,7 +253,8 @@ curl -H "Authorization: Bearer may_your_api_key" \
   http://localhost:5050/api/v1/vehicles
 ```
 
-See the API documentation at `/api/docs` when logged in.
+Vehicles, fuel logs, expenses, trips, and charging sessions can all be read and
+created through the API. See the API documentation at `/api/docs` when logged in.
 
 ## 🔗 Integrations
 
