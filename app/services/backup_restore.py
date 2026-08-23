@@ -211,6 +211,7 @@ VEHICLE_SECTIONS = [
             key_fields=('date', 'category', 'description', 'cost')),
     Section('trips', Trip,
             {'date': 'date', 'start_odometer': 'float', 'end_odometer': 'float',
+             'start_fuel_level': 'float', 'end_fuel_level': 'float',
              'purpose': 'str', 'description': 'str', 'start_location': 'str',
              'end_location': 'str', 'notes': 'str', 'created_at': 'datetime'},
             key_fields=('date', 'start_odometer', 'end_odometer', 'purpose')),

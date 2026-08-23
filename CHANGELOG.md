@@ -12,6 +12,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ### Added
 
+- Fuel level on trips. A trip can now record the fuel gauge reading at each
+  end, as a percentage of a full tank, alongside the odometer readings. Where
+  the vehicle has a tank capacity set, May works out the fuel used on the trip
+  from the two readings and shows it on the trip list and while the trip is
+  being logged, giving a per-trip picture of consumption rather than only one
+  per fill-up. Both readings are optional, are carried in the API, CSV import
+  and export, and the backup. ([#273](https://github.com/dannymcc/may/issues/273))
 - Restoring a May backup. Settings → Integrations → Import Data now has a
   "Restore May Backup" option that accepts both the JSON export and the full
   backup ZIP produced by the export page, so data can be moved from an old

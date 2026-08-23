@@ -587,6 +587,60 @@ class TestV1Trips:
         resp = client.delete('/api/v1/trips/99999', headers=api_headers)
         assert resp.status_code == 404
 
+    def test_create_trip_with_fuel_levels(self, client, api_headers, sample_vehicle):
+        """Fuel gauge readings are accepted and fuel used is derived (#273)."""
+        sample_vehicle.tank_capacity = 50.0
+        _db_ext.session.commit()
+        resp = client.post(
+            f'/api/v1/vehicles/{sample_vehicle.id}/trips',
+            json={
+                'date': '2024-03-05',
+                'start_odometer': 20000,
+                'end_odometer': 20120,
+                'start_fuel_level': 90,
+                'end_fuel_level': 70,
+                'purpose': 'business',
+            },
+            headers=api_headers
+        )
+        assert resp.status_code == 201
+        data = resp.get_json()
+        assert data['start_fuel_level'] == 90.0
+        assert data['end_fuel_level'] == 70.0
+        assert data['fuel_used'] == pytest.approx(10.0)
+
+    def test_create_trip_rejects_out_of_range_fuel_level(self, client, api_headers, sample_vehicle):
+        resp = client.post(
+            f'/api/v1/vehicles/{sample_vehicle.id}/trips',
+            json={
+                'date': '2024-03-05',
+                'start_odometer': 20000,
+                'start_fuel_level': 120,
+                'purpose': 'business',
+            },
+            headers=api_headers
+        )
+        assert resp.status_code == 400
+
+    def test_update_trip_fuel_levels(self, client, api_headers, sample_trip):
+        resp = client.put(
+            f'/api/v1/trips/{sample_trip.id}',
+            json={'start_fuel_level': 60, 'end_fuel_level': 40},
+            headers=api_headers
+        )
+        assert resp.status_code == 200
+        data = resp.get_json()
+        assert data['start_fuel_level'] == 60.0
+        assert data['end_fuel_level'] == 40.0
+
+    def test_update_trip_rejects_out_of_range_fuel_level(self, client, api_headers, sample_trip):
+        resp = client.put(
+            f'/api/v1/trips/{sample_trip.id}',
+            json={'end_fuel_level': -1},
+            headers=api_headers
+        )
+        assert resp.status_code == 400
+
 
 class TestV1Charging:
     def test_list_charging_requires_api_key(self, client, sample_vehicle):

@@ -1485,6 +1485,11 @@ class Trip(db.Model):
     start_odometer = db.Column(db.Float, nullable=False)
     end_odometer = db.Column(db.Float, nullable=True)
 
+    # Fuel gauge readings as a percentage of a full tank (0-100), so fuel used
+    # can be approximated against the vehicle's tank capacity (#273)
+    start_fuel_level = db.Column(db.Float, nullable=True)
+    end_fuel_level = db.Column(db.Float, nullable=True)
+
     purpose = db.Column(db.String(20), nullable=False)  # business, personal, commute, etc.
     description = db.Column(db.String(200))
     start_location = db.Column(db.String(200))
@@ -1503,6 +1508,24 @@ class Trip(db.Model):
             return 0
         return self.end_odometer - self.start_odometer
 
+    @property
+    def fuel_used(self):
+        """Approximate fuel burnt on the trip from the gauge readings.
+
+        Returned in the same unit as the vehicle's tank capacity. ``None`` when
+        either reading or the tank capacity is missing, or when the tank ended
+        fuller than it started (a fill-up mid-trip makes the figure meaningless).
+        """
+        if self.start_fuel_level is None or self.end_fuel_level is None:
+            return None
+        capacity = self.vehicle.tank_capacity if self.vehicle else None
+        if not capacity:
+            return None
+        used = (self.start_fuel_level - self.end_fuel_level) / 100 * capacity
+        if used < 0:
+            return None
+        return used
+
     def to_dict(self):
         """Serialize trip to dictionary for API"""
         return {
@@ -1512,6 +1535,9 @@ class Trip(db.Model):
             'start_odometer': self.start_odometer,
             'end_odometer': self.end_odometer,
             'distance': self.distance,
+            'start_fuel_level': self.start_fuel_level,
+            'end_fuel_level': self.end_fuel_level,
+            'fuel_used': self.fuel_used,
             'purpose': self.purpose,
             'description': self.description,
             'start_location': self.start_location,

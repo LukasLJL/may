@@ -203,6 +203,13 @@ Categorize all vehicle-related costs:
 
 Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it.
 
+### Trips
+Log journeys for mileage and tax records:
+- Date, purpose, start and end locations, and the odometer at each end
+- Optional fuel gauge readings at the start and end of the trip, entered as a percentage of a full tank
+- Where the vehicle has a tank capacity set, the fuel used on the trip is worked out from those readings and shown on the trip list, giving a per-trip view of consumption between fill-ups
+- Reusable templates for journeys you make often, and a business/personal summary report per year
+
 ### Reminders
 Never miss important dates:
 - MOT/Inspection due dates
