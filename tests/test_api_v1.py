@@ -200,6 +200,32 @@ class TestV1FuelLogs:
         assert data['odometer'] == 11000.0
         assert 'id' in data
 
+    def test_create_fuel_log_with_sales_tax(self, client, api_headers, sample_vehicle):
+        """Sales tax comes back on the created log and can be cleared later (#225)."""
+        resp = client.post(
+            f'/api/v1/vehicles/{sample_vehicle.id}/fuel',
+            json={
+                'date': '2024-02-02',
+                'odometer': 11500,
+                'volume': 45.0,
+                'price_per_unit': 1.55,
+                'total_cost': 69.75,
+                'sales_tax': 9.07,
+            },
+            headers=api_headers
+        )
+        assert resp.status_code == 201
+        data = resp.get_json()
+        assert data['sales_tax'] == 9.07
+
+        resp = client.put(
+            f"/api/v1/fuel/{data['id']}",
+            json={'sales_tax': None},
+            headers=api_headers
+        )
+        assert resp.status_code == 200
+        assert resp.get_json()['sales_tax'] is None
+
     def test_create_fuel_log_missing_date(self, client, api_headers, sample_vehicle):
         resp = client.post(
             f'/api/v1/vehicles/{sample_vehicle.id}/fuel',

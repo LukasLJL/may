@@ -528,7 +528,8 @@ def api_create_fuel_log(vehicle_id):
     Create a fuel log
 
     Required fields: date, odometer
-    Optional fields: volume, price_per_unit, total_cost, is_full_tank, is_missed, station, notes
+    Optional fields: volume, price_per_unit, total_cost, sales_tax, is_full_tank, is_missed,
+    station, notes
     """
     user = get_api_user()
     vehicle = Vehicle.query.get_or_404(vehicle_id)
@@ -559,6 +560,7 @@ def api_create_fuel_log(vehicle_id):
         volume=parse_decimal(data['volume']) if data.get('volume') else None,
         price_per_unit=parse_decimal(data['price_per_unit']) if data.get('price_per_unit') else None,
         total_cost=parse_decimal(data['total_cost']) if data.get('total_cost') else None,
+        sales_tax=parse_decimal(data['sales_tax']) if data.get('sales_tax') else None,
         is_full_tank=data.get('is_full_tank', True),
         is_missed=data.get('is_missed', False),
         station=data.get('station'),
@@ -616,6 +618,8 @@ def api_update_fuel_log(log_id):
         log.price_per_unit = parse_decimal(data['price_per_unit']) if data['price_per_unit'] else None
     if 'total_cost' in data:
         log.total_cost = parse_decimal(data['total_cost']) if data['total_cost'] else None
+    if 'sales_tax' in data:
+        log.sales_tax = parse_decimal(data['sales_tax']) if data['sales_tax'] else None
     if 'is_full_tank' in data:
         log.is_full_tank = data['is_full_tank']
     if 'is_missed' in data:
@@ -1621,7 +1625,7 @@ def export_csv():
         writer = csv.writer(fuel_csv)
         writer.writerow([
             'id', 'vehicle_id', 'vehicle_name', 'date', 'odometer', 'odometer_unit',
-            'volume', 'price_per_unit', 'total_cost', 'is_full_tank',
+            'volume', 'price_per_unit', 'total_cost', 'sales_tax', 'is_full_tank',
             'is_missed', 'station', 'notes', 'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
@@ -1630,7 +1634,7 @@ def export_csv():
                 writer.writerow([
                     log.id, vehicle.id, vehicle.name, log.date.isoformat(),
                     log.odometer, odometer_unit,
-                    log.volume, log.price_per_unit, log.total_cost,
+                    log.volume, log.price_per_unit, log.total_cost, log.sales_tax,
                     log.is_full_tank, log.is_missed, log.station, log.notes,
                     log.created_at.isoformat() if log.created_at else ''
                 ])
@@ -1938,6 +1942,7 @@ def export_json():
                 'volume': log.volume,
                 'price_per_unit': log.price_per_unit,
                 'total_cost': log.total_cost,
+                'sales_tax': log.sales_tax,
                 'is_full_tank': log.is_full_tank,
                 'is_missed': log.is_missed,
                 'station': log.station,
@@ -2239,6 +2244,7 @@ def export_full_backup():
                 'volume': log.volume,
                 'price_per_unit': log.price_per_unit,
                 'total_cost': log.total_cost,
+                'sales_tax': log.sales_tax,
                 'is_full_tank': log.is_full_tank,
                 'is_missed': log.is_missed,
                 'station': log.station,
@@ -3162,6 +3168,7 @@ def get_import_fields(data_type):
             {'name': 'volume', 'label': 'Volume', 'required': False, 'type': 'float'},
             {'name': 'price_per_unit', 'label': 'Price per Unit', 'required': False, 'type': 'float'},
             {'name': 'total_cost', 'label': 'Total Cost', 'required': False, 'type': 'float'},
+            {'name': 'sales_tax', 'label': 'Sales Tax', 'required': False, 'type': 'float'},
             {'name': 'is_full_tank', 'label': 'Full Tank', 'required': False, 'type': 'bool'},
             {'name': 'is_missed', 'label': 'Missed Fill-up', 'required': False, 'type': 'bool'},
             {'name': 'station', 'label': 'Station', 'required': False, 'type': 'str'},
@@ -3214,6 +3221,7 @@ _COLUMN_ALIASES = {
     'volume': ['volume', 'litres', 'liters', 'gallons', 'gal', 'fuel', 'qty', 'quantity'],
     'price_per_unit': ['price per unit', 'unit price', 'price/l', 'price/gal', 'price', 'rate'],
     'total_cost': ['total cost', 'total', 'cost', 'price paid', 'total price'],
+    'sales_tax': ['sales tax', 'sales taxes', 'tax', 'taxes', 'vat', 'gst', 'hst', 'pst', 'qst'],
     'is_full_tank': ['full tank', 'full', 'complete', 'full fill'],
     'is_missed': ['missed', 'missed fill', 'skipped'],
     'station': ['station', 'gas station', 'fuel station'],
@@ -3397,6 +3405,7 @@ def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_
             volume=parse_float_value(mapped_row.get('volume')),
             price_per_unit=parse_float_value(mapped_row.get('price_per_unit')),
             total_cost=parse_float_value(mapped_row.get('total_cost')),
+            sales_tax=parse_float_value(mapped_row.get('sales_tax')),
             is_full_tank=parse_bool_value(mapped_row.get('is_full_tank')) if mapped_row.get('is_full_tank') else True,
             is_missed=parse_bool_value(mapped_row.get('is_missed')),
             station=mapped_row.get('station', '').strip() or None,

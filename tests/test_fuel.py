@@ -109,6 +109,108 @@ class TestFuelNew:
         assert resp.status_code in (200, 302)
 
 
+class TestFuelSalesTax:
+    """Sales tax paid on fuel, for businesses reclaiming it (#225)."""
+
+    def test_create_records_sales_tax(self, auth_client, sample_vehicle):
+        resp = auth_client.post('/fuel/new', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'date': '2024-04-01',
+            'odometer': '16000',
+            'volume': '50.0',
+            'price_per_unit': '1.60',
+            'total_cost': '80.0',
+            'sales_tax': '10.40',
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        log = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id, odometer=16000.0).first()
+        assert log is not None
+        assert log.sales_tax == 10.40
+        # Tax is part of the total, not added on top of it
+        assert log.total_cost == 80.0
+
+    def test_blank_sales_tax_is_none(self, auth_client, sample_vehicle):
+        resp = auth_client.post('/fuel/new', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'date': '2024-04-02',
+            'odometer': '16100',
+            'volume': '40.0',
+            'price_per_unit': '1.50',
+            'sales_tax': '',
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        log = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id, odometer=16100.0).first()
+        assert log is not None
+        assert log.sales_tax is None
+
+    def test_negative_sales_tax_rejected(self, auth_client, sample_vehicle):
+        resp = auth_client.post('/fuel/new', data={
+            'vehicle_id': str(sample_vehicle.id),
+            'date': '2024-04-03',
+            'odometer': '16200',
+            'volume': '40.0',
+            'price_per_unit': '1.50',
+            'sales_tax': '-5',
+            'is_full_tank': 'on',
+        }, follow_redirects=True)
+        assert resp.status_code == 200
+        assert FuelLog.query.filter_by(
+            vehicle_id=sample_vehicle.id, odometer=16200.0).first() is None
+
+    def test_edit_sets_and_clears_sales_tax(self, auth_client, sample_fuel_log):
+        form = {
+            'date': '2024-01-15',
+            'odometer': '10500',
+            'volume': '42.0',
+            'price_per_unit': '1.55',
+            'total_cost': '65.1',
+            'sales_tax': '8.46',
+            'is_full_tank': 'on',
+        }
+        resp = auth_client.post(f'/fuel/{sample_fuel_log.id}/edit', data=form,
+                                follow_redirects=True)
+        assert resp.status_code == 200
+        db.session.refresh(sample_fuel_log)
+        assert sample_fuel_log.sales_tax == 8.46
+
+        form['sales_tax'] = ''
+        resp = auth_client.post(f'/fuel/{sample_fuel_log.id}/edit', data=form,
+                                follow_redirects=True)
+        assert resp.status_code == 200
+        db.session.refresh(sample_fuel_log)
+        assert sample_fuel_log.sales_tax is None
+
+    def test_index_totals_sales_tax_by_year(self, auth_client, app, sample_vehicle, test_user):
+        for day, year, tax in ((1, 2023, 5.0), (2, 2024, 4.25), (3, 2024, 3.75)):
+            db.session.add(FuelLog(
+                vehicle_id=sample_vehicle.id,
+                user_id=test_user.id,
+                date=date(year, 5, day),
+                odometer=20000 + day,
+                volume=40.0,
+                price_per_unit=1.5,
+                total_cost=60.0,
+                sales_tax=tax,
+            ))
+        db.session.commit()
+
+        resp = auth_client.get('/fuel/')
+        assert resp.status_code == 200
+        body = resp.data.decode()
+        assert 'Sales Tax Paid' in body
+        # 2024 is the sum of both 2024 logs, and the newest year comes first
+        assert '8.00' in body
+        assert '5.00' in body
+        assert body.index('2024') < body.index('2023')
+
+    def test_index_hides_summary_without_sales_tax(self, auth_client, sample_fuel_log):
+        resp = auth_client.get('/fuel/')
+        assert resp.status_code == 200
+        assert 'Sales Tax Paid' not in resp.data.decode()
+
+
 class TestFuelEdit:
     def test_edit_requires_auth(self, client, sample_fuel_log):
         resp = client.get(f'/fuel/{sample_fuel_log.id}/edit', follow_redirects=False)

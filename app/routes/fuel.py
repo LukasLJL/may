@@ -44,9 +44,22 @@ def index():
         ChargingSession.vehicle_id.in_(vehicle_ids)
     ).order_by(ChargingSession.date.desc()).all() if vehicle_ids else []
 
+    # Sales tax paid per calendar year (#225): businesses reclaim it annually,
+    # so the yearly total is what the page needs to show. Only years with tax
+    # recorded appear, newest first, and the block is hidden entirely for users
+    # who never log it.
+    sales_tax_by_year = {}
+    for log in logs:
+        if log.sales_tax and log.date:
+            year = log.date.year
+            sales_tax_by_year[year] = sales_tax_by_year.get(year, 0) + log.sales_tax
+    sales_tax_by_year = [(year, round(total, 2))
+                         for year, total in sorted(sales_tax_by_year.items(), reverse=True)]
+
     return render_template('fuel/index.html',
                            logs=logs,
                            vehicles=vehicles,
+                           sales_tax_by_year=sales_tax_by_year,
                            charging_sessions=charging_sessions)
 
 
@@ -71,33 +84,42 @@ def new():
         date_str = request.form.get('date')
         date = datetime.strptime(date_str, '%Y-%m-%d').date() if date_str else datetime.now().date()
 
-        # Validate numeric inputs
+        # Validate numeric inputs. A failure sends the user back to the form
+        # with the flash: there is no `fuel/new.html` template to re-render.
         odometer, err = validate_positive_number(request.form.get('odometer'), 'Odometer', max_value=9999999)
         if err:
             flash(err, 'error')
-            return render_template('fuel/new.html', vehicles=vehicles)
+            return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
         volume, err = validate_positive_number(request.form.get('volume'), 'Volume', max_value=10000)
         if err:
             flash(err, 'error')
-            return render_template('fuel/new.html', vehicles=vehicles)
+            return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
         price_per_unit, err = validate_positive_number(request.form.get('price_per_unit'), 'Price per unit', max_value=1000)
         if err:
             flash(err, 'error')
-            return render_template('fuel/new.html', vehicles=vehicles)
+            return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
         discount_per_unit = None
         if request.form.get('discount_per_unit'):
             discount_per_unit, err = validate_positive_number(request.form.get('discount_per_unit'), 'Discount per unit', max_value=1000)
             if err:
                 flash(err, 'error')
-                return render_template('fuel/new.html', vehicles=vehicles)
+                return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
         total_cost, err = validate_positive_number(request.form.get('total_cost'), 'Total cost', max_value=100000)
         if err:
             flash(err, 'error')
-            return render_template('fuel/new.html', vehicles=vehicles)
+            return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
+
+        # Sales tax paid on the fill-up, already included in the total cost (#225)
+        sales_tax = None
+        if request.form.get('sales_tax'):
+            sales_tax, err = validate_positive_number(request.form.get('sales_tax'), 'Sales tax', max_value=100000)
+            if err:
+                flash(err, 'error')
+                return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
         log = FuelLog(
             vehicle_id=vehicle_id,
@@ -108,6 +130,7 @@ def new():
             price_per_unit=price_per_unit,
             discount_per_unit=discount_per_unit,
             total_cost=total_cost,
+            sales_tax=sales_tax,
             fuel_type=request.form.get('fuel_type') or None,
             is_full_tank=request.form.get('is_full_tank') == 'on',
             is_missed=request.form.get('is_missed') == 'on',
@@ -210,6 +233,7 @@ def edit(log_id):
         log.price_per_unit = parse_decimal(request.form.get('price_per_unit')) if request.form.get('price_per_unit') else None
         log.discount_per_unit = parse_decimal(request.form.get('discount_per_unit')) if request.form.get('discount_per_unit') else None
         log.total_cost = parse_decimal(request.form.get('total_cost')) if request.form.get('total_cost') else None
+        log.sales_tax = parse_decimal(request.form.get('sales_tax')) if request.form.get('sales_tax') else None
         log.fuel_type = request.form.get('fuel_type') or None
         log.is_full_tank = request.form.get('is_full_tank') == 'on'
         log.is_missed = request.form.get('is_missed') == 'on'

@@ -45,7 +45,8 @@ def make_backup_data():
             ],
             'fuel_logs': [
                 {'id': 1, 'date': '2024-01-15', 'odometer': 10000.0, 'volume': 40.0,
-                 'price_per_unit': 1.5, 'total_cost': 60.0, 'is_full_tank': True,
+                 'price_per_unit': 1.5, 'total_cost': 60.0, 'sales_tax': 7.8,
+                 'is_full_tank': True,
                  'is_missed': False, 'station': 'Shell', 'notes': None,
                  'created_at': '2024-01-15T18:00:00'},
                 {'id': 2, 'date': '2024-02-15', 'odometer': 10500.0, 'volume': 42.0,
@@ -220,6 +221,7 @@ class TestBackupRestoreJson:
         log = vehicle.fuel_logs.order_by(FuelLog.date).first()
         assert log.odometer == 10000.0
         assert log.station == 'Shell'
+        assert log.sales_tax == 7.8  # #225
         assert log.user_id == test_user.id
         assert str(log.date) == '2024-01-15'
 

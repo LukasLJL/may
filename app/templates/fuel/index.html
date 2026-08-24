@@ -18,6 +18,20 @@
     {% endif %}
 </div>
 
+{% if sales_tax_by_year %}
+<div class="mb-6 bg-white dark:bg-gray-800 shadow rounded-lg p-6">
+    <h2 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ _('Sales Tax Paid') }}</h2>
+    <dl class="mt-3 flex flex-wrap gap-6">
+        {% for year, total in sales_tax_by_year %}
+        <div>
+            <dt class="text-xs text-gray-500 dark:text-gray-400">{{ year }}</dt>
+            <dd class="text-lg font-semibold text-gray-900 dark:text-white">{{ total|money }} {{ current_user.currency }}</dd>
+        </div>
+        {% endfor %}
+    </dl>
+</div>
+{% endif %}
+
 {% if logs %}
 <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
     <div class="overflow-x-auto">
@@ -56,7 +70,12 @@
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{% if log.price_per_unit %}{{ "%.3f"|format(log.price_per_unit) }}{% else %}-{% endif %}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">{{ (log.total_cost or 0)|money }} {{ current_user.currency }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                        {{ (log.total_cost or 0)|money }} {{ current_user.currency }}
+                        {% if log.sales_tax %}
+                        <span class="block text-xs text-gray-500 dark:text-gray-400">{{ _('incl. tax %(amount)s', amount=log.sales_tax|money) }}</span>
+                        {% endif %}
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                         {% set consumption = log.get_consumption(current_user.consumption_unit, current_user.volume_unit) %}
                         {% if consumption %}{{ "%.1f"|format(consumption) }} {{ current_user.consumption_unit }}{% else %}-{% endif %}

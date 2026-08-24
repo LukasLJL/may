@@ -10,6 +10,25 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.38.0] - 2026-08-24
+
+### Added
+
+- Fuel logs can record the sales tax paid on a fill-up — VAT, GST/HST/PST or
+  whichever applies locally — entered as the amount on the receipt and counted
+  as part of the total cost, not added to it. Where a jurisdiction charges more
+  than one tax, enter the sum. The fuel log list totals the tax by calendar
+  year and shows each fill-up's share under its cost, and the amount is
+  included in the vehicle PDF report, the CSV and JSON exports, backups, CSV
+  imports and the REST API.
+  ([#225](https://github.com/dannymcc/may/issues/225))
+
+### Fixed
+
+- Adding a fuel log with an invalid number in any field returned a server error
+  instead of the validation message: the handler tried to re-render a template
+  that does not exist. It now returns to the form with the message shown.
+
 ## [0.37.0] - 2026-08-24
 
 ### Changed
