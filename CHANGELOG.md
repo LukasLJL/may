@@ -10,6 +10,15 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- An empty `.secret_key` file in May's data folder no longer leaves every
+  worker process signing sessions with a key of its own, which showed up as
+  forms — creating a user, say — being refused with "The CSRF session token is
+  missing" or doing nothing at all. May now fills in a key file that exists but
+  holds nothing, instead of leaving it as it found it.
+  ([#315](https://github.com/dannymcc/may/issues/315))
+
 ## [0.35.2] - 2026-08-24
 
 ### Fixed
