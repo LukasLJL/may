@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.35.3] - 2026-08-24
+
 ### Fixed
 
 - An empty `.secret_key` file in May's data folder no longer leaves every
