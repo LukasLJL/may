@@ -29,7 +29,7 @@ def index():
     if vehicle_filter:
         query = query.filter(ChargingSession.vehicle_id == vehicle_filter)
 
-    sessions = query.order_by(ChargingSession.date.desc()).all()
+    sessions = query.order_by(ChargingSession.date.desc(), ChargingSession.odometer.desc()).all()
 
     # Calculate totals
     total_kwh = sum(s.kwh_added or 0 for s in sessions)

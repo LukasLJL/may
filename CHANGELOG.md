@@ -10,6 +10,17 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Changed
+
+- Charging sessions logged on the same date are now listed in odometer order,
+  the highest reading first, rather than in whatever order the database
+  returned them — the same fix #325 made for trips. A session's date carries no
+  time of day, so several charges on one day could appear out of sequence,
+  which is easy to hit on a plug-in hybrid. The list is still ordered by date,
+  most recent first. A session with no odometer recorded has nothing to order
+  by, so it is left wherever the database puts it within that date.
+  ([#329](https://github.com/dannymcc/may/issues/329))
+
 ## [0.38.1] - 2026-08-24
 
 ### Fixed
