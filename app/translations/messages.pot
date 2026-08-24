@@ -4469,3 +4469,21 @@ msgstr ""
 msgid "No fuel prices recorded yet."
 msgstr ""
 
+
+#: app/templates/fuel/form.html:95
+msgid "Sales Tax"
+msgstr ""
+
+#: app/templates/fuel/form.html:101
+msgid ""
+"Optional. Sales tax shown on the receipt, already included in the total "
+"cost. Add the amounts together where more than one tax applies."
+msgstr ""
+
+#: app/templates/fuel/index.html:23
+msgid "Sales Tax Paid"
+msgstr ""
+
+#: app/templates/fuel/index.html:76
+msgid "incl. tax %(amount)s"
+msgstr ""

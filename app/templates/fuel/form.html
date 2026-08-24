@@ -92,6 +92,15 @@
                 </div>
 
                 <div>
+                    <label for="sales_tax" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Sales Tax') }} ({{ current_user.currency }})</label>
+                    <input type="number" name="sales_tax" id="sales_tax" step="0.01" min="0"
+                           value="{{ log.sales_tax if log and log.sales_tax is not none else '' }}"
+                           placeholder="0.00"
+                           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ _('Optional. Sales tax shown on the receipt, already included in the total cost. Add the amounts together where more than one tax applies.') }}</p>
+                </div>
+
+                <div>
                     <label for="station_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Station') }}</label>
                     {% if stations %}
                     <select name="station_id" id="station_id" onchange="updateStationName(this)"

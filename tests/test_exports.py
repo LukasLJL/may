@@ -3,6 +3,7 @@ import pytest
 import json
 import zipfile
 import io
+from app import db
 
 
 class TestExportCsv:
@@ -52,6 +53,19 @@ class TestExportCsv:
         with zipfile.ZipFile(buf) as zf:
             vehicles_csv = zf.read('vehicles.csv').decode('utf-8')
             assert 'Test Car' in vehicles_csv
+
+    def test_export_csv_includes_sales_tax(self, auth_client, sample_vehicle, sample_fuel_log):
+        """#225 — sales tax paid on fuel has to survive an export."""
+        sample_fuel_log.sales_tax = 7.8
+        db.session.commit()
+        resp = auth_client.get('/api/export/csv')
+        assert resp.status_code == 200
+        buf = io.BytesIO(resp.data)
+        with zipfile.ZipFile(buf) as zf:
+            fuel_csv = zf.read('fuel_logs.csv').decode('utf-8')
+        lines = fuel_csv.splitlines()
+        assert 'sales_tax' in lines[0]
+        assert '7.8' in lines[1]
 
     def test_export_csv_includes_odometer_unit(self, auth_client, sample_vehicle, sample_fuel_log, sample_expense):
         """#173 — odometer values must be self-describing about units."""

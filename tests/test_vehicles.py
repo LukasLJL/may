@@ -560,6 +560,27 @@ class TestVehicleReportParts:
 
         assert 'Parts (' not in html
 
+    def test_template_shows_fuel_sales_tax(self, app, sample_vehicle, test_user,
+                                          sample_fuel_log):
+        """#225 — the report an accountant sees carries the tax and its total."""
+        sample_fuel_log.sales_tax = 7.8
+        db.session.commit()
+
+        html = self._render(app, sample_vehicle, test_user,
+                            fuel_logs=[sample_fuel_log])
+
+        assert 'Sales Tax' in html
+        assert 'Sales tax total' in html
+        assert '7.80' in html
+
+    def test_template_omits_sales_tax_column_when_unused(self, app, sample_vehicle,
+                                                         test_user, sample_fuel_log):
+        html = self._render(app, sample_vehicle, test_user,
+                            fuel_logs=[sample_fuel_log])
+
+        assert 'Sales Tax' not in html
+        assert 'Sales tax total' not in html
+
     def test_report_route_includes_parts(self, auth_client, app, tmp_path,
                                          monkeypatch, sample_vehicle, test_user):
         rendered = self._fake_weasyprint(monkeypatch)
