@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.36.1] - 2026-08-24
+
 ### Fixed
 
 - A vehicle set to track engine hours has its readings treated as hours rather
@@ -29,6 +31,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   existing reading — 50 miles becoming 50 engine hours — so the rest of the
   edit saves and that one field is refused with a message.
   ([#323](https://github.com/dannymcc/may/issues/323))
+
+- The README documents the tracking unit, including the note that the figures
+  for an hours-tracked vehicle are correct while the labels beside them still
+  read in distance terms. The API documentation says the same about
+  `total_distance` and `average_consumption`, and that the tracking unit is
+  neither exposed nor settable over the API.
+  ([#323](https://github.com/dannymcc/may/issues/323))
+
+- The vehicle response example in the API documentation includes
+  `secondary_fuel_type`, which the API has returned since 0.36.0.
 
 ## [0.36.0] - 2026-08-24
 
