@@ -10,6 +10,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- Saving an expense, fuel log or note no longer always lands on the vehicle
+  page. Each now returns to its own list, so several entries can be added one
+  after another. Starting from a vehicle page still returns you to that
+  vehicle, as before. ([#283](https://github.com/dannymcc/may/issues/283))
+
 ## [0.33.1] - 2026-08-23
 
 ### Fixed

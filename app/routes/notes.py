@@ -63,7 +63,12 @@ def new():
         db.session.add(note)
         db.session.commit()
         flash(_('Note added successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        return redirect(url_for('notes.index'))
 
     selected_vehicle_id = request.args.get('vehicle_id', type=int) or current_user.default_vehicle_id
 
@@ -101,7 +106,12 @@ def edit(note_id):
 
         db.session.commit()
         flash(_('Note updated successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=note.vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=note.vehicle_id))
+
+        return redirect(url_for('notes.index'))
 
     return render_template('notes/form.html', note=note, vehicles=vehicles,
                            selected_vehicle_id=note.vehicle_id)
@@ -122,4 +132,9 @@ def delete(note_id):
     db.session.delete(note)
     db.session.commit()
     flash(_('Note deleted successfully'), 'success')
-    return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+    # Redirect back to vehicle page if we came from there (#283)
+    if request.args.get('return_to') == 'vehicle':
+        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+    return redirect(url_for('notes.index'))

@@ -158,7 +158,12 @@ def new():
                 db.session.commit()
 
         flash(_('Fuel log added successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        return redirect(url_for('fuel.index'))
 
     # Pre-select vehicle: explicit param > default vehicle preference
     selected_vehicle_id = request.args.get('vehicle_id', type=int) or current_user.default_vehicle_id
@@ -290,7 +295,12 @@ def edit(log_id):
 
         db.session.commit()
         flash(_('Fuel log updated successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=log.vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=log.vehicle_id))
+
+        return redirect(url_for('fuel.index'))
 
     # Get all fuel stations for dropdown (stations are system-wide)
     stations = FuelStation.query.order_by(

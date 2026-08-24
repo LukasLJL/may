@@ -180,7 +180,12 @@ def new():
         _flash_skipped_attachments(skipped)
 
         flash(_('Expense added successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+        return redirect(url_for('expenses.index'))
 
     # Pre-select vehicle if provided
     selected_vehicle_id = request.args.get('vehicle_id', type=int) or current_user.default_vehicle_id
@@ -230,7 +235,12 @@ def edit(expense_id):
         db.session.commit()
         _flash_skipped_attachments(skipped)
         flash(_('Expense updated successfully'), 'success')
-        return redirect(url_for('vehicles.view', vehicle_id=expense.vehicle_id))
+
+        # Redirect back to vehicle page if we came from there (#283)
+        if request.form.get('return_to') == 'vehicle':
+            return redirect(url_for('vehicles.view', vehicle_id=expense.vehicle_id))
+
+        return redirect(url_for('expenses.index'))
 
     return render_template('expenses/form.html',
                            expense=expense,
@@ -261,7 +271,12 @@ def delete(expense_id):
     db.session.delete(expense)
     db.session.commit()
     flash(_('Expense deleted successfully'), 'success')
-    return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+    # Redirect back to vehicle page if we came from there (#283)
+    if request.args.get('return_to') == 'vehicle':
+        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
+    return redirect(url_for('expenses.index'))
 
 
 @bp.route('/<int:expense_id>/attachments/<int:attachment_id>/delete', methods=['POST'])
