@@ -129,7 +129,7 @@ python run.py
 Copy `.env.example` to `.env` and configure:
 
 ```bash
-# Secret key for session encryption
+# Secret key for session encryption (optional)
 SECRET_KEY=your-secure-random-string
 
 # Database location (optional, defaults to SQLite in the app's data folder)
@@ -141,6 +141,17 @@ DATABASE_URL=sqlite:////srv/may/data/may.db
 # Upload folder for attachments (optional)
 UPLOAD_FOLDER=/srv/may/data/uploads
 ```
+
+If you don't set `SECRET_KEY`, May generates one on first start and saves it to
+`.secret_key` in its data folder, so logins survive restarts. Set it yourself if
+you'd rather manage the key, or if you run more than one instance behind a load
+balancer and want them to share sessions.
+
+The supplied `docker-compose.yml` passes a placeholder `SECRET_KEY` when you
+haven't set one of your own, so under Compose May signs sessions with that
+rather than generating a key. Set `SECRET_KEY` in `.env` next to
+`docker-compose.yml`, or remove the line from the compose file to let May
+generate and keep its own.
 
 The `.env` file must sit next to `config.py` in the application directory, and
 it is read when May starts. Variables set in the real environment take
@@ -155,7 +166,7 @@ in `.env` has no effect — edit `docker-compose.yml` instead.
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `SECRET_KEY` | Session encryption key | Random |
+| `SECRET_KEY` | Session encryption key | Generated on first start and saved to `data/.secret_key` |
 | `DATABASE_URL` | Database connection string (SQLite or PostgreSQL) | SQLite at `data/may.db` inside the application directory (`/app/data/may.db` in Docker) |
 | `UPLOAD_FOLDER` | Path for file uploads | `data/uploads` inside the application directory (`/app/data/uploads` in Docker) |
 | `PUID` | User ID the container runs as (linuxserver.io convention) | `1000` |
