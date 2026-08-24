@@ -196,6 +196,8 @@ Track every fill-up with:
 - Automatic MPG/L per 100km calculations
 - Fuel type selection for vehicles that take more than one fuel, including hybrids (petrol or diesel), so station price charts stay grouped by the fuel actually bought
 
+Saving a fuel log returns you to the fuel log list, unless you started from a vehicle page, in which case you go back to that vehicle. Notes behave the same way.
+
 ### Expenses
 Categorize all vehicle-related costs:
 - Maintenance & Repairs
@@ -206,7 +208,7 @@ Categorize all vehicle-related costs:
 - Accessories
 - Other expenses
 
-Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it. An odometer recorded against an expense counts towards the vehicle's latest reading, alongside fuel logs, trips and charging sessions.
+Record odometer readings alongside costs, and expand any expense row to see vendor, notes, and links to any attached receipts inline. An expense can have several receipts — select more than one file when adding or editing it. An odometer recorded against an expense counts towards the vehicle's latest reading, alongside fuel logs, trips and charging sessions. Saving an expense returns you to the expenses list, unless you started from a vehicle page, in which case you go back to that vehicle.
 
 ### Trips
 Log journeys for mileage and tax records:

@@ -906,3 +906,60 @@ class TestPriceHistoryFuelType:
 
         db.session.refresh(history)
         assert history.fuel_type == 'diesel'
+
+
+class TestFuelRedirects:
+    """Saving a fuel log returns to the fuel log list unless the user came
+    from a vehicle page (#283). Deletion keeps the `next` behaviour of #298."""
+
+    def _payload(self, vehicle, **overrides):
+        data = {
+            'vehicle_id': str(vehicle.id),
+            'date': '2024-05-01',
+            'odometer': '16000',
+            'volume': '40.0',
+            'price_per_unit': '1.50',
+            'total_cost': '60.0',
+            'is_full_tank': 'on',
+        }
+        data.update(overrides)
+        return data
+
+    def test_create_redirects_to_fuel_log(self, auth_client, sample_vehicle):
+        resp = auth_client.post('/fuel/new', data=self._payload(sample_vehicle),
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith('/fuel/')
+
+    def test_create_returns_to_vehicle_when_requested(self, auth_client, sample_vehicle):
+        resp = auth_client.post('/fuel/new',
+                                data=self._payload(sample_vehicle, return_to='vehicle'),
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith(f'/vehicles/{sample_vehicle.id}')
+
+    def test_edit_redirects_to_fuel_log(self, auth_client, sample_fuel_log):
+        resp = auth_client.post(f'/fuel/{sample_fuel_log.id}/edit',
+                                data=self._payload(sample_fuel_log.vehicle),
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith('/fuel/')
+
+    def test_edit_returns_to_vehicle_when_requested(self, auth_client, sample_fuel_log):
+        vehicle_id = sample_fuel_log.vehicle_id
+        resp = auth_client.post(f'/fuel/{sample_fuel_log.id}/edit',
+                                data=self._payload(sample_fuel_log.vehicle,
+                                                   return_to='vehicle'),
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
+
+    def test_form_from_vehicle_page_includes_hidden_field(self, auth_client, sample_vehicle):
+        resp = auth_client.get(f'/fuel/new?vehicle_id={sample_vehicle.id}&return_to=vehicle')
+        assert resp.status_code == 200
+        assert b'name="return_to" value="vehicle"' in resp.data
+
+    def test_form_from_fuel_page_omits_hidden_field(self, auth_client, sample_vehicle):
+        resp = auth_client.get('/fuel/new')
+        assert resp.status_code == 200
+        assert b'name="return_to"' not in resp.data
