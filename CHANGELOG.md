@@ -10,6 +10,30 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.38.1] - 2026-08-24
+
+### Fixed
+
+- The "L/100km" and "km/L" choices in Settings > Units & Values were the two
+  options #310 missed: still hard-coded English, so they stayed as written
+  whatever language was selected. They now go through the catalogues, which
+  lets locales use their own convention — Hungarian, for instance, spaces the
+  unit as "L/100 km". Translations are filled in for all shipped languages.
+  ([#328](https://github.com/dannymcc/may/issues/328))
+
+### Changed
+
+- The test suite no longer emits thousands of deprecation warnings. The causes
+  are fixed rather than silenced: a shared `app.utils.utcnow()` replaces
+  `datetime.utcnow()` throughout (still naive UTC, matching every stored
+  column), primary-key lookups use `db.session.get()` and `db.get_or_404()`
+  instead of the legacy 1.x query API, and the deliberate user/vehicle foreign
+  key cycle is marked `use_alter`. Behaviour is unchanged; a real failure is now
+  legible in the CI log. ([#302](https://github.com/dannymcc/may/issues/302))
+- README: the sales tax notes now say that quick entry mode does not ask for
+  tax, so a fill-up logged that way leaves the yearly total short until the log
+  is edited.
+
 ## [0.38.0] - 2026-08-24
 
 ### Added

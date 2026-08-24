@@ -163,7 +163,7 @@ class TestVehicleDelete:
         vehicle_id = sample_vehicle.id
         resp = auth_client.post(f'/vehicles/{vehicle_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert Vehicle.query.get(vehicle_id) is None
+        assert db.session.get(Vehicle, vehicle_id) is None
 
 
 class TestVehicleArchive:
@@ -805,7 +805,7 @@ class TestVehiclePhotos:
             follow_redirects=True)
 
         assert resp.status_code == 200
-        assert Attachment.query.get(photo.id) is None
+        assert db.session.get(Attachment, photo.id) is None
         assert not (tmp_path / 'gallery.png').exists()
 
     def test_deleting_main_photo_falls_back_to_another(self, auth_client, app,

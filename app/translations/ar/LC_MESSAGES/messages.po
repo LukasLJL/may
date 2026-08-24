@@ -4149,6 +4149,14 @@ msgstr "ميل لكل غالون (بريطاني)"
 msgid "MPG (US)"
 msgstr "ميل لكل غالون (أمريكي)"
 
+#: app/templates/auth/settings.html:148
+msgid "L/100km"
+msgstr "لتر/100 كم"
+
+#: app/templates/auth/settings.html:151
+msgid "km/L"
+msgstr "كم/لتر"
+
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"
 msgstr "ملليلترات (مل)"

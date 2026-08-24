@@ -519,7 +519,7 @@ def users():
 @login_required
 @admin_required
 def toggle_admin(user_id):
-    user = User.query.get_or_404(user_id)
+    user = db.get_or_404(User, user_id)
     if user.id == current_user.id:
         return redirect(url_for('auth.users'))
 
@@ -541,7 +541,7 @@ def toggle_admin(user_id):
 @login_required
 @admin_required
 def delete_user(user_id):
-    user = User.query.get_or_404(user_id)
+    user = db.get_or_404(User, user_id)
     if user.id != current_user.id:
         db.session.delete(user)
         db.session.commit()
@@ -555,7 +555,7 @@ def delete_user(user_id):
 @admin_required
 def edit_user(user_id):
     """Edit a user's details (admin only)"""
-    user = User.query.get_or_404(user_id)
+    user = db.get_or_404(User, user_id)
 
     if request.method == 'POST':
         new_email = request.form.get('email', '').strip()

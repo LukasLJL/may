@@ -157,7 +157,7 @@ def _scalar_default_sql(column):
     """Render a SQLAlchemy column's Python-side default as a SQL literal.
 
     Returns None when no scalar default is set, when the default is callable
-    (e.g. ``datetime.utcnow``), or when the value is a type we cannot safely
+    (e.g. ``utcnow``), or when the value is a type we cannot safely
     embed in DDL. Callable defaults are intentionally skipped: ``ALTER TABLE``
     fills existing rows once at column-creation time, so the captured value
     would be misleading anyway.
@@ -327,7 +327,7 @@ def create_app(config_class=Config):
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(int(user_id))
+        return db.session.get(User, int(user_id))
 
     # Make languages and branding available in templates
     @app.context_processor

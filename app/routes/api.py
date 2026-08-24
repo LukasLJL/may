@@ -24,7 +24,7 @@ from app.services.tessie import TessieService
 from app.services.backup_restore import (
     BackupError, SECTION_LABELS, describe_backup, read_backup, restore_backup
 )
-from app.utils import parse_decimal, parse_fuel_level
+from app.utils import parse_decimal, parse_fuel_level, utcnow
 from flask_babel import gettext as _
 from config import APP_VERSION
 
@@ -272,7 +272,7 @@ def uploaded_file(filename):
 @login_required
 def vehicle_stats(vehicle_id):
     """Get statistics for a specific vehicle (for charts)"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in current_user.get_all_vehicles():
         return jsonify({'error': 'Access denied'}), 403
@@ -325,7 +325,7 @@ def vehicle_stats(vehicle_id):
 @login_required
 def last_odometer(vehicle_id):
     """Get the last recorded odometer reading for a vehicle"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in current_user.get_all_vehicles():
         return jsonify({'error': 'Access denied'}), 403
@@ -362,7 +362,7 @@ def api_get_vehicle(vehicle_id):
     Returns detailed information about a single vehicle.
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -422,7 +422,7 @@ def api_update_vehicle(vehicle_id):
     All fields are optional. Only provided fields will be updated.
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle.owner_id != user.id:
         return jsonify({'error': 'Only the owner can update this vehicle', 'code': 'forbidden'}), 403
@@ -467,7 +467,7 @@ def api_delete_vehicle(vehicle_id):
     This will also delete all associated fuel logs and expenses.
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle.owner_id != user.id:
         return jsonify({'error': 'Only the owner can delete this vehicle', 'code': 'forbidden'}), 403
@@ -494,7 +494,7 @@ def api_list_fuel_logs(vehicle_id):
     - sort: Sort order, 'asc' or 'desc' by date (default: desc)
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -532,7 +532,7 @@ def api_create_fuel_log(vehicle_id):
     station, notes
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -582,7 +582,7 @@ def api_create_fuel_log(vehicle_id):
 def api_get_fuel_log(log_id):
     """Get a specific fuel log"""
     user = get_api_user()
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
 
     if log.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Fuel log not found or access denied', 'code': 'not_found'}), 404
@@ -595,7 +595,7 @@ def api_get_fuel_log(log_id):
 def api_update_fuel_log(log_id):
     """Update a fuel log"""
     user = get_api_user()
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
 
     if log.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Fuel log not found or access denied', 'code': 'not_found'}), 404
@@ -638,7 +638,7 @@ def api_update_fuel_log(log_id):
 def api_delete_fuel_log(log_id):
     """Delete a fuel log"""
     user = get_api_user()
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
 
     if log.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Fuel log not found or access denied', 'code': 'not_found'}), 404
@@ -666,7 +666,7 @@ def api_list_expenses(vehicle_id):
     - sort: Sort order, 'asc' or 'desc' by date (default: desc)
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -707,7 +707,7 @@ def api_create_expense(vehicle_id):
     Optional fields: odometer, vendor, notes
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -756,7 +756,7 @@ def api_create_expense(vehicle_id):
 def api_get_expense(expense_id):
     """Get a specific expense"""
     user = get_api_user()
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
 
     if expense.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Expense not found or access denied', 'code': 'not_found'}), 404
@@ -769,7 +769,7 @@ def api_get_expense(expense_id):
 def api_update_expense(expense_id):
     """Update an expense"""
     user = get_api_user()
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
 
     if expense.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Expense not found or access denied', 'code': 'not_found'}), 404
@@ -813,7 +813,7 @@ def api_update_expense(expense_id):
 def api_delete_expense(expense_id):
     """Delete an expense"""
     user = get_api_user()
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
 
     if expense.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Expense not found or access denied', 'code': 'not_found'}), 404
@@ -857,7 +857,7 @@ def api_list_trips(vehicle_id):
     - sort: Sort order, 'asc' or 'desc' by date (default: desc)
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -899,7 +899,7 @@ def api_create_trip(vehicle_id):
     start_location, end_location, notes
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -966,7 +966,7 @@ def api_create_trip(vehicle_id):
 def api_get_trip(trip_id):
     """Get a specific trip"""
     user = get_api_user()
-    trip = Trip.query.get_or_404(trip_id)
+    trip = db.get_or_404(Trip, trip_id)
 
     if trip.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Trip not found or access denied', 'code': 'not_found'}), 404
@@ -979,7 +979,7 @@ def api_get_trip(trip_id):
 def api_update_trip(trip_id):
     """Update a trip"""
     user = get_api_user()
-    trip = Trip.query.get_or_404(trip_id)
+    trip = db.get_or_404(Trip, trip_id)
 
     if trip.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Trip not found or access denied', 'code': 'not_found'}), 404
@@ -1044,7 +1044,7 @@ def api_update_trip(trip_id):
 def api_delete_trip(trip_id):
     """Delete a trip"""
     user = get_api_user()
-    trip = Trip.query.get_or_404(trip_id)
+    trip = db.get_or_404(Trip, trip_id)
 
     if trip.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Trip not found or access denied', 'code': 'not_found'}), 404
@@ -1072,7 +1072,7 @@ def api_list_charging_sessions(vehicle_id):
     - sort: Sort order, 'asc' or 'desc' by date (default: desc)
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -1114,7 +1114,7 @@ def api_create_charging_session(vehicle_id):
     cost_per_kwh, total_cost, charger_type, location, network, notes
     """
     user = get_api_user()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Vehicle not found or access denied', 'code': 'not_found'}), 404
@@ -1181,7 +1181,7 @@ def api_create_charging_session(vehicle_id):
 def api_get_charging_session(session_id):
     """Get a specific charging session"""
     user = get_api_user()
-    charge = ChargingSession.query.get_or_404(session_id)
+    charge = db.get_or_404(ChargingSession, session_id)
 
     if charge.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Charging session not found or access denied', 'code': 'not_found'}), 404
@@ -1194,7 +1194,7 @@ def api_get_charging_session(session_id):
 def api_update_charging_session(session_id):
     """Update a charging session"""
     user = get_api_user()
-    charge = ChargingSession.query.get_or_404(session_id)
+    charge = db.get_or_404(ChargingSession, session_id)
 
     if charge.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Charging session not found or access denied', 'code': 'not_found'}), 404
@@ -1252,7 +1252,7 @@ def api_update_charging_session(session_id):
 def api_delete_charging_session(session_id):
     """Delete a charging session"""
     user = get_api_user()
-    charge = ChargingSession.query.get_or_404(session_id)
+    charge = db.get_or_404(ChargingSession, session_id)
 
     if charge.vehicle not in user.get_all_vehicles():
         return jsonify({'error': 'Charging session not found or access denied', 'code': 'not_found'}), 404
@@ -1365,7 +1365,7 @@ def refresh_vehicle_dvla(vehicle_id):
     """
     from app.services.dvla import DVLAService
 
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in current_user.get_all_vehicles():
         return jsonify({'success': False, 'error': 'Access denied'}), 403
@@ -1385,7 +1385,7 @@ def refresh_vehicle_dvla(vehicle_id):
         vehicle.tax_status = result.get('tax_status')
         vehicle.tax_due = result.get('tax_due_date')
         vehicle.dvla_colour = result.get('colour')
-        vehicle.dvla_last_updated = datetime.utcnow()
+        vehicle.dvla_last_updated = utcnow()
 
         # Optionally update make if empty
         if not vehicle.make and result.get('make'):
@@ -1463,7 +1463,7 @@ def refresh_vehicle_tessie(vehicle_id):
     """
     from app.services.tessie import TessieService
 
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in current_user.get_all_vehicles():
         return jsonify({'success': False, 'error': 'Access denied'}), 403
@@ -1483,7 +1483,7 @@ def refresh_vehicle_tessie(vehicle_id):
         vehicle.tessie_last_odometer = result['odometer_km']
         vehicle.tessie_battery_level = result.get('battery_level')
         vehicle.tessie_battery_range = result.get('battery_range_km')
-        vehicle.tessie_last_updated = datetime.utcnow()
+        vehicle.tessie_last_updated = utcnow()
 
         db.session.commit()
 
@@ -1508,7 +1508,7 @@ def import_tessie_charges(vehicle_id):
     """
     from app.models import ChargingSession
 
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -1874,7 +1874,7 @@ def export_json():
     """
     export_data = {
         'export_info': {
-            'exported_at': datetime.utcnow().isoformat(),
+            'exported_at': utcnow().isoformat(),
             'username': current_user.username,
             'app_version': APP_VERSION
         },
@@ -2154,7 +2154,7 @@ def export_full_backup():
     # Build export data (similar to export_json but with attachment info)
     export_data = {
         'export_info': {
-            'exported_at': datetime.utcnow().isoformat(),
+            'exported_at': utcnow().isoformat(),
             'username': current_user.username,
             'app_version': APP_VERSION,
             'backup_type': 'full'
@@ -2464,7 +2464,7 @@ def export_full_backup():
     upload_folder = current_app.config['UPLOAD_FOLDER']
     manifest = {
         'version': APP_VERSION,
-        'created_at': datetime.utcnow().isoformat(),
+        'created_at': utcnow().isoformat(),
         'username': current_user.username,
         'files': []
     }
@@ -2574,13 +2574,13 @@ def _parse_hammond_date(row, key):
     Falls back to today's date if parsing fails."""
     val = _safe_get(row, key)
     if not val:
-        return datetime.utcnow().date()
+        return utcnow().date()
     try:
         # Hammond may store dates as "2022-01-15T00:00:00Z" or "2022-01-15"
         return datetime.fromisoformat(str(val).replace('Z', '+00:00')).date()
     except (ValueError, TypeError) as e:
         logger.warning("Hammond: could not parse date %s=%r: %s", key, val, e)
-        return datetime.utcnow().date()
+        return utcnow().date()
 
 
 HAMMOND_FUEL_TYPES = {
@@ -2946,12 +2946,12 @@ def import_clarkson():
                     # Parse date
                     date_str = clean_sql_string(values[6])
                     try:
-                        date = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').date() if date_str else datetime.utcnow().date()
+                        date = datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S').date() if date_str else utcnow().date()
                     except ValueError:
                         try:
                             date = datetime.strptime(date_str, '%Y-%m-%d').date()
                         except ValueError:
-                            date = datetime.utcnow().date()
+                            date = utcnow().date()
 
                     station = clean_sql_string(values[11]) if len(values) > 11 else None
 
@@ -3095,7 +3095,7 @@ def import_fuelly():
                             continue
 
                 if not date:
-                    date = datetime.utcnow().date()
+                    date = utcnow().date()
 
                 # Parse numeric values - Fuelly uses US units (gallons, miles)
                 odometer_str = row.get('Odometer', '').strip().replace(',', '')
@@ -3525,7 +3525,7 @@ def csv_import_preview():
         flash(_('Invalid data type selected.'), 'error')
         return redirect(url_for('api.csv_import_upload'))
 
-    vehicle = Vehicle.query.get(vehicle_id)
+    vehicle = db.session.get(Vehicle, vehicle_id)
     if not vehicle:
         flash(_('Vehicle not found.'), 'error')
         return redirect(url_for('api.csv_import_upload'))
@@ -3600,7 +3600,7 @@ def csv_import_execute():
         flash(_('Invalid data type.'), 'error')
         return redirect(url_for('auth.settings') + '#integrations')
 
-    vehicle = Vehicle.query.get(vehicle_id)
+    vehicle = db.session.get(Vehicle, vehicle_id)
     if not vehicle:
         flash(_('Vehicle not found.'), 'error')
         return redirect(url_for('auth.settings') + '#integrations')

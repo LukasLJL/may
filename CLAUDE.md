@@ -77,6 +77,20 @@ may/
 - **ChargingSession**: EV charging with kWh, SOC%, cost
 - **AppSettings**: Key-value store for app-wide settings (branding, registration toggle)
 
+## Code Conventions
+
+- **Primary-key lookups**: use `db.session.get(Model, id)` and `db.get_or_404(Model, id)`.
+  `Model.query.get()` and `Model.query.get_or_404()` route through the legacy
+  SQLAlchemy 1.x API and warn on every call.
+- **Current time**: use `app.utils.utcnow()` rather than `datetime.utcnow()`, which
+  Python 3.12 deprecates. It returns a *naive* UTC datetime on purpose: every
+  `db.DateTime` column holds naive UTC, and mixing in aware values would leave
+  new rows carrying an offset that older rows do not. `app.utils.utcfromtimestamp()`
+  is the equivalent for POSIX timestamps.
+
+`tests/test_warning_hygiene.py` enforces both, so the suite stays quiet enough for
+real failures to be legible in the merge gate (#302).
+
 ## Database
 
 SQLite database stored at `/data/may.db`. The project uses Flask-Migrate (Alembic) for database migrations.

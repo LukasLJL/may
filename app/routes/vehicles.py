@@ -9,7 +9,7 @@ from flask_babel import gettext as _
 from sqlalchemy import func
 from werkzeug.utils import secure_filename
 from app import db
-from app.utils import parse_decimal
+from app.utils import parse_decimal, utcnow
 from app.models import Vehicle, VehicleSpec, VehiclePart, FuelLog, Expense, User, Reminder, MaintenanceSchedule, Attachment, VEHICLE_TYPES, FUEL_TYPES, VEHICLE_SPEC_TYPES, REMINDER_TYPES, PART_TYPES, TRACKING_UNITS, ODOMETER_UNITS, TRIP_PURPOSES, EXPENSE_CATEGORIES, AppSettings
 from app.services.tessie import TessieService
 
@@ -157,7 +157,7 @@ def new():
 @bp.route('/<int:vehicle_id>')
 @login_required
 def view(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -249,7 +249,7 @@ def view(vehicle_id):
 @bp.route('/<int:vehicle_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
@@ -342,7 +342,7 @@ def edit(vehicle_id):
 @bp.route('/<int:vehicle_id>/delete', methods=['POST'])
 @login_required
 def delete(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
@@ -369,7 +369,7 @@ def add_photos(vehicle_id):
     record type used for fuel and expense receipts, so they are already
     covered by the backup export.
     """
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if not _owns_vehicle(vehicle):
         flash(_('Access denied'), 'error')
@@ -420,13 +420,13 @@ def add_photos(vehicle_id):
 @login_required
 def set_primary_photo(vehicle_id, attachment_id):
     """Use a gallery photo as the vehicle's main picture (#147)."""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if not _owns_vehicle(vehicle):
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.index'))
 
-    photo = Attachment.query.get_or_404(attachment_id)
+    photo = db.get_or_404(Attachment, attachment_id)
     if photo.vehicle_id != vehicle.id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.view', vehicle_id=vehicle.id))
@@ -457,13 +457,13 @@ def set_primary_photo(vehicle_id, attachment_id):
 @login_required
 def delete_photo(vehicle_id, attachment_id):
     """Remove a gallery photo (#147)."""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if not _owns_vehicle(vehicle):
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.index'))
 
-    photo = Attachment.query.get_or_404(attachment_id)
+    photo = db.get_or_404(Attachment, attachment_id)
     if photo.vehicle_id != vehicle.id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.view', vehicle_id=vehicle.id))
@@ -489,7 +489,7 @@ def delete_photo(vehicle_id, attachment_id):
 @bp.route('/<int:vehicle_id>/share', methods=['GET', 'POST'])
 @login_required
 def share(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
@@ -520,14 +520,14 @@ def share(vehicle_id):
 @bp.route('/<int:vehicle_id>/unshare/<int:user_id>', methods=['POST'])
 @login_required
 def unshare(vehicle_id, user_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
         flash(_('Access denied'), 'error')
         return redirect(url_for('vehicles.index'))
 
-    user = User.query.get_or_404(user_id)
+    user = db.get_or_404(User, user_id)
     if user in vehicle.shared_users.all():
         vehicle.shared_users.remove(user)
         db.session.commit()
@@ -539,7 +539,7 @@ def unshare(vehicle_id, user_id):
 @bp.route('/<int:vehicle_id>/archive', methods=['POST'])
 @login_required
 def archive(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
@@ -555,7 +555,7 @@ def archive(vehicle_id):
 @bp.route('/<int:vehicle_id>/unarchive', methods=['POST'])
 @login_required
 def unarchive(vehicle_id):
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check ownership
     if vehicle.owner_id != current_user.id and not current_user.is_admin:
@@ -646,7 +646,7 @@ def collect_receipts(fuel_logs, expenses, upload_folder):
 @login_required
 def report(vehicle_id):
     """Generate a PDF report for a vehicle"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -703,7 +703,7 @@ def report(vehicle_id):
         include_receipts=include_receipts,
         receipts=receipts,
         receipts_omitted=receipts_omitted,
-        generated_at=datetime.utcnow()
+        generated_at=utcnow()
     )
 
     # Generate PDF
@@ -726,7 +726,7 @@ def report(vehicle_id):
 @login_required
 def parts(vehicle_id):
     """List all parts for a vehicle"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -755,7 +755,7 @@ def parts(vehicle_id):
 @login_required
 def new_part(vehicle_id):
     """Add a new part to a vehicle"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -792,8 +792,8 @@ def new_part(vehicle_id):
 @login_required
 def edit_part(vehicle_id, part_id):
     """Edit an existing part"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
-    part = VehiclePart.query.get_or_404(part_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
+    part = db.get_or_404(VehiclePart, part_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():
@@ -830,8 +830,8 @@ def edit_part(vehicle_id, part_id):
 @login_required
 def delete_part(vehicle_id, part_id):
     """Delete a part"""
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
-    part = VehiclePart.query.get_or_404(part_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
+    part = db.get_or_404(VehiclePart, part_id)
 
     # Check access
     if vehicle not in current_user.get_all_vehicles():

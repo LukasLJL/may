@@ -176,7 +176,7 @@ class TestViewerWebAccess:
     def test_cannot_delete_a_fuel_log(self, client, viewer, sample_fuel_log):
         _login(client, 'owner')
         client.post(f'/fuel/{sample_fuel_log.id}/delete', follow_redirects=True)
-        assert FuelLog.query.get(sample_fuel_log.id) is not None
+        assert db.session.get(FuelLog, sample_fuel_log.id) is not None
 
 
 class TestControlsAreHidden:
@@ -307,7 +307,7 @@ class TestAdminRoleManagement:
             'role': ROLE_VIEWER,
         }, follow_redirects=True)
         assert response.status_code == 200
-        assert User.query.get(test_user.id).role == ROLE_VIEWER
+        assert db.session.get(User, test_user.id).role == ROLE_VIEWER
 
     def test_role_shown_on_the_users_page(self, admin_client, test_user):
         response = admin_client.get('/auth/users')

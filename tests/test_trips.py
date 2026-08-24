@@ -189,7 +189,7 @@ class TestTripDelete:
         trip_id = sample_trip.id
         resp = auth_client.post(f'/trips/{trip_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert Trip.query.get(trip_id) is None
+        assert db.session.get(Trip, trip_id) is None
 
 
 @pytest.fixture
@@ -328,7 +328,7 @@ class TestTripTemplatesDelete:
         tmpl_id = sample_template.id
         resp = auth_client.post(f'/trips/templates/{tmpl_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert TripTemplate.query.get(tmpl_id) is None
+        assert db.session.get(TripTemplate, tmpl_id) is None
 
     def test_cannot_delete_other_users_template(self, client, app, sample_template):
         from app.models import User
@@ -338,7 +338,7 @@ class TestTripTemplatesDelete:
         db.session.commit()
         client.post('/auth/login', data={'username': 'other3', 'password': 'Pass123!'}, follow_redirects=True)
         resp = client.post(f'/trips/templates/{sample_template.id}/delete', follow_redirects=True)
-        assert TripTemplate.query.get(sample_template.id) is not None
+        assert db.session.get(TripTemplate, sample_template.id) is not None
 
 
 class TestTripTemplatesData:

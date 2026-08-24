@@ -43,7 +43,7 @@ def new():
 
     if request.method == 'POST':
         vehicle_id = request.form.get('vehicle_id')
-        vehicle = Vehicle.query.get(vehicle_id)
+        vehicle = db.session.get(Vehicle, vehicle_id)
 
         if not vehicle or vehicle not in vehicles:
             flash(_('Invalid vehicle'), 'error')
@@ -99,7 +99,7 @@ def new():
 @login_required
 def edit(schedule_id):
     """Edit a maintenance schedule"""
-    schedule = MaintenanceSchedule.query.get_or_404(schedule_id)
+    schedule = db.get_or_404(MaintenanceSchedule, schedule_id)
     vehicles = current_user.get_all_vehicles()
 
     if schedule.vehicle not in vehicles:
@@ -141,7 +141,7 @@ def edit(schedule_id):
 @login_required
 def complete(schedule_id):
     """Mark maintenance as completed and optionally create expense"""
-    schedule = MaintenanceSchedule.query.get_or_404(schedule_id)
+    schedule = db.get_or_404(MaintenanceSchedule, schedule_id)
     vehicles = current_user.get_all_vehicles()
 
     if schedule.vehicle not in vehicles:
@@ -193,7 +193,7 @@ def complete(schedule_id):
 @login_required
 def delete(schedule_id):
     """Delete a maintenance schedule"""
-    schedule = MaintenanceSchedule.query.get_or_404(schedule_id)
+    schedule = db.get_or_404(MaintenanceSchedule, schedule_id)
     vehicles = current_user.get_all_vehicles()
 
     if schedule.vehicle not in vehicles:

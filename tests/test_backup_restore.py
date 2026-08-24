@@ -4,6 +4,7 @@ import json
 import os
 import zipfile
 
+from app import db
 from app.services.backup_restore import read_backup, restore_backup
 from app.models import (
     Vehicle, FuelLog, Expense, Trip, ChargingSession, FuelStation,
@@ -288,8 +289,8 @@ class TestBackupRestoreJson:
         """Restoring must not touch data the user already has."""
         restore(auth_client, backup_json_bytes())
 
-        assert Vehicle.query.get(sample_vehicle.id) is not None
-        assert Expense.query.get(sample_expense.id) is not None
+        assert db.session.get(Vehicle, sample_vehicle.id) is not None
+        assert db.session.get(Expense, sample_expense.id) is not None
         assert Vehicle.query.filter_by(owner_id=test_user.id).count() == 2
 
     def test_documents_without_files_are_skipped(self, auth_client, test_user):

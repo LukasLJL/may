@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from flask_babel import gettext as _
 from app import db, DATE_FORMATS
 from app.models import Reminder, Vehicle, REMINDER_TYPES, RECURRENCE_OPTIONS
+from app.utils import utcnow
 
 bp = Blueprint('reminders', __name__, url_prefix='/reminders')
 
@@ -65,7 +66,7 @@ def new(vehicle_id=None):
 
     if request.method == 'POST':
         vehicle_id = int(request.form.get('vehicle_id'))
-        vehicle = Vehicle.query.get_or_404(vehicle_id)
+        vehicle = db.get_or_404(Vehicle, vehicle_id)
 
         if vehicle not in vehicles:
             flash(_('Access denied'), 'error')
@@ -103,7 +104,7 @@ def new(vehicle_id=None):
     # Pre-select vehicle if provided
     selected_vehicle = None
     if vehicle_id:
-        selected_vehicle = Vehicle.query.get(vehicle_id)
+        selected_vehicle = db.session.get(Vehicle, vehicle_id)
         if selected_vehicle not in vehicles:
             selected_vehicle = None
 
@@ -119,7 +120,7 @@ def new(vehicle_id=None):
 @login_required
 def edit(reminder_id):
     """Edit an existing reminder"""
-    reminder = Reminder.query.get_or_404(reminder_id)
+    reminder = db.get_or_404(Reminder, reminder_id)
     vehicles = current_user.get_all_vehicles()
 
     if reminder.vehicle not in vehicles:
@@ -161,7 +162,7 @@ def complete_reminder(reminder):
     flashes the returned message.
     """
     reminder.is_completed = True
-    reminder.completed_at = datetime.utcnow()
+    reminder.completed_at = utcnow()
 
     # If recurring, create the next occurrence
     if reminder.recurrence != 'none':
@@ -206,7 +207,7 @@ def complete_reminder(reminder):
 @login_required
 def complete(reminder_id):
     """Mark a reminder as completed"""
-    reminder = Reminder.query.get_or_404(reminder_id)
+    reminder = db.get_or_404(Reminder, reminder_id)
     vehicles = current_user.get_all_vehicles()
 
     if reminder.vehicle not in vehicles:
@@ -229,7 +230,7 @@ def complete(reminder_id):
 @login_required
 def uncomplete(reminder_id):
     """Mark a completed reminder as not completed"""
-    reminder = Reminder.query.get_or_404(reminder_id)
+    reminder = db.get_or_404(Reminder, reminder_id)
     vehicles = current_user.get_all_vehicles()
 
     if reminder.vehicle not in vehicles:
@@ -248,7 +249,7 @@ def uncomplete(reminder_id):
 @login_required
 def delete(reminder_id):
     """Delete a reminder"""
-    reminder = Reminder.query.get_or_404(reminder_id)
+    reminder = db.get_or_404(Reminder, reminder_id)
     vehicles = current_user.get_all_vehicles()
 
     if reminder.vehicle not in vehicles:

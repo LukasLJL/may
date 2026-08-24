@@ -22,6 +22,7 @@ import requests
 
 from app import db
 from app.models import AppSettings, FuelPriceHistory, FuelStation
+from app.utils import utcnow
 
 #: Value stored in FuelStation.price_source for forecourts from this scheme.
 PRICE_SOURCE = 'uk_fuel_prices'
@@ -373,7 +374,7 @@ class UKFuelPriceService:
             stats['prices'] += cls.record_prices(station, forecourt)
 
         db.session.commit()
-        AppSettings.set(SETTING_LAST_RUN, datetime.utcnow().isoformat())
+        AppSettings.set(SETTING_LAST_RUN, utcnow().isoformat())
 
         return stats
 
@@ -392,7 +393,7 @@ class UKFuelPriceService:
                 previous = datetime.fromisoformat(last_run)
             except ValueError:
                 previous = None
-            if previous and datetime.utcnow() - previous < timedelta(hours=min_interval_hours):
+            if previous and utcnow() - previous < timedelta(hours=min_interval_hours):
                 return None
 
         return cls.refresh_prices()

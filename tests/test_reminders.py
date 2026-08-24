@@ -95,7 +95,7 @@ class TestReminderDelete:
         reminder_id = sample_reminder.id
         resp = auth_client.post(f'/reminders/{reminder_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert Reminder.query.get(reminder_id) is None
+        assert db.session.get(Reminder, reminder_id) is None
 
 
 class TestReminderComplete:
