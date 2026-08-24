@@ -153,17 +153,13 @@ def edit(reminder_id):
                            recurrence_options=RECURRENCE_OPTIONS)
 
 
-@bp.route('/<int:reminder_id>/complete', methods=['POST'])
-@login_required
-def complete(reminder_id):
-    """Mark a reminder as completed"""
-    reminder = Reminder.query.get_or_404(reminder_id)
-    vehicles = current_user.get_all_vehicles()
+def complete_reminder(reminder):
+    """Mark a reminder completed, rolling any recurrence forward.
 
-    if reminder.vehicle not in vehicles:
-        flash(_('Access denied'), 'error')
-        return redirect(url_for('reminders.index'))
-
+    Shared by the reminders list and the expense form (#296) so both
+    schedule the next occurrence the same way. The caller commits and
+    flashes the returned message.
+    """
     reminder.is_completed = True
     reminder.completed_at = datetime.utcnow()
 
@@ -185,12 +181,10 @@ def complete(reminder_id):
             is_completed=False,
         ).first()
 
-        user_format = getattr(current_user, 'date_format', None) or 'DD/MM/YYYY'
-        fmt = DATE_FORMATS.get(user_format, DATE_FORMATS['DD/MM/YYYY'])['default']
+        if not existing:
+            user_format = getattr(current_user, 'date_format', None) or 'DD/MM/YYYY'
+            fmt = DATE_FORMATS.get(user_format, DATE_FORMATS['DD/MM/YYYY'])['default']
 
-        if existing:
-            flash(_('Reminder marked as completed'), 'success')
-        else:
             new_reminder = Reminder(
                 vehicle_id=reminder.vehicle_id,
                 user_id=reminder.user_id,
@@ -203,9 +197,23 @@ def complete(reminder_id):
                 notify_days_before=reminder.notify_days_before
             )
             db.session.add(new_reminder)
-            flash(_('Reminder completed. Next occurrence created for %(date)s') % {'date': new_due_date.strftime(fmt)}, 'success')
-    else:
-        flash(_('Reminder marked as completed'), 'success')
+            return _('Reminder completed. Next occurrence created for %(date)s') % {'date': new_due_date.strftime(fmt)}
+
+    return _('Reminder marked as completed')
+
+
+@bp.route('/<int:reminder_id>/complete', methods=['POST'])
+@login_required
+def complete(reminder_id):
+    """Mark a reminder as completed"""
+    reminder = Reminder.query.get_or_404(reminder_id)
+    vehicles = current_user.get_all_vehicles()
+
+    if reminder.vehicle not in vehicles:
+        flash(_('Access denied'), 'error')
+        return redirect(url_for('reminders.index'))
+
+    flash(complete_reminder(reminder), 'success')
 
     db.session.commit()
 

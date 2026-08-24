@@ -8,7 +8,8 @@ from flask_babel import gettext as _
 from sqlalchemy import func
 from app import db
 from app.utils import parse_decimal
-from app.models import Vehicle, Expense, Attachment, MaintenanceSchedule, EXPENSE_CATEGORIES
+from app.models import Vehicle, Expense, Attachment, MaintenanceSchedule, Reminder, EXPENSE_CATEGORIES
+from app.routes.reminders import complete_reminder
 
 bp = Blueprint('expenses', __name__, url_prefix='/expenses')
 
@@ -99,6 +100,27 @@ def _active_schedules(vehicle_ids):
     ).order_by(MaintenanceSchedule.name).all()
 
 
+def _open_reminder(reminder_id, vehicle_ids, vehicle_id=None):
+    """The outstanding reminder this expense is being logged against (#296).
+
+    Returns None unless the reminder exists, is still open and belongs to a
+    vehicle the user can see — and, once the expense's vehicle is known, to
+    that same vehicle. Completing a reminder is a write to the reminders
+    area, so an account that may not change reminders never gets the link.
+    """
+    if not reminder_id or not current_user.can_write('reminders'):
+        return None
+
+    reminder = Reminder.query.get(reminder_id)
+    if reminder is None or reminder.is_completed:
+        return None
+    if reminder.vehicle_id not in vehicle_ids:
+        return None
+    if vehicle_id is not None and reminder.vehicle_id != vehicle_id:
+        return None
+    return reminder
+
+
 @bp.route('/')
 @login_required
 def index():
@@ -172,6 +194,12 @@ def new():
                 )
                 schedule.calculate_next_due()
 
+        # Optionally complete the reminder this expense was logged for
+        # (#296), rolling a recurring reminder on to its next occurrence.
+        reminder = _open_reminder(request.form.get('reminder_id', type=int),
+                                  [v.id for v in vehicles], vehicle_id)
+        reminder_message = complete_reminder(reminder) if reminder else None
+
         db.session.commit()
 
         # Handle attachment uploads (one or more)
@@ -180,6 +208,8 @@ def new():
         _flash_skipped_attachments(skipped)
 
         flash(_('Expense added successfully'), 'success')
+        if reminder_message:
+            flash(reminder_message, 'success')
 
         # Redirect back to vehicle page if we came from there (#283)
         if request.form.get('return_to') == 'vehicle':
@@ -191,12 +221,19 @@ def new():
     selected_vehicle_id = request.args.get('vehicle_id', type=int) or current_user.default_vehicle_id
 
     vehicle_ids = [v.id for v in vehicles]
+
+    # Logging the expense for a reminder pre-fills the form from it (#296)
+    reminder = _open_reminder(request.args.get('reminder_id', type=int), vehicle_ids)
+    if reminder:
+        selected_vehicle_id = reminder.vehicle_id
+
     return render_template('expenses/form.html',
                            expense=None,
                            vehicles=vehicles,
                            categories=EXPENSE_CATEGORIES,
                            known_vendors=_known_vendors(vehicle_ids),
                            maintenance_schedules=_active_schedules(vehicle_ids),
+                           reminder=reminder,
                            selected_vehicle_id=selected_vehicle_id)
 
 

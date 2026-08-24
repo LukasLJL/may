@@ -10,6 +10,15 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Added
+
+- Outstanding reminders now carry a "Log expense" action. It opens the expense
+  form pre-filled with the reminder's vehicle, title and a matching category;
+  saving the expense completes the reminder and schedules its next occurrence.
+  The cost is entered at that point rather than stored on the reminder, so fees
+  that change between payments stay accurate.
+  ([#296](https://github.com/dannymcc/may/issues/296))
+
 ## [0.33.2] - 2026-08-24
 
 ### Fixed

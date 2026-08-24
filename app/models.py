@@ -987,6 +987,11 @@ class Reminder(db.Model):
         from datetime import date
         return (self.due_date - date.today()).days
 
+    def expense_category(self):
+        """The expense category to pre-select when logging an expense for
+        this reminder (#296). Unmapped types fall back to 'other'."""
+        return REMINDER_EXPENSE_CATEGORIES.get(self.reminder_type, 'other')
+
     def to_dict(self):
         """Serialize reminder to dictionary"""
         return {
@@ -1160,6 +1165,18 @@ REMINDER_TYPES = [
     ('oil_change', _l('Oil Change')),
     ('custom', _l('Custom'))
 ]
+
+# Which expense category to pre-select when an expense is logged against a
+# reminder (#296). Types with no obvious equivalent fall back to 'other'.
+REMINDER_EXPENSE_CATEGORIES = {
+    'mot': 'inspection',
+    'service': 'maintenance',
+    'insurance': 'insurance',
+    'tax': 'tax',
+    'registration': 'registration',
+    'tire_change': 'maintenance',
+    'oil_change': 'maintenance',
+}
 
 # Recurrence options. The legacy values (quarterly, biannual) remain accepted on
 # read so saved reminders keep working; new reminders use a unit + interval pair
