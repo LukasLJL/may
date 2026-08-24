@@ -10,6 +10,34 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.36.0] - 2026-08-24
+
+### Added
+
+- "AdBlue/DEF" is offered as a secondary fuel type, so the fluid a diesel
+  tracks alongside its fuel can be named rather than logged as "Other". It
+  counts as no tailpipe CO2, being an exhaust additive rather than a fuel.
+  ([#319](https://github.com/dannymcc/may/issues/319))
+
+- The Fuel Logs table shows the fuel type of each entry.
+  ([#319](https://github.com/dannymcc/may/issues/319))
+
+- Fuel logs returned by the REST API now carry a `fuel_type` field, and each
+  point of the vehicle stats consumption series is labelled with the fuel it
+  belongs to. Fuel type remains read-only over the API: a log created there
+  takes the vehicle's own fuel type.
+  ([#319](https://github.com/dannymcc/may/issues/319))
+
+### Fixed
+
+- Fuel consumption is now worked out per fuel type, so an AdBlue refill logged
+  against a diesel no longer inflates that diesel's L/100km. The previous
+  full-tank lookup, the litres counted in between and the consumption average
+  all consider one fuel at a time, and the Fuel Consumption Trend draws a
+  separate labelled line for each. Logs recorded before the fuel type selector
+  existed count as the vehicle's own fuel type.
+  ([#319](https://github.com/dannymcc/may/issues/319))
+
 ## [0.35.3] - 2026-08-24
 
 ### Fixed

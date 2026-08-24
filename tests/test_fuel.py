@@ -996,3 +996,143 @@ class TestFuelRedirects:
         resp = auth_client.get('/fuel/new')
         assert resp.status_code == 200
         assert b'name="return_to"' not in resp.data
+
+
+@pytest.fixture
+def adblue_vehicle(app, test_user):
+    """A diesel that tracks AdBlue as its secondary fluid (#319)."""
+    vehicle = Vehicle(
+        owner_id=test_user.id,
+        name='Diesel Van',
+        vehicle_type='car',
+        fuel_type='diesel',
+        secondary_fuel_type='adblue',
+        odometer_unit='km',
+    )
+    db.session.add(vehicle)
+    db.session.commit()
+    return vehicle
+
+
+class TestSecondaryFuelConsumption:
+    """Issue #319: AdBlue is an auxiliary fluid, not propulsion, so its
+    refills must never move a diesel's consumption figures."""
+
+    @staticmethod
+    def _log(vehicle, test_user, odometer, volume, fuel_type,
+             is_full_tank=True, is_missed=False):
+        log = FuelLog(
+            vehicle_id=vehicle.id, user_id=test_user.id,
+            date=date(2024, 1, 1), odometer=odometer, volume=volume,
+            fuel_type=fuel_type, is_full_tank=is_full_tank, is_missed=is_missed,
+        )
+        db.session.add(log)
+        return log
+
+    def test_effective_fuel_type_falls_back_to_vehicle(
+            self, app, test_user, adblue_vehicle):
+        legacy = self._log(adblue_vehicle, test_user, 10000, 50, None)
+        adblue = self._log(adblue_vehicle, test_user, 10100, 10, 'adblue')
+        db.session.commit()
+        assert legacy.effective_fuel_type == 'diesel'
+        assert adblue.effective_fuel_type == 'adblue'
+
+    def test_effective_fuel_type_maps_propulsion_to_fuel(
+            self, app, test_user, hybrid_vehicle):
+        log = self._log(hybrid_vehicle, test_user, 20000, 35, None)
+        db.session.commit()
+        assert log.effective_fuel_type == 'petrol'
+
+    def test_adblue_refill_excluded_from_diesel_consumption(
+            self, app, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10300, 10, 'adblue', is_full_tank=False)
+        second_diesel = self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        db.session.commit()
+        # 45 L over 500 km — the 10 L of AdBlue is no part of it.
+        assert abs(second_diesel.get_consumption() - 9.0) < 0.01
+
+    def test_adblue_full_tank_does_not_anchor_diesel(
+            self, app, test_user, adblue_vehicle):
+        """An AdBlue tank filled to the brim is not a diesel fill-up, so it
+        must not become the previous full tank a diesel figure spans from."""
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10300, 10, 'adblue')
+        second_diesel = self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        db.session.commit()
+        assert abs(second_diesel.get_consumption() - 9.0) < 0.01
+
+    def test_legacy_untyped_diesel_logs_still_pair_up(
+            self, app, test_user, adblue_vehicle):
+        """Rows logged before the fuel type selector existed carry no type of
+        their own and are read as the vehicle's primary fuel."""
+        self._log(adblue_vehicle, test_user, 10000, 50, None)
+        self._log(adblue_vehicle, test_user, 10300, 10, 'adblue', is_full_tank=False)
+        second_diesel = self._log(adblue_vehicle, test_user, 10500, 45, None)
+        db.session.commit()
+        assert abs(second_diesel.get_consumption() - 9.0) < 0.01
+
+    def test_missed_adblue_refill_does_not_void_diesel_figure(
+            self, app, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10300, 10, 'adblue',
+                  is_full_tank=False, is_missed=True)
+        second_diesel = self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        db.session.commit()
+        assert abs(second_diesel.get_consumption() - 9.0) < 0.01
+
+    def test_adblue_consumption_is_its_own_series(
+            self, app, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10100, 10, 'adblue')
+        self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        second_adblue = self._log(adblue_vehicle, test_user, 10600, 5, 'adblue')
+        db.session.commit()
+        # 5 L of AdBlue over the 500 km since the last AdBlue fill.
+        assert abs(second_adblue.get_consumption() - 1.0) < 0.01
+
+    def test_average_consumption_is_per_fuel_type(
+            self, app, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10100, 10, 'adblue')
+        self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        self._log(adblue_vehicle, test_user, 10600, 5, 'adblue')
+        db.session.commit()
+        assert abs(adblue_vehicle.get_average_consumption() - 9.0) < 0.01
+        assert abs(adblue_vehicle.get_average_consumption(fuel_type='adblue') - 1.0) < 0.01
+
+    def test_unavailable_reason_is_per_fuel_type(
+            self, app, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10100, 10, 'adblue')
+        self._log(adblue_vehicle, test_user, 10500, 45, 'diesel')
+        db.session.commit()
+        assert adblue_vehicle.get_consumption_unavailable_reason() is None
+        assert adblue_vehicle.get_consumption_unavailable_reason(
+            fuel_type='adblue') == 'insufficient_full_tanks'
+
+    def test_fuel_log_to_dict_reports_effective_fuel_type(
+            self, app, test_user, adblue_vehicle):
+        legacy = self._log(adblue_vehicle, test_user, 10000, 50, None)
+        db.session.commit()
+        assert legacy.to_dict()['fuel_type'] == 'diesel'
+
+    def test_fuel_index_shows_fuel_type(
+            self, auth_client, test_user, adblue_vehicle):
+        self._log(adblue_vehicle, test_user, 10000, 50, 'diesel')
+        self._log(adblue_vehicle, test_user, 10100, 10, 'adblue')
+        db.session.commit()
+        resp = auth_client.get('/fuel/')
+        assert resp.status_code == 200
+        html = resp.get_data(as_text=True)
+        assert 'Diesel' in html
+        assert 'AdBlue/DEF' in html
+
+    def test_vehicle_page_charts_each_fuel_type_separately(
+            self, auth_client, test_user, adblue_vehicle):
+        resp = auth_client.get(f'/vehicles/{adblue_vehicle.id}')
+        assert resp.status_code == 200
+        html = resp.get_data(as_text=True)
+        # The trend chart builds one dataset per fuel type rather than one
+        # flat consumption series.
+        assert 'typeLabels' in html

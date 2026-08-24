@@ -18,7 +18,7 @@ from app.models import (
     User, Vehicle, VehicleSpec, FuelLog, Expense, EXPENSE_CATEGORIES,
     Reminder, MaintenanceSchedule, RecurringExpense, FuelStation,
     Document, Trip, ChargingSession, VehiclePart, FuelPriceHistory, Attachment,
-    TRIP_PURPOSES, CHARGER_TYPES
+    TRIP_PURPOSES, CHARGER_TYPES, fuel_type_label
 )
 from app.services.tessie import TessieService
 from app.services.backup_restore import (
@@ -285,7 +285,12 @@ def vehicle_stats(vehicle_id):
             consumption_data.append({
                 'date': log.date.isoformat(),
                 'consumption': round(consumption, 2),
-                'odometer': log.odometer
+                'odometer': log.odometer,
+                # Each fuel gets its own series in the trend chart; mixing a
+                # diesel's AdBlue refills into its diesel line would be
+                # nonsense (#319).
+                'fuel_type': log.effective_fuel_type,
+                'fuel_type_label': str(fuel_type_label(log.effective_fuel_type)),
             })
 
     expenses = vehicle.expenses.all()
