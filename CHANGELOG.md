@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.37.0] - 2026-08-24
+
 ### Changed
 
 - Trips logged on the same date are now listed in odometer order, the highest
