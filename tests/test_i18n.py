@@ -1,5 +1,6 @@
 """Tests for language selection — LANGUAGES vs the shipped catalogues (#300)."""
 import os
+import re
 
 from flask_babel import force_locale, gettext
 
@@ -150,3 +151,98 @@ class TestUnitsAndValuesTranslation:
         assert missing == [], (
             f"unit option labels with no catalogue entry: {missing}"
         )
+
+
+class TestConsumptionUnitTranslation:
+    """The Fuel Consumption dropdown's 'L/100km' option is still a bare
+    literal in settings.html, unlike its siblings (distance_unit,
+    volume_unit, date_format) which #310 already routed through gettext —
+    this one option was missed. Because it never reaches _(), no catalogue
+    can translate it, e.g. the Hungarian convention of a space between the
+    number and the unit, "L/100 km" rather than "L/100km" (#328).
+    """
+
+    def _settings_source(self):
+        path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'app', 'templates', 'auth', 'settings.html',
+        )
+        with open(path, encoding='utf-8') as f:
+            return f.read()
+
+    def test_L100km_option_label_uses_gettext(self):
+        source = self._settings_source()
+        match = re.search(r'<option value="L/100km"[^>]*>(.*?)</option>', source)
+        assert match is not None, (
+            "could not find the L/100km option in settings.html — has it moved?"
+        )
+        assert '_(' in match.group(1), (
+            "the L/100km option label in the Fuel Consumption dropdown is a "
+            "bare literal rather than passed through gettext(), so it can "
+            "never be translated no matter what language is selected (#328)"
+        )
+
+    def test_kmL_option_label_uses_gettext(self):
+        # The same dropdown's other metric option was missed by #310 too.
+        source = self._settings_source()
+        match = re.search(r'<option value="km/L"[^>]*>(.*?)</option>', source)
+        assert match is not None, (
+            "could not find the km/L option in settings.html — has it moved?"
+        )
+        assert '_(' in match.group(1), (
+            "the km/L option label in the Fuel Consumption dropdown is a "
+            "bare literal rather than passed through gettext()"
+        )
+
+    def test_every_catalogue_carries_the_consumption_options(self):
+        # Wrapping the labels only helps if each shipped catalogue has an
+        # entry to translate them with. The wording itself is left to the
+        # catalogues — several locales keep the source form — so assert the
+        # entry exists and is filled in rather than pinning the text.
+        missing = []
+        for code in _catalogue_dirs():
+            path = os.path.join(
+                TRANSLATIONS_DIR, code, 'LC_MESSAGES', 'messages.po')
+            with open(path, encoding='utf-8') as f:
+                catalogue = f.read()
+            for msgid in ('L/100km', 'km/L'):
+                entry = re.search(
+                    r'^msgid "%s"\nmsgstr "(.*)"$' % re.escape(msgid),
+                    catalogue, re.MULTILINE,
+                )
+                if entry is None or not entry.group(1):
+                    missing.append(f'{code}: {msgid}')
+        assert missing == [], (
+            f"consumption unit labels with no catalogue entry: {missing}"
+        )
+
+    def test_hungarian_consumption_label_renders_translated(
+            self, client, test_user):
+        # The reported case: Hungarian spaces the unit, "L/100 km". Read the
+        # expected wording from the catalogue so revising it is not a
+        # breaking change — what matters is that the page shows it at all.
+        test_user.language = 'hu'
+        db.session.commit()
+
+        client.post('/auth/login', data={
+            'username': 'testuser',
+            'password': 'TestPass123!',
+        }, follow_redirects=True)
+
+        response = client.get('/auth/settings')
+        assert response.status_code == 200
+        body = response.get_data(as_text=True)
+
+        with force_locale('hu'):
+            translated = gettext('L/100km')
+        assert translated != 'L/100km', (
+            "the Hungarian catalogue no longer distinguishes the L/100km "
+            "label, so this test can no longer tell English from Hungarian"
+        )
+        assert '>%s</option>' % translated in body, (
+            "the Fuel Consumption dropdown still renders the English "
+            "'L/100km' for a Hungarian user (#328)"
+        )
+        # The submitted value is what the user record stores and must stay
+        # in its English/unit-code form.
+        assert 'value="L/100km"' in body

@@ -4196,6 +4196,14 @@ msgstr "MPG (Великобритания)"
 msgid "MPG (US)"
 msgstr "MPG (США)"
 
+#: app/templates/auth/settings.html:148
+msgid "L/100km"
+msgstr "л/100 км"
+
+#: app/templates/auth/settings.html:151
+msgid "km/L"
+msgstr "км/л"
+
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"
 msgstr "Миллилитры (мл)"

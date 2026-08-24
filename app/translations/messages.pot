@@ -4093,6 +4093,14 @@ msgstr ""
 msgid "MPG (US)"
 msgstr ""
 
+#: app/templates/auth/settings.html:148
+msgid "L/100km"
+msgstr ""
+
+#: app/templates/auth/settings.html:151
+msgid "km/L"
+msgstr ""
+
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"
 msgstr ""
