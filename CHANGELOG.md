@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.34.0] - 2026-08-24
+
 ### Added
 
 - Outstanding reminders now carry a "Log expense" action. It opens the expense
@@ -18,6 +20,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   The cost is entered at that point rather than stored on the reminder, so fees
   that change between payments stay accurate.
   ([#296](https://github.com/dannymcc/may/issues/296))
+
+### Changed
+
+- The reminders list and the expense form now complete a reminder through the
+  same code, so both roll a recurrence forward identically and keep the
+  duplicate guard added for [#232](https://github.com/dannymcc/may/issues/232).
+- The README's reminders section describes the new action.
 
 ## [0.33.2] - 2026-08-24
 
