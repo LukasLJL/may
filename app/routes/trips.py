@@ -33,7 +33,9 @@ def index():
     if year_filter:
         query = query.filter(db.extract('year', Trip.date) == year_filter)
 
-    trips = query.order_by(Trip.date.desc()).all()
+    # Same-day trips have no time component, so fall back to the odometer
+    # reading to keep them in driving order (most recent first)
+    trips = query.order_by(Trip.date.desc(), Trip.start_odometer.desc()).all()
 
     # Get available years for filter
     years = db.session.query(db.extract('year', Trip.date)).filter(

@@ -10,6 +10,18 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.37.0] - 2026-08-24
+
+### Changed
+
+- Trips logged on the same date are now listed in odometer order, the highest
+  reading first, rather than in whatever order the database returned them. A
+  trip's date carries no time of day, so several journeys on one day could
+  appear out of sequence and the reading on the top row would not be the
+  vehicle's latest — easily missed on a phone. The list is still ordered by
+  date, most recent first.
+  ([#325](https://github.com/dannymcc/may/issues/325))
+
 ## [0.36.1] - 2026-08-24
 
 ### Fixed
