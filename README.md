@@ -231,6 +231,7 @@ Log journeys for mileage and tax records:
 - Optional fuel gauge readings at the start and end of the trip, entered as a percentage of a full tank
 - Where the vehicle has a tank capacity set, the fuel used on the trip is worked out from those readings and shown on the trip list, giving a per-trip view of consumption between fill-ups
 - Reusable templates for journeys you make often, and a business/personal summary report per year
+- The list is ordered by date, most recent first; trips sharing a date are ordered by their odometer reading, so the journey you drove last sits at the top
 
 ### Reminders
 Never miss important dates:

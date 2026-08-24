@@ -36,6 +36,68 @@ class TestTripIndex:
         assert resp.status_code == 200
         assert b'Client meeting' in resp.data
 
+    def test_index_orders_same_day_trips_by_odometer(self, auth_client, test_user, sample_vehicle):
+        """Trips logged on the same date should be listed by odometer
+        (most recently driven first), not by insertion order (#325)."""
+        earlier = Trip(
+            vehicle_id=sample_vehicle.id,
+            user_id=test_user.id,
+            date=date(2024, 2, 1),
+            start_odometer=10000.0,
+            end_odometer=10050.0,
+            purpose='business',
+            description='Morning trip',
+        )
+        db.session.add(earlier)
+        db.session.commit()
+
+        later = Trip(
+            vehicle_id=sample_vehicle.id,
+            user_id=test_user.id,
+            date=date(2024, 2, 1),
+            start_odometer=10050.0,
+            end_odometer=10120.0,
+            purpose='business',
+            description='Afternoon trip',
+        )
+        db.session.add(later)
+        db.session.commit()
+
+        resp = auth_client.get('/trips/')
+        assert resp.status_code == 200
+        html = resp.data.decode()
+        # The trip with the higher (later) odometer reading should be
+        # listed before the earlier same-day trip.
+        assert html.index('Afternoon trip') < html.index('Morning trip')
+
+    def test_index_still_orders_by_date_first(self, auth_client, test_user, sample_vehicle):
+        """The odometer tie-break must not displace the date ordering (#325)."""
+        older = Trip(
+            vehicle_id=sample_vehicle.id,
+            user_id=test_user.id,
+            date=date(2024, 2, 1),
+            start_odometer=20000.0,
+            end_odometer=20100.0,
+            purpose='business',
+            description='Older high-odometer trip',
+        )
+        newer = Trip(
+            vehicle_id=sample_vehicle.id,
+            user_id=test_user.id,
+            date=date(2024, 3, 1),
+            start_odometer=10000.0,
+            end_odometer=10100.0,
+            purpose='business',
+            description='Newer low-odometer trip',
+        )
+        db.session.add_all([older, newer])
+        db.session.commit()
+
+        resp = auth_client.get('/trips/')
+        assert resp.status_code == 200
+        html = resp.data.decode()
+        assert html.index('Newer low-odometer trip') < html.index('Older high-odometer trip')
+
 
 class TestTripNew:
     def test_new_requires_auth(self, client):
