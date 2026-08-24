@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.34.1] - 2026-08-24
+
 ### Fixed
 
 - The Date Format, Distance, Volume and Fuel Consumption choices in Settings >
