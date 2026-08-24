@@ -259,7 +259,16 @@ def edit(vehicle_id):
     if request.method == 'POST':
         vehicle.name = request.form.get('name')
         vehicle.vehicle_type = request.form.get('vehicle_type')
-        vehicle.tracking_unit = request.form.get('tracking_unit', 'mileage')
+        # Changing the tracking unit would reinterpret every reading already
+        # logged — 50 miles silently becoming 50 engine hours — so once a
+        # vehicle has readings the unit is fixed (#323). The rest of the edit
+        # still saves; only this field is refused.
+        submitted_tracking_unit = request.form.get('tracking_unit', 'mileage')
+        if submitted_tracking_unit != vehicle.tracking_unit and vehicle.has_odometer_readings():
+            flash(_('Tracking unit cannot be changed once readings have been logged '
+                    'for this vehicle. Existing readings were kept as they are.'), 'error')
+        else:
+            vehicle.tracking_unit = submitted_tracking_unit
         vehicle.odometer_unit = request.form.get('odometer_unit') or None
         vehicle.make = request.form.get('make')
         vehicle.model = request.form.get('model')

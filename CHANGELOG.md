@@ -10,6 +10,38 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.36.1] - 2026-08-24
+
+### Fixed
+
+- A vehicle set to track engine hours has its readings treated as hours rather
+  than as a distance. Its consumption is worked out in litres per hour, its
+  running cost per hour, and a charged machine's energy use per 100 hours;
+  none of those figures change any more when the vehicle's (distance-only)
+  odometer unit is switched between km and miles, which used to scale 50
+  engine hours into 80.5 as though they were miles. Vehicles tracked by
+  mileage are unaffected. The labels shown alongside these figures still read
+  in distance terms and are being corrected separately.
+  ([#323](https://github.com/dannymcc/may/issues/323))
+
+### Changed
+
+- A vehicle's tracking unit can no longer be changed once anything has been
+  logged against its odometer. Switching it would have reinterpreted every
+  existing reading — 50 miles becoming 50 engine hours — so the rest of the
+  edit saves and that one field is refused with a message.
+  ([#323](https://github.com/dannymcc/may/issues/323))
+
+- The README documents the tracking unit, including the note that the figures
+  for an hours-tracked vehicle are correct while the labels beside them still
+  read in distance terms. The API documentation says the same about
+  `total_distance` and `average_consumption`, and that the tracking unit is
+  neither exposed nor settable over the API.
+  ([#323](https://github.com/dannymcc/may/issues/323))
+
+- The vehicle response example in the API documentation includes
+  `secondary_fuel_type`, which the API has returned since 0.36.0.
+
 ## [0.36.0] - 2026-08-24
 
 ### Added

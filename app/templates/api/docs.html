@@ -96,6 +96,7 @@
       "registration": "ABC 123",
       "vin": "...",
       "fuel_type": "petrol",
+      "secondary_fuel_type": null,
       "tank_capacity": 50.0,
       "is_active": true,
       "created_at": "2024-01-15T10:30:00",
@@ -111,6 +112,13 @@
   "count": 1
 }</code></pre>
                     </div>
+                    <p class="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                        A vehicle whose odometer is metered in engine hours rather than distance
+                        reports <code>total_distance</code> in hours and
+                        <code>average_consumption</code> in litres per hour. The tracking unit is
+                        set on the vehicle page and is not currently exposed or settable over the
+                        API; vehicles created here are tracked by distance.
+                    </p>
                 </div>
             </div>
 
