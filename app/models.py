@@ -404,7 +404,7 @@ class Vehicle(db.Model):
             return _distance_in(raw_distance, self.get_effective_odometer_unit(), distance_unit)
         return raw_distance
 
-    def _valid_consumption_segments(self):
+    def _valid_consumption_segments(self, fuel_type=None):
         """Collect (distance, fuel) spans usable for the consumption average.
 
         Each span runs between consecutive full-tank fill-ups, counting every
@@ -414,16 +414,26 @@ class Vehicle(db.Model):
         usable, so one missed fill-up doesn't invalidate the whole history
         (issue #251).
 
+        Only logs of one fuel type are considered, defaulting to the
+        vehicle's own. A diesel that also tracks AdBlue keeps the two
+        apart: AdBlue is an auxiliary fluid, not propulsion, so pouring it
+        in must never move the diesel figure (issue #319).
+
         Returns ``None`` when there are fewer than two full-tank anchors,
         otherwise a (possibly empty) list of ``(distance, fuel)`` tuples.
         """
-        full_logs = self.fuel_logs.filter_by(is_full_tank=True).order_by(FuelLog.odometer).all()
+        same_fuel = FuelLog.effective_fuel_type_filter(
+            fuel_type or resolve_price_fuel_type(None, self.fuel_type), self.fuel_type)
+        full_logs = self.fuel_logs.filter(
+            FuelLog.is_full_tank == True, same_fuel
+        ).order_by(FuelLog.odometer).all()
         if len(full_logs) < 2:
             return None
 
         range_logs = self.fuel_logs.filter(
             FuelLog.odometer > full_logs[0].odometer,
             FuelLog.odometer <= full_logs[-1].odometer,
+            same_fuel,
         ).order_by(FuelLog.odometer).all()
 
         segments = []
@@ -438,15 +448,16 @@ class Vehicle(db.Model):
                 segments.append((distance, fuel))
         return segments
 
-    def get_average_consumption(self, consumption_unit=None, volume_unit='L'):
+    def get_average_consumption(self, consumption_unit=None, volume_unit='L', fuel_type=None):
         """Calculate average fuel consumption across full-tank fill-up spans.
 
         Spans contaminated by a missed fill-up are excluded rather than
         poisoning the whole figure (issue #251); the average covers every
-        remaining span, partial fills included (issue #169). Returns None
-        when no honest span exists.
+        remaining span, partial fills included (issue #169). Each fuel type
+        is averaged on its own, the vehicle's primary fuel by default
+        (issue #319). Returns None when no honest span exists.
         """
-        segments = self._valid_consumption_segments()
+        segments = self._valid_consumption_segments(fuel_type)
         if not segments:
             return None
 
@@ -470,7 +481,7 @@ class Vehicle(db.Model):
             return (litres / km) * 100  # L/100km
         return None
 
-    def get_consumption_unavailable_reason(self):
+    def get_consumption_unavailable_reason(self, fuel_type=None):
         """Explain why :meth:`get_average_consumption` returns ``None``.
 
         Returns a stable reason code (translated for display in the template)
@@ -482,16 +493,21 @@ class Vehicle(db.Model):
         - ``'missed_fill_up'`` — every span is invalidated by a missed fill-up
         - ``'insufficient_data'`` — not enough distance/volume to calculate
         """
-        segments = self._valid_consumption_segments()
+        segments = self._valid_consumption_segments(fuel_type)
         if segments is None:
             return 'insufficient_full_tanks'
         if segments:
             return None
 
-        full_logs = self.fuel_logs.filter_by(is_full_tank=True).order_by(FuelLog.odometer).all()
+        same_fuel = FuelLog.effective_fuel_type_filter(
+            fuel_type or resolve_price_fuel_type(None, self.fuel_type), self.fuel_type)
+        full_logs = self.fuel_logs.filter(
+            FuelLog.is_full_tank == True, same_fuel
+        ).order_by(FuelLog.odometer).all()
         range_logs = self.fuel_logs.filter(
             FuelLog.odometer > full_logs[0].odometer,
             FuelLog.odometer <= full_logs[-1].odometer,
+            same_fuel,
         ).all()
         if any(log.is_missed for log in range_logs):
             return 'missed_fill_up'
@@ -732,6 +748,7 @@ FUEL_CO2_KG_PER_LITRE = {
     'plugin_hybrid': 2.31,
     'electric': 0.0,
     'hydrogen': 0.0,
+    'adblue': 0.0,  # a diesel exhaust additive, not a fuel being burned (#319)
 }
 
 
@@ -796,6 +813,33 @@ class FuelLog(db.Model):
     attachments = db.relationship('Attachment', backref='fuel_log', lazy='dynamic',
                                   cascade='all, delete-orphan')
 
+    @property
+    def effective_fuel_type(self):
+        """The fuel this fill-up actually put in the vehicle (issue #319).
+
+        Logs written before the per-log selector existed carry no fuel type
+        of their own, so they inherit the vehicle's. Propulsion types are
+        mapped to the fuel they burn, which keeps a hybrid's untyped rows in
+        the same series as ones explicitly logged as petrol (issue #268).
+        """
+        return resolve_price_fuel_type(
+            self.fuel_type, self.vehicle.fuel_type if self.vehicle else None)
+
+    @classmethod
+    def effective_fuel_type_filter(cls, fuel_type, vehicle_fuel_type):
+        """Filter criterion matching logs whose effective fuel type is ``fuel_type``.
+
+        Mirrors :attr:`effective_fuel_type` in SQL: a stored propulsion type
+        counts as the fuel it burns, and a NULL fuel type counts as the
+        vehicle's own.
+        """
+        stored = {fuel_type} | {propulsion for propulsion, fuel in PROPULSION_TO_FUEL.items()
+                                if fuel == fuel_type}
+        criterion = cls.fuel_type.in_(stored)
+        if resolve_price_fuel_type(None, vehicle_fuel_type) == fuel_type:
+            criterion = db.or_(criterion, cls.fuel_type.is_(None))
+        return criterion
+
     def get_consumption(self, consumption_unit=None, volume_unit='L'):
         """Calculate consumption for this fill-up.
 
@@ -806,6 +850,9 @@ class FuelLog(db.Model):
         (issue #169). If any of the intervening logs is flagged ``is_missed``,
         the figure is unknowable and we return None.
 
+        Only logs of the same effective fuel type count, so an AdBlue refill
+        never lands in a diesel figure and vice versa (issue #319).
+
         Partial fills return None: the litres added in a top-up tell you
         nothing about consumption over the preceding distance, and surfacing
         a number there is misleading (issue #194).
@@ -813,10 +860,15 @@ class FuelLog(db.Model):
         if not self.volume or not self.is_full_tank:
             return None
 
+        same_fuel = FuelLog.effective_fuel_type_filter(
+            self.effective_fuel_type,
+            self.vehicle.fuel_type if self.vehicle else None)
+
         prev_full = FuelLog.query.filter(
             FuelLog.vehicle_id == self.vehicle_id,
             FuelLog.odometer < self.odometer,
             FuelLog.is_full_tank == True,
+            same_fuel,
         ).order_by(FuelLog.odometer.desc()).first()
         if not prev_full:
             return None
@@ -825,6 +877,7 @@ class FuelLog(db.Model):
             FuelLog.vehicle_id == self.vehicle_id,
             FuelLog.odometer > prev_full.odometer,
             FuelLog.odometer <= self.odometer,
+            same_fuel,
         ).all()
         if any(log.is_missed for log in between):
             return None
@@ -859,6 +912,7 @@ class FuelLog(db.Model):
             'price_per_unit': self.price_per_unit,
             'discount_per_unit': self.discount_per_unit,
             'total_cost': self.total_cost,
+            'fuel_type': self.effective_fuel_type,
             'is_full_tank': self.is_full_tank,
             'is_missed': self.is_missed,
             'station': self.station,
@@ -1128,6 +1182,9 @@ FUEL_TYPES = [
     ('cng', _l('CNG')),
     ('hydrogen', _l('Hydrogen')),
     ('e85', _l('E85/Flex Fuel')),
+    # AdBlue propels nothing — it is an auxiliary fluid a diesel tracks
+    # alongside its fuel, so it belongs here only as a secondary type (#319).
+    ('adblue', _l('AdBlue/DEF')),
     ('other', _l('Other'))
 ]
 
@@ -1151,6 +1208,11 @@ def resolve_price_fuel_type(log_fuel_type, vehicle_fuel_type):
     """
     fuel_type = log_fuel_type or vehicle_fuel_type
     return PROPULSION_TO_FUEL.get(fuel_type, fuel_type) or 'petrol'
+
+
+def fuel_type_label(fuel_type):
+    """Display label for a stored fuel type slug, translated where known."""
+    return dict(FUEL_TYPES).get(fuel_type) or (fuel_type or '').replace('_', ' ').title()
 
 
 # Reminder types

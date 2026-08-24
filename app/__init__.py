@@ -362,8 +362,8 @@ def create_app(config_class=Config):
 
     @app.template_filter('fuel_type_label')
     def fuel_type_label_filter(value):
-        from app.models import FUEL_TYPES
-        return dict(FUEL_TYPES).get(value) or (value or '').replace('_', ' ').title()
+        from app.models import fuel_type_label
+        return fuel_type_label(value)
 
     @app.template_filter('spec_label')
     def spec_label_filter(spec):

@@ -1143,25 +1143,63 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!consumptionEl) return;
             if (data.consumption && data.consumption.length > 0) {
                 const ctx = consumptionEl.getContext('2d');
+
+                // A diesel that also tracks AdBlue logs two quite different
+                // fluids, so plot one line per fuel type rather than mixing
+                // them into a single misleading series (#319). Each point
+                // keeps its own slot on the x-axis, so two fills on one date
+                // are still two points.
+                const dates = data.consumption.map(d => d.date);
+                const typeLabels = {};
+                data.consumption.forEach(d => {
+                    typeLabels[d.fuel_type || 'unknown'] = d.fuel_type_label || d.fuel_type || 'unknown';
+                });
+
+                const typeColours = {
+                    petrol: 'rgb(14, 165, 233)',
+                    diesel: 'rgb(234, 88, 12)',
+                    electric: 'rgb(16, 185, 129)',
+                    hybrid: 'rgb(250, 204, 21)',
+                    plugin_hybrid: 'rgb(132, 204, 22)',
+                    lpg: 'rgb(168, 85, 247)',
+                    cng: 'rgb(236, 72, 153)',
+                    hydrogen: 'rgb(6, 182, 212)',
+                    e85: 'rgb(217, 70, 239)',
+                    other: 'rgb(100, 116, 139)'
+                };
+                const fallbackColours = ['rgb(59, 130, 246)', 'rgb(239, 68, 68)', 'rgb(34, 197, 94)', 'rgb(245, 158, 11)', 'rgb(139, 92, 246)'];
+                const fuelTypes = Object.keys(typeLabels);
+                const unit = {{ current_user.consumption_unit|tojson }};
+                const datasets = fuelTypes.map((ft, i) => {
+                    const colour = typeColours[ft] || fallbackColours[i % fallbackColours.length];
+                    // A single series keeps the filled look it has always had;
+                    // several would obscure each other, so they stay as lines.
+                    const single = fuelTypes.length === 1;
+                    return {
+                        label: typeLabels[ft] + ' (' + unit + ')',
+                        data: data.consumption.map(d => (d.fuel_type || 'unknown') === ft ? d.consumption : null),
+                        borderColor: colour,
+                        backgroundColor: single ? colour.replace('rgb(', 'rgba(').replace(')', ', 0.1)') : colour,
+                        tension: 0.3,
+                        fill: single,
+                        spanGaps: true
+                    };
+                });
+
                 chartInstances['consumption'] = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: data.consumption.map(d => d.date),
-                        datasets: [{
-                            label: {{ (_('Consumption') + ' (' + current_user.consumption_unit + ')')|tojson }},
-                            data: data.consumption.map(d => d.consumption),
-                            borderColor: 'rgb(14, 165, 233)',
-                            backgroundColor: 'rgba(14, 165, 233, 0.1)',
-                            tension: 0.3,
-                            fill: true
-                        }]
+                        labels: dates,
+                        datasets: datasets
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                display: false
+                                // Only worth showing the key once more than
+                                // one fuel type is being charted.
+                                display: datasets.length > 1
                             }
                         },
                         scales: {

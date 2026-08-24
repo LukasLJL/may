@@ -229,6 +229,10 @@ msgstr ""
 msgid "E85/Flex Fuel"
 msgstr ""
 
+#: app/models.py:1037
+msgid "AdBlue/DEF"
+msgstr ""
+
 #: app/models.py:1042
 msgid "MOT/Inspection"
 msgstr ""
