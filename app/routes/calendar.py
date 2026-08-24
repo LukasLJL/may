@@ -27,6 +27,7 @@ from app.models import (
 from datetime import datetime, timedelta, date
 from functools import wraps
 import hashlib
+from app.utils import utcnow
 
 bp = Blueprint('calendar', __name__, url_prefix='/api/calendar')
 
@@ -84,7 +85,7 @@ def create_vevent(uid, summary, description, dtstart, dtend=None, all_day=True, 
     lines = [
         'BEGIN:VEVENT',
         f'UID:{uid}',
-        f'DTSTAMP:{format_datetime(datetime.utcnow())}',
+        f'DTSTAMP:{format_datetime(utcnow())}',
         f'SUMMARY:{escape_ical(summary)}',
     ]
 

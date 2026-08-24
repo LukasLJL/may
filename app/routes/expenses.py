@@ -111,7 +111,7 @@ def _open_reminder(reminder_id, vehicle_ids, vehicle_id=None):
     if not reminder_id or not current_user.can_write('reminders'):
         return None
 
-    reminder = Reminder.query.get(reminder_id)
+    reminder = db.session.get(Reminder, reminder_id)
     if reminder is None or reminder.is_completed:
         return None
     if reminder.vehicle_id not in vehicle_ids:
@@ -157,7 +157,7 @@ def new():
 
     if request.method == 'POST':
         vehicle_id = int(request.form.get('vehicle_id'))
-        vehicle = Vehicle.query.get_or_404(vehicle_id)
+        vehicle = db.get_or_404(Vehicle, vehicle_id)
 
         # Check access
         if vehicle not in vehicles:
@@ -186,7 +186,7 @@ def new():
         # schedule and recalculates the next due point.
         schedule_id = request.form.get('maintenance_schedule_id', type=int)
         if schedule_id:
-            schedule = MaintenanceSchedule.query.get(schedule_id)
+            schedule = db.session.get(MaintenanceSchedule, schedule_id)
             if schedule and schedule.vehicle_id == vehicle_id:
                 schedule.last_performed_date = date
                 schedule.last_performed_odometer = (
@@ -240,7 +240,7 @@ def new():
 @bp.route('/<int:expense_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(expense_id):
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
     vehicles = current_user.get_all_vehicles()
 
     # Check access
@@ -289,7 +289,7 @@ def edit(expense_id):
 @bp.route('/<int:expense_id>/delete', methods=['POST'])
 @login_required
 def delete(expense_id):
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
     vehicles = current_user.get_all_vehicles()
 
     # Check access
@@ -319,14 +319,14 @@ def delete(expense_id):
 @bp.route('/<int:expense_id>/attachments/<int:attachment_id>/delete', methods=['POST'])
 @login_required
 def delete_attachment(expense_id, attachment_id):
-    expense = Expense.query.get_or_404(expense_id)
+    expense = db.get_or_404(Expense, expense_id)
     vehicles = current_user.get_all_vehicles()
 
     if expense.vehicle not in vehicles:
         flash(_('Access denied'), 'error')
         return redirect(url_for('expenses.index'))
 
-    attachment = Attachment.query.get_or_404(attachment_id)
+    attachment = db.get_or_404(Attachment, attachment_id)
     if attachment.expense_id != expense_id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('expenses.edit', expense_id=expense_id))

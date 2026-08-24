@@ -111,7 +111,7 @@ class TestNotesDelete:
         note_id = sample_note.id
         resp = auth_client.post(f'/notes/{note_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert Note.query.get(note_id) is None
+        assert db.session.get(Note, note_id) is None
 
 
 class TestNoteRedirects:

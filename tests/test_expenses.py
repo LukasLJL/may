@@ -158,7 +158,7 @@ class TestExpenseDelete:
         # Use correct URL
         resp = auth_client.post(f'/expenses/{expense_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert Expense.query.get(expense_id) is None
+        assert db.session.get(Expense, expense_id) is None
 
 
 class TestExpenseAttachments:
@@ -251,7 +251,7 @@ class TestExpenseAttachments:
             f'/expenses/{sample_expense.id}/attachments/{first_id}/delete',
             follow_redirects=True)
         assert resp.status_code == 200
-        assert Attachment.query.get(first_id) is None
+        assert db.session.get(Attachment, first_id) is None
         assert sample_expense.attachments.count() == 1
 
 

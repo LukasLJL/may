@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask_babel import lazy_gettext as _l
 from app import db
+from app.utils import utcnow
 
 # Currency symbols for display in UI
 CURRENCY_SYMBOLS = {
@@ -88,7 +89,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     role = db.Column(db.String(20), default=ROLE_EDITOR)  # editor, contributor, viewer (#285)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # User preferences
     language = db.Column(db.String(10), default='en')  # en, de, fr, es, etc.
@@ -122,7 +123,18 @@ class User(UserMixin, db.Model):
 
     # Menu preferences
     start_page = db.Column(db.String(50), default='dashboard')  # dashboard, vehicles, fuel, expenses, etc.
-    default_vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=True)
+    # users and vehicles reference each other on purpose: a vehicle has an
+    # owner, and a user may pin one of their vehicles as the default. The cycle
+    # leaves SQLAlchemy unable to order the two tables for CREATE or DROP, so
+    # this half -- the nullable one -- is marked use_alter: the constraint is
+    # emitted separately, after both tables exist. SQLite has no ALTER TABLE for
+    # constraints, so its DDL is unchanged and the foreign key stays inline;
+    # only PostgreSQL sees a separate ADD CONSTRAINT.
+    default_vehicle_id = db.Column(
+        db.Integer,
+        db.ForeignKey('vehicles.id', use_alter=True, name='fk_users_default_vehicle_id'),
+        nullable=True
+    )
     show_menu_vehicles = db.Column(db.Boolean, default=True)
     show_menu_fuel = db.Column(db.Boolean, default=True)
     show_menu_expenses = db.Column(db.Boolean, default=True)
@@ -203,7 +215,7 @@ class User(UserMixin, db.Model):
     def generate_reset_token(self):
         """Generate a password reset token valid for 1 hour"""
         self.password_reset_token = secrets.token_urlsafe(48)
-        self.password_reset_expires = datetime.utcnow() + timedelta(hours=1)
+        self.password_reset_expires = utcnow() + timedelta(hours=1)
         return self.password_reset_token
 
     def clear_reset_token(self):
@@ -217,14 +229,14 @@ class User(UserMixin, db.Model):
         if not token:
             return None
         user = User.query.filter_by(password_reset_token=token).first()
-        if user and user.password_reset_expires and user.password_reset_expires > datetime.utcnow():
+        if user and user.password_reset_expires and user.password_reset_expires > utcnow():
             return user
         return None
 
     def generate_api_key(self):
         """Generate a new API key for this user"""
         self.api_key = f"may_{secrets.token_hex(32)}"
-        self.api_key_created_at = datetime.utcnow()
+        self.api_key_created_at = utcnow()
         return self.api_key
 
     def revoke_api_key(self):
@@ -271,7 +283,7 @@ class Vehicle(db.Model):
 
     # Status
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Image
     image_filename = db.Column(db.String(255))
@@ -851,7 +863,7 @@ class FuelLog(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     odometer = db.Column(db.Float, nullable=False)  # stored in km
     volume = db.Column(db.Float)  # stored in liters
     price_per_unit = db.Column(db.Float)  # price per the user's volume unit, as entered
@@ -866,7 +878,7 @@ class FuelLog(db.Model):
     station = db.Column(db.String(100))
     notes = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     attachments = db.relationship('Attachment', backref='fuel_log', lazy='dynamic',
@@ -996,7 +1008,7 @@ class Expense(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     category = db.Column(db.String(50), nullable=False)  # maintenance, insurance, repairs, tax, parking, tolls, other
     description = db.Column(db.String(200), nullable=False)
     cost = db.Column(db.Float, nullable=False)
@@ -1005,7 +1017,7 @@ class Expense(db.Model):
     vendor = db.Column(db.String(100))
     notes = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     attachments = db.relationship('Attachment', backref='expense', lazy='dynamic',
@@ -1041,7 +1053,7 @@ class Attachment(db.Model):
     expense_id = db.Column(db.Integer, db.ForeignKey('expenses.id'))
 
     description = db.Column(db.String(200))
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
 
 class VehicleSpec(db.Model):
@@ -1054,7 +1066,7 @@ class VehicleSpec(db.Model):
     spec_type = db.Column(db.String(50), nullable=False)  # predefined or custom type
     label = db.Column(db.String(100), nullable=False)  # display label
     value = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
 
 class Reminder(db.Model):
@@ -1087,8 +1099,8 @@ class Reminder(db.Model):
     completed_at = db.Column(db.DateTime)
 
     # Tracking
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     def is_overdue(self):
         """Check if reminder is past due date"""
@@ -1137,7 +1149,7 @@ class AppSettings(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String(50), unique=True, nullable=False, index=True)
     value = db.Column(db.Text)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     @staticmethod
     def get(key, default=None):
@@ -1415,8 +1427,8 @@ class MaintenanceSchedule(db.Model):
     remind_miles_before = db.Column(db.Integer, default=500)
 
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('maintenance_schedules', lazy='dynamic', cascade='all, delete-orphan'))
@@ -1453,7 +1465,7 @@ class MaintenanceSchedule(db.Model):
         """
         vehicle = self.vehicle
         if vehicle is None and self.vehicle_id:
-            vehicle = Vehicle.query.get(self.vehicle_id)
+            vehicle = db.session.get(Vehicle, self.vehicle_id)
         if vehicle:
             return vehicle.get_effective_odometer_unit()
         return 'km'
@@ -1518,7 +1530,7 @@ class RecurringExpense(db.Model):
     notify_before_days = db.Column(db.Integer, default=3)
 
     is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('recurring_expenses', lazy='dynamic', cascade='all, delete-orphan'))
@@ -1606,7 +1618,7 @@ class FuelStation(db.Model):
     times_used = db.Column(db.Integer, default=0)
     last_used = db.Column(db.DateTime)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Live price provider this station stands for, if any. ``price_source``
     # is a key from PRICE_SOURCES and ``external_id`` the provider's own id
@@ -1622,7 +1634,7 @@ class FuelStation(db.Model):
     def increment_usage(self):
         """Increment usage counter when station is used"""
         self.times_used = (self.times_used or 0) + 1
-        self.last_used = datetime.utcnow()
+        self.last_used = utcnow()
 
     @property
     def price_source_label(self):
@@ -1694,8 +1706,8 @@ class Document(db.Model):
     remind_before_expiry = db.Column(db.Boolean, default=True)
     remind_days = db.Column(db.Integer, default=30)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('documents', lazy='dynamic', cascade='all, delete-orphan'))
@@ -1724,7 +1736,7 @@ class Trip(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     start_odometer = db.Column(db.Float, nullable=False)
     end_odometer = db.Column(db.Float, nullable=True)
 
@@ -1739,7 +1751,7 @@ class Trip(db.Model):
     end_location = db.Column(db.String(200))
 
     notes = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     user = db.relationship('User', backref=db.backref('trips', lazy='dynamic'))
@@ -1805,7 +1817,7 @@ class TripTemplate(db.Model):
     description = db.Column(db.String(200))
     notes = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     user = db.relationship('User', backref=db.backref('trip_templates', lazy='dynamic'))
 
@@ -1830,7 +1842,7 @@ class ChargingSession(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     start_time = db.Column(db.Time)
     end_time = db.Column(db.Time)
     odometer = db.Column(db.Float)
@@ -1847,7 +1859,7 @@ class ChargingSession(db.Model):
     network = db.Column(db.String(100))  # ChargePoint, Electrify America, etc.
 
     notes = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Tessie integration - track imported charges
     tessie_charge_id = db.Column(db.String(50), unique=True, nullable=True)
@@ -1917,8 +1929,8 @@ class VehiclePart(db.Model):
     supplier_url = db.Column(db.String(500))  # Link to purchase
     notes = db.Column(db.Text)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('parts', lazy='dynamic', cascade='all, delete-orphan'))
@@ -1953,11 +1965,11 @@ class FuelPriceHistory(db.Model):
     # legacy rows and manually recorded station prices have no owning log.
     fuel_log_id = db.Column(db.Integer, db.ForeignKey('fuel_logs.id'), nullable=True)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     fuel_type = db.Column(db.String(20), nullable=False)  # petrol, diesel, premium, etc.
     price_per_unit = db.Column(db.Float, nullable=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     # Cascade so deleting a station removes its price rows rather than
@@ -1984,12 +1996,12 @@ class Note(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     title = db.Column(db.String(200))
     content = db.Column(db.Text, nullable=False)
     odometer = db.Column(db.Float)  # optional, stored in vehicle odometer unit
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships — backref is `note_entries` to avoid clashing with Vehicle.notes column
     vehicle = db.relationship('Vehicle', backref=db.backref('note_entries', lazy='dynamic', cascade='all, delete-orphan'))
@@ -2019,13 +2031,13 @@ class MileageAllowance(db.Model):
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date = db.Column(db.Date, nullable=False, default=utcnow)
     description = db.Column(db.String(200))
     distance = db.Column(db.Float)  # optional, stored in vehicle odometer unit
     rate_per_unit = db.Column(db.Float)  # optional reimbursement rate per distance unit
     amount = db.Column(db.Float, nullable=False)  # total amount received
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('mileage_allowances', lazy='dynamic', cascade='all, delete-orphan'))
@@ -2069,8 +2081,8 @@ class TireSet(db.Model):
     notes = db.Column(db.Text)
     is_retired = db.Column(db.Boolean, default=False)  # worn out, sold, scrapped
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     # Relationships
     vehicle = db.relationship('Vehicle', backref=db.backref('tire_sets', lazy='dynamic', cascade='all, delete-orphan'))
@@ -2141,12 +2153,12 @@ class TireFitment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tire_set_id = db.Column(db.Integer, db.ForeignKey('tire_sets.id'), nullable=False)
 
-    fitted_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    fitted_date = db.Column(db.Date, nullable=False, default=utcnow)
     fitted_odometer = db.Column(db.Float, nullable=False)
     removed_date = db.Column(db.Date)
     removed_odometer = db.Column(db.Float)
 
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=utcnow)
 
     # Relationships
     tire_set = db.relationship(

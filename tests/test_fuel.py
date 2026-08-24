@@ -246,7 +246,7 @@ class TestFuelDelete:
         log_id = sample_fuel_log.id
         resp = auth_client.post(f'/fuel/{log_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
     def test_delete_returns_to_fuel_log(self, auth_client, sample_fuel_log):
         """#298 — deleting from the fuel log stays on the fuel log."""
@@ -255,7 +255,7 @@ class TestFuelDelete:
                                 data={'next': '/fuel/'}, follow_redirects=False)
         assert resp.status_code == 302
         assert resp.headers['Location'].endswith('/fuel/')
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
     def test_delete_without_next_returns_to_vehicle(self, auth_client, sample_fuel_log):
         """Deleting from the vehicle page still returns there."""
@@ -264,7 +264,7 @@ class TestFuelDelete:
         resp = auth_client.post(f'/fuel/{log_id}/delete', follow_redirects=False)
         assert resp.status_code == 302
         assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
     def test_delete_ignores_offsite_next(self, auth_client, sample_fuel_log):
         """An off-site next falls back to the vehicle page (open redirect guard)."""
@@ -286,7 +286,7 @@ class TestFuelDelete:
                                 follow_redirects=False)
         assert resp.status_code == 302
         assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
     def test_delete_return_to_vehicle_in_query(self, auth_client, sample_fuel_log):
         """return_to is read from the query string too, as on the other deletes."""
@@ -296,7 +296,7 @@ class TestFuelDelete:
                                 follow_redirects=False)
         assert resp.status_code == 302
         assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
     def test_delete_ignores_unknown_return_to(self, auth_client, sample_fuel_log):
         """Only the known token is honoured; anything else falls through to next."""
@@ -308,7 +308,7 @@ class TestFuelDelete:
         assert resp.status_code == 302
         assert 'evil.example' not in resp.headers['Location']
         assert resp.headers['Location'].endswith('/fuel/')
-        assert FuelLog.query.get(log_id) is None
+        assert db.session.get(FuelLog, log_id) is None
 
 
 class TestPartialFillConsumption:
@@ -557,7 +557,7 @@ class TestPriceHistorySync:
             'total_cost': str(log.total_cost),
             'is_full_tank': 'on',
         }, follow_redirects=True)
-        assert FuelPriceHistory.query.get(history_id) is None
+        assert db.session.get(FuelPriceHistory, history_id) is None
 
     def test_stale_price_not_shown_after_edit(self, auth_client, fuel_log_with_price_history):
         """The bad-entry scenario from issue #113: edit fixes the price, history reflects it."""

@@ -42,7 +42,7 @@ def _odometer_from_form(field, vehicle):
 
 def _accessible_set(set_id, vehicles):
     """A tire set the signed-in account may see, or None."""
-    tire_set = TireSet.query.get_or_404(set_id)
+    tire_set = db.get_or_404(TireSet, set_id)
     return tire_set if tire_set.vehicle in vehicles else None
 
 
@@ -77,7 +77,7 @@ def new():
         return redirect(url_for('vehicles.new'))
 
     if request.method == 'POST':
-        vehicle = Vehicle.query.get_or_404(request.form.get('vehicle_id', type=int))
+        vehicle = db.get_or_404(Vehicle, request.form.get('vehicle_id', type=int))
 
         if vehicle not in vehicles:
             flash(_('Access denied'), 'error')
@@ -232,7 +232,7 @@ def remove(set_id):
 @login_required
 def delete_fitment(fitment_id):
     """Drop a fitting period recorded by mistake."""
-    fitment = TireFitment.query.get_or_404(fitment_id)
+    fitment = db.get_or_404(TireFitment, fitment_id)
     vehicles = current_user.get_all_vehicles()
 
     if fitment.tire_set.vehicle not in vehicles:

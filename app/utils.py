@@ -1,6 +1,7 @@
 """Shared utility helpers for May."""
 
 import re
+from datetime import datetime, timezone
 
 
 def parse_decimal(value, default=None):
@@ -105,3 +106,27 @@ def first_day_of_week(locale):
         return 1
     base = tag.split('-', 1)[0]
     return 0 if base in _SUNDAY_FIRST_LOCALES else 1
+
+
+def utcnow():
+    """The current UTC time as a *naive* :class:`~datetime.datetime`.
+
+    A drop-in replacement for ``datetime.utcnow()``, which Python 3.12
+    deprecates. The obvious substitute, ``datetime.now(timezone.utc)``, is
+    timezone-aware, and every ``db.DateTime`` column in this application holds
+    naive UTC: storing an aware value would leave new rows carrying an offset
+    that older rows do not, and comparing the two raises ``TypeError``. So the
+    offset is computed and then dropped, leaving the same value ``utcnow()``
+    produced.
+    """
+    return datetime.now(timezone.utc).replace(tzinfo=None)
+
+
+def utcfromtimestamp(timestamp):
+    """A POSIX ``timestamp`` as a *naive* UTC datetime.
+
+    The counterpart to :func:`utcnow` for the equally deprecated
+    ``datetime.utcfromtimestamp()``; see that function for why the result is
+    naive.
+    """
+    return datetime.fromtimestamp(timestamp, timezone.utc).replace(tzinfo=None)

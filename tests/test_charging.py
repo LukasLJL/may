@@ -184,4 +184,4 @@ class TestChargingDelete:
         session_id = sample_session.id
         resp = auth_client.post(f'/charging/{session_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert ChargingSession.query.get(session_id) is None
+        assert db.session.get(ChargingSession, session_id) is None

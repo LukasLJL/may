@@ -162,7 +162,7 @@ class TestTireSetCrud:
 
         resp = auth_client.post(f'/tires/{set_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert TireSet.query.get(set_id) is None
+        assert db.session.get(TireSet, set_id) is None
         assert TireFitment.query.filter_by(tire_set_id=set_id).count() == 0
 
 
@@ -250,7 +250,7 @@ class TestFitAndRemove:
 
         resp = auth_client.post(f'/tires/fitments/{fitment_id}/delete', follow_redirects=True)
         assert resp.status_code == 200
-        assert TireFitment.query.get(fitment_id) is None
+        assert db.session.get(TireFitment, fitment_id) is None
 
 
 class TestTireAccessControl:

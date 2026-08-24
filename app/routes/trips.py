@@ -71,7 +71,7 @@ def new():
 
     if request.method == 'POST':
         vehicle_id = int(request.form.get('vehicle_id'))
-        vehicle = Vehicle.query.get_or_404(vehicle_id)
+        vehicle = db.get_or_404(Vehicle, vehicle_id)
 
         if vehicle not in vehicles:
             flash(_('Access denied'), 'error')
@@ -114,14 +114,14 @@ def new():
     # Pre-fill from template if requested
     preload_template_id = request.args.get('template_id', type=int)
     if preload_template_id:
-        tmpl = TripTemplate.query.get(preload_template_id)
+        tmpl = db.session.get(TripTemplate, preload_template_id)
         if tmpl and tmpl.user_id == current_user.id and tmpl.vehicle_id:
             selected_vehicle_id = tmpl.vehicle_id
 
     # Get last odometer for selected vehicle
     last_odometer = 0
     if selected_vehicle_id:
-        vehicle = Vehicle.query.get(selected_vehicle_id)
+        vehicle = db.session.get(Vehicle, selected_vehicle_id)
         if vehicle:
             last_odometer = vehicle.get_last_odometer()
     elif len(vehicles) == 1:
@@ -143,7 +143,7 @@ def new():
 @login_required
 def edit(trip_id):
     """Edit an existing trip"""
-    trip = Trip.query.get_or_404(trip_id)
+    trip = db.get_or_404(Trip, trip_id)
     vehicles = current_user.get_all_vehicles()
 
     if trip.vehicle not in vehicles:
@@ -187,7 +187,7 @@ def edit(trip_id):
 @login_required
 def delete(trip_id):
     """Delete a trip"""
-    trip = Trip.query.get_or_404(trip_id)
+    trip = db.get_or_404(Trip, trip_id)
     vehicles = current_user.get_all_vehicles()
 
     if trip.vehicle not in vehicles:
@@ -222,7 +222,7 @@ def templates_new():
         vehicle_id = request.form.get('vehicle_id')
         if vehicle_id:
             vehicle_id = int(vehicle_id)
-            vehicle = Vehicle.query.get_or_404(vehicle_id)
+            vehicle = db.get_or_404(Vehicle, vehicle_id)
             if vehicle not in vehicles:
                 flash(_('Access denied'), 'error')
                 return redirect(url_for('trips.templates_index'))
@@ -254,7 +254,7 @@ def templates_new():
 @login_required
 def templates_edit(template_id):
     """Edit a trip template"""
-    template = TripTemplate.query.get_or_404(template_id)
+    template = db.get_or_404(TripTemplate, template_id)
     if template.user_id != current_user.id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('trips.templates_index'))
@@ -265,7 +265,7 @@ def templates_edit(template_id):
         vehicle_id = request.form.get('vehicle_id')
         if vehicle_id:
             vehicle_id = int(vehicle_id)
-            vehicle = Vehicle.query.get_or_404(vehicle_id)
+            vehicle = db.get_or_404(Vehicle, vehicle_id)
             if vehicle not in vehicles:
                 flash(_('Access denied'), 'error')
                 return redirect(url_for('trips.templates_index'))
@@ -294,7 +294,7 @@ def templates_edit(template_id):
 @login_required
 def templates_delete(template_id):
     """Delete a trip template"""
-    template = TripTemplate.query.get_or_404(template_id)
+    template = db.get_or_404(TripTemplate, template_id)
     if template.user_id != current_user.id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('trips.templates_index'))
@@ -309,7 +309,7 @@ def templates_delete(template_id):
 @login_required
 def templates_data(template_id):
     """Return template data as JSON for pre-filling the trip form"""
-    template = TripTemplate.query.get_or_404(template_id)
+    template = db.get_or_404(TripTemplate, template_id)
     if template.user_id != current_user.id:
         return jsonify({'error': 'Access denied'}), 403
     return jsonify(template.to_dict())

@@ -3,6 +3,7 @@ import pytest
 from datetime import date, timedelta, datetime
 
 from app import db
+from app.utils import utcnow
 from app.models import (
     User, Vehicle, FuelLog, Expense, Reminder, MaintenanceSchedule,
     RecurringExpense, FuelStation, FuelPriceHistory, Trip, ChargingSession,
@@ -74,7 +75,7 @@ class TestUserResetToken:
         test_user.generate_reset_token()
         assert test_user.password_reset_expires is not None
         # Should expire about 1 hour from now
-        diff = test_user.password_reset_expires - datetime.utcnow()
+        diff = test_user.password_reset_expires - utcnow()
         assert timedelta(minutes=55) < diff < timedelta(minutes=65)
 
     def test_get_by_reset_token_valid(self, app, test_user):
@@ -90,7 +91,7 @@ class TestUserResetToken:
     def test_get_by_reset_token_expired(self, app, test_user):
         test_user.generate_reset_token()
         # Move expiry to the past
-        test_user.password_reset_expires = datetime.utcnow() - timedelta(hours=2)
+        test_user.password_reset_expires = utcnow() - timedelta(hours=2)
         db.session.commit()
         found = User.get_by_reset_token(test_user.password_reset_token)
         assert found is None

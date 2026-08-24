@@ -213,7 +213,7 @@ def get_monthly_spending(vehicle_ids):
 def timeline(vehicle_id):
     """Service timeline showing maintenance history and expenses"""
     vehicles = current_user.get_all_vehicles()
-    vehicle = Vehicle.query.get_or_404(vehicle_id)
+    vehicle = db.get_or_404(Vehicle, vehicle_id)
 
     if vehicle not in vehicles:
         return redirect(url_for('main.dashboard'))

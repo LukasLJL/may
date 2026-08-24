@@ -74,7 +74,7 @@ def new():
 
     if request.method == 'POST':
         vehicle_id = int(request.form.get('vehicle_id'))
-        vehicle = Vehicle.query.get_or_404(vehicle_id)
+        vehicle = db.get_or_404(Vehicle, vehicle_id)
 
         # Check access
         if vehicle not in vehicles:
@@ -149,7 +149,7 @@ def new():
         # Auto-save fuel price to history if station is selected
         station_id = request.form.get('station_id', type=int)
         if station_id and log.price_per_unit:
-            station = FuelStation.query.get(station_id)
+            station = db.session.get(FuelStation, station_id)
             if station:
                 # Save price history
                 price_history = FuelPriceHistory(
@@ -208,7 +208,7 @@ def new():
 @bp.route('/<int:log_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(log_id):
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
     vehicles = current_user.get_all_vehicles()
 
     # Check access
@@ -223,7 +223,7 @@ def edit(log_id):
 
         new_vehicle_id = request.form.get('vehicle_id', type=int)
         if new_vehicle_id:
-            new_vehicle = Vehicle.query.get_or_404(new_vehicle_id)
+            new_vehicle = db.get_or_404(Vehicle, new_vehicle_id)
             if new_vehicle in vehicles:
                 log.vehicle_id = new_vehicle_id
         date_str = request.form.get('date')
@@ -279,7 +279,7 @@ def edit(log_id):
                     log.fuel_type, log.vehicle.fuel_type
                 )
                 if station_id and existing_entry.station_id != station_id:
-                    new_station = FuelStation.query.get(station_id)
+                    new_station = db.session.get(FuelStation, station_id)
                     if new_station:
                         # Reassigning the log moves the usage count too (#252):
                         # decrement the station we're leaving before bumping the
@@ -290,7 +290,7 @@ def edit(log_id):
                         existing_entry.station_id = station_id
                         new_station.increment_usage()
         elif station_id and log.price_per_unit:
-            new_station = FuelStation.query.get(station_id)
+            new_station = db.session.get(FuelStation, station_id)
             if new_station:
                 db.session.add(FuelPriceHistory(
                     station_id=station_id,
@@ -343,7 +343,7 @@ def edit(log_id):
 @bp.route('/<int:log_id>/delete', methods=['POST'])
 @login_required
 def delete(log_id):
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
     vehicles = current_user.get_all_vehicles()
 
     # Check access
@@ -399,14 +399,14 @@ def delete(log_id):
 @bp.route('/<int:log_id>/attachments/<int:attachment_id>/delete', methods=['POST'])
 @login_required
 def delete_attachment(log_id, attachment_id):
-    log = FuelLog.query.get_or_404(log_id)
+    log = db.get_or_404(FuelLog, log_id)
     vehicles = current_user.get_all_vehicles()
 
     if log.vehicle not in vehicles:
         flash(_('Access denied'), 'error')
         return redirect(url_for('fuel.index'))
 
-    attachment = Attachment.query.get_or_404(attachment_id)
+    attachment = db.get_or_404(Attachment, attachment_id)
     if attachment.fuel_log_id != log_id:
         flash(_('Access denied'), 'error')
         return redirect(url_for('fuel.edit', log_id=log_id))
@@ -441,7 +441,7 @@ def quick():
 
     if request.method == 'POST':
         vehicle_id = int(request.form.get('vehicle_id'))
-        vehicle = Vehicle.query.get_or_404(vehicle_id)
+        vehicle = db.get_or_404(Vehicle, vehicle_id)
 
         if vehicle not in vehicles:
             flash(_('Access denied'), 'error')
@@ -481,7 +481,7 @@ def quick():
         station_id = request.form.get('station_id', type=int)
         station = None
         if station_id:
-            station = FuelStation.query.get(station_id)
+            station = db.session.get(FuelStation, station_id)
         else:
             station_name = request.form.get('station')
             if station_name:
@@ -518,7 +518,7 @@ def quick():
     # Get last odometer for selected vehicle
     last_odometer = None
     if selected_vehicle_id:
-        vehicle = Vehicle.query.get(selected_vehicle_id)
+        vehicle = db.session.get(Vehicle, selected_vehicle_id)
         if vehicle:
             last_odometer = vehicle.get_last_odometer()
 
