@@ -10,6 +10,22 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- The Date Format, Distance, Volume and Fuel Consumption choices in Settings >
+  Units & Values are now translated. They were hard-coded English, so they
+  stayed in English whatever language was selected — obvious on a non-Latin
+  catalogue. Translations for the new labels are filled in for all shipped
+  languages. ([#310](https://github.com/dannymcc/may/issues/310))
+- The Hungarian catalogue was marked fuzzy in its header, so `pybabel compile`
+  skipped it and its `.mo` file could not be rebuilt in place. The marker is
+  gone and the catalogue compiles with the rest.
+
+### Changed
+
+- The distance option in Settings reads "Kilometres (km)", matching the
+  per-vehicle odometer picker and reusing its existing translations.
+
 ## [0.34.0] - 2026-08-24
 
 ### Added

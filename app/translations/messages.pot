@@ -185,11 +185,11 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 
-#: app/models.py:1022
+#: app/models.py:1116 app/templates/auth/settings.html:129
 msgid "Kilometres (km)"
 msgstr ""
 
-#: app/models.py:1023
+#: app/models.py:1117 app/templates/auth/settings.html:130
 msgid "Miles (mi)"
 msgstr ""
 
@@ -4046,8 +4046,41 @@ msgstr ""
 msgid "Select unit..."
 msgstr ""
 
+#: app/templates/auth/settings.html:138
 #: app/templates/vehicles/part_form.html:58
 msgid "Liters (L)"
+msgstr ""
+
+#: app/templates/auth/settings.html:118
+msgid "DD/MM/YYYY"
+msgstr ""
+
+#: app/templates/auth/settings.html:119
+msgid "MM/DD/YYYY"
+msgstr ""
+
+#: app/templates/auth/settings.html:120
+msgid "YYYY-MM-DD"
+msgstr ""
+
+#: app/templates/auth/settings.html:121
+msgid "DD.MM.YYYY"
+msgstr ""
+
+#: app/templates/auth/settings.html:139
+msgid "UK Gallons (gal)"
+msgstr ""
+
+#: app/templates/auth/settings.html:140
+msgid "US Gallons (gal)"
+msgstr ""
+
+#: app/templates/auth/settings.html:149
+msgid "MPG (UK)"
+msgstr ""
+
+#: app/templates/auth/settings.html:150
+msgid "MPG (US)"
 msgstr ""
 
 #: app/templates/vehicles/part_form.html:59

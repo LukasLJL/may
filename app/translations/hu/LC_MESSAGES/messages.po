@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -187,11 +186,11 @@ msgstr "Futásteljesítmény (km/mi)"
 msgid "Hours"
 msgstr "Óra"
 
-#: app/models.py:1022
+#: app/models.py:1116 app/templates/auth/settings.html:129
 msgid "Kilometres (km)"
 msgstr "Kilometer (km)"
 
-#: app/models.py:1023
+#: app/models.py:1117 app/templates/auth/settings.html:130
 msgid "Miles (mi)"
 msgstr "Mérföld (mi)"
 
@@ -4172,9 +4171,42 @@ msgstr "Mértékegység"
 msgid "Select unit..."
 msgstr "Válassz mértékegységet…"
 
+#: app/templates/auth/settings.html:138
 #: app/templates/vehicles/part_form.html:58
 msgid "Liters (L)"
 msgstr "Liter (L)"
+
+#: app/templates/auth/settings.html:118
+msgid "DD/MM/YYYY"
+msgstr "NN/HH/ÉÉÉÉ"
+
+#: app/templates/auth/settings.html:119
+msgid "MM/DD/YYYY"
+msgstr "HH/NN/ÉÉÉÉ"
+
+#: app/templates/auth/settings.html:120
+msgid "YYYY-MM-DD"
+msgstr "ÉÉÉÉ-HH-NN"
+
+#: app/templates/auth/settings.html:121
+msgid "DD.MM.YYYY"
+msgstr "NN.HH.ÉÉÉÉ"
+
+#: app/templates/auth/settings.html:139
+msgid "UK Gallons (gal)"
+msgstr "Brit gallon (gal)"
+
+#: app/templates/auth/settings.html:140
+msgid "US Gallons (gal)"
+msgstr "Amerikai gallon (gal)"
+
+#: app/templates/auth/settings.html:149
+msgid "MPG (UK)"
+msgstr "MPG (UK)"
+
+#: app/templates/auth/settings.html:150
+msgid "MPG (US)"
+msgstr "MPG (US)"
 
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"

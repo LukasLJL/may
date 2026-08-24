@@ -186,11 +186,11 @@ msgstr "里程 (公里/英里)"
 msgid "Hours"
 msgstr "小时"
 
-#: app/models.py:1022
+#: app/models.py:1116 app/templates/auth/settings.html:129
 msgid "Kilometres (km)"
 msgstr "公里 (km)"
 
-#: app/models.py:1023
+#: app/models.py:1117 app/templates/auth/settings.html:130
 msgid "Miles (mi)"
 msgstr "英里 (mi)"
 
@@ -4059,9 +4059,42 @@ msgstr "单位"
 msgid "Select unit..."
 msgstr "选择单位……"
 
+#: app/templates/auth/settings.html:138
 #: app/templates/vehicles/part_form.html:58
 msgid "Liters (L)"
 msgstr "升 (L)"
+
+#: app/templates/auth/settings.html:118
+msgid "DD/MM/YYYY"
+msgstr "日/月/年"
+
+#: app/templates/auth/settings.html:119
+msgid "MM/DD/YYYY"
+msgstr "月/日/年"
+
+#: app/templates/auth/settings.html:120
+msgid "YYYY-MM-DD"
+msgstr "年-月-日"
+
+#: app/templates/auth/settings.html:121
+msgid "DD.MM.YYYY"
+msgstr "日.月.年"
+
+#: app/templates/auth/settings.html:139
+msgid "UK Gallons (gal)"
+msgstr "英制加仑 (gal)"
+
+#: app/templates/auth/settings.html:140
+msgid "US Gallons (gal)"
+msgstr "美制加仑 (gal)"
+
+#: app/templates/auth/settings.html:149
+msgid "MPG (UK)"
+msgstr "MPG（英制）"
+
+#: app/templates/auth/settings.html:150
+msgid "MPG (US)"
+msgstr "MPG（美制）"
 
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"
