@@ -10,6 +10,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- Running without `SECRET_KEY` set no longer bounces you back to the login page
+  on every page change. May now generates a key on first start and saves it to
+  `.secret_key` in its data folder, so all of its worker processes sign
+  sessions with the same key and logins survive a restart. Setting `SECRET_KEY`
+  yourself still takes precedence, and if the key file cannot be written May
+  starts as before with a warning.
+  ([#317](https://github.com/dannymcc/may/issues/317))
+
 ## [0.35.1] - 2026-08-24
 
 ### Fixed
