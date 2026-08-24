@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.35.0] - 2026-08-24
+
 ### Changed
 
 - Deleting a fuel log accepts the same `return_to=vehicle` parameter the new
@@ -17,6 +19,7 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   sent back to rather than relying on the default. The older `next` parameter
   still works exactly as before, so existing links and bookmarks are
   unaffected. ([#312](https://github.com/dannymcc/may/issues/312))
+- The README's fuel logs section says where deleting a log leaves you.
 
 ## [0.34.1] - 2026-08-24
 
