@@ -359,8 +359,15 @@ def delete(log_id):
     db.session.delete(log)
     db.session.commit()
     flash(_('Fuel log deleted successfully'), 'success')
+    # Redirect back to vehicle page if we came from there (#283), using the
+    # same `return_to` token the new and edit routes take (#312).
+    return_to = request.form.get('return_to') or request.args.get('return_to')
+    if return_to == 'vehicle':
+        return redirect(url_for('vehicles.view', vehicle_id=vehicle_id))
+
     # Return to wherever the delete came from (#298): deleting from the fuel
-    # log should stay there rather than bouncing to the vehicle page.
+    # log should stay there rather than bouncing to the vehicle page. `next`
+    # stays supported so existing links and bookmarks keep working.
     next_url = get_safe_redirect_url(request.form.get('next'), default=None)
     return redirect(next_url or url_for('vehicles.view', vehicle_id=vehicle_id))
 

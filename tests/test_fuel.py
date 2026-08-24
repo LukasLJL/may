@@ -175,6 +175,39 @@ class TestFuelDelete:
         assert 'evil.example' not in resp.headers['Location']
         assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
 
+    def test_delete_return_to_vehicle(self, auth_client, sample_fuel_log):
+        """#312 — delete takes the same return_to token as new and edit."""
+        log_id = sample_fuel_log.id
+        vehicle_id = sample_fuel_log.vehicle_id
+        resp = auth_client.post(f'/fuel/{log_id}/delete',
+                                data={'return_to': 'vehicle'},
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
+        assert FuelLog.query.get(log_id) is None
+
+    def test_delete_return_to_vehicle_in_query(self, auth_client, sample_fuel_log):
+        """return_to is read from the query string too, as on the other deletes."""
+        log_id = sample_fuel_log.id
+        vehicle_id = sample_fuel_log.vehicle_id
+        resp = auth_client.post(f'/fuel/{log_id}/delete?return_to=vehicle',
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert resp.headers['Location'].endswith(f'/vehicles/{vehicle_id}')
+        assert FuelLog.query.get(log_id) is None
+
+    def test_delete_ignores_unknown_return_to(self, auth_client, sample_fuel_log):
+        """Only the known token is honoured; anything else falls through to next."""
+        log_id = sample_fuel_log.id
+        resp = auth_client.post(f'/fuel/{log_id}/delete',
+                                data={'return_to': 'http://evil.example/',
+                                      'next': '/fuel/'},
+                                follow_redirects=False)
+        assert resp.status_code == 302
+        assert 'evil.example' not in resp.headers['Location']
+        assert resp.headers['Location'].endswith('/fuel/')
+        assert FuelLog.query.get(log_id) is None
+
 
 class TestPartialFillConsumption:
     """#194 — partial fills return no consumption; the next full fill
