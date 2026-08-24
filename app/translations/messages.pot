@@ -941,6 +941,12 @@ msgstr ""
 msgid "Vehicle \"%(name)s\" added successfully"
 msgstr ""
 
+#: app/routes/vehicles.py:268
+msgid ""
+"Tracking unit cannot be changed once readings have been logged for this "
+"vehicle. Existing readings were kept as they are."
+msgstr ""
+
 #: app/routes/vehicles.py:259
 msgid "Vehicle updated successfully"
 msgstr ""

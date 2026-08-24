@@ -319,11 +319,36 @@ class Vehicle(db.Model):
     charging_sessions = db.relationship('ChargingSession', backref='vehicle', lazy='dynamic',
                                         cascade='all, delete-orphan')
 
+    def tracks_hours(self):
+        """True when this vehicle's readings are engine hours, not distance (#323).
+
+        ``tracking_unit`` is the authority for how every ``odometer`` value
+        belonging to this vehicle is interpreted: a tractor logged at 50 is
+        at 50 engine hours, not 50 miles. Hours never convert by a distance
+        factor, so ``odometer_unit`` is meaningless for such a vehicle.
+        """
+        return self.tracking_unit == 'hours'
+
+    def has_odometer_readings(self):
+        """True when anything has already been logged against this odometer (#323).
+
+        Used to refuse a ``tracking_unit`` change that would silently
+        reinterpret existing readings — 50 miles becoming 50 hours.
+        """
+        if self.fuel_logs.first() is not None:
+            return True
+        if self.trips.filter(Trip.end_odometer.isnot(None)).first() is not None:
+            return True
+        if self.charging_sessions.filter(ChargingSession.odometer.isnot(None)).first() is not None:
+            return True
+        return self.expenses.filter(Expense.odometer.isnot(None)).first() is not None
+
     def get_effective_odometer_unit(self):
         """Return the odometer unit for this vehicle.
 
         Uses the vehicle's own odometer_unit if set, otherwise falls back to
-        the owner's distance_unit preference.
+        the owner's distance_unit preference. Only meaningful for a vehicle
+        tracked by distance; see :meth:`tracks_hours`.
         """
         if self.odometer_unit:
             return self.odometer_unit
@@ -387,7 +412,17 @@ class Vehicle(db.Model):
             distance_unit: If provided ('km' or 'mi'), converts the result
                 to this unit. Otherwise returns the raw value in the
                 vehicle's effective odometer unit.
+
+        For an hours-tracked vehicle the readings are engine hours, so the
+        span is returned as logged and ``distance_unit`` is ignored — there
+        is no km/mi conversion to apply to an hour (#323).
         """
+        if self.tracks_hours():
+            logs = self.fuel_logs.order_by(FuelLog.odometer).all()
+            if len(logs) < 2:
+                return 0
+            return logs[-1].odometer - logs[0].odometer
+
         # If Tessie is enabled, use the odometer reading directly (always stored in km)
         if self.uses_tessie_odometer() and self.tessie_last_odometer:
             odometer = self.tessie_last_odometer
@@ -421,6 +456,9 @@ class Vehicle(db.Model):
 
         Returns ``None`` when there are fewer than two full-tank anchors,
         otherwise a (possibly empty) list of ``(distance, fuel)`` tuples.
+        The span is expressed in the vehicle's own ``tracking_unit`` — km or
+        miles for a distance-tracked vehicle, engine hours for one tracked by
+        hours (#323) — and is never converted here.
         """
         same_fuel = FuelLog.effective_fuel_type_filter(
             fuel_type or resolve_price_fuel_type(None, self.fuel_type), self.fuel_type)
@@ -456,6 +494,10 @@ class Vehicle(db.Model):
         remaining span, partial fills included (issue #169). Each fuel type
         is averaged on its own, the vehicle's primary fuel by default
         (issue #319). Returns None when no honest span exists.
+
+        An hours-tracked vehicle is averaged in litres per engine hour and
+        ``consumption_unit`` is ignored: mpg, km/L and L/100km are all named
+        for a distance this vehicle never records (issue #323).
         """
         segments = self._valid_consumption_segments(fuel_type)
         if not segments:
@@ -465,6 +507,8 @@ class Vehicle(db.Model):
         total_fuel = sum(fuel for _, fuel in segments)
 
         if total_distance > 0 and total_fuel > 0:
+            if self.tracks_hours():
+                return _to_litres(total_fuel, volume_unit) / total_distance
             odometer_unit = self.get_effective_odometer_unit()
             if consumption_unit == 'mpg':
                 miles = _distance_in(total_distance, odometer_unit, 'mi')
@@ -580,6 +624,11 @@ class Vehicle(db.Model):
         the vehicle's odometer unit). Mirrors the fill-to-fill approach used
         for fuel: needs at least two anchor sessions with odometers, and sums
         every charge in between.
+
+        Charging is rare on hours-tracked machinery but not impossible —
+        electric plant exists — so the same rule applies as for fuel: an
+        hours-tracked vehicle gets kWh per 100 engine hours and
+        ``distance_unit`` is ignored (issue #323).
         """
         sessions = (self.charging_sessions
                     .filter(ChargingSession.odometer.isnot(None))
@@ -594,6 +643,8 @@ class Vehicle(db.Model):
         total_kwh = sum(s.kwh_added for s in sessions if s.kwh_added) or 0
         if total_kwh <= 0:
             return None
+        if self.tracks_hours():
+            return (total_kwh / raw_distance) * 100
         target = distance_unit or self.get_effective_odometer_unit()
         distance = _distance_in(raw_distance, self.get_effective_odometer_unit(), target)
         return (total_kwh / distance) * 100 if distance > 0 else None
@@ -610,7 +661,14 @@ class Vehicle(db.Model):
         return sum(trip.distance for trip in self.trips.all()) or 0
 
     def get_cost_per_distance(self):
-        """Calculate total cost of ownership per distance unit"""
+        """Calculate total cost of ownership per unit on the vehicle's odometer.
+
+        That unit is whatever ``tracking_unit`` says it is: cost per km or
+        per mile for a distance-tracked vehicle, cost per engine hour for an
+        hours-tracked one (issue #323). The arithmetic is the same either
+        way because :meth:`get_total_distance` returns the span as logged,
+        without a km/mi conversion, for an hours-tracked vehicle.
+        """
         total_cost = self.get_total_fuel_cost() + self.get_total_expense_cost() + self.get_total_charging_cost()
         total_distance = self.get_total_distance()
         if total_distance > 0:
@@ -856,6 +914,11 @@ class FuelLog(db.Model):
         Partial fills return None: the litres added in a top-up tell you
         nothing about consumption over the preceding distance, and surfacing
         a number there is misleading (issue #194).
+
+        The owning vehicle's ``tracking_unit`` decides what the span between
+        two readings means. For an hours-tracked vehicle it is engine hours,
+        so the figure is litres per hour and ``consumption_unit`` is ignored
+        (issue #323).
         """
         if not self.volume or not self.is_full_tank:
             return None
@@ -884,6 +947,8 @@ class FuelLog(db.Model):
         volume_native = sum(log.volume for log in between if log.volume)
 
         if distance > 0 and volume_native > 0:
+            if self.vehicle and self.vehicle.tracks_hours():
+                return _to_litres(volume_native, volume_unit) / distance
             odometer_unit = self.vehicle.get_effective_odometer_unit()
             if consumption_unit == 'mpg':
                 miles = _distance_in(distance, odometer_unit, 'mi')

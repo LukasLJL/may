@@ -191,6 +191,7 @@ Add and manage your vehicles with detailed information:
 - Make, model, year, and registration
 - Fuel type and tank capacity
 - Custom specifications and notes
+- **Tracking Unit**: Choose whether a vehicle's odometer counts distance or engine hours — plant and machinery are metered in hours, and their consumption and running costs are worked out per hour rather than per mile. The unit is fixed once anything has been logged against the odometer, since changing it would reinterpret every existing reading
 - **Photo Gallery**: Upload as many photos per vehicle as you like from the "Photos" section on the vehicle page. Any of them can be set as the main photo — the one shown on the dashboard and vehicle list — and the vehicle page steps through the rest with left/right arrows
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
