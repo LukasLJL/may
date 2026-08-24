@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.35.2] - 2026-08-24
+
 ### Fixed
 
 - Running without `SECRET_KEY` set no longer bounces you back to the login page
@@ -19,6 +21,12 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   yourself still takes precedence, and if the key file cannot be written May
   starts as before with a warning.
   ([#317](https://github.com/dannymcc/may/issues/317))
+
+### Changed
+
+- The README's configuration section notes that the supplied
+  `docker-compose.yml` passes a placeholder `SECRET_KEY`, so Compose users get
+  that rather than a generated key until they set or remove it.
 
 ## [0.35.1] - 2026-08-24
 

@@ -147,6 +147,12 @@ If you don't set `SECRET_KEY`, May generates one on first start and saves it to
 you'd rather manage the key, or if you run more than one instance behind a load
 balancer and want them to share sessions.
 
+The supplied `docker-compose.yml` passes a placeholder `SECRET_KEY` when you
+haven't set one of your own, so under Compose May signs sessions with that
+rather than generating a key. Set `SECRET_KEY` in `.env` next to
+`docker-compose.yml`, or remove the line from the compose file to let May
+generate and keep its own.
+
 The `.env` file must sit next to `config.py` in the application directory, and
 it is read when May starts. Variables set in the real environment take
 precedence over `.env`.
