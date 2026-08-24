@@ -10,6 +10,16 @@
 
     <form method="POST" enctype="multipart/form-data" class="space-y-6">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        {% if reminder %}
+        <!-- Logging this expense against a reminder (#296) -->
+        <input type="hidden" name="reminder_id" id="reminder_id" value="{{ reminder.id }}" data-vehicle-id="{{ reminder.vehicle_id }}">
+        <div id="reminder-notice" class="rounded-md bg-primary-50 dark:bg-gray-700 p-4 text-sm text-gray-700 dark:text-gray-200">
+            {{ _('Saving this expense will also complete the reminder "%(title)s".', title=reminder.title) }}
+            {% if reminder.recurrence != 'none' %}
+            {{ _('Its next occurrence will be scheduled.') }}
+            {% endif %}
+        </div>
+        {% endif %}
         <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">
@@ -38,7 +48,7 @@
                     <select name="category" id="category" required
                             class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
                         {% for value, label in categories %}
-                        <option value="{{ value }}" {% if expense and expense.category == value %}selected{% endif %}>{{ label }}</option>
+                        <option value="{{ value }}" {% if (expense and expense.category == value) or (not expense and reminder and reminder.expense_category() == value) %}selected{% endif %}>{{ label }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -46,7 +56,7 @@
                 <div class="sm:col-span-2">
                     <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Description') }} *</label>
                     <input type="text" name="description" id="description" required
-                           value="{{ expense.description if expense else '' }}"
+                           value="{% if expense %}{{ expense.description }}{% elif reminder %}{{ reminder.title }}{% endif %}"
                            placeholder="{{ _('e.g., Oil change, Annual service') }}"
                            class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
                 </div>
@@ -179,6 +189,21 @@
             }
             vehicleSelect.addEventListener('change', filterSchedules);
             filterSchedules();
+        }
+
+        // Drop the reminder link if the expense is moved to another vehicle (#296)
+        const reminderInput = document.getElementById('reminder_id');
+        if (reminderInput) {
+            const reminderNotice = document.getElementById('reminder-notice');
+            function syncReminderLink() {
+                const match = vehicleSelect.value === reminderInput.dataset.vehicleId;
+                reminderInput.disabled = !match;
+                if (reminderNotice) {
+                    reminderNotice.style.display = match ? '' : 'none';
+                }
+            }
+            vehicleSelect.addEventListener('change', syncReminderLink);
+            syncReminderLink();
         }
     })();
 </script>

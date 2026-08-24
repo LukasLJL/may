@@ -224,6 +224,7 @@ Never miss important dates:
 - Insurance renewals
 - Tax payments
 - Custom reminders with flexible recurrence
+- **Log expense**: record what an outstanding reminder cost. The expense form opens pre-filled with the vehicle, the reminder's title and a matching category; saving it records the expense, ticks the reminder off and schedules its next occurrence. The cost is typed at that point, so reminders for fees that change — registration, for instance — stay accurate.
 
 ### Maintenance Schedules
 Plan regular maintenance tasks:
