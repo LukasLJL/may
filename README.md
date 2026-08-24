@@ -207,6 +207,8 @@ Track every fill-up with:
 - Automatic MPG/L per 100km calculations
 - Fuel type selection for vehicles that take more than one fuel, including hybrids (petrol or diesel), so station price charts stay grouped by the fuel actually bought
 - Each fuel is measured on its own: consumption figures, averages and the consumption trend chart count only the logs of that fuel type, so an AdBlue refill on a diesel never lands in the diesel L/100km. Logs recorded before the fuel type selector existed count as the vehicle's own fuel type.
+- "AdBlue/DEF" is available as a vehicle's secondary fuel type, for the fluid a diesel tracks alongside its fuel. It is an exhaust additive rather than a fuel, so it is not offered as a vehicle's own fuel type and counts as no tailpipe CO2.
+- The fuel log list shows the fuel type of each entry
 
 Saving a fuel log returns you to the fuel log list, unless you started from a vehicle page, in which case you go back to that vehicle. Deleting one does the same: from the fuel log list you stay on the list, from a vehicle page you return to that vehicle. Notes behave the same way.
 
