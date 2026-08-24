@@ -94,6 +94,62 @@ class TestSecretKeyPersistsAcrossProcesses:
         assert settings['SECRET_KEY'] == 'from-real-env'
         assert not (tmp_path / 'data' / '.secret_key').exists()
 
+    def test_empty_key_file_is_claimed_rather_than_left_alone(self, tmp_path):
+        """A key file that exists but holds nothing is filled in.
+
+        A container killed between creating the file and writing to it, a full
+        disk, or someone making the file by hand meaning to fill it in later
+        all leave an empty data/.secret_key. Nothing repairs it on a later
+        boot, so every worker would keep falling back to a key of its own and
+        forms would keep being refused with "The CSRF session token is
+        missing" (#315).
+        """
+        key_file = tmp_path / 'data' / '.secret_key'
+        key_file.parent.mkdir()
+        key_file.write_text('')
+
+        first_worker = run_config(tmp_path)['SECRET_KEY']
+        second_worker = run_config(tmp_path)['SECRET_KEY']
+
+        assert first_worker == second_worker, (
+            "SECRET_KEY differs between two process boots against an empty "
+            "key file -- sessions and CSRF tokens break whenever a request "
+            "lands on the other gunicorn worker."
+        )
+        assert key_file.read_text().strip() == first_worker
+
+    def test_whitespace_only_key_file_is_claimed(self, tmp_path):
+        """A file holding only whitespace is no more a key than an empty one."""
+        key_file = tmp_path / 'data' / '.secret_key'
+        key_file.parent.mkdir()
+        key_file.write_text('   \n')
+
+        first_worker = run_config(tmp_path)['SECRET_KEY']
+
+        assert key_file.read_text().strip() == first_worker
+        assert run_config(tmp_path)['SECRET_KEY'] == first_worker
+
+    def test_unreadable_key_file_is_left_alone(self, tmp_path):
+        """Only a file that positively reads as empty is claimed.
+
+        A key file there is no reading — one belonging to another user, or a
+        directory, as Docker leaves behind when a bind mount names a path that
+        does not exist — may hold the very key the other workers are signing
+        with, so May warns and starts on an in-memory key rather than writing
+        over it.
+        """
+        key_dir = tmp_path / 'data' / '.secret_key'
+        key_dir.mkdir(parents=True)
+
+        result = run_config_raw(tmp_path)
+
+        assert result.returncode == 0, result.stderr
+        assert json.loads(result.stdout)['SECRET_KEY']
+        assert 'RuntimeWarning' in result.stderr
+        assert 'Set SECRET_KEY for production' in result.stderr
+        assert key_dir.is_dir() and not list(key_dir.iterdir())
+        assert sorted(p.name for p in (tmp_path / 'data').iterdir()) == ['.secret_key']
+
     def test_unwritable_data_directory_falls_back_with_a_warning(self, tmp_path):
         """If the key cannot be saved (read-only filesystem, say) May still
         starts with an in-memory key and says so."""
