@@ -10,6 +10,16 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- Several pages ran off the right-hand side on a phone. The rows of action
+  buttons at the top of the vehicle, trips, stations and document pages now
+  wrap onto a second line instead of dragging the page wider than the screen,
+  and the tyre fitting history, expenses spend-by-vendor, user management and
+  backup preview tables scroll sideways like every other table rather than
+  overflowing or being clipped.
+  ([#314](https://github.com/dannymcc/may/issues/314))
+
 ## [0.35.0] - 2026-08-24
 
 ### Changed
