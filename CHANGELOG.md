@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.35.1] - 2026-08-24
+
 ### Fixed
 
 - Several pages ran off the right-hand side on a phone. The rows of action
