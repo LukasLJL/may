@@ -38,11 +38,11 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Total Distance') }}</dt>
-        <dd class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">{{ "%.1f"|format(total_distance) }} {{ current_user.distance_unit }}</dd>
+        <dd class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">{{ "%.1f"|format(total_distance) }} {% if total_distance_unit %}{{ total_distance_unit }}{% else %}<span title="{{ _('This total covers vehicles metered in distance and in engine hours.') }}">{{ _('mixed units') }}</span>{% endif %}</dd>
     </div>
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Business Distance') }}</dt>
-        <dd class="mt-1 text-2xl font-semibold text-green-600 dark:text-green-400">{{ "%.1f"|format(business_distance) }} {{ current_user.distance_unit }}</dd>
+        <dd class="mt-1 text-2xl font-semibold text-green-600 dark:text-green-400">{{ "%.1f"|format(business_distance) }} {% if total_distance_unit %}{{ total_distance_unit }}{% else %}<span title="{{ _('This total covers vehicles metered in distance and in engine hours.') }}">{{ _('mixed units') }}</span>{% endif %}</dd>
     </div>
 </div>
 
@@ -119,7 +119,7 @@
                 </div>
                 <div class="ml-4 flex items-center gap-4">
                     <div class="text-right">
-                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ "%.1f"|format(trip.distance) }} {{ current_user.distance_unit }}</p>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ "%.1f"|format(trip.distance) }} {{ trip.vehicle.get_reading_unit() }}</p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">{{ "%.0f"|format(trip.start_odometer) }} &rarr; {{ "%.0f"|format(trip.end_odometer or 0) }}</p>
                         {% if trip.fuel_used is not none %}
                         <p class="text-xs text-gray-500 dark:text-gray-400">{{ _('Fuel used') }}: {{ "%.1f"|format(trip.fuel_used) }} {{ current_user.volume_unit }}</p>

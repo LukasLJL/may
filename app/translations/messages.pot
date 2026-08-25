@@ -4516,3 +4516,38 @@ msgstr ""
 msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
 msgstr ""
 
+
+#: app/templates/fuel/form.html:38 app/templates/fuel/form.html:202
+#: app/templates/trips/form.html:56 app/templates/trips/form.html:183
+msgid "Last engine hours"
+msgstr ""
+
+#: app/templates/trips/form.html:84 app/templates/trips/form.html:185
+msgid "Start Hours"
+msgstr ""
+
+#: app/templates/trips/form.html:92 app/templates/trips/form.html:187
+msgid "End Hours"
+msgstr ""
+
+#: app/templates/tires/form.html:75
+msgid "Odometer when bought"
+msgstr ""
+
+#: app/templates/tires/form.html:75 app/templates/tires/form.html:117
+msgid "Engine hours when bought"
+msgstr ""
+
+#: app/templates/dashboard.html:102 app/templates/trips/index.html:41
+#: app/templates/trips/report.html:36
+msgid "mixed units"
+msgstr ""
+
+#: app/templates/dashboard.html:119
+msgid "unit"
+msgstr ""
+
+#: app/templates/dashboard.html:102 app/templates/trips/index.html:41
+#: app/templates/trips/report.html:36
+msgid "This total covers vehicles metered in distance and in engine hours."
+msgstr ""

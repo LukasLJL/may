@@ -130,3 +130,18 @@ def utcfromtimestamp(timestamp):
     naive.
     """
     return datetime.fromtimestamp(timestamp, timezone.utc).replace(tzinfo=None)
+
+
+def shared_reading_unit(vehicles, distance_unit):
+    """The unit a total across ``vehicles`` can honestly carry (#324).
+
+    A total over vehicles that all meter the same way is fine: distance
+    vehicles sum in ``distance_unit`` — the account preference their figures
+    were converted into — and hours vehicles in engine hours. Mix the two and
+    the sum is meaningless, so this returns ``None`` and the caller says so
+    rather than stamping a distance unit on it.
+    """
+    metering = {vehicle.tracks_hours() for vehicle in vehicles if vehicle is not None}
+    if len(metering) != 1:
+        return None
+    return 'h' if metering.pop() else distance_unit

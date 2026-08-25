@@ -137,7 +137,7 @@
                 <p class="text-sm font-medium text-gray-900 dark:text-white">
                     {% if trip.start_location or trip.end_location %}{{ trip.start_location or '?' }} &rarr; {{ trip.end_location or '?' }}{% else %}{{ trip.description or _('Trip') }}{% endif %}
                 </p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">{{ trip.vehicle.name }} &middot; {{ trip.date|format_date }}{% if trip.distance %} &middot; {{ "%.1f"|format(trip.distance) }} {{ current_user.distance_unit }}{% endif %}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ trip.vehicle.name }} &middot; {{ trip.date|format_date }}{% if trip.distance %} &middot; {{ "%.1f"|format(trip.distance) }} {{ trip.vehicle.get_reading_unit() }}{% endif %}</p>
             </a>
             {% endif %}
         </li>

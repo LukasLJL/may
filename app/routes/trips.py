@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from flask_babel import gettext as _
 from app import db
-from app.utils import parse_decimal, parse_fuel_level
+from app.utils import parse_decimal, parse_fuel_level, shared_reading_unit
 from flask import jsonify
 from app.models import Vehicle, Trip, TripTemplate, TRIP_PURPOSES
 
@@ -47,7 +47,14 @@ def index():
     total_distance = sum(trip.distance for trip in trips)
     business_distance = sum(trip.distance for trip in trips if trip.purpose == 'business')
 
+    # Totals over vehicles that meter differently would silently add engine
+    # hours to miles, so only label the sum when they agree (#324).
+    total_distance_unit = shared_reading_unit(
+        [trip.vehicle for trip in trips], current_user.distance_unit
+    ) if trips else current_user.distance_unit
+
     return render_template('trips/index.html',
+                           total_distance_unit=total_distance_unit,
                            trips=trips,
                            vehicles=vehicles,
                            purposes=TRIP_PURPOSES,
@@ -354,7 +361,14 @@ def report():
         years.append(year)
         years.sort(reverse=True)
 
+    # Totals over vehicles that meter differently would silently add engine
+    # hours to miles, so only label the sum when they agree (#324).
+    total_distance_unit = shared_reading_unit(
+        [trip.vehicle for trip in trips], current_user.distance_unit
+    ) if trips else current_user.distance_unit
+
     return render_template('trips/report.html',
+                           total_distance_unit=total_distance_unit,
                            trips=trips,
                            summary=summary,
                            total_distance=total_distance,
