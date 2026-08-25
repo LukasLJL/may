@@ -10,6 +10,14 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.41.1] - 2026-08-25
+
+### Changed
+
+- Dependencies: `python-dotenv` >= 1.2.3
+  ([#336](https://github.com/dannymcc/may/pull/336)) and `gunicorn` >= 26.1.0
+  ([#337](https://github.com/dannymcc/may/pull/337)).
+
 ## [0.41.0] - 2026-08-25
 
 ### Added
