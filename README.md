@@ -214,6 +214,13 @@ Track every fill-up with:
 
 Saving a fuel log returns you to the fuel log list, unless you started from a vehicle page, in which case you go back to that vehicle. Deleting one does the same: from the fuel log list you stay on the list, from a vehicle page you return to that vehicle. Notes behave the same way.
 
+### EV Charging
+Log charging sessions for electric and plug-in hybrid vehicles:
+- Date, optional start and end times, and the odometer reading
+- Energy added in kWh, state of charge at each end, and cost — the total is worked out from the price per kWh where you do not enter it yourself
+- Charger type, location and network, so home and public charging can be told apart
+- The list is ordered by date, most recent first; sessions sharing a date are ordered by their odometer reading, so the most recent charge sits at the top. This matters most on a plug-in hybrid, which may be charged several times in a day
+
 ### Expenses
 Categorize all vehicle-related costs:
 - Maintenance & Repairs
