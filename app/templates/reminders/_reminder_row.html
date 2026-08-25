@@ -64,15 +64,15 @@
                 </p>
                 <p class="text-xs text-gray-500 dark:text-gray-400">
                     {% if reminder.is_completed %}
-                    Completed
+                    {{ _('Completed') }}
                     {% elif reminder.is_overdue() %}
-                    {{ reminder.days_until_due()|abs }} days overdue
+                    {{ _('%(num)d days overdue', num=reminder.days_until_due()|abs) }}
                     {% elif reminder.days_until_due() == 0 %}
-                    Due today
+                    {{ _('Due today') }}
                     {% elif reminder.days_until_due() == 1 %}
-                    Due tomorrow
+                    {{ _('Due tomorrow') }}
                     {% else %}
-                    In {{ reminder.days_until_due() }} days
+                    {{ _('In %(num)d days', num=reminder.days_until_due()) }}
                     {% endif %}
                 </p>
             </div>

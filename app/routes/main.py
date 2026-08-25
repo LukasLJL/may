@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, send_from_directory, current_app
 from flask_login import login_required, current_user
+from flask_babel import gettext
 from datetime import datetime, timedelta
 from sqlalchemy import func
 from app import db
@@ -255,7 +256,8 @@ def timeline(vehicle_id):
         timeline_events.append({
             'date': log.date,
             'type': 'fuel',
-            'title': f"Fuel: {log.volume:.1f} L" if log.volume else "Fuel Log",
+            'title': (gettext('Fuel: %(volume).1f L', volume=log.volume)
+                      if log.volume else gettext('Fuel Log')),
             'description': log.station or '',
             'cost': log.total_cost or 0,
             'odometer': log.odometer,
@@ -279,7 +281,8 @@ def timeline(vehicle_id):
         timeline_events.append({
             'date': session.date,
             'type': 'charging',
-            'title': f"Charging: {session.kwh_added:.1f} kWh" if session.kwh_added else "Charging Session",
+            'title': (gettext('Charging: %(kwh).1f kWh', kwh=session.kwh_added)
+                      if session.kwh_added else gettext('Charging Session')),
             'description': session.location or '',
             'cost': session.total_cost or 0,
             'odometer': session.odometer,
