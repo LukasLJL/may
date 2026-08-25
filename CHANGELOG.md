@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.39.0] - 2026-08-25
+
 ### Added
 
 - A maintenance schedule for a vehicle tracked in engine hours is now set in
@@ -30,8 +32,9 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   since 0.36.1; only the labels beside them still said "mi" or "L/100km".
   Fuel, expenses, notes, tyres, mileage allowance, the vehicle page, the
   maintenance list, the calendar feed and the PDF report all follow the
-  vehicle's own unit now. The trip and charging forms still label the reading
-  with the account's distance unit, as they do for every vehicle.
+  vehicle's own unit now. The trip and charging forms, and the timeline on the
+  vehicle page, still label the reading with the account's distance unit, as
+  they do for every vehicle.
   ([#282](https://github.com/dannymcc/may/issues/282))
 
 - "Due soon" for a maintenance schedule on an hours-tracked vehicle means
