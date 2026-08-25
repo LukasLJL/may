@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.38.2] - 2026-08-25
+
 ### Changed
 
 - Charging sessions logged on the same date are now listed in odometer order,

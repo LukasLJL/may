@@ -11,7 +11,7 @@ basedir = Path(__file__).parent.absolute()
 load_dotenv(basedir / '.env')
 
 
-APP_VERSION = '0.38.1'
+APP_VERSION = '0.38.2'
 RELEASE_CHANNEL = os.environ.get('RELEASE_CHANNEL', 'stable')
 GIT_SHA = os.environ.get('GIT_SHA', '')[:7]  # Short SHA
 GITHUB_REPO = 'dannymcc/may'
