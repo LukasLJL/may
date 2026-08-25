@@ -51,7 +51,8 @@ def make_backup_data():
                  'is_missed': False, 'station': 'Shell', 'notes': None,
                  'created_at': '2024-01-15T18:00:00'},
                 {'id': 2, 'date': '2024-02-15', 'odometer': 10500.0, 'volume': 42.0,
-                 'price_per_unit': 1.6, 'total_cost': 67.2, 'is_full_tank': True,
+                 'price_per_unit': 1.6, 'total_cost': 67.2,
+                 'fuel_type': 'lpg', 'fuel_distance': 320.0, 'is_full_tank': True,
                  'is_missed': False, 'station': 'BP', 'notes': None,
                  'created_at': '2024-02-15T18:00:00'},
             ],
@@ -219,6 +220,11 @@ class TestBackupRestoreJson:
         assert vehicle.specs.count() == 1
 
         assert vehicle.fuel_logs.count() == 2
+        # #221 — a dual-fuel history has to survive the round trip, which means
+        # both which fuel went in and the distance run on it.
+        lpg_log = vehicle.fuel_logs.order_by(FuelLog.date).all()[1]
+        assert lpg_log.fuel_type == 'lpg'
+        assert lpg_log.fuel_distance == 320.0
         log = vehicle.fuel_logs.order_by(FuelLog.date).first()
         assert log.odometer == 10000.0
         assert log.station == 'Shell'

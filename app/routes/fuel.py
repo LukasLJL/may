@@ -121,6 +121,15 @@ def new():
                 flash(err, 'error')
                 return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
 
+        # Distance run on this fuel — only bi-fuel vehicles need it (#221)
+        fuel_distance = None
+        if request.form.get('fuel_distance'):
+            fuel_distance, err = validate_positive_number(
+                request.form.get('fuel_distance'), 'Distance on this fuel', max_value=9999999)
+            if err:
+                flash(err, 'error')
+                return redirect(url_for('fuel.new', vehicle_id=vehicle_id))
+
         log = FuelLog(
             vehicle_id=vehicle_id,
             user_id=current_user.id,
@@ -132,6 +141,7 @@ def new():
             total_cost=total_cost,
             sales_tax=sales_tax,
             fuel_type=request.form.get('fuel_type') or None,
+            fuel_distance=fuel_distance,
             is_full_tank=request.form.get('is_full_tank') == 'on',
             is_missed=request.form.get('is_missed') == 'on',
             station=request.form.get('station'),
@@ -235,6 +245,7 @@ def edit(log_id):
         log.total_cost = parse_decimal(request.form.get('total_cost')) if request.form.get('total_cost') else None
         log.sales_tax = parse_decimal(request.form.get('sales_tax')) if request.form.get('sales_tax') else None
         log.fuel_type = request.form.get('fuel_type') or None
+        log.fuel_distance = parse_decimal(request.form.get('fuel_distance')) if request.form.get('fuel_distance') else None
         log.is_full_tank = request.form.get('is_full_tank') == 'on'
         log.is_missed = request.form.get('is_missed') == 'on'
         log.station = request.form.get('station')

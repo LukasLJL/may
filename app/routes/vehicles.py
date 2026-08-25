@@ -184,6 +184,10 @@ def view(vehicle_id):
         'net_cost': vehicle.get_net_cost(),
         'total_distance': vehicle.get_total_distance(vehicle.get_effective_odometer_unit()),
         'avg_consumption': vehicle.get_average_consumption(current_user.consumption_unit, current_user.volume_unit),
+        # Dual-fuel vehicles get a figure per fuel rather than one blended
+        # number that describes neither fuel (#221).
+        'consumption_by_fuel': vehicle.get_average_consumption_by_fuel(
+            current_user.consumption_unit, current_user.volume_unit),
         'cost_per_distance': vehicle.get_cost_per_distance(),
         'total_fuel_volume': vehicle.get_total_fuel_volume(),
         'total_co2_kg': vehicle.get_total_co2_kg(current_user.volume_unit),

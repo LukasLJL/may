@@ -214,6 +214,21 @@ Track every fill-up with:
 
 Saving a fuel log returns you to the fuel log list, unless you started from a vehicle page, in which case you go back to that vehicle. Deleting one does the same: from the fuel log list you stay on the list, from a vehicle page you return to that vehicle. Notes behave the same way.
 
+#### Dual-fuel vehicles (petrol + LPG)
+Give the vehicle a secondary fuel type and each fill-up gets a **Fuel Type**
+selector. May then keeps the two fuels apart: each fuel gets its own average on
+the vehicle page, built only from fill-ups of that fuel, because a combined
+figure would describe neither.
+
+The odometer cannot say which kilometres were run on LPG and which on petrol,
+so a fill-up of a dual-fuel vehicle also asks for **Distance on this fuel** —
+how far the car ran on that fuel since your last fill-up of it. This is only
+needed where it is genuinely ambiguous: a stretch in which you filled with one
+fuel only is worked out from the odometer as usual, so a car converted to LPG
+keeps its earlier petrol figures. Where the two fuels are mixed and that
+distance is missing, the page says the figure cannot be worked out without it
+rather than showing one derived from the wrong distance.
+
 ### EV Charging
 Log charging sessions for electric and plug-in hybrid vehicles:
 - Date, optional start and end times, and the odometer reading

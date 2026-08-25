@@ -528,8 +528,8 @@ def api_create_fuel_log(vehicle_id):
     Create a fuel log
 
     Required fields: date, odometer
-    Optional fields: volume, price_per_unit, total_cost, sales_tax, is_full_tank, is_missed,
-    station, notes
+    Optional fields: volume, price_per_unit, total_cost, sales_tax, fuel_type,
+    fuel_distance, is_full_tank, is_missed, station, notes
     """
     user = get_api_user()
     vehicle = db.get_or_404(Vehicle, vehicle_id)
@@ -561,6 +561,8 @@ def api_create_fuel_log(vehicle_id):
         price_per_unit=parse_decimal(data['price_per_unit']) if data.get('price_per_unit') else None,
         total_cost=parse_decimal(data['total_cost']) if data.get('total_cost') else None,
         sales_tax=parse_decimal(data['sales_tax']) if data.get('sales_tax') else None,
+        fuel_type=data.get('fuel_type') or None,
+        fuel_distance=parse_decimal(data['fuel_distance']) if data.get('fuel_distance') else None,
         is_full_tank=data.get('is_full_tank', True),
         is_missed=data.get('is_missed', False),
         station=data.get('station'),
@@ -620,6 +622,10 @@ def api_update_fuel_log(log_id):
         log.total_cost = parse_decimal(data['total_cost']) if data['total_cost'] else None
     if 'sales_tax' in data:
         log.sales_tax = parse_decimal(data['sales_tax']) if data['sales_tax'] else None
+    if 'fuel_type' in data:
+        log.fuel_type = data['fuel_type'] or None
+    if 'fuel_distance' in data:
+        log.fuel_distance = parse_decimal(data['fuel_distance']) if data['fuel_distance'] else None
     if 'is_full_tank' in data:
         log.is_full_tank = data['is_full_tank']
     if 'is_missed' in data:
@@ -1625,8 +1631,9 @@ def export_csv():
         writer = csv.writer(fuel_csv)
         writer.writerow([
             'id', 'vehicle_id', 'vehicle_name', 'date', 'odometer', 'odometer_unit',
-            'volume', 'price_per_unit', 'total_cost', 'sales_tax', 'is_full_tank',
-            'is_missed', 'station', 'notes', 'created_at'
+            'volume', 'price_per_unit', 'total_cost', 'sales_tax', 'fuel_type',
+            'fuel_distance', 'is_full_tank', 'is_missed', 'station', 'notes',
+            'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
             # Each row states the unit its own vehicle meters in, so a
@@ -1638,6 +1645,7 @@ def export_csv():
                     log.id, vehicle.id, vehicle.name, log.date.isoformat(),
                     log.odometer, odometer_unit,
                     log.volume, log.price_per_unit, log.total_cost, log.sales_tax,
+                    log.fuel_type, log.fuel_distance,
                     log.is_full_tank, log.is_missed, log.station, log.notes,
                     log.created_at.isoformat() if log.created_at else ''
                 ])
@@ -1946,6 +1954,8 @@ def export_json():
                 'price_per_unit': log.price_per_unit,
                 'total_cost': log.total_cost,
                 'sales_tax': log.sales_tax,
+                'fuel_type': log.fuel_type,
+                'fuel_distance': log.fuel_distance,
                 'is_full_tank': log.is_full_tank,
                 'is_missed': log.is_missed,
                 'station': log.station,
@@ -2248,6 +2258,8 @@ def export_full_backup():
                 'price_per_unit': log.price_per_unit,
                 'total_cost': log.total_cost,
                 'sales_tax': log.sales_tax,
+                'fuel_type': log.fuel_type,
+                'fuel_distance': log.fuel_distance,
                 'is_full_tank': log.is_full_tank,
                 'is_missed': log.is_missed,
                 'station': log.station,

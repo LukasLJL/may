@@ -10,6 +10,30 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- A dual-fuel vehicle — a petrol car converted to run on LPG, say — now gets a
+  separate average consumption for each fuel on its vehicle page, instead of
+  one figure that mixed petrol litres and LPG litres over the same odometer
+  span and so described neither. Each fill-up of such a vehicle can record the
+  **distance run on this fuel** since the last fill-up of it, because the
+  odometer alone cannot say which miles were run on which fuel.
+
+  This is a visible change for dual-fuel vehicles: a stretch of history where
+  both fuels were used will explain that the figure cannot be worked out,
+  rather than showing an average derived from the wrong distance. To restore
+  the figure, edit those fill-ups and enter the distance run on that fuel
+  since the previous fill-up of it. Only stretches that actually mix the two
+  fuels are affected — a car converted to LPG last year keeps its ordinary
+  figures for the years it ran on petrol alone — and everything else on the
+  page (totals, spend, price history and the per-fill-up records) is
+  unchanged. Vehicles running a single fuel are unaffected, as are diesels
+  tracking AdBlue, which propels nothing.
+
+  The fuel type and the distance attributed to it are now included in CSV and
+  JSON exports and in backups, so a dual-fuel history survives a restore.
+  ([#221](https://github.com/dannymcc/may/issues/221))
+
 ## [0.40.0] - 2026-08-25
 
 ### Changed
