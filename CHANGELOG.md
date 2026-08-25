@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.40.0] - 2026-08-25
+
 ### Changed
 
 - The last places that still described an hour-metered vehicle's readings as a
