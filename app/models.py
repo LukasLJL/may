@@ -492,6 +492,74 @@ class Vehicle(db.Model):
             return _distance_in(raw_distance, self.get_effective_odometer_unit(), distance_unit)
         return raw_distance
 
+    def get_primary_fuel_type(self):
+        """The fuel this vehicle burns by default, propulsion resolved (#221)."""
+        return resolve_price_fuel_type(None, self.fuel_type)
+
+    def get_propulsion_fuel_types(self):
+        """Distinct fuels the fill-ups say this vehicle actually burns (#221).
+
+        A log without its own fuel type counts as the vehicle's primary fuel,
+        and propulsion labels are resolved to the fuel they burn, so a
+        hybrid's untyped rows and its explicit petrol rows are one fuel, not
+        two (#268). Auxiliary fluids are left out: AdBlue propels nothing
+        (#319). Ordered primary fuel first so bi-fuel vehicles read naturally.
+        """
+        types = {_propulsion_fuel_type(log.fuel_type or self.fuel_type)
+                 for log in self.fuel_logs.all()}
+        types.discard(None)
+        primary = self.get_primary_fuel_type()
+        return sorted(types, key=lambda ft: (ft != primary, ft))
+
+    def declares_second_fuel(self):
+        """True when the owner has declared a second fuel this vehicle burns.
+
+        Distinct from :meth:`runs_on_two_fuels`, which also wants fill-ups of
+        both to exist: the fuel form has to offer the distance field before
+        the first such fill-up, or the attribution could never be entered.
+        """
+        secondary = _propulsion_fuel_type(self.secondary_fuel_type)
+        return bool(secondary) and secondary != self.get_primary_fuel_type()
+
+    def runs_on_two_fuels(self):
+        """True when this vehicle burns two different fuels (#221).
+
+        An LPG conversion is the usual case: the owner declares a
+        ``secondary_fuel_type`` and fills up on both. That declaration is
+        what makes the odometer ambiguous — only the owner knows the car can
+        run on either — so it, not the mix of fuel types happening to appear
+        in the logs, is the gate. A plain hybrid whose older fill-ups predate
+        the fuel type selector must not be mistaken for a bi-fuel car (#268).
+
+        Both halves have to hold. Until fill-ups of both fuels exist there is
+        nothing to disentangle, so a declared bi-fuel car that has only ever
+        logged petrol keeps the ordinary odometer maths.
+        """
+        return self.declares_second_fuel() and len(self.get_propulsion_fuel_types()) > 1
+
+    def _other_fuel_odometers(self, fuel_type=None):
+        """Odometer readings of fill-ups of this vehicle's *other* fuel (#221).
+
+        A span containing one of these covers ground run on both fuels, so
+        its odometer difference says nothing about either and the driver's
+        own attribution is needed. A span with none of them is unambiguous:
+        a car converted to LPG last year keeps the ordinary odometer maths
+        over the years it ran on petrol alone.
+
+        Empty unless the vehicle actually runs on two fuels.
+        """
+        if not self.runs_on_two_fuels():
+            return []
+        target = fuel_type or self.get_primary_fuel_type()
+        return [log.odometer for log in self.fuel_logs.all()
+                if _propulsion_fuel_type(log.fuel_type or self.fuel_type) not in (None, target)]
+
+    @staticmethod
+    def _span_runs_on_both_fuels(other_odometers, start_odometer, end_odometer):
+        """True when a fill-up of the other fuel falls inside this span (#221)."""
+        return any(start_odometer < odometer <= end_odometer
+                   for odometer in other_odometers)
+
     def _valid_consumption_segments(self, fuel_type=None):
         """Collect (distance, fuel) spans usable for the consumption average.
 
@@ -506,6 +574,11 @@ class Vehicle(db.Model):
         vehicle's own. A diesel that also tracks AdBlue keeps the two
         apart: AdBlue is an auxiliary fluid, not propulsion, so pouring it
         in must never move the diesel figure (issue #319).
+
+        Where a span covers ground run on both fuels the odometer cannot say
+        which miles went on which, so its distance is the one the driver
+        attributed to this fuel, and a span missing that attribution is
+        dropped rather than guessed at (issue #221).
 
         Returns ``None`` when there are fewer than two full-tank anchors,
         otherwise a (possibly empty) list of ``(distance, fuel)`` tuples.
@@ -527,6 +600,7 @@ class Vehicle(db.Model):
             same_fuel,
         ).order_by(FuelLog.odometer).all()
 
+        other_fuel_odometers = self._other_fuel_odometers(fuel_type)
         segments = []
         for start, end in zip(full_logs, full_logs[1:]):
             span_logs = [log for log in range_logs
@@ -534,7 +608,14 @@ class Vehicle(db.Model):
             if any(log.is_missed for log in span_logs):
                 continue
             fuel = sum(log.volume for log in span_logs if log.volume)
-            distance = end.odometer - start.odometer
+            if self._span_runs_on_both_fuels(other_fuel_odometers,
+                                             start.odometer, end.odometer):
+                distances = [log.fuel_distance for log in span_logs]
+                if any(distance is None for distance in distances):
+                    continue
+                distance = sum(distances)
+            else:
+                distance = end.odometer - start.odometer
             if distance > 0 and fuel > 0:
                 segments.append((distance, fuel))
         return segments
@@ -551,6 +632,9 @@ class Vehicle(db.Model):
         An hours-tracked vehicle is averaged in litres per engine hour and
         ``consumption_unit`` is ignored: mpg, km/L and L/100km are all named
         for a distance this vehicle never records (issue #323).
+
+        On a bi-fuel vehicle the figure covers one fuel at a time and needs
+        the distance the driver attributed to that fuel (issue #221).
         """
         segments = self._valid_consumption_segments(fuel_type)
         if not segments:
@@ -588,6 +672,8 @@ class Vehicle(db.Model):
 
         - ``'insufficient_full_tanks'`` — fewer than two full-tank fill-ups
         - ``'missed_fill_up'`` — every span is invalidated by a missed fill-up
+        - ``'needs_distance_attribution'`` — bi-fuel vehicle whose fill-ups
+          don't say how far the car ran on this fuel (issue #221)
         - ``'insufficient_data'`` — not enough distance/volume to calculate
         """
         segments = self._valid_consumption_segments(fuel_type)
@@ -608,7 +694,30 @@ class Vehicle(db.Model):
         ).all()
         if any(log.is_missed for log in range_logs):
             return 'missed_fill_up'
+        other_fuel_odometers = self._other_fuel_odometers(fuel_type)
+        if (self._span_runs_on_both_fuels(other_fuel_odometers, full_logs[0].odometer,
+                                          full_logs[-1].odometer)
+                and any(log.fuel_distance is None for log in range_logs)):
+            return 'needs_distance_attribution'
         return 'insufficient_data'
+
+    def get_average_consumption_by_fuel(self, consumption_unit=None, volume_unit='L'):
+        """Average consumption per fuel for a bi-fuel vehicle (#221).
+
+        Returns one entry per fuel type logged, each with the figure (or
+        ``None``) and the reason it is missing, so the UI can show both
+        fuels side by side instead of one meaningless combined number.
+        A vehicle with no fill-ups yet still gets a single entry for its
+        primary fuel, so the UI keeps its usual empty state.
+        """
+        return [
+            {
+                'fuel_type': fuel_type,
+                'value': self.get_average_consumption(consumption_unit, volume_unit, fuel_type),
+                'reason': self.get_consumption_unavailable_reason(fuel_type),
+            }
+            for fuel_type in self.get_propulsion_fuel_types() or [self.get_primary_fuel_type()]
+        ]
 
     def uses_tessie_odometer(self):
         """Check if this vehicle uses Tessie for odometer tracking"""
@@ -913,6 +1022,9 @@ class FuelLog(db.Model):
     sales_tax = db.Column(db.Float)  # sales tax paid, included in total_cost (issue #225)
 
     fuel_type = db.Column(db.String(20), nullable=True)  # overrides vehicle primary; set when vehicle has secondary fuel type
+    # Distance run on this fuel since the previous fill-up of the same fuel,
+    # in the vehicle's odometer unit. Only bi-fuel vehicles need it (#221).
+    fuel_distance = db.Column(db.Float, nullable=True)
     is_full_tank = db.Column(db.Boolean, default=True)
     is_missed = db.Column(db.Boolean, default=False)  # missed fill-up flag
 
@@ -973,6 +1085,11 @@ class FuelLog(db.Model):
         two readings means. For an hours-tracked vehicle it is engine hours,
         so the figure is litres per hour and ``consumption_unit`` is ignored
         (issue #323).
+
+        Where the span covers ground run on both of a bi-fuel vehicle's
+        fuels, the distance is the one the driver attributed to this fuel
+        rather than the odometer difference — the odometer cannot say which
+        miles were run on LPG and which on petrol (issue #221).
         """
         if not self.volume or not self.is_full_tank:
             return None
@@ -989,7 +1106,6 @@ class FuelLog(db.Model):
         ).order_by(FuelLog.odometer.desc()).first()
         if not prev_full:
             return None
-        distance = self.odometer - prev_full.odometer
         between = FuelLog.query.filter(
             FuelLog.vehicle_id == self.vehicle_id,
             FuelLog.odometer > prev_full.odometer,
@@ -998,6 +1114,15 @@ class FuelLog(db.Model):
         ).all()
         if any(log.is_missed for log in between):
             return None
+        other_fuel_odometers = (self.vehicle._other_fuel_odometers(self.effective_fuel_type)
+                                if self.vehicle else [])
+        if Vehicle._span_runs_on_both_fuels(other_fuel_odometers,
+                                            prev_full.odometer, self.odometer):
+            if any(log.fuel_distance is None for log in between):
+                return None
+            distance = sum(log.fuel_distance for log in between)
+        else:
+            distance = self.odometer - prev_full.odometer
         volume_native = sum(log.volume for log in between if log.volume)
 
         if distance > 0 and volume_native > 0:
@@ -1033,6 +1158,7 @@ class FuelLog(db.Model):
             'total_cost': self.total_cost,
             'sales_tax': self.sales_tax,
             'fuel_type': self.effective_fuel_type,
+            'fuel_distance': self.fuel_distance,
             'is_full_tank': self.is_full_tank,
             'is_missed': self.is_missed,
             'station': self.station,
@@ -1328,6 +1454,25 @@ def resolve_price_fuel_type(log_fuel_type, vehicle_fuel_type):
     """
     fuel_type = log_fuel_type or vehicle_fuel_type
     return PROPULSION_TO_FUEL.get(fuel_type, fuel_type) or 'petrol'
+
+
+# Fluids a vehicle carries alongside its fuel without burning them for
+# propulsion. They are logged and costed, but they never earn a consumption
+# figure of their own (#319) and never split a bi-fuel vehicle's distance
+# (#221): an AdBlue top-up says nothing about how far the car ran on diesel.
+AUXILIARY_FLUID_TYPES = {'adblue'}
+
+
+def _propulsion_fuel_type(fuel_type):
+    """The fuel a stored type actually burns, or None if it burns nothing.
+
+    Propulsion labels resolve to the fuel behind them, so 'hybrid' and
+    'petrol' are one fuel rather than two (#268), and auxiliary fluids
+    resolve to None (#319).
+    """
+    if not fuel_type or fuel_type in AUXILIARY_FLUID_TYPES:
+        return None
+    return resolve_price_fuel_type(fuel_type, fuel_type)
 
 
 def fuel_type_label(fuel_type):

@@ -2843,6 +2843,16 @@ msgstr ""
 msgid "Discount per"
 msgstr ""
 
+#: app/templates/fuel/form.html:138
+msgid "Distance on this fuel"
+msgstr ""
+
+#: app/templates/fuel/form.html:143
+msgid ""
+"Distance run on this fuel since your last fill-up of it. The odometer can’t"
+" tell the fuels apart, so consumption for a dual-fuel vehicle needs this."
+msgstr ""
+
 #: app/templates/fuel/form.html:84
 msgid "Optional loyalty discount, subtracted from the price per unit."
 msgstr ""
@@ -4213,6 +4223,13 @@ msgstr ""
 
 #: app/templates/vehicles/view.html:118
 msgid "A missed fill-up in the range means we can’t calculate this honestly."
+msgstr ""
+
+#: app/templates/vehicles/view.html:181
+msgid ""
+"Consumption can’t be worked out until the distance run on each fuel is "
+"recorded — the odometer can’t tell petrol from LPG. Add it to your fill-"
+"ups."
 msgstr ""
 
 #: app/templates/vehicles/view.html:120

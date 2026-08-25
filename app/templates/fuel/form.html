@@ -30,7 +30,8 @@
                                 data-uses-tessie="{{ 'true' if vehicle.uses_tessie_odometer() else 'false' }}"
                                 data-tessie-odometer="{% if vehicle.tessie_last_odometer %}{% if vehicle.get_effective_odometer_unit() == 'mi' %}{{ (vehicle.tessie_last_odometer * 0.621371)|round|int }}{% else %}{{ vehicle.tessie_last_odometer|round|int }}{% endif %}{% endif %}"
                                 data-primary-fuel="{{ vehicle.fuel_type }}"
-                                data-secondary-fuel="{{ vehicle.secondary_fuel_type or '' }}">
+                                data-secondary-fuel="{{ vehicle.secondary_fuel_type or '' }}"
+                                data-bi-fuel="{{ 'true' if vehicle.declares_second_fuel() else 'false' }}">
                             {{ vehicle.name }}
                         </option>
                         {% endfor %}
@@ -135,6 +136,16 @@
                     <select name="fuel_type" id="fuel_type"
                             class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
                     </select>
+                </div>
+
+                <div id="fuel-distance-field" class="hidden">
+                    <label for="fuel_distance" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ _('Distance on this fuel') }} (<span id="fuel-distance-unit">{{ current_user.distance_unit }}</span>)
+                    </label>
+                    <input type="number" name="fuel_distance" id="fuel_distance" step="0.1" min="0"
+                           value="{{ log.fuel_distance if log and log.fuel_distance is not none else '' }}"
+                           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{ _('Distance run on this fuel since your last fill-up of it. The odometer can’t tell the fuels apart, so consumption for a dual-fuel vehicle needs this.') }}</p>
                 </div>
 
                 <div class="sm:col-span-2 flex flex-wrap gap-6">
@@ -251,6 +262,9 @@ function updateVehicleOdometer(vehicleId) {
 function updateFuelTypeSelector(selectedOption) {
     const fuelTypeField = document.getElementById('fuel-type-field');
     const fuelTypeSelect = document.getElementById('fuel_type');
+    // Dual-fuel vehicles need the distance run on each fuel (#221)
+    const fuelDistanceField = document.getElementById('fuel-distance-field');
+    const fuelDistanceUnit = document.getElementById('fuel-distance-unit');
     const primaryFuel = selectedOption.getAttribute('data-primary-fuel') || '';
     const secondaryFuel = selectedOption.getAttribute('data-secondary-fuel') || '';
     const fuelLabels = {{ dict(fuel_types)|tojson }};
@@ -263,6 +277,14 @@ function updateFuelTypeSelector(selectedOption) {
     };
 
     let choices = [];
+
+    // Only a vehicle that burns two fuels needs the distance split out. An
+    // AdBlue tank doesn't count — it propels nothing (#319) — so the server
+    // decides and says so on the option.
+    const biFuel = selectedOption.getAttribute('data-bi-fuel') === 'true';
+    fuelDistanceField.classList.toggle('hidden', !biFuel);
+    fuelDistanceUnit.textContent = selectedOption.getAttribute('data-odometer-unit') || '';
+
     if (secondaryFuel) {
         choices = [primaryFuel, secondaryFuel];
     } else if (propulsionFuels[primaryFuel]) {
