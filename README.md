@@ -470,7 +470,9 @@ Translations were generated with AI assistance and may contain inaccuracies. If 
 
 1. Translation files are located in `app/translations/<lang>/LC_MESSAGES/messages.po`
 2. Edit the `msgstr` value for any incorrect entry
-3. Submit a pull request with your fix
+3. Recompile with `pybabel compile -d app/translations` — the app reads the
+   compiled `messages.mo`, so a `.po` edit on its own changes nothing
+4. Submit a pull request with both the `.po` and the `.mo`
 
 ### Adding a Language
 

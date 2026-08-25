@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.41.2] - 2026-08-25
+
 ### Fixed
 
 - More labels that never reached a translator are now translated: the import
@@ -26,6 +28,13 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   a bare number, so a locale can put the count first — Hungarian needs "180x
   használt", which the old two-piece wording made impossible.
   ([#340](https://github.com/dannymcc/may/issues/340))
+
+### Changed
+
+- The README's "Improving Translations" steps now say to recompile the
+  catalogue with `pybabel compile -d app/translations` and to include the
+  `.mo` in the pull request; the app reads the compiled file, so a `.po` edit
+  on its own has no effect.
 
 ## [0.41.1] - 2026-08-25
 
