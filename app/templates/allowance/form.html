@@ -18,7 +18,7 @@
                             class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
                         {% for vehicle in vehicles %}
                         <option value="{{ vehicle.id }}"
-                                data-odometer-unit="{{ vehicle.get_effective_odometer_unit() }}"
+                                data-odometer-unit="{{ vehicle.get_reading_unit() }}"
                                 {% if (allowance and allowance.vehicle_id == vehicle.id) or (selected_vehicle_id == vehicle.id) %}selected{% endif %}>
                             {{ vehicle.name }}
                         </option>

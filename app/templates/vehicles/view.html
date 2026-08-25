@@ -99,7 +99,7 @@
                 </div>
                 <div>
                     <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Last Odometer') }}</dt>
-                    <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ "%.0f"|format(vehicle.get_last_odometer(vehicle.get_effective_odometer_unit())) }} {{ vehicle.get_effective_odometer_unit() }}</dd>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white">{{ "%.0f"|format(vehicle.get_last_odometer(vehicle.get_effective_odometer_unit())) }} {{ vehicle.get_reading_unit() }}</dd>
                 </div>
             </div>
         </div>
@@ -159,16 +159,16 @@
     </div>
     {% endif %}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Total Distance') }}</dt>
+        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{% if vehicle.tracks_hours() %}{{ _('Total Hours') }}{% else %}{{ _('Total Distance') }}{% endif %}</dt>
         <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{{ "%.0f"|format(stats.total_distance) }}</dd>
-        <dd class="text-sm text-gray-500 dark:text-gray-400">{{ vehicle.get_effective_odometer_unit() }}</dd>
+        <dd class="text-sm text-gray-500 dark:text-gray-400">{{ vehicle.get_reading_unit() }}</dd>
     </div>
     {% if vehicle.uses_fuel() %}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Avg. Consumption') }}</dt>
         {% if stats.avg_consumption %}
         <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{{ "%.1f"|format(stats.avg_consumption) }}</dd>
-        <dd class="text-sm text-gray-500 dark:text-gray-400">{{ current_user.consumption_unit }}</dd>
+        <dd class="text-sm text-gray-500 dark:text-gray-400">{{ vehicle.get_consumption_unit() or current_user.consumption_unit }}</dd>
         {% else %}
         {% set reason = vehicle.get_consumption_unavailable_reason() %}
         {% if reason == 'missed_fill_up' %}
@@ -187,11 +187,11 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
         <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Avg. Charging') }}</dt>
         <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{% if stats.avg_charging_consumption %}{{ "%.1f"|format(stats.avg_charging_consumption) }}{% else %}-{% endif %}</dd>
-        <dd class="text-sm text-gray-500 dark:text-gray-400">kWh / 100 {{ vehicle.get_effective_odometer_unit() }}</dd>
+        <dd class="text-sm text-gray-500 dark:text-gray-400">kWh / 100 {{ vehicle.get_reading_unit() }}</dd>
     </div>
     {% endif %}
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Cost per') }} {{ vehicle.get_effective_odometer_unit() }}</dt>
+        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ _('Cost per') }} {{ vehicle.get_reading_unit() }}</dt>
         <dd class="mt-1 text-xl font-semibold text-gray-900 dark:text-white">{% if stats.cost_per_distance %}{{ stats.cost_per_distance|money }}{% else %}-{% endif %}</dd>
         <dd class="text-sm text-gray-500 dark:text-gray-400">{{ current_user.currency }}</dd>
     </div>
@@ -592,7 +592,7 @@
         <!-- Progress bars -->
         <div class="mb-4">
             <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
-                <span>{{ _('Distance') }}: {{ "{:,}".format(ms.driven) }} / {{ "{:,}".format(ms.limit|int) }} {{ vehicle.get_effective_odometer_unit() }}</span>
+                <span>{{ vehicle.get_span_label() }}: {{ "{:,}".format(ms.driven) }} / {{ "{:,}".format(ms.limit|int) }} {{ vehicle.get_reading_unit() }}</span>
                 <span>{{ ms.progress_pct }}%</span>
             </div>
             <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 relative overflow-hidden">
@@ -613,7 +613,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
             <div class="text-center">
                 <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ "{:,}".format(ms.remaining) }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ vehicle.get_effective_odometer_unit() }} {{ _('remaining') }}</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ vehicle.get_reading_unit() }} {{ _('remaining') }}</p>
             </div>
             <div class="text-center">
                 <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ ms.days_remaining }}</p>
@@ -778,7 +778,7 @@
                         <span>{{ schedule.next_due_date|format_date }}</span>
                         {% endif %}
                         {% if schedule.next_due_odometer %}
-                        <span>{{ schedule.next_due_odometer|int }} {{ vehicle.get_effective_odometer_unit() }}</span>
+                        <span>{{ schedule.next_due_odometer|int }} {{ vehicle.get_reading_unit() }}</span>
                         {% endif %}
                     </div>
                 </div>
@@ -948,7 +948,7 @@
                     <div>
                         <p class="text-sm font-medium text-gray-900 dark:text-white">{{ log.date|format_date }}</p>
                         <p class="text-sm text-gray-500 dark:text-gray-400">
-                            {{ "%.0f"|format(log.odometer) }} {{ vehicle.get_effective_odometer_unit() }} &middot;
+                            {{ "%.0f"|format(log.odometer) }} {{ vehicle.get_reading_unit() }} &middot;
                             {{ "%.1f"|format(log.volume or 0) }} {{ current_user.volume_unit }}
                             {% if log.price_per_unit %}&middot; {{ "%.3f"|format(log.price_per_unit) }}/{{ current_user.volume_unit }}{% endif %}
                             {% if log.is_full_tank %}<span class="text-green-600">{{ _('(Full)') }}</span>{% endif %}
@@ -959,7 +959,7 @@
                             <p class="text-sm font-medium text-gray-900 dark:text-white">{{ (log.total_cost or 0)|money }} {{ current_user.currency }}</p>
                             {% set consumption = log.get_consumption(current_user.consumption_unit, current_user.volume_unit) %}
                             {% if consumption %}
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ "%.1f"|format(consumption) }} {{ current_user.consumption_unit }}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ "%.1f"|format(consumption) }} {{ vehicle.get_consumption_unit() or current_user.consumption_unit }}</p>
                             {% endif %}
                         </div>
                         <div class="flex items-center gap-1">
@@ -1169,7 +1169,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
                 const fallbackColours = ['rgb(59, 130, 246)', 'rgb(239, 68, 68)', 'rgb(34, 197, 94)', 'rgb(245, 158, 11)', 'rgb(139, 92, 246)'];
                 const fuelTypes = Object.keys(typeLabels);
-                const unit = {{ current_user.consumption_unit|tojson }};
+                const unit = {{ (vehicle.get_consumption_unit() or current_user.consumption_unit)|tojson }};
                 const datasets = fuelTypes.map((ft, i) => {
                     const colour = typeColours[ft] || fallbackColours[i % fallbackColours.length];
                     // A single series keeps the filled look it has always had;
@@ -1207,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 beginAtZero: false,
                                 title: {
                                     display: true,
-                                    text: {{ current_user.consumption_unit|tojson }}
+                                    text: {{ (vehicle.get_consumption_unit() or current_user.consumption_unit)|tojson }}
                                 }
                             }
                         }

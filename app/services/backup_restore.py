@@ -233,6 +233,7 @@ VEHICLE_SECTIONS = [
     Section('maintenance_schedules', MaintenanceSchedule,
             {'name': 'str', 'maintenance_type': 'str', 'description': 'str',
              'interval_miles': 'int', 'interval_km': 'int',
+             'interval_hours': 'int',
              'interval_months': 'int', 'last_performed_date': 'date',
              'last_performed_odometer': 'float', 'next_due_date': 'date',
              'next_due_odometer': 'float', 'estimated_cost': 'float',

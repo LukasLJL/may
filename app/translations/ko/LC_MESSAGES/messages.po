@@ -4491,6 +4491,26 @@ msgstr "소비 추이를 표시할 데이터가 충분하지 않습니다. 완�
 msgid "No fuel prices recorded yet."
 msgstr "아직 기록된 연료 가격이 없습니다."
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "엔진 가동 시간"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "주기 (시간)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "예: 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "총 가동 시간"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "이 차량은 엔진 가동 시간으로 계측하므로 정비 주기를 시간 단위로 계산합니다."
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "분기별 (3개월마다)"
 

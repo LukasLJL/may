@@ -199,7 +199,7 @@
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 <div>
                     <label for="annual_mileage_limit" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ _('Annual Limit') }} ({{ vehicle.get_effective_odometer_unit() if vehicle else current_user.distance_unit }})
+                        {{ _('Annual Limit') }} ({{ vehicle.get_reading_unit() if vehicle else current_user.distance_unit }})
                     </label>
                     <input type="number" name="annual_mileage_limit" id="annual_mileage_limit"
                            step="1" min="0"

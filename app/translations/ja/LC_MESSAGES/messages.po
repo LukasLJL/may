@@ -4486,6 +4486,26 @@ msgstr "消費トレンドを表示するデータが不足しています。満
 msgid "No fuel prices recorded yet."
 msgstr "まだ燃料価格が記録されていません。"
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "エンジンアワー"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "毎 (時間)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "例: 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "総稼働時間"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "この車両はエンジンアワーで計測するため、点検間隔は時間で数えます。"
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "四半期ごと（3ヶ月ごと）"
 

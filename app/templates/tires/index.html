@@ -21,7 +21,7 @@
 {% if tire_sets %}
 <div class="space-y-4">
     {% for tire_set in tire_sets %}
-    {% set unit = tire_set.vehicle.get_effective_odometer_unit() %}
+    {% set unit = tire_set.vehicle.get_reading_unit() %}
     {% set current_odometer = vehicle_odometers.get(tire_set.vehicle_id) %}
     {% set fitment = tire_set.current_fitment %}
     <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">

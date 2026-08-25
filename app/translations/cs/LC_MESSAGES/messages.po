@@ -4594,3 +4594,24 @@ msgstr ""
 #: app/templates/vehicles/view.html:1043
 msgid "No fuel prices recorded yet."
 msgstr "Zatím nejsou zaznamenány žádné ceny paliva."
+
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "Motohodiny"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Každých (motohodin)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "např. 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Celkem motohodin"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "Toto vozidlo se měří v motohodinách, takže jeho servisní interval se počítá v hodinách."
+

@@ -10,6 +10,43 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.39.0] - 2026-08-25
+
+### Added
+
+- A maintenance schedule for a vehicle tracked in engine hours is now set in
+  hours — "every 250 hours" — rather than in kilometres or miles. The only
+  reading-based intervals on offer were distances, and the next-due reading
+  was worked out by running that distance through the km/mi conversion before
+  adding it to a figure that was in hours, so a tractor could never be
+  serviced to anything sensible. The km and miles boxes are hidden for such a
+  vehicle and shown again for any other, before any script runs.
+  ([#282](https://github.com/dannymcc/may/issues/282))
+
+### Fixed
+
+- Readings on an hours-tracked vehicle, and every figure derived from them,
+  are labelled in hours rather than in distance: "h" beside a reading,
+  "L / h" for consumption, "Cost per h", "kWh / 100 h", and "Engine hours"
+  rather than "Odometer" on the maintenance form. The figures have been right
+  since 0.36.1; only the labels beside them still said "mi" or "L/100km".
+  Fuel, expenses, notes, tyres, mileage allowance, the vehicle page, the
+  maintenance list, the calendar feed and the PDF report all follow the
+  vehicle's own unit now. The trip and charging forms, and the timeline on the
+  vehicle page, still label the reading with the account's distance unit, as
+  they do for every vehicle.
+  ([#282](https://github.com/dannymcc/may/issues/282))
+
+- "Due soon" for a maintenance schedule on an hours-tracked vehicle means
+  within 25 engine hours rather than within 500, which had put every such
+  service permanently in the amber.
+  ([#282](https://github.com/dannymcc/may/issues/282))
+
+- The next-due reading in the maintenance list is labelled with the owning
+  vehicle's unit rather than the account's distance preference, which was
+  also wrong for any vehicle whose own odometer unit differed from it.
+  ([#282](https://github.com/dannymcc/may/issues/282))
+
 ## [0.38.2] - 2026-08-25
 
 ### Changed

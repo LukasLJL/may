@@ -4579,6 +4579,26 @@ msgstr ""
 msgid "No fuel prices recorded yet."
 msgstr "Ingen drivstoffpriser registrert ennå."
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "Motortimer"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Hver (timer)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "f.eks. 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Totalt antall timer"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "Dette kjøretøyet måles i motortimer, så serviceintervallet telles i timer."
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "Kvartalsvis (hver 3. måned)"
 

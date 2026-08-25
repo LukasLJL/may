@@ -21,7 +21,7 @@
                             class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
                         {% for vehicle in vehicles %}
                         <option value="{{ vehicle.id }}"
-                                data-odometer-unit="{{ vehicle.get_effective_odometer_unit() }}"
+                                data-odometer-unit="{{ vehicle.get_reading_unit() }}"
                                 {% if selected_vehicle_id == vehicle.id %}selected{% endif %}>
                             {{ vehicle.name }}
                         </option>
@@ -71,7 +71,7 @@
                 </div>
 
                 <div>
-                    <label for="purchase_odometer" id="purchase-odometer-label" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Odometer when bought') }} ({{ tire_set.vehicle.get_effective_odometer_unit() if tire_set else current_user.distance_unit }})</label>
+                    <label for="purchase_odometer" id="purchase-odometer-label" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Odometer when bought') }} ({{ tire_set.vehicle.get_reading_unit() if tire_set else current_user.distance_unit }})</label>
                     <input type="number" name="purchase_odometer" id="purchase_odometer" step="0.1"
                            value="{{ tire_set.purchase_odometer if tire_set and tire_set.purchase_odometer is not none else '' }}"
                            class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">

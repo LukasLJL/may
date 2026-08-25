@@ -4631,6 +4631,26 @@ msgstr ""
 msgid "No fuel prices recorded yet."
 msgstr "Noch keine Kraftstoffpreise erfasst."
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "Motorstunden"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Alle (Stunden)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "z.B. 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Gesamtstunden"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "Dieses Fahrzeug wird in Motorstunden gemessen, daher wird sein Wartungsintervall in Stunden gezählt."
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "Vierteljährlich (alle 3 Monate)"
 

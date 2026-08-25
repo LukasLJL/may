@@ -30,7 +30,7 @@ Named after James May, completing the trio of Top Gear presenters (alongside [Cl
 - **💰 Expense Tracking**: Monitor maintenance, insurance, repairs, tax, and other costs by category
 - **🔄 Recurring Expenses**: Track regular payments like insurance, tax, and subscriptions
 - **🧭 Trip Logging**: Log journeys for mileage and tax records, with optional fuel gauge readings for a per-trip view of consumption
-- **🔧 Maintenance Schedules**: Plan and track scheduled maintenance with mileage/date intervals
+- **🔧 Maintenance Schedules**: Plan and track scheduled maintenance with mileage, engine-hour or date intervals
 - **🛞 Tire Sets**: Record each set of tires going on and off the vehicle, with the distance covered per set worked out for you
 - **📅 Reminders**: Set up recurring reminders for MOT, service, insurance, and tax renewals
 - **🔔 Multi-Channel Notifications**: Get reminded via Email, ntfy, Pushover, or Webhooks
@@ -191,7 +191,7 @@ Add and manage your vehicles with detailed information:
 - Make, model, year, and registration
 - Fuel type and tank capacity
 - Custom specifications and notes
-- **Tracking Unit**: Choose whether a vehicle's odometer counts distance or engine hours — plant and machinery are metered in hours, and their consumption and running costs are worked out per hour rather than per mile. The unit is fixed once anything has been logged against the odometer, since changing it would reinterpret every existing reading. The figures themselves are correct for an hours-tracked vehicle, but the labels beside them still read in distance terms ("L/100km", "Cost per mi"); that is being corrected separately
+- **Tracking Unit**: Choose whether a vehicle's odometer counts distance or engine hours — plant and machinery are metered in hours, and their consumption and running costs are worked out per hour rather than per mile. The unit is fixed once anything has been logged against the odometer, since changing it would reinterpret every existing reading. Readings and the figures beside them are labelled in hours throughout ("h", "L / h", "Cost per h"), forms call the field "Engine hours" rather than "Odometer", and a maintenance schedule for such a vehicle is set in engine hours instead of kilometres or miles. Two places are the exception and still label a reading with the account's distance unit, as they do for every vehicle: the trip and charging forms, and the timeline on the vehicle page
 - **Photo Gallery**: Upload as many photos per vehicle as you like from the "Photos" section on the vehicle page. Any of them can be set as the main photo — the one shown on the dashboard and vehicle list — and the vehicle page steps through the rest with left/right arrows
 - **Vehicle Sharing**: Mark a vehicle as "Shared" to make it visible and loggable by all users on the instance
 - **Upcoming Maintenance**: Vehicle detail pages show a live panel of scheduled maintenance tasks, with overdue and due-soon alerts
@@ -253,6 +253,7 @@ Never miss important dates:
 ### Maintenance Schedules
 Plan regular maintenance tasks:
 - Set intervals by mileage or time (e.g., oil change every 10,000 km or 12 months)
+- A vehicle tracked in engine hours takes its interval in hours instead (e.g., every 250 hours). The km and miles boxes are hidden for it, since no distance interval could be compared against an hour reading, and "due soon" means within 25 hours rather than 500
 - Track completion history
 - Automatic reminder generation
 - Link to expenses when completed

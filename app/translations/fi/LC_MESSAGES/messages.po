@@ -4583,6 +4583,26 @@ msgstr ""
 msgid "No fuel prices recorded yet."
 msgstr "Polttoaineen hintoja ei ole vielä kirjattu."
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "Moottorin käyttötunnit"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Joka (tuntia)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "esim. 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Kokonaistunnit"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "Tämän ajoneuvon mittarina ovat moottorin käyttötunnit, joten huoltoväli lasketaan tunteina."
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "Neljännesvuosittain (joka 3. kuukausi)"
 

@@ -4610,6 +4610,26 @@ msgstr ""
 msgid "No fuel prices recorded yet."
 msgstr "Nog geen brandstofprijzen geregistreerd."
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "Motoruren"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Elke (uren)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "bijv. 250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Totaal aantal uren"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "Dit voertuig wordt gemeten in motoruren, dus het onderhoudsinterval wordt in uren geteld."
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "Per kwartaal (elke 3 maanden)"
 
