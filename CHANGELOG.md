@@ -10,6 +10,21 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Changed
+
+- The last places that still described an hour-metered vehicle's readings as a
+  distance now follow the vehicle, completing the work started in #282. The
+  trip and charging forms ask for engine hours rather than an odometer
+  reading, as the fuel, expense, note, tyre and allowance forms already did,
+  and the remaining forms now change the word as well as the unit beside it.
+  The CSV exports state each row's own unit, so a tractor's engine hours are
+  no longer filed under a distance heading alongside the cars, and the Home
+  Assistant endpoints report the unit the reading is actually in. Totals that
+  span both kinds of vehicle — the dashboard and the trip summaries — say
+  "mixed units" instead of adding engine hours to miles and labelling the sum
+  as a distance. Distance-metered vehicles are unchanged throughout.
+  ([#324](https://github.com/dannymcc/may/issues/324))
+
 ## [0.39.0] - 2026-08-25
 
 ### Added

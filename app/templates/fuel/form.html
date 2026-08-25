@@ -2,6 +2,9 @@
 {% block title %}{% if log %}{{ _('Edit Fuel Log') }}{% else %}{{ _('Add Fuel Log') }}{% endif %}{% endblock %}
 
 {% block content %}
+{% set selected_id = (log.vehicle_id if log else selected_vehicle_id) %}
+{% set preselected = vehicles | selectattr('id', 'equalto', selected_id if selected_id else -1) | list %}
+{% set form_vehicle = preselected[0] if preselected else (vehicles[0] if vehicles else None) %}
 <div class="max-w-2xl mx-auto">
     <div class="mb-6">
         <a href="{{ url_for('fuel.index') }}" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:text-gray-300">&larr; {{ _('Back to fuel logs') }}</a>
@@ -22,6 +25,8 @@
                                 {% if (log and log.vehicle_id == vehicle.id) or (selected_vehicle_id == vehicle.id) %}selected{% endif %}
                                 data-last-odometer="{{ vehicle.get_last_odometer(vehicle.get_effective_odometer_unit()) }}"
                                 data-odometer-unit="{{ vehicle.get_reading_unit() }}"
+                                data-reading-label="{{ vehicle.get_reading_label() }}"
+                                data-hours-metered="{{ 'true' if vehicle.tracks_hours() else 'false' }}"
                                 data-uses-tessie="{{ 'true' if vehicle.uses_tessie_odometer() else 'false' }}"
                                 data-tessie-odometer="{% if vehicle.tessie_last_odometer %}{% if vehicle.get_effective_odometer_unit() == 'mi' %}{{ (vehicle.tessie_last_odometer * 0.621371)|round|int }}{% else %}{{ vehicle.tessie_last_odometer|round|int }}{% endif %}{% endif %}"
                                 data-primary-fuel="{{ vehicle.fuel_type }}"
@@ -30,7 +35,7 @@
                         </option>
                         {% endfor %}
                     </select>
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ _('Last odometer') }}: <span id="last-odometer">-</span> <span id="odometer-unit-display">{{ current_user.distance_unit }}</span></p>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400"><span id="last-reading-label">{% if form_vehicle and form_vehicle.tracks_hours() %}{{ _('Last engine hours') }}{% else %}{{ _('Last odometer') }}{% endif %}</span>: <span id="last-odometer">-</span> <span id="odometer-unit-display">{{ form_vehicle.get_reading_unit() if form_vehicle else current_user.distance_unit }}</span></p>
                 </div>
 
                 <div>
@@ -42,7 +47,7 @@
 
                 <div>
                     <label for="odometer" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                        {{ _('Odometer') }} (<span id="odometer-unit-label">{{ current_user.distance_unit }}</span>) *
+                        <span id="odometer-reading-label">{{ form_vehicle.get_reading_label() if form_vehicle else _('Odometer') }}</span> (<span id="odometer-unit-label">{{ form_vehicle.get_reading_unit() if form_vehicle else current_user.distance_unit }}</span>) *
                         <span id="tessie-odometer-badge" class="hidden ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                             <svg class="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
@@ -193,6 +198,8 @@
 </div>
 
 <script>
+const T_LAST_ODOMETER = {{ _('Last odometer')|tojson }};
+const T_LAST_HOURS = {{ _('Last engine hours')|tojson }};
 function updateVehicleOdometer(vehicleId) {
     const select = document.getElementById('vehicle_id');
     const selectedOption = select.options[select.selectedIndex];
@@ -211,6 +218,15 @@ function updateVehicleOdometer(vehicleId) {
     const unitLabel = document.getElementById('odometer-unit-label');
     if (unitDisplay) unitDisplay.textContent = odometerUnit;
     if (unitLabel) unitLabel.textContent = odometerUnit;
+
+    // An hours-metered vehicle is asked for engine hours, not an odometer
+    // reading (#324). Distance vehicles keep exactly the wording they had.
+    const readingLabel = selectedOption.getAttribute('data-reading-label');
+    const hoursMetered = selectedOption.getAttribute('data-hours-metered') === 'true';
+    const readingLabelEl = document.getElementById('odometer-reading-label');
+    const lastReadingEl = document.getElementById('last-reading-label');
+    if (readingLabel && readingLabelEl) readingLabelEl.textContent = readingLabel;
+    if (lastReadingEl) lastReadingEl.textContent = hoursMetered ? T_LAST_HOURS : T_LAST_ODOMETER;
 
     if (usesTessie && tessieOdometer) {
         // Show Tessie badge and make field read-only

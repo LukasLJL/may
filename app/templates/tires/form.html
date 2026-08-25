@@ -22,6 +22,7 @@
                         {% for vehicle in vehicles %}
                         <option value="{{ vehicle.id }}"
                                 data-odometer-unit="{{ vehicle.get_reading_unit() }}"
+                                data-hours-metered="{{ 'true' if vehicle.tracks_hours() else 'false' }}"
                                 {% if selected_vehicle_id == vehicle.id %}selected{% endif %}>
                             {{ vehicle.name }}
                         </option>
@@ -71,7 +72,7 @@
                 </div>
 
                 <div>
-                    <label for="purchase_odometer" id="purchase-odometer-label" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ _('Odometer when bought') }} ({{ tire_set.vehicle.get_reading_unit() if tire_set else current_user.distance_unit }})</label>
+                    <label for="purchase_odometer" id="purchase-odometer-label" class="block text-sm font-medium text-gray-700 dark:text-gray-300"><span id="purchase-reading-word">{% if tire_set and tire_set.vehicle.tracks_hours() %}{{ _('Engine hours when bought') }}{% else %}{{ _('Odometer when bought') }}{% endif %}</span> (<span id="purchase-reading-unit">{{ tire_set.vehicle.get_reading_unit() if tire_set else current_user.distance_unit }}</span>)</label>
                     <input type="number" name="purchase_odometer" id="purchase_odometer" step="0.1"
                            value="{{ tire_set.purchase_odometer if tire_set and tire_set.purchase_odometer is not none else '' }}"
                            class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500">
@@ -112,6 +113,8 @@
 
 {% block extra_scripts %}
 <script>
+    const T_BOUGHT_ODOMETER = {{ _('Odometer when bought')|tojson }};
+    const T_BOUGHT_HOURS = {{ _('Engine hours when bought')|tojson }};
     (function() {
         const vehicleSelect = document.getElementById('vehicle_id');
         const odometerLabel = document.getElementById('purchase-odometer-label');
@@ -119,9 +122,18 @@
 
         function updateOdometerUnit() {
             const selected = vehicleSelect.options[vehicleSelect.selectedIndex];
-            const unit = selected ? selected.dataset.odometerUnit : '';
-            if (unit) {
-                odometerLabel.textContent = odometerLabel.textContent.replace(/\([^)]*\)/, '(' + unit + ')');
+            if (!selected) return;
+            // A set fitted to hours-metered plant was bought at an hour
+            // reading, not a mileage (#324). Word and unit each live in
+            // their own span, so neither overwrites the other.
+            const word = document.getElementById('purchase-reading-word');
+            if (word) {
+                word.textContent = selected.dataset.hoursMetered === 'true'
+                    ? T_BOUGHT_HOURS : T_BOUGHT_ODOMETER;
+            }
+            const unitEl = document.getElementById('purchase-reading-unit');
+            if (unitEl && selected.dataset.odometerUnit) {
+                unitEl.textContent = selected.dataset.odometerUnit;
             }
         }
 

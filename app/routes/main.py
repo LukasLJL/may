@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import func
 from app import db
 from app.models import Vehicle, FuelLog, Expense, ChargingSession, FuelPriceHistory, FuelStation, MileageAllowance, Attachment, EXPENSE_CATEGORIES
+from app.utils import shared_reading_unit
 
 bp = Blueprint('main', __name__)
 
@@ -144,7 +145,15 @@ def dashboard():
             )
         ).order_by(FuelPriceHistory.price_per_unit.asc()).limit(3).all()
 
+    # A fleet total is only honest while every vehicle meters the same way.
+    # One hours-metered machine among the cars and the sum mixes engine hours
+    # with distance, so the template says so rather than labelling it with a
+    # distance unit (#324).
+    total_distance_unit = (shared_reading_unit(vehicles, current_user.distance_unit)
+                           if vehicles else current_user.distance_unit)
+
     return render_template('dashboard.html',
+                           total_distance_unit=total_distance_unit,
                            vehicles=vehicles,
                            total_fuel_cost=total_fuel_cost,
                            total_expense_cost=total_expense_cost,

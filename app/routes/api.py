@@ -1603,7 +1603,7 @@ def export_csv():
                 vehicle.make, vehicle.model, vehicle.year,
                 vehicle.registration, vehicle.vin, vehicle.fuel_type,
                 vehicle.tank_capacity,
-                vehicle.get_effective_odometer_unit(),
+                vehicle.get_reading_unit(),
                 vehicle.is_active, vehicle.notes,
                 vehicle.created_at.isoformat() if vehicle.created_at else ''
             ])
@@ -1629,7 +1629,10 @@ def export_csv():
             'is_missed', 'station', 'notes', 'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
-            odometer_unit = vehicle.get_effective_odometer_unit()
+            # Each row states the unit its own vehicle meters in, so a
+            # tractor's engine hours are never filed under a distance
+            # heading alongside the cars (#324).
+            odometer_unit = vehicle.get_reading_unit()
             for log in vehicle.fuel_logs.order_by(FuelLog.date.desc(), FuelLog.odometer.desc()).all():
                 writer.writerow([
                     log.id, vehicle.id, vehicle.name, log.date.isoformat(),
@@ -1648,7 +1651,7 @@ def export_csv():
             'description', 'cost', 'odometer', 'odometer_unit', 'vendor', 'notes', 'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
-            odometer_unit = vehicle.get_effective_odometer_unit()
+            odometer_unit = vehicle.get_reading_unit()
             for expense in vehicle.expenses.order_by(Expense.date.desc()).all():
                 writer.writerow([
                     expense.id, vehicle.id, vehicle.name, expense.date.isoformat(),
@@ -1759,7 +1762,7 @@ def export_csv():
             'notes', 'created_at'
         ])
         for vehicle in current_user.get_all_vehicles():
-            odometer_unit = vehicle.get_effective_odometer_unit()
+            odometer_unit = vehicle.get_reading_unit()
             for trip in vehicle.trips.order_by(Trip.date.desc()).all():
                 writer.writerow([
                     trip.id, vehicle.id, vehicle.name,
