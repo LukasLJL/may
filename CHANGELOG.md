@@ -10,6 +10,23 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Fixed
+
+- More labels that never reached a translator are now translated: the import
+  rows on Settings > Import / Export (the Hammond, Clarkson, Fuelly, Drivvo and
+  CSV descriptions with their Import/Soon buttons), the reminder due-date
+  caption ("Due today", "In N days" and the rest), and the vehicle timeline's
+  "Fuel: N L" / "Charging: N kWh" titles. Strings that were already wrapped but
+  had never been extracted — Role, Photos, "No photos yet.", "Restore May
+  Backup" and the whole Tires page — now have catalogue entries as well, filled
+  in for all 19 shipped languages.
+  ([#340](https://github.com/dannymcc/may/issues/340))
+- The times-used caption on Fuel Stations is a single translatable string with
+  the count in it (`Used %(count)dx`) rather than a translated word followed by
+  a bare number, so a locale can put the count first — Hungarian needs "180x
+  használt", which the old two-piece wording made impossible.
+  ([#340](https://github.com/dannymcc/may/issues/340))
+
 ## [0.41.1] - 2026-08-25
 
 ### Changed

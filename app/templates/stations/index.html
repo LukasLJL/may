@@ -67,7 +67,7 @@
                 </div>
                 <div class="ml-4 flex items-center gap-4">
                     <span class="text-xs text-gray-400 dark:text-gray-500">
-                        {{ _('Used') }} {{ station.times_used or 0 }}x
+                        {{ _('Used %(count)dx', count=station.times_used or 0) }}
                     </span>
                     <a href="{{ url_for('stations.price_history', station_id=station.id) }}"
                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" title="{{ _('Price History') }}">

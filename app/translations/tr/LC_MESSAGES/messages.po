@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-03 21:10+0100\n"
+"POT-Creation-Date: 2026-08-25 18:55+0000\n"
 "PO-Revision-Date: 2026-08-03 16:49+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: tr <LL@li.org>\n"
@@ -18,441 +18,516 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: app/models.py:964
+#: app/models.py:50
+msgid "Editor"
+msgstr "Düzenleyici"
+
+#: app/models.py:51
+msgid "Contributor"
+msgstr "Katkıda bulunan"
+
+#: app/models.py:52
+msgid "Viewer"
+msgstr "Görüntüleyici"
+
+#: app/models.py:56
+msgid "Full access to the vehicles and data this account can see."
+msgstr "Bu hesabın görebildiği araçlara ve verilere tam erişim."
+
+#: app/models.py:57
+msgid ""
+"Can record fuel fill-ups and charging sessions. Everything else is read-"
+"only."
+msgstr ""
+"Yakıt alımlarını ve şarj oturumlarını kaydedebilir. Diğer her şey salt "
+"okunurdur."
+
+#: app/models.py:58
+msgid "Read-only. Can see the data but cannot change anything."
+msgstr "Salt okunur. Verileri görebilir ancak hiçbir şeyi değiştiremez."
+
+#: app/models.py:183 app/templates/auth/create_user.html:71
+#: app/templates/auth/edit_user.html:59
+msgid "Administrator"
+msgstr "Yönetici"
+
+#: app/models.py:390 app/templates/maintenance/form.html:126
+msgid "Engine hours"
+msgstr "Motor saati"
+
+#: app/models.py:391 app/templates/charging/form.html:86
+#: app/templates/expenses/form.html:76 app/templates/expenses/index.html:32
+#: app/templates/fuel/form.html:51 app/templates/fuel/index.html:43
+#: app/templates/fuel/index.html:146 app/templates/fuel/quick.html:35
+#: app/templates/maintenance/form.html:126
+#: app/templates/maintenance/form.html:127 app/templates/notes/form.html:41
+#: app/templates/notes/index.html:31 app/templates/tires/index.html:92
+#: app/templates/tires/index.html:107 app/templates/vehicles/view.html:484
+msgid "Odometer"
+msgstr "Kilometre Sayacı"
+
+#: app/models.py:396 app/models.py:1411 app/templates/trips/form.html:189
+msgid "Hours"
+msgstr "Saat"
+
+#: app/models.py:397 app/templates/allowance/form.html:48
+#: app/templates/allowance/index.html:30 app/templates/auth/settings.html:126
+#: app/templates/tires/index.html:127 app/templates/trips/form.html:97
+#: app/templates/trips/form.html:188 app/templates/trips/report.html:102
+msgid "Distance"
+msgstr "Mesafe"
+
+#: app/models.py:1358
 msgid "Front Tire Size"
 msgstr "Ön Lastik Ebadı"
 
-#: app/models.py:965
+#: app/models.py:1359
 msgid "Rear Tire Size"
 msgstr "Arka Lastik Ebadı"
 
-#: app/models.py:966
+#: app/models.py:1360
 msgid "Wheel Size"
 msgstr "Jant Ebadı"
 
-#: app/models.py:967
+#: app/models.py:1361
 msgid "Engine Oil Type"
 msgstr "Motor Yağı Tipi"
 
-#: app/models.py:968
+#: app/models.py:1362
 msgid "Oil Capacity"
 msgstr "Yağ Kapasitesi"
 
-#: app/models.py:969
+#: app/models.py:1363
 msgid "Coolant Type"
 msgstr "Soğutucu Sıvı Tipi"
 
-#: app/models.py:970
+#: app/models.py:1364
 msgid "Front Wiper Size"
 msgstr "Ön Silecek Ebadı"
 
-#: app/models.py:971
+#: app/models.py:1365
 msgid "Rear Wiper Size"
 msgstr "Arka Silecek Ebadı"
 
-#: app/models.py:972
+#: app/models.py:1366
 msgid "Battery Type"
 msgstr "Akü Tipi"
 
-#: app/models.py:973
+#: app/models.py:1367
 msgid "Spark Plug Type"
 msgstr "Buji Tipi"
 
-#: app/models.py:974
+#: app/models.py:1368
 msgid "Air Filter Part #"
 msgstr "Hava Filtresi Parça No"
 
-#: app/models.py:975
+#: app/models.py:1369
 msgid "Cabin Filter Part #"
 msgstr "Kabin Filtresi Parça No"
 
-#: app/models.py:976
+#: app/models.py:1370
 msgid "Front Brake Pads"
 msgstr "Ön Fren Balatası"
 
-#: app/models.py:977
+#: app/models.py:1371
 msgid "Rear Brake Pads"
 msgstr "Arka Fren Balatası"
 
-#: app/models.py:978 app/models.py:1531
+#: app/models.py:1372 app/models.py:2147
 msgid "Transmission Fluid"
 msgstr "Şanzıman Yağı"
 
-#: app/models.py:979 app/models.py:1050 app/models.py:1103
+#: app/models.py:1373 app/models.py:1493 app/models.py:1558
 #: app/templates/auth/settings.html:195
 msgid "Custom"
 msgstr "Özel"
 
-#: app/models.py:984 app/templates/auth/settings.html:427
-#: app/templates/auth/settings.html:493 app/templates/base.html:317
-#: app/templates/base.html:404
+#: app/models.py:1378 app/templates/auth/settings.html:440
+#: app/templates/auth/settings.html:506 app/templates/base.html:318
+#: app/templates/base.html:412
 msgid "Maintenance"
 msgstr "Bakım"
 
-#: app/models.py:985
+#: app/models.py:1379
 msgid "Repairs"
 msgstr "Onarımlar"
 
-#: app/models.py:986
+#: app/models.py:1380
 msgid "Inspection"
 msgstr "Muayene"
 
-#: app/models.py:987
+#: app/models.py:1381
 msgid "Insurance"
 msgstr "Sigorta"
 
-#: app/models.py:988 app/models.py:1045
+#: app/models.py:1382 app/models.py:1488
 msgid "Road Tax"
 msgstr "Taşıt Vergisi"
 
-#: app/models.py:989 app/templates/vehicles/view.html:59
+#: app/models.py:1383 app/templates/vehicles/view.html:97
 msgid "Registration"
 msgstr "Tescil"
 
-#: app/models.py:990
+#: app/models.py:1384
 msgid "Parking"
 msgstr "Otopark"
 
-#: app/models.py:991
+#: app/models.py:1385
 msgid "Tolls"
 msgstr "Geçiş Ücreti"
 
-#: app/models.py:992
+#: app/models.py:1386
 msgid "Cleaning"
 msgstr "Temizlik"
 
-#: app/models.py:993
+#: app/models.py:1387
 msgid "Accessories"
 msgstr "Aksesuarlar"
 
-#: app/models.py:994 app/models.py:1011 app/models.py:1037 app/models.py:1071
-#: app/models.py:1081 app/models.py:1115 app/models.py:1537
+#: app/models.py:1388 app/models.py:1405 app/models.py:1434 app/models.py:1526
+#: app/models.py:1536 app/models.py:1570 app/models.py:1578 app/models.py:2153
 msgid "Other"
 msgstr "Diğer"
 
-#: app/models.py:999
+#: app/models.py:1393
 msgid "Car"
 msgstr "Otomobil"
 
-#: app/models.py:1000
+#: app/models.py:1394
 msgid "Van"
 msgstr "Van"
 
-#: app/models.py:1001
+#: app/models.py:1395
 msgid "Motorbike"
 msgstr "Motosiklet"
 
-#: app/models.py:1002
+#: app/models.py:1396
 msgid "Scooter"
 msgstr "Skuter"
 
-#: app/models.py:1003
+#: app/models.py:1397
 msgid "Truck"
 msgstr "Kamyon"
 
-#: app/models.py:1004
+#: app/models.py:1398
 msgid "SUV"
 msgstr "SUV"
 
-#: app/models.py:1005
+#: app/models.py:1399
 msgid "Hatchback"
 msgstr "Hatchback"
 
-#: app/models.py:1006
+#: app/models.py:1400
 msgid "Station Wagon / Estate"
 msgstr "Steyşın Vagon"
 
-#: app/models.py:1007
+#: app/models.py:1401
 msgid "Pickup / Ute"
 msgstr "Pikap"
 
-#: app/models.py:1008
+#: app/models.py:1402
 msgid "Tractor"
 msgstr "Traktör"
 
-#: app/models.py:1009
+#: app/models.py:1403
 msgid "ATV/UTV"
 msgstr "ATV/UTV"
 
-#: app/models.py:1010
+#: app/models.py:1404
 msgid "Boat"
 msgstr "Tekne"
 
-#: app/models.py:1016
+#: app/models.py:1410
 msgid "Mileage (km/mi)"
 msgstr "Kilometre (km/mi)"
 
-#: app/models.py:1017
-msgid "Hours"
-msgstr "Saat"
-
-#: app/models.py:1116 app/templates/auth/settings.html:129
+#: app/models.py:1416 app/templates/auth/settings.html:129
 msgid "Kilometres (km)"
 msgstr "Kilometre (km)"
 
-#: app/models.py:1117 app/templates/auth/settings.html:130
+#: app/models.py:1417 app/templates/auth/settings.html:130
 msgid "Miles (mi)"
 msgstr "Mil (mi)"
 
-#: app/models.py:1028
+#: app/models.py:1422
 msgid "Petrol/Gasoline"
 msgstr "Benzin"
 
-#: app/models.py:1029
+#: app/models.py:1423
 msgid "Diesel"
 msgstr "Dizel"
 
-#: app/models.py:1030
+#: app/models.py:1424
 msgid "Electric"
 msgstr "Elektrikli"
 
-#: app/models.py:1031
+#: app/models.py:1425
 msgid "Hybrid"
 msgstr "Hibrit"
 
-#: app/models.py:1032
+#: app/models.py:1426
 msgid "Plug-in Hybrid"
 msgstr "Şarj Edilebilir Hibrit"
 
-#: app/models.py:1033
+#: app/models.py:1427
 msgid "LPG"
 msgstr "LPG"
 
-#: app/models.py:1034
+#: app/models.py:1428
 msgid "CNG"
 msgstr "CNG"
 
-#: app/models.py:1035
+#: app/models.py:1429
 msgid "Hydrogen"
 msgstr "Hidrojen"
 
-#: app/models.py:1036
+#: app/models.py:1430
 msgid "E85/Flex Fuel"
 msgstr "E85/Flex Yakıt"
 
-#: app/models.py:1042
+#: app/models.py:1433
+msgid "AdBlue/DEF"
+msgstr "AdBlue/DEF"
+
+#: app/models.py:1485
 msgid "MOT/Inspection"
 msgstr "Muayene"
 
-#: app/models.py:1043
+#: app/models.py:1486
 msgid "Service Due"
 msgstr "Servis Zamanı"
 
-#: app/models.py:1044
+#: app/models.py:1487
 msgid "Insurance Renewal"
 msgstr "Sigorta Yenileme"
 
-#: app/models.py:1046
+#: app/models.py:1489
 msgid "Registration Renewal"
 msgstr "Tescil Yenileme"
 
-#: app/models.py:1047
+#: app/models.py:1490
 msgid "Warranty Expiry"
 msgstr "Garanti Bitişi"
 
-#: app/models.py:1048
+#: app/models.py:1491
 msgid "Tire Change"
 msgstr "Lastik Değişimi"
 
-#: app/models.py:1049 app/models.py:1086
+#: app/models.py:1492 app/models.py:1541
 msgid "Oil Change"
 msgstr "Yağ Değişimi"
 
-#: app/models.py:1057
+#: app/models.py:1512
 msgid "No Repeat"
 msgstr "Tekrarlama Yok"
 
-#: app/models.py:1058
+#: app/models.py:1513
 msgid "Day(s)"
 msgstr "Gün"
 
-#: app/models.py:1059
+#: app/models.py:1514
 msgid "Week(s)"
 msgstr "Hafta"
 
-#: app/models.py:1060
+#: app/models.py:1515
 msgid "Month(s)"
 msgstr "Ay"
 
-#: app/models.py:1061
+#: app/models.py:1516
 msgid "Year(s)"
 msgstr "Yıl"
 
-#: app/models.py:1066
+#: app/models.py:1521
 msgid "Business"
 msgstr "İş"
 
-#: app/models.py:1067
+#: app/models.py:1522
 msgid "Personal"
 msgstr "Kişisel"
 
-#: app/models.py:1068
+#: app/models.py:1523
 msgid "Commute"
 msgstr "İşe Gidiş-Geliş"
 
-#: app/models.py:1069
+#: app/models.py:1524
 msgid "Medical"
 msgstr "Sağlık"
 
-#: app/models.py:1070
+#: app/models.py:1525
 msgid "Charity"
 msgstr "Hayır İşi"
 
-#: app/models.py:1076
+#: app/models.py:1531
 msgid "Home Charging"
 msgstr "Evde Şarj"
 
-#: app/models.py:1077
+#: app/models.py:1532
 msgid "Level 1"
 msgstr "Seviye 1"
 
-#: app/models.py:1078
+#: app/models.py:1533
 msgid "Level 2"
 msgstr "Seviye 2"
 
-#: app/models.py:1079
+#: app/models.py:1534
 msgid "DC Fast Charge"
 msgstr "DC Hızlı Şarj"
 
-#: app/models.py:1080
+#: app/models.py:1535
 msgid "Tesla Supercharger"
 msgstr "Tesla Supercharger"
 
-#: app/models.py:1087 app/models.py:1523
+#: app/models.py:1542 app/models.py:2139
 msgid "Oil Filter"
 msgstr "Yağ Filtresi"
 
-#: app/models.py:1088 app/models.py:1524
+#: app/models.py:1543 app/models.py:2140
 msgid "Air Filter"
 msgstr "Hava Filtresi"
 
-#: app/models.py:1089
+#: app/models.py:1544
 msgid "Cabin/Pollen Filter"
 msgstr "Kabin/Polen Filtresi"
 
-#: app/models.py:1090 app/models.py:1525
+#: app/models.py:1545 app/models.py:2141
 msgid "Fuel Filter"
 msgstr "Yakıt Filtresi"
 
-#: app/models.py:1091
+#: app/models.py:1546
 msgid "Spark Plugs"
 msgstr "Bujiler"
 
-#: app/models.py:1092
+#: app/models.py:1547
 msgid "Brake Pads"
 msgstr "Fren Balataları"
 
-#: app/models.py:1093 app/models.py:1529
+#: app/models.py:1548 app/models.py:2145
 msgid "Brake Fluid"
 msgstr "Fren Hidroliği"
 
-#: app/models.py:1094
+#: app/models.py:1549
 msgid "Coolant Flush"
 msgstr "Soğutucu Sıvı Değişimi"
 
-#: app/models.py:1095
+#: app/models.py:1550
 msgid "Transmission Service"
 msgstr "Şanzıman Bakımı"
 
-#: app/models.py:1096
+#: app/models.py:1551
 msgid "Timing Belt"
 msgstr "Triger Kayışı"
 
-#: app/models.py:1097
+#: app/models.py:1552
 msgid "Serpentine Belt"
 msgstr "V Kayışı"
 
-#: app/models.py:1098
+#: app/models.py:1553
 msgid "Tire Rotation"
 msgstr "Lastik Rotasyonu"
 
-#: app/models.py:1099
+#: app/models.py:1554
 msgid "Wheel Alignment"
 msgstr "Rot Ayarı"
 
-#: app/models.py:1100
+#: app/models.py:1555
 msgid "Battery Check/Replace"
 msgstr "Akü Kontrol/Değişim"
 
-#: app/models.py:1101
+#: app/models.py:1556
 msgid "Wiper Blades"
 msgstr "Silecek Lastikleri"
 
-#: app/models.py:1102
+#: app/models.py:1557
 msgid "Full Service"
 msgstr "Genel Bakım"
 
-#: app/models.py:1108
+#: app/models.py:1563
 msgid "Insurance Policy"
 msgstr "Sigorta Poliçesi"
 
-#: app/models.py:1109
+#: app/models.py:1564
 msgid "Registration/V5C"
 msgstr "Tescil Belgesi/V5C"
 
-#: app/models.py:1110
+#: app/models.py:1565
 msgid "MOT Certificate"
 msgstr "Muayene Belgesi"
 
-#: app/models.py:1111
+#: app/models.py:1566
 msgid "Service Record"
 msgstr "Servis Kaydı"
 
-#: app/models.py:1112
+#: app/models.py:1567
 msgid "Purchase Invoice"
 msgstr "Satın Alma Faturası"
 
-#: app/models.py:1113
+#: app/models.py:1568
 msgid "Warranty Document"
 msgstr "Garanti Belgesi"
 
-#: app/models.py:1114
+#: app/models.py:1569
 msgid "Owner's Manual"
 msgstr "Kullanım Kılavuzu"
 
-#: app/models.py:1522
+#: app/models.py:1575
+msgid "Summer"
+msgstr "Yaz"
+
+#: app/models.py:1576
+msgid "Winter"
+msgstr "Kış"
+
+#: app/models.py:1577
+msgid "All Season"
+msgstr "Dört mevsim"
+
+#: app/models.py:2138
 msgid "Engine Oil"
 msgstr "Motor Yağı"
 
-#: app/models.py:1526
+#: app/models.py:2142
 msgid "Cabin Filter"
 msgstr "Kabin Filtresi"
 
-#: app/models.py:1527
+#: app/models.py:2143
 msgid "Spark Plug"
 msgstr "Buji"
 
-#: app/models.py:1528
+#: app/models.py:2144
 msgid "Brake Pad"
 msgstr "Fren Balatası"
 
-#: app/models.py:1530
+#: app/models.py:2146
 msgid "Coolant"
 msgstr "Soğutucu Sıvı"
 
-#: app/models.py:1532
+#: app/models.py:2148
 msgid "Battery"
 msgstr "Akü"
 
-#: app/models.py:1533
+#: app/models.py:2149
 msgid "Tire"
 msgstr "Lastik"
 
-#: app/models.py:1534
+#: app/models.py:2150
 msgid "Belt"
 msgstr "Kayış"
 
-#: app/models.py:1535
+#: app/models.py:2151
 msgid "Wiper Blade"
 msgstr "Silecek Lastiği"
 
-#: app/models.py:1536
+#: app/models.py:2152
 msgid "Light Bulb"
 msgstr "Ampul"
 
-#: app/routes/allowance.py:31 app/routes/expenses.py:82 app/routes/fuel.py:53
-#: app/routes/fuel.py:377 app/routes/notes.py:31 app/routes/reminders.py:63
-#: app/routes/trips.py:67
+#: app/permissions.py:128
+msgid "Your account does not have permission to change this data."
+msgstr "Hesabınızın bu verileri değiştirme izni yok."
+
+#: app/routes/allowance.py:31 app/routes/expenses.py:155 app/routes/fuel.py:72
+#: app/routes/fuel.py:444 app/routes/notes.py:31 app/routes/reminders.py:64
+#: app/routes/tires.py:76 app/routes/trips.py:76
 msgid "Please add a vehicle first"
 msgstr "Lütfen önce bir araç ekleyin"
 
@@ -461,24 +536,28 @@ msgstr "Lütfen önce bir araç ekleyin"
 #: app/routes/charging.py:123 app/routes/charging.py:173
 #: app/routes/documents.py:130 app/routes/documents.py:146
 #: app/routes/documents.py:165 app/routes/documents.py:205
-#: app/routes/expenses.py:91 app/routes/expenses.py:166
-#: app/routes/expenses.py:221 app/routes/expenses.py:245
-#: app/routes/expenses.py:250 app/routes/fuel.py:62 app/routes/fuel.py:182
-#: app/routes/fuel.py:305 app/routes/fuel.py:350 app/routes/fuel.py:355
-#: app/routes/fuel.py:391 app/routes/maintenance.py:106
-#: app/routes/maintenance.py:148 app/routes/maintenance.py:200
-#: app/routes/notes.py:40 app/routes/notes.py:82 app/routes/notes.py:118
-#: app/routes/reminders.py:71 app/routes/reminders.py:126
-#: app/routes/reminders.py:164 app/routes/reminders.py:228
-#: app/routes/reminders.py:247 app/routes/trips.py:75 app/routes/trips.py:139
-#: app/routes/trips.py:174 app/routes/trips.py:207 app/routes/trips.py:239
-#: app/routes/trips.py:250 app/routes/trips.py:279 app/routes/vehicles.py:119
-#: app/routes/vehicles.py:196 app/routes/vehicles.py:283
-#: app/routes/vehicles.py:305 app/routes/vehicles.py:336
-#: app/routes/vehicles.py:355 app/routes/vehicles.py:371
-#: app/routes/vehicles.py:388 app/routes/vehicles.py:453
-#: app/routes/vehicles.py:482 app/routes/vehicles.py:520
-#: app/routes/vehicles.py:558
+#: app/routes/expenses.py:164 app/routes/expenses.py:248
+#: app/routes/expenses.py:297 app/routes/expenses.py:326
+#: app/routes/expenses.py:331 app/routes/fuel.py:81 app/routes/fuel.py:226
+#: app/routes/fuel.py:362 app/routes/fuel.py:417 app/routes/fuel.py:422
+#: app/routes/fuel.py:458 app/routes/maintenance.py:107
+#: app/routes/maintenance.py:150 app/routes/maintenance.py:202
+#: app/routes/notes.py:40 app/routes/notes.py:87 app/routes/notes.py:128
+#: app/routes/reminders.py:72 app/routes/reminders.py:127
+#: app/routes/reminders.py:214 app/routes/reminders.py:237
+#: app/routes/reminders.py:256 app/routes/tires.py:83 app/routes/tires.py:127
+#: app/routes/tires.py:167 app/routes/tires.py:208 app/routes/tires.py:239
+#: app/routes/tires.py:254 app/routes/trips.py:84 app/routes/trips.py:157
+#: app/routes/trips.py:201 app/routes/trips.py:234 app/routes/trips.py:266
+#: app/routes/trips.py:277 app/routes/trips.py:306 app/routes/vehicles.py:164
+#: app/routes/vehicles.py:260 app/routes/vehicles.py:353
+#: app/routes/vehicles.py:379 app/routes/vehicles.py:430
+#: app/routes/vehicles.py:435 app/routes/vehicles.py:467
+#: app/routes/vehicles.py:472 app/routes/vehicles.py:500
+#: app/routes/vehicles.py:531 app/routes/vehicles.py:550
+#: app/routes/vehicles.py:566 app/routes/vehicles.py:657
+#: app/routes/vehicles.py:737 app/routes/vehicles.py:766
+#: app/routes/vehicles.py:804 app/routes/vehicles.py:842
 msgid "Access denied"
 msgstr "Erişim reddedildi"
 
@@ -499,20 +578,20 @@ msgstr "Kilometre ücreti başarıyla güncellendi"
 msgid "Mileage allowance deleted successfully"
 msgstr "Kilometre ücreti başarıyla silindi"
 
-#: app/routes/api.py:2161 app/routes/api.py:2374 app/routes/api.py:2549
+#: app/routes/api.py:2657 app/routes/api.py:2870 app/routes/api.py:3045
 msgid "No file uploaded"
 msgstr "Dosya yüklenmedi"
 
-#: app/routes/api.py:2166 app/routes/api.py:2379 app/routes/api.py:2554
+#: app/routes/api.py:2662 app/routes/api.py:2875 app/routes/api.py:3050
 #: app/routes/documents.py:67 app/routes/documents.py:72
 msgid "No file selected"
 msgstr "Dosya seçilmedi"
 
-#: app/routes/api.py:2188
+#: app/routes/api.py:2684
 msgid "The uploaded file is not a valid SQLite database."
 msgstr "Yüklenen dosya geçerli bir SQLite veritabanı değil."
 
-#: app/routes/api.py:2193
+#: app/routes/api.py:2689
 msgid ""
 "This does not appear to be a Hammond database — no vehicles, fillups, or "
 "expenses tables found."
@@ -520,7 +599,7 @@ msgstr ""
 "Bu bir Hammond veritabanı gibi görünmüyor — araç, yakıt dolumu veya gider "
 "tabloları bulunamadı."
 
-#: app/routes/api.py:2342
+#: app/routes/api.py:2838
 #, python-format
 msgid ""
 "Hammond import complete: %(vehicles)s vehicles, %(fuel_logs)s fuel logs, "
@@ -529,7 +608,7 @@ msgstr ""
 "Hammond içe aktarımı tamamlandı: %(vehicles)s araç, %(fuel_logs)s yakıt "
 "kaydı, %(expenses)s gider içe aktarıldı."
 
-#: app/routes/api.py:2344
+#: app/routes/api.py:2840
 #, python-format
 msgid ""
 "(%(total_skipped)s records skipped due to errors — check server logs for "
@@ -538,7 +617,7 @@ msgstr ""
 "(%(total_skipped)s kayıt hatalar nedeniyle atlandı — ayrıntılar için sunucu "
 "günlüklerini kontrol edin.)"
 
-#: app/routes/api.py:2351
+#: app/routes/api.py:2847
 #, python-format
 msgid ""
 "Import failed due to a database error. Check that the file is a valid "
@@ -547,13 +626,13 @@ msgstr ""
 "Veritabanı hatası nedeniyle içe aktarma başarısız oldu. Dosyanın geçerli bir"
 " Hammond veritabanı olduğundan emin olun. Hata: %(error)s"
 
-#: app/routes/api.py:2356 app/routes/api.py:2500 app/routes/api.py:2672
-#: app/routes/api.py:3167
+#: app/routes/api.py:2852 app/routes/api.py:2996 app/routes/api.py:3168
+#: app/routes/api.py:3674
 #, python-format
 msgid "Import failed: %(error)s"
 msgstr "İçe aktarma başarısız: %(error)s"
 
-#: app/routes/api.py:2496
+#: app/routes/api.py:2992
 #, python-format
 msgid ""
 "Clarkson import complete: %(vehicles)s vehicles, %(fuel_logs)s fuel logs"
@@ -561,7 +640,7 @@ msgstr ""
 "Clarkson içe aktarımı tamamlandı: %(vehicles)s araç, %(fuel_logs)s yakıt "
 "kaydı"
 
-#: app/routes/api.py:2668
+#: app/routes/api.py:3164
 #, python-format
 msgid ""
 "Fuelly import complete: %(vehicles)s new vehicles, %(fuel_logs)s fuel logs"
@@ -569,43 +648,70 @@ msgstr ""
 "Fuelly içe aktarımı tamamlandı: %(vehicles)s yeni araç, %(fuel_logs)s yakıt "
 "kaydı"
 
-#: app/routes/api.py:3020
+#: app/routes/api.py:3527
 msgid "Please add a vehicle before importing data."
 msgstr "Veri içe aktarmadan önce lütfen bir araç ekleyin."
 
-#: app/routes/api.py:3033
+#: app/routes/api.py:3540
 msgid "Invalid data type selected."
 msgstr "Geçersiz veri türü seçildi."
 
-#: app/routes/api.py:3038 app/routes/api.py:3113
+#: app/routes/api.py:3545 app/routes/api.py:3620
 msgid "Vehicle not found."
 msgstr "Araç bulunamadı."
 
-#: app/routes/api.py:3042
+#: app/routes/api.py:3549
 msgid "No CSV file uploaded."
 msgstr "CSV dosyası yüklenmedi."
 
-#: app/routes/api.py:3053
+#: app/routes/api.py:3560
 msgid "CSV file has no column headers."
 msgstr "CSV dosyasında sütun başlığı yok."
 
-#: app/routes/api.py:3094
+#: app/routes/api.py:3601
 #, python-format
 msgid "Failed to parse CSV file: %(error)s"
 msgstr "CSV dosyası ayrıştırılamadı: %(error)s"
 
-#: app/routes/api.py:3108
+#: app/routes/api.py:3615
 msgid "Invalid data type."
 msgstr "Geçersiz veri türü."
 
-#: app/routes/api.py:3117
+#: app/routes/api.py:3624
 msgid "CSV file expired. Please upload again."
 msgstr "CSV dosyasının süresi doldu. Lütfen tekrar yükleyin."
 
-#: app/routes/api.py:3155
+#: app/routes/api.py:3662
 #, python-format
 msgid "CSV import complete: %(count)s %(label)s imported."
 msgstr "CSV içe aktarımı tamamlandı: %(count)s %(label)s içe aktarıldı."
+
+#: app/routes/api.py:3709
+msgid "No backup file uploaded."
+msgstr "Yedek dosyası yüklenmedi."
+
+#: app/routes/api.py:3732
+#, python-format
+msgid "Could not read that backup: %(error)s"
+msgstr "Bu yedek okunamadı: %(error)s"
+
+#: app/routes/api.py:3751
+msgid "The uploaded backup has expired. Please upload it again."
+msgstr "Yüklenen yedeğin süresi doldu. Lütfen yeniden yükleyin."
+
+#: app/routes/api.py:3764
+#, python-format
+msgid ""
+"Backup restored: %(added)s records added, %(skipped)s already present and "
+"left alone."
+msgstr ""
+"Yedek geri yüklendi: %(added)s kayıt eklendi, %(skipped)s kayıt zaten "
+"mevcuttu ve olduğu gibi bırakıldı."
+
+#: app/routes/api.py:3772
+#, python-format
+msgid "Restore failed: %(error)s"
+msgstr "Geri yükleme başarısız: %(error)s"
 
 #: app/routes/auth.py:39
 msgid "Invalid username or password"
@@ -632,7 +738,7 @@ msgstr ""
 "isteyin."
 
 #: app/routes/auth.py:112 app/routes/auth.py:170 app/routes/auth.py:240
-#: app/routes/auth.py:546 app/routes/auth.py:582
+#: app/routes/auth.py:574 app/routes/auth.py:621
 msgid "Passwords do not match"
 msgstr "Parolalar eşleşmiyor"
 
@@ -644,7 +750,7 @@ msgstr "Parolanız sıfırlandı. Lütfen giriş yapın."
 msgid "New account registration is currently disabled."
 msgstr "Yeni hesap kaydı şu anda devre dışı."
 
-#: app/routes/auth.py:180 app/routes/auth.py:591
+#: app/routes/auth.py:180 app/routes/auth.py:632
 msgid "Username already exists"
 msgstr "Bu kullanıcı adı zaten kullanılıyor"
 
@@ -660,7 +766,7 @@ msgstr "Kayıt başarılı! Lütfen giriş yapın."
 msgid "You have been logged out."
 msgstr "Oturumunuz kapatıldı."
 
-#: app/routes/auth.py:230 app/routes/auth.py:538
+#: app/routes/auth.py:230 app/routes/auth.py:565
 msgid "Email already in use by another account"
 msgstr "Bu e-posta başka bir hesap tarafından kullanılıyor"
 
@@ -668,71 +774,75 @@ msgstr "Bu e-posta başka bir hesap tarafından kullanılıyor"
 msgid "Settings updated successfully"
 msgstr "Ayarlar başarıyla güncellendi"
 
-#: app/routes/auth.py:330
+#: app/routes/auth.py:341
 #, python-format
 msgid "Invalid webhook URL: %(error)s"
 msgstr "Geçersiz webhook URL'si: %(error)s"
 
-#: app/routes/auth.py:345
+#: app/routes/auth.py:356
 msgid "Notification preferences updated"
 msgstr "Bildirim tercihleri güncellendi"
 
-#: app/routes/auth.py:370
+#: app/routes/auth.py:382
 msgid "Menu preferences updated"
 msgstr "Menü tercihleri güncellendi"
 
-#: app/routes/auth.py:395
+#: app/routes/auth.py:407
 msgid "Notification settings updated"
 msgstr "Bildirim ayarları güncellendi"
 
-#: app/routes/auth.py:424
+#: app/routes/auth.py:436
 msgid "Branding settings updated successfully"
 msgstr "Marka ayarları başarıyla güncellendi"
 
-#: app/routes/auth.py:440
+#: app/routes/auth.py:452
 msgid "Logo removed successfully"
 msgstr "Logo başarıyla kaldırıldı"
 
-#: app/routes/auth.py:453
+#: app/routes/auth.py:465
 msgid "DVLA settings updated"
 msgstr "DVLA ayarları güncellendi"
 
-#: app/routes/auth.py:466
+#: app/routes/auth.py:480
+msgid "UK fuel price settings updated"
+msgstr "Birleşik Krallık yakıt fiyatı ayarları güncellendi"
+
+#: app/routes/auth.py:493
 msgid "Tessie settings updated"
 msgstr "Tessie ayarları güncellendi"
 
-#: app/routes/auth.py:479
+#: app/routes/auth.py:506
 msgid "Registration settings updated"
 msgstr "Kayıt ayarları güncellendi"
 
-#: app/routes/auth.py:503
+#: app/routes/auth.py:530
 msgid "Cannot remove admin status from the last administrator."
 msgstr "Son yöneticinin yönetici yetkisi kaldırılamaz."
 
-#: app/routes/auth.py:508
+#: app/routes/auth.py:535
 #, python-format
 msgid "Admin status updated for %(username)s"
 msgstr "%(username)s için yönetici durumu güncellendi"
 
-#: app/routes/auth.py:521
+#: app/routes/auth.py:548
 #, python-format
 msgid "User %(username)s deleted"
 msgstr "%(username)s kullanıcısı silindi"
 
-#: app/routes/auth.py:559
+#: app/routes/auth.py:593
 #, python-format
 msgid "User %(username)s updated successfully"
 msgstr "%(username)s kullanıcısı başarıyla güncellendi"
 
-#: app/routes/auth.py:578
+#: app/routes/auth.py:616
 msgid "Username, email, and password are required"
 msgstr "Kullanıcı adı, e-posta ve parola gereklidir"
 
-#: app/routes/auth.py:595
+#: app/routes/auth.py:637
 msgid "Email already in use"
 msgstr "Bu e-posta zaten kullanılıyor"
 
-#: app/routes/auth.py:603
+#: app/routes/auth.py:646
 #, python-format
 msgid "User %(username)s created successfully"
 msgstr "%(username)s kullanıcısı başarıyla oluşturuldu"
@@ -777,69 +887,93 @@ msgstr "Belge güncellendi"
 msgid "Document \"%(title)s\" deleted"
 msgstr "\"%(title)s\" belgesi silindi"
 
-#: app/routes/expenses.py:142
+#: app/routes/expenses.py:60 app/routes/vehicles.py:411
+#, python-format
+msgid ""
+"These files were not saved because the file type is not supported: %(names)s"
+msgstr "Bu dosyalar kaydedilmedi çünkü dosya türü desteklenmiyor: %(names)s"
+
+#: app/routes/expenses.py:210
 msgid "Expense added successfully"
 msgstr "Gider başarıyla eklendi"
 
-#: app/routes/expenses.py:180
+#: app/routes/expenses.py:262
 msgid "Invalid data submitted. Please check the date and cost fields."
 msgstr ""
 "Geçersiz veri gönderildi. Lütfen tarih ve tutar alanlarını kontrol edin."
 
-#: app/routes/expenses.py:203
+#: app/routes/expenses.py:274
 msgid "Expense updated successfully"
 msgstr "Gider başarıyla güncellendi"
 
-#: app/routes/expenses.py:234
+#: app/routes/expenses.py:310
 msgid "Expense deleted successfully"
 msgstr "Gider başarıyla silindi"
 
-#: app/routes/expenses.py:259 app/routes/fuel.py:364
+#: app/routes/expenses.py:340 app/routes/fuel.py:431
 msgid "Attachment deleted"
 msgstr "Ek silindi"
 
-#: app/routes/fuel.py:154
+#: app/routes/fuel.py:193
 msgid "Fuel log added successfully"
 msgstr "Yakıt kaydı başarıyla eklendi"
 
-#: app/routes/fuel.py:280
+#: app/routes/fuel.py:332
 msgid "Fuel log updated successfully"
 msgstr "Yakıt kaydı başarıyla güncellendi"
 
-#: app/routes/fuel.py:339
+#: app/routes/fuel.py:396
 msgid "Fuel log deleted successfully"
 msgstr "Yakıt kaydı başarıyla silindi"
 
-#: app/routes/fuel.py:448
+#: app/routes/fuel.py:515
 msgid "Fuel log added!"
 msgstr "Yakıt kaydı eklendi!"
 
-#: app/routes/maintenance.py:85
+#: app/routes/main.py:259
+#, python-format
+msgid "Fuel: %(volume).1f L"
+msgstr "Yakıt: %(volume).1f L"
+
+#: app/routes/main.py:260 app/templates/search/index.html:74
+msgid "Fuel Log"
+msgstr "Yakıt kaydı"
+
+#: app/routes/main.py:284
+#, python-format
+msgid "Charging: %(kwh).1f kWh"
+msgstr "Şarj: %(kwh).1f kWh"
+
+#: app/routes/main.py:285 app/templates/search/index.html:160
+msgid "Charging Session"
+msgstr "Şarj oturumu"
+
+#: app/routes/maintenance.py:86
 #, python-format
 msgid "Maintenance schedule \"%(name)s\" created"
 msgstr "\"%(name)s\" bakım planı oluşturuldu"
 
-#: app/routes/maintenance.py:130
+#: app/routes/maintenance.py:132
 msgid "Maintenance schedule updated"
 msgstr "Bakım planı güncellendi"
 
-#: app/routes/maintenance.py:188
+#: app/routes/maintenance.py:190
 #, python-format
 msgid "Maintenance \"%(name)s\" marked as completed"
 msgstr "\"%(name)s\" bakımı tamamlandı olarak işaretlendi"
 
-#: app/routes/maintenance.py:207
+#: app/routes/maintenance.py:209
 #, python-format
 msgid "Maintenance schedule \"%(name)s\" deleted"
 msgstr "\"%(name)s\" bakım planı silindi"
 
-#: app/routes/notes.py:54 app/routes/notes.py:93
+#: app/routes/notes.py:54 app/routes/notes.py:98
 msgid "Invalid data submitted. Please check the date and odometer fields."
 msgstr ""
 "Geçersiz veri gönderildi. Lütfen tarih ve kilometre sayacı alanlarını "
 "kontrol edin."
 
-#: app/routes/notes.py:59 app/routes/notes.py:98
+#: app/routes/notes.py:59 app/routes/notes.py:103
 msgid "Please enter some note text"
 msgstr "Lütfen bir not metni girin"
 
@@ -847,11 +981,11 @@ msgstr "Lütfen bir not metni girin"
 msgid "Note added successfully"
 msgstr "Not başarıyla eklendi"
 
-#: app/routes/notes.py:103
+#: app/routes/notes.py:108
 msgid "Note updated successfully"
 msgstr "Not başarıyla güncellendi"
 
-#: app/routes/notes.py:124
+#: app/routes/notes.py:134
 msgid "Note deleted successfully"
 msgstr "Not başarıyla silindi"
 
@@ -885,259 +1019,376 @@ msgstr "%(name)s için gider oluşturuldu."
 msgid "Recurring expense %(status)s."
 msgstr "Tekrarlanan gider %(status)s."
 
-#: app/routes/reminders.py:77 app/routes/reminders.py:133
+#: app/routes/reminders.py:78 app/routes/reminders.py:134
 msgid "Invalid date format"
 msgstr "Geçersiz tarih biçimi"
 
-#: app/routes/reminders.py:95
+#: app/routes/reminders.py:96
 #, python-format
 msgid "Reminder \"%(title)s\" created successfully"
 msgstr "\"%(title)s\" hatırlatıcısı başarıyla oluşturuldu"
 
-#: app/routes/reminders.py:145
+#: app/routes/reminders.py:146
 msgid "Reminder updated successfully"
 msgstr "Hatırlatıcı başarıyla güncellendi"
 
-#: app/routes/reminders.py:192 app/routes/reminders.py:208
-msgid "Reminder marked as completed"
-msgstr "Hatırlatıcı tamamlandı olarak işaretlendi"
-
-#: app/routes/reminders.py:206
+#: app/routes/reminders.py:201
 #, python-format
 msgid "Reminder completed. Next occurrence created for %(date)s"
 msgstr "Hatırlatıcı tamamlandı. Sonraki tekrar %(date)s için oluşturuldu"
 
-#: app/routes/reminders.py:235
+#: app/routes/reminders.py:203
+msgid "Reminder marked as completed"
+msgstr "Hatırlatıcı tamamlandı olarak işaretlendi"
+
+#: app/routes/reminders.py:244
 msgid "Reminder marked as not completed"
 msgstr "Hatırlatıcı tamamlanmadı olarak işaretlendi"
 
-#: app/routes/reminders.py:254
+#: app/routes/reminders.py:263
 msgid "Reminder deleted"
 msgstr "Hatırlatıcı silindi"
 
-#: app/routes/stations.py:50
+#: app/routes/stations.py:55
 #, python-format
 msgid "Station \"%(name)s\" added"
 msgstr "\"%(name)s\" istasyonu eklendi"
 
-#: app/routes/stations.py:81
+#: app/routes/stations.py:86
 msgid "Station updated"
 msgstr "İstasyon güncellendi"
 
-#: app/routes/stations.py:109
+#: app/routes/stations.py:114
 #, python-format
 msgid "Station \"%(name)s\" deleted"
 msgstr "\"%(name)s\" istasyonu silindi"
 
-#: app/routes/stations.py:166
+#: app/routes/stations.py:170
+#, python-format
+msgid "Updated %(prices)s live prices from %(matched)s forecourts"
+msgstr "%(matched)s istasyondan %(prices)s canlı fiyat güncellendi"
+
+#: app/routes/stations.py:176
+msgid "No matching forecourts found. Check the station postcodes."
+msgstr ""
+"Eşleşen istasyon bulunamadı. İstasyonların posta kodlarını kontrol edin."
+
+#: app/routes/stations.py:182
+#, python-format
+msgid "Some retailer feeds could not be read: %(errors)s"
+msgstr "Bazı satıcı akışları okunamadı: %(errors)s"
+
+#: app/routes/stations.py:193 app/routes/stations.py:209
+msgid "UK fuel prices are not enabled. An admin can turn them on in Settings."
+msgstr ""
+"Birleşik Krallık yakıt fiyatları etkin değil. Bir yönetici bunları Ayarlar "
+"bölümünden açabilir."
+
+#: app/routes/stations.py:229
 msgid "You can only delete your own price entries"
 msgstr "Yalnızca kendi girdiğiniz fiyat kayıtlarını silebilirsiniz"
 
-#: app/routes/stations.py:173
+#: app/routes/stations.py:236
 msgid "Price entry deleted"
 msgstr "Fiyat kaydı silindi"
 
-#: app/routes/trips.py:97
+#: app/routes/tires.py:88 app/routes/tires.py:133
+msgid "Please give the tire set a name"
+msgstr "Lütfen lastik takımına bir ad verin"
+
+#: app/routes/tires.py:105 app/routes/tires.py:141
+msgid "Invalid data submitted. Please check the odometer and cost fields."
+msgstr ""
+"Geçersiz veri gönderildi. Kilometre ve maliyet alanlarını kontrol edin."
+
+#: app/routes/tires.py:112
+#, python-format
+msgid "Tire set \"%(name)s\" added"
+msgstr "\"%(name)s\" lastik takımı eklendi"
+
+#: app/routes/tires.py:153
+msgid "Tire set updated"
+msgstr "Lastik takımı güncellendi"
+
+#: app/routes/tires.py:171
+msgid "That tire set is already on the vehicle"
+msgstr "Bu lastik takımı zaten araçta takılı"
+
+#: app/routes/tires.py:174
+msgid "That tire set is retired. Reinstate it before fitting it again."
+msgstr ""
+"Bu lastik takımı kullanımdan kaldırılmış. Yeniden takmadan önce tekrar "
+"kullanıma alın."
+
+#: app/routes/tires.py:188 app/routes/tires.py:227
+#, python-format
+msgid "Took \"%(name)s\" off the vehicle"
+msgstr "\"%(name)s\" araçtan söküldü"
+
+#: app/routes/tires.py:197
+#, python-format
+msgid "Fitted \"%(name)s\""
+msgstr "\"%(name)s\" takıldı"
+
+#: app/routes/tires.py:213
+msgid "That tire set is not on the vehicle"
+msgstr "Bu lastik takımı araçta takılı değil"
+
+#: app/routes/tires.py:220
+msgid ""
+"The odometer reading cannot be lower than the one the set was fitted at"
+msgstr "Kilometre değeri, takımın takıldığı andaki değerden düşük olamaz"
+
+#: app/routes/tires.py:244
+msgid "Fitting record deleted"
+msgstr "Takma kaydı silindi"
+
+#: app/routes/tires.py:261
+#, python-format
+msgid "Tire set \"%(name)s\" deleted"
+msgstr "\"%(name)s\" lastik takımı silindi"
+
+#: app/routes/trips.py:94 app/routes/trips.py:165
+msgid "Fuel levels must be a percentage between 0 and 100."
+msgstr "Yakıt seviyeleri 0 ile 100 arasında bir yüzde olmalıdır."
+
+#: app/routes/trips.py:115
 msgid "Trip logged successfully"
 msgstr "Yolculuk başarıyla kaydedildi"
 
-#: app/routes/trips.py:154
+#: app/routes/trips.py:181
 msgid "Trip updated successfully"
 msgstr "Yolculuk başarıyla güncellendi"
 
-#: app/routes/trips.py:179
+#: app/routes/trips.py:206
 msgid "Trip deleted successfully"
 msgstr "Yolculuk başarıyla silindi"
 
-#: app/routes/trips.py:224
+#: app/routes/trips.py:251
 msgid "Template saved"
 msgstr "Şablon kaydedildi"
 
-#: app/routes/trips.py:264
+#: app/routes/trips.py:291
 msgid "Template updated"
 msgstr "Şablon güncellendi"
 
-#: app/routes/trips.py:284
+#: app/routes/trips.py:311
 msgid "Template deleted"
 msgstr "Şablon silindi"
 
-#: app/routes/vehicles.py:97
+#: app/routes/vehicles.py:142
 #, python-format
 msgid "Vehicle \"%(name)s\" added successfully"
 msgstr "\"%(name)s\" aracı başarıyla eklendi"
 
-#: app/routes/vehicles.py:259
+#: app/routes/vehicles.py:272
+msgid ""
+"Tracking unit cannot be changed once readings have been logged for this "
+"vehicle. Existing readings were kept as they are."
+msgstr ""
+"Bu araç için okuma kaydedildikten sonra takip birimi değiştirilemez. Mevcut "
+"okumalar olduğu gibi korundu."
+
+#: app/routes/vehicles.py:329
 msgid "Vehicle updated successfully"
 msgstr "Araç başarıyla güncellendi"
 
-#: app/routes/vehicles.py:294
+#: app/routes/vehicles.py:363
 msgid "Vehicle deleted successfully"
 msgstr "Araç başarıyla silindi"
 
-#: app/routes/vehicles.py:313
+#: app/routes/vehicles.py:414
+msgid "Photo added"
+msgstr "Fotoğraf eklendi"
+
+#: app/routes/vehicles.py:416
+#, python-format
+msgid "%(count)s photos added"
+msgstr "%(count)s fotoğraf eklendi"
+
+#: app/routes/vehicles.py:418
+msgid "No photos were selected"
+msgstr "Hiç fotoğraf seçilmedi"
+
+#: app/routes/vehicles.py:456
+msgid "Main photo updated"
+msgstr "Ana fotoğraf güncellendi"
+
+#: app/routes/vehicles.py:489
+msgid "Photo deleted"
+msgstr "Fotoğraf silindi"
+
+#: app/routes/vehicles.py:508
 msgid "User not found"
 msgstr "Kullanıcı bulunamadı"
 
-#: app/routes/vehicles.py:315
+#: app/routes/vehicles.py:510
 msgid "You are already the owner"
 msgstr "Zaten sahibisiniz"
 
-#: app/routes/vehicles.py:317
+#: app/routes/vehicles.py:512
 msgid "Vehicle already shared with this user"
 msgstr "Araç bu kullanıcıyla zaten paylaşılıyor"
 
-#: app/routes/vehicles.py:321
+#: app/routes/vehicles.py:516
 #, python-format
 msgid "Vehicle shared with %(username)s"
 msgstr "Araç %(username)s ile paylaşıldı"
 
-#: app/routes/vehicles.py:343
+#: app/routes/vehicles.py:538
 #, python-format
 msgid "Sharing removed for %(username)s"
 msgstr "%(username)s için paylaşım kaldırıldı"
 
-#: app/routes/vehicles.py:360
+#: app/routes/vehicles.py:555
 #, python-format
 msgid "Vehicle \"%(name)s\" has been archived"
 msgstr "\"%(name)s\" aracı arşivlendi"
 
-#: app/routes/vehicles.py:376
+#: app/routes/vehicles.py:571
 #, python-format
 msgid "Vehicle \"%(name)s\" has been restored"
 msgstr "\"%(name)s\" aracı geri yüklendi"
 
-#: app/routes/vehicles.py:394
+#: app/routes/vehicles.py:663
 msgid "PDF generation is not available. Please install weasyprint."
 msgstr "PDF oluşturma kullanılamıyor. Lütfen weasyprint yükleyin."
 
-#: app/routes/vehicles.py:502
+#: app/routes/vehicles.py:786
 #, python-format
 msgid "Part \"%(name)s\" added successfully"
 msgstr "\"%(name)s\" parçası başarıyla eklendi"
 
-#: app/routes/vehicles.py:525 app/routes/vehicles.py:563
+#: app/routes/vehicles.py:809 app/routes/vehicles.py:847
 msgid "Part not found"
 msgstr "Parça bulunamadı"
 
-#: app/routes/vehicles.py:540
+#: app/routes/vehicles.py:824
 msgid "Part updated successfully"
 msgstr "Parça başarıyla güncellendi"
 
-#: app/routes/vehicles.py:569
+#: app/routes/vehicles.py:853
 msgid "Part deleted successfully"
 msgstr "Parça başarıyla silindi"
 
-#: app/templates/auth/settings.html:421 app/templates/base.html:271
-#: app/templates/base.html:383 app/templates/dashboard.html:2
+#: app/templates/auth/settings.html:434 app/templates/base.html:271
+#: app/templates/base.html:391 app/templates/dashboard.html:2
 #: app/templates/dashboard.html:11
 msgid "Dashboard"
 msgstr "Panel"
 
-#: app/templates/auth/settings.html:422 app/templates/auth/settings.html:473
-#: app/templates/base.html:275 app/templates/base.html:385
+#: app/templates/auth/settings.html:435 app/templates/auth/settings.html:486
+#: app/templates/base.html:275 app/templates/base.html:393
 #: app/templates/dashboard.html:27 app/templates/vehicles/index.html:2
 #: app/templates/vehicles/index.html:7
 msgid "Vehicles"
 msgstr "Araçlar"
 
-#: app/templates/auth/settings.html:423 app/templates/auth/settings.html:478
-#: app/templates/base.html:280 app/templates/base.html:388
+#: app/templates/auth/settings.html:436 app/templates/auth/settings.html:491
+#: app/templates/base.html:280 app/templates/base.html:396
 #: app/templates/fuel/index.html:2 app/templates/fuel/index.html:7
-#: app/templates/search/index.html:64 app/templates/vehicles/view.html:789
+#: app/templates/search/index.html:66 app/templates/vehicles/view.html:947
 msgid "Fuel Logs"
 msgstr "Yakıt Kayıtları"
 
-#: app/templates/auth/settings.html:425 app/templates/auth/settings.html:483
-#: app/templates/base.html:285 app/templates/base.html:391
-#: app/templates/dashboard.html:382 app/templates/expenses/index.html:2
-#: app/templates/expenses/index.html:7 app/templates/expenses/index.html:123
-#: app/templates/search/index.html:43 app/templates/timeline/index.html:108
-#: app/templates/vehicles/view.html:841
+#: app/templates/auth/settings.html:438 app/templates/auth/settings.html:496
+#: app/templates/base.html:285 app/templates/base.html:399
+#: app/templates/dashboard.html:398 app/templates/expenses/index.html:2
+#: app/templates/expenses/index.html:7 app/templates/expenses/index.html:143
+#: app/templates/search/index.html:43 app/templates/timeline/index.html:120
+#: app/templates/vehicles/view.html:1004
 msgid "Expenses"
 msgstr "Giderler"
 
-#: app/templates/auth/settings.html:426 app/templates/auth/settings.html:488
-#: app/templates/base.html:290 app/templates/base.html:394
+#: app/templates/auth/settings.html:439 app/templates/auth/settings.html:501
+#: app/templates/base.html:290 app/templates/base.html:402
 #: app/templates/reminders/index.html:2 app/templates/reminders/index.html:7
 msgid "Reminders"
 msgstr "Hatırlatıcılar"
 
-#: app/templates/auth/settings.html:431 app/templates/auth/settings.html:513
-#: app/templates/base.html:295 app/templates/base.html:398
-#: app/templates/search/index.html:124 app/templates/trips/index.html:2
+#: app/templates/auth/settings.html:444 app/templates/auth/settings.html:526
+#: app/templates/base.html:295 app/templates/base.html:406
+#: app/templates/search/index.html:130 app/templates/trips/index.html:2
 #: app/templates/trips/index.html:7
 msgid "Trips"
 msgstr "Yolculuklar"
 
-#: app/templates/base.html:309
+#: app/templates/base.html:310
 msgid "More"
 msgstr "Daha Fazla"
 
-#: app/templates/base.html:320 app/templates/base.html:407
+#: app/templates/base.html:321 app/templates/base.html:415
 msgid "Recurring"
 msgstr "Tekrarlanan"
 
-#: app/templates/auth/settings.html:429 app/templates/auth/settings.html:503
-#: app/templates/base.html:323 app/templates/base.html:410
+#: app/templates/auth/settings.html:442 app/templates/auth/settings.html:516
+#: app/templates/base.html:324 app/templates/base.html:418
 #: app/templates/documents/index.html:2 app/templates/documents/index.html:7
-#: app/templates/search/index.html:85
+#: app/templates/search/index.html:89
 msgid "Documents"
 msgstr "Belgeler"
 
-#: app/templates/auth/settings.html:430 app/templates/auth/settings.html:508
-#: app/templates/base.html:326 app/templates/base.html:413
+#: app/templates/auth/settings.html:443 app/templates/auth/settings.html:521
+#: app/templates/base.html:327 app/templates/base.html:421
 #: app/templates/stations/index.html:2 app/templates/stations/index.html:7
 msgid "Fuel Stations"
 msgstr "Yakıt İstasyonları"
 
-#: app/templates/auth/settings.html:432 app/templates/auth/settings.html:518
-#: app/templates/base.html:329 app/templates/base.html:401
+#: app/templates/auth/settings.html:445 app/templates/auth/settings.html:531
+#: app/templates/base.html:330 app/templates/base.html:409
 msgid "EV Charging"
 msgstr "Elektrikli Araç Şarjı"
 
 #: app/templates/allowance/index.html:2 app/templates/allowance/index.html:7
-#: app/templates/auth/settings.html:433 app/templates/auth/settings.html:523
-#: app/templates/base.html:332 app/templates/base.html:416
-#: app/templates/dashboard.html:158 app/templates/vehicles/view.html:94
+#: app/templates/auth/settings.html:446 app/templates/auth/settings.html:536
+#: app/templates/base.html:333 app/templates/base.html:424
+#: app/templates/dashboard.html:158 app/templates/vehicles/view.html:151
 msgid "Mileage Allowance"
 msgstr "Kilometre Ücreti"
 
-#: app/templates/auth/settings.html:434 app/templates/auth/settings.html:528
-#: app/templates/base.html:335 app/templates/base.html:419
-#: app/templates/charging/form.html:144 app/templates/expenses/form.html:98
-#: app/templates/fuel/form.html:143 app/templates/notes/index.html:2
-#: app/templates/notes/index.html:7 app/templates/search/index.html:106
-#: app/templates/stations/form.html:74 app/templates/trips/form.html:117
-#: app/templates/trips/template_form.html:76
-#: app/templates/vehicles/form.html:222
+#: app/templates/auth/settings.html:541 app/templates/base.html:336
+#: app/templates/base.html:427 app/templates/tires/index.html:2
+#: app/templates/tires/index.html:7
+msgid "Tires"
+msgstr "Lastikler"
+
+#: app/templates/auth/settings.html:447 app/templates/auth/settings.html:546
+#: app/templates/base.html:339 app/templates/base.html:430
+#: app/templates/charging/form.html:149 app/templates/expenses/form.html:112
+#: app/templates/fuel/form.html:168 app/templates/notes/index.html:2
+#: app/templates/notes/index.html:7 app/templates/search/index.html:110
+#: app/templates/stations/form.html:74 app/templates/tires/form.html:83
+#: app/templates/trips/form.html:142 app/templates/trips/template_form.html:76
+#: app/templates/vehicles/form.html:223
 #: app/templates/vehicles/part_form.html:87
-#: app/templates/vehicles/view.html:605
+#: app/templates/vehicles/view.html:746
 msgid "Notes"
 msgstr "Notlar"
 
-#: app/templates/auth/settings.html:424 app/templates/base.html:337
-#: app/templates/base.html:347 app/templates/base.html:421
+#: app/templates/auth/settings.html:437 app/templates/base.html:342
+#: app/templates/base.html:354 app/templates/base.html:433
 #: app/templates/fuel/quick.html:2 app/templates/fuel/quick.html:7
 msgid "Quick Fuel Entry"
 msgstr "Hızlı Yakıt Girişi"
 
-#: app/templates/base.html:351 app/templates/dashboard.html:376
-#: app/templates/timeline/index.html:102 app/templates/vehicles/view.html:55
+#: app/templates/base.html:358 app/templates/dashboard.html:392
+#: app/templates/timeline/index.html:114 app/templates/trips/index.html:127
+#: app/templates/vehicles/view.html:93
 msgid "Fuel"
 msgstr "Yakıt"
 
-#: app/templates/base.html:354 app/templates/base.html:396
+#: app/templates/base.html:362 app/templates/base.html:404
 #: app/templates/search/index.html:2 app/templates/search/index.html:6
 #: app/templates/search/index.html:32
 msgid "Search"
 msgstr "Ara"
 
 #: app/templates/auth/settings.html:2 app/templates/auth/settings.html:6
-#: app/templates/base.html:359 app/templates/base.html:422
+#: app/templates/base.html:367 app/templates/base.html:435
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: app/templates/base.html:366 app/templates/base.html:427
+#: app/templates/base.html:374 app/templates/base.html:440
 msgid "Logout"
 msgstr "Çıkış Yap"
 
@@ -1145,34 +1396,52 @@ msgstr "Çıkış Yap"
 msgid "Overview of your vehicles and expenses"
 msgstr "Araçlarınıza ve giderlerinize genel bakış"
 
-#: app/templates/dashboard.html:45 app/templates/vehicles/view.html:75
+#: app/templates/dashboard.html:45 app/templates/vehicles/view.html:132
 msgid "Total Fuel Cost"
 msgstr "Toplam Yakıt Maliyeti"
 
-#: app/templates/dashboard.html:64 app/templates/vehicles/view.html:82
+#: app/templates/dashboard.html:64 app/templates/vehicles/view.html:139
 msgid "Total Charging Cost"
 msgstr "Toplam Şarj Maliyeti"
 
-#: app/templates/dashboard.html:83 app/templates/vehicles/view.html:88
+#: app/templates/dashboard.html:83 app/templates/vehicles/view.html:145
 msgid "Other Expenses"
 msgstr "Diğer Giderler"
 
-#: app/templates/dashboard.html:101 app/templates/trips/index.html:38
-#: app/templates/trips/report.html:35 app/templates/vehicles/view.html:105
+#: app/templates/dashboard.html:101 app/templates/trips/index.html:40
+#: app/templates/trips/report.html:35 app/templates/vehicles/view.html:162
 msgid "Total Distance"
 msgstr "Toplam Mesafe"
 
-#: app/templates/dashboard.html:119 app/templates/vehicles/view.html:137
+#: app/templates/dashboard.html:102 app/templates/dashboard.html:119
+#: app/templates/trips/index.html:41 app/templates/trips/index.html:45
+#: app/templates/trips/report.html:36 app/templates/trips/report.html:40
+#: app/templates/trips/report.html:68 app/templates/trips/report.html:127
+msgid "This total covers vehicles metered in distance and in engine hours."
+msgstr "Bu toplam, mesafe ve motor saati ile takip edilen araçları kapsar."
+
+#: app/templates/dashboard.html:102 app/templates/trips/index.html:41
+#: app/templates/trips/index.html:45 app/templates/trips/report.html:36
+#: app/templates/trips/report.html:40 app/templates/trips/report.html:68
+#: app/templates/trips/report.html:127
+msgid "mixed units"
+msgstr "karışık birimler"
+
+#: app/templates/dashboard.html:119 app/templates/vehicles/view.html:201
 msgid "Cost per"
 msgstr "Birim Maliyet"
 
-#: app/templates/charging/form.html:135 app/templates/charging/index.html:26
-#: app/templates/dashboard.html:139 app/templates/fuel/form.html:88
-#: app/templates/fuel/quick.html:75
+#: app/templates/dashboard.html:119
+msgid "unit"
+msgstr "birim"
+
+#: app/templates/charging/form.html:140 app/templates/charging/index.html:28
+#: app/templates/dashboard.html:139 app/templates/fuel/form.html:94
+#: app/templates/fuel/quick.html:76
 msgid "Total Cost"
 msgstr "Toplam Maliyet"
 
-#: app/templates/dashboard.html:176 app/templates/vehicles/view.html:99
+#: app/templates/dashboard.html:176 app/templates/vehicles/view.html:156
 msgid "Net Cost"
 msgstr "Net Maliyet"
 
@@ -1181,13 +1450,13 @@ msgid "Monthly Spending"
 msgstr "Aylık Harcama"
 
 #: app/templates/dashboard.html:198 app/templates/stations/cheapest.html:2
-#: app/templates/stations/cheapest.html:7 app/templates/stations/index.html:16
+#: app/templates/stations/cheapest.html:7 app/templates/stations/index.html:28
 msgid "Cheapest Fuel"
 msgstr "En Ucuz Yakıt"
 
-#: app/templates/dashboard.html:199 app/templates/dashboard.html:286
-#: app/templates/dashboard.html:310 app/templates/vehicles/view.html:515
-#: app/templates/vehicles/view.html:625 app/templates/vehicles/view.html:683
+#: app/templates/dashboard.html:199 app/templates/dashboard.html:290
+#: app/templates/dashboard.html:314 app/templates/vehicles/view.html:652
+#: app/templates/vehicles/view.html:766 app/templates/vehicles/view.html:824
 msgid "View all"
 msgstr "Tümünü görüntüle"
 
@@ -1197,7 +1466,7 @@ msgstr ""
 "Henüz fiyat verisi yok. Fiyatları takip etmek için yakıt istasyonu ekleyip "
 "yakıt kaydı girin."
 
-#: app/templates/dashboard.html:230
+#: app/templates/dashboard.html:230 app/templates/vehicles/view.html:932
 msgid "Expenses by Category"
 msgstr "Kategoriye göre giderler"
 
@@ -1205,124 +1474,118 @@ msgstr "Kategoriye göre giderler"
 msgid "Your Vehicles"
 msgstr "Araçlarınız"
 
-#: app/templates/dashboard.html:242
+#: app/templates/dashboard.html:243
 msgid "Add"
 msgstr "Ekle"
 
-#: app/templates/dashboard.html:277
-msgid "No vehicles yet."
-msgstr "Henüz araç yok."
-
-#: app/templates/dashboard.html:277
+#: app/templates/dashboard.html:280
 msgid "Add your first vehicle"
 msgstr "İlk aracınızı ekleyin"
 
-#: app/templates/dashboard.html:285
+#: app/templates/dashboard.html:289
 msgid "Recent Fuel Logs"
 msgstr "Son Yakıt Kayıtları"
 
-#: app/templates/dashboard.html:303 app/templates/vehicles/view.html:835
+#: app/templates/dashboard.html:307 app/templates/vehicles/view.html:998
 msgid "No fuel logs yet."
 msgstr "Henüz yakıt kaydı yok."
 
-#: app/templates/dashboard.html:309
+#: app/templates/dashboard.html:313
 msgid "Recent Expenses"
 msgstr "Son Giderler"
 
-#: app/templates/dashboard.html:327 app/templates/vehicles/view.html:879
+#: app/templates/dashboard.html:331 app/templates/vehicles/view.html:1046
 msgid "No expenses yet."
 msgstr "Henüz gider yok."
 
-#: app/templates/allowance/form.html:2 app/templates/allowance/form.html:8
+#: app/templates/allowance/form.html:2 app/templates/allowance/form.html:11
 msgid "Edit Allowance"
 msgstr "Ücreti Düzenle"
 
-#: app/templates/allowance/form.html:2 app/templates/allowance/form.html:8
-#: app/templates/allowance/form.html:77 app/templates/allowance/index.html:15
-#: app/templates/allowance/index.html:74
+#: app/templates/allowance/form.html:2 app/templates/allowance/form.html:11
+#: app/templates/allowance/form.html:81 app/templates/allowance/index.html:16
+#: app/templates/allowance/index.html:81
 msgid "Add Allowance"
 msgstr "Ücret Ekle"
 
-#: app/templates/allowance/form.html:7
+#: app/templates/allowance/form.html:10
 msgid "Back to mileage allowance"
 msgstr "Kilometre ücretine dön"
 
-#: app/templates/allowance/form.html:16 app/templates/allowance/index.html:26
-#: app/templates/charging/form.html:16 app/templates/charging/index.html:36
-#: app/templates/documents/form.html:21 app/templates/expenses/form.html:16
-#: app/templates/expenses/index.html:27 app/templates/fuel/form.html:16
-#: app/templates/fuel/index.html:26 app/templates/fuel/index.html:113
-#: app/templates/fuel/quick.html:15 app/templates/maintenance/form.html:20
-#: app/templates/notes/form.html:16 app/templates/notes/index.html:27
+#: app/templates/allowance/form.html:19 app/templates/allowance/index.html:28
+#: app/templates/charging/form.html:19 app/templates/charging/index.html:38
+#: app/templates/documents/form.html:21 app/templates/expenses/form.html:29
+#: app/templates/expenses/index.html:29 app/templates/fuel/form.html:19
+#: app/templates/fuel/index.html:42 app/templates/fuel/index.html:145
+#: app/templates/fuel/quick.html:15 app/templates/maintenance/form.html:30
+#: app/templates/notes/form.html:19 app/templates/notes/index.html:29
 #: app/templates/recurring/form.html:21 app/templates/reminders/form.html:26
-#: app/templates/reminders/index.html:25 app/templates/trips/form.html:32
-#: app/templates/trips/index.html:51 app/templates/trips/report.html:99
+#: app/templates/reminders/index.html:27 app/templates/tires/form.html:16
+#: app/templates/trips/form.html:37 app/templates/trips/index.html:53
+#: app/templates/trips/report.html:99
 msgid "Vehicle"
 msgstr "Araç"
 
-#: app/templates/allowance/form.html:30 app/templates/allowance/index.html:25
-#: app/templates/charging/form.html:32 app/templates/expenses/form.html:30
-#: app/templates/expenses/index.html:26 app/templates/fuel/form.html:37
-#: app/templates/fuel/index.html:25 app/templates/fuel/index.html:112
-#: app/templates/maintenance/form.html:100 app/templates/notes/form.html:30
-#: app/templates/notes/index.html:26 app/templates/trips/form.html:59
+#: app/templates/allowance/form.html:34 app/templates/allowance/index.html:27
+#: app/templates/charging/form.html:37 app/templates/expenses/form.html:44
+#: app/templates/expenses/index.html:28 app/templates/fuel/form.html:43
+#: app/templates/fuel/index.html:41 app/templates/fuel/index.html:144
+#: app/templates/maintenance/form.html:119 app/templates/notes/form.html:34
+#: app/templates/notes/index.html:28 app/templates/tires/index.html:87
+#: app/templates/tires/index.html:102 app/templates/trips/form.html:67
 #: app/templates/trips/report.html:98
 msgid "Date"
 msgstr "Tarih"
 
-#: app/templates/allowance/form.html:37 app/templates/allowance/index.html:29
+#: app/templates/allowance/form.html:41 app/templates/allowance/index.html:31
 #: app/templates/recurring/form.html:65
 msgid "Amount"
 msgstr "Tutar"
 
-#: app/templates/allowance/form.html:44 app/templates/allowance/index.html:28
-#: app/templates/auth/settings.html:126 app/templates/trips/form.html:89
-#: app/templates/trips/report.html:102 app/templates/vehicles/view.html:465
-msgid "Distance"
-msgstr "Mesafe"
-
-#: app/templates/allowance/form.html:52
+#: app/templates/allowance/form.html:56
 msgid "Rate per unit"
 msgstr "Birim Başına Ücret"
 
-#: app/templates/allowance/form.html:57
+#: app/templates/allowance/form.html:61
 msgid "Optional. If set with distance, the amount is calculated for you."
 msgstr ""
 "İsteğe bağlı. Mesafe ile birlikte belirtilirse tutar sizin için hesaplanır."
 
-#: app/templates/allowance/form.html:61 app/templates/allowance/index.html:27
-#: app/templates/documents/form.html:91 app/templates/documents/view.html:96
-#: app/templates/expenses/form.html:47 app/templates/expenses/index.html:29
-#: app/templates/maintenance/form.html:57 app/templates/recurring/form.html:96
-#: app/templates/trips/form.html:109 app/templates/trips/report.html:101
+#: app/templates/allowance/form.html:65 app/templates/allowance/index.html:29
+#: app/templates/documents/form.html:91 app/templates/documents/view.html:98
+#: app/templates/expenses/form.html:61 app/templates/expenses/index.html:31
+#: app/templates/maintenance/form.html:68 app/templates/recurring/form.html:96
+#: app/templates/trips/form.html:134 app/templates/trips/report.html:101
 #: app/templates/trips/template_form.html:68
 msgid "Description"
 msgstr "Açıklama"
 
-#: app/templates/allowance/form.html:64
+#: app/templates/allowance/form.html:68
 msgid "e.g., June client visits"
 msgstr "ör. Haziran müşteri ziyaretleri"
 
-#: app/templates/allowance/form.html:73 app/templates/charging/form.html:154
-#: app/templates/documents/form.html:122 app/templates/expenses/form.html:126
-#: app/templates/fuel/form.html:171 app/templates/maintenance/form.html:156
-#: app/templates/maintenance/index.html:157 app/templates/notes/form.html:63
+#: app/templates/allowance/form.html:77 app/templates/charging/form.html:159
+#: app/templates/documents/form.html:122 app/templates/expenses/form.html:146
+#: app/templates/fuel/form.html:201
+#: app/templates/import/backup_preview.html:90
+#: app/templates/maintenance/form.html:177
+#: app/templates/maintenance/index.html:162 app/templates/notes/form.html:72
 #: app/templates/recurring/form.html:128 app/templates/reminders/form.html:126
-#: app/templates/stations/form.html:101 app/templates/trips/form.html:127
-#: app/templates/trips/template_form.html:86
-#: app/templates/vehicles/form.html:321
+#: app/templates/stations/form.html:101 app/templates/tires/form.html:103
+#: app/templates/trips/form.html:152 app/templates/trips/template_form.html:86
+#: app/templates/vehicles/form.html:322
 #: app/templates/vehicles/part_form.html:98
 msgid "Cancel"
 msgstr "İptal"
 
-#: app/templates/allowance/form.html:77 app/templates/auth/edit_user.html:74
-#: app/templates/auth/settings.html:212 app/templates/charging/form.html:158
-#: app/templates/documents/form.html:126 app/templates/expenses/form.html:130
-#: app/templates/fuel/form.html:175 app/templates/maintenance/form.html:160
-#: app/templates/notes/form.html:67 app/templates/recurring/form.html:132
-#: app/templates/stations/form.html:105 app/templates/trips/form.html:131
-#: app/templates/trips/template_form.html:90
-#: app/templates/vehicles/form.html:325
+#: app/templates/allowance/form.html:81 app/templates/auth/edit_user.html:91
+#: app/templates/auth/settings.html:212 app/templates/charging/form.html:163
+#: app/templates/documents/form.html:126 app/templates/expenses/form.html:150
+#: app/templates/fuel/form.html:205 app/templates/maintenance/form.html:181
+#: app/templates/notes/form.html:76 app/templates/recurring/form.html:132
+#: app/templates/stations/form.html:105 app/templates/tires/form.html:107
+#: app/templates/trips/form.html:156 app/templates/trips/template_form.html:90
+#: app/templates/vehicles/form.html:326
 #: app/templates/vehicles/part_form.html:102
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
@@ -1334,37 +1597,39 @@ msgstr ""
 "İş kullanımı için aldığınız kilometre ücretini kaydedin; bu, işletme "
 "maliyetlerinizi dengeler"
 
-#: app/templates/allowance/index.html:30 app/templates/expenses/index.html:32
-#: app/templates/fuel/index.html:32 app/templates/fuel/index.html:118
-#: app/templates/notes/index.html:30
+#: app/templates/allowance/index.html:32 app/templates/expenses/index.html:34
+#: app/templates/fuel/index.html:49 app/templates/fuel/index.html:150
+#: app/templates/notes/index.html:32 app/templates/tires/index.html:128
 msgid "Actions"
 msgstr "İşlemler"
 
-#: app/templates/allowance/index.html:48 app/templates/documents/view.html:30
-#: app/templates/expenses/index.html:60 app/templates/fuel/index.html:61
-#: app/templates/fuel/index.html:141 app/templates/maintenance/index.html:83
-#: app/templates/notes/index.html:52 app/templates/stations/index.html:65
-#: app/templates/vehicles/view.html:40 app/templates/vehicles/view.html:457
+#: app/templates/allowance/index.html:51 app/templates/documents/view.html:31
+#: app/templates/expenses/index.html:64 app/templates/fuel/index.html:85
+#: app/templates/fuel/index.html:174 app/templates/maintenance/index.html:85
+#: app/templates/notes/index.html:55 app/templates/stations/index.html:80
+#: app/templates/tires/index.html:158 app/templates/vehicles/view.html:75
+#: app/templates/vehicles/view.html:593
 msgid "Edit"
 msgstr "Düzenle"
 
-#: app/templates/allowance/index.html:50
+#: app/templates/allowance/index.html:55
 msgid "Delete this allowance entry?"
 msgstr "Bu ücret kaydı silinsin mi?"
 
-#: app/templates/allowance/index.html:52 app/templates/documents/form.html:114
-#: app/templates/expenses/form.html:112 app/templates/expenses/index.html:64
-#: app/templates/fuel/form.html:157 app/templates/fuel/index.html:65
-#: app/templates/notes/index.html:56 app/templates/recurring/form.html:120
-#: app/templates/stations/form.html:93
+#: app/templates/allowance/index.html:57 app/templates/documents/form.html:114
+#: app/templates/expenses/form.html:126 app/templates/expenses/index.html:70
+#: app/templates/fuel/form.html:182 app/templates/fuel/index.html:92
+#: app/templates/notes/index.html:61 app/templates/recurring/form.html:120
+#: app/templates/stations/form.html:93 app/templates/tires/index.html:144
+#: app/templates/tires/index.html:162 app/templates/vehicles/view.html:337
 msgid "Delete"
 msgstr "Sil"
 
-#: app/templates/allowance/index.html:66
+#: app/templates/allowance/index.html:72
 msgid "No allowance entries"
 msgstr "Ücret kaydı yok"
 
-#: app/templates/allowance/index.html:67
+#: app/templates/allowance/index.html:73
 msgid "Track mileage allowance you receive for business journeys."
 msgstr "İş yolculukları için aldığınız kilometre ücretini takip edin."
 
@@ -1373,7 +1638,7 @@ msgid "API Documentation"
 msgstr "API Belgeleri"
 
 #: app/templates/auth/create_user.html:2 app/templates/auth/create_user.html:8
-#: app/templates/auth/create_user.html:62 app/templates/auth/users.html:9
+#: app/templates/auth/create_user.html:79 app/templates/auth/users.html:9
 msgid "Create User"
 msgstr "Kullanıcı Oluştur"
 
@@ -1397,8 +1662,8 @@ msgstr "Kullanıcı Adı"
 
 #: app/templates/auth/create_user.html:33 app/templates/auth/edit_user.html:33
 #: app/templates/auth/forgot_password.html:20
-#: app/templates/auth/register.html:24 app/templates/auth/settings.html:234
-#: app/templates/auth/settings.html:1246
+#: app/templates/auth/register.html:24 app/templates/auth/settings.html:247
+#: app/templates/auth/settings.html:1370
 msgid "Email"
 msgstr "E-posta"
 
@@ -1412,9 +1677,15 @@ msgstr "Parola"
 msgid "Confirm Password"
 msgstr "Parolayı Onayla"
 
-#: app/templates/auth/create_user.html:54 app/templates/auth/edit_user.html:42
-msgid "Administrator"
-msgstr "Yönetici"
+#: app/templates/auth/create_user.html:53 app/templates/auth/edit_user.html:40
+#: app/templates/auth/settings.html:234 app/templates/auth/users.html:21
+msgid "Role"
+msgstr "Rol"
+
+#: app/templates/auth/create_user.html:65 app/templates/auth/edit_user.html:52
+msgid "Administrators always have full access, whatever role is set."
+msgstr ""
+"Yöneticiler, hangi rol atanmış olursa olsun her zaman tam erişime sahiptir."
 
 #: app/templates/auth/edit_user.html:2
 msgid "Edit User"
@@ -1424,23 +1695,23 @@ msgstr "Kullanıcıyı Düzenle"
 msgid "Update user details and credentials"
 msgstr "Kullanıcı bilgilerini ve kimlik bilgilerini güncelleyin"
 
-#: app/templates/auth/edit_user.html:51
+#: app/templates/auth/edit_user.html:68
 #: app/templates/auth/reset_password.html:2
 #: app/templates/auth/reset_password.html:31
 msgid "Reset Password"
 msgstr "Parolayı Sıfırla"
 
-#: app/templates/auth/edit_user.html:52
+#: app/templates/auth/edit_user.html:69
 msgid "Leave blank to keep the current password"
 msgstr "Mevcut parolayı korumak için boş bırakın"
 
-#: app/templates/auth/edit_user.html:58
+#: app/templates/auth/edit_user.html:75
 #: app/templates/auth/reset_password.html:18
-#: app/templates/auth/settings.html:359
+#: app/templates/auth/settings.html:372
 msgid "New Password"
 msgstr "Yeni Parola"
 
-#: app/templates/auth/edit_user.html:63 app/templates/auth/settings.html:365
+#: app/templates/auth/edit_user.html:80 app/templates/auth/settings.html:378
 msgid "Confirm New Password"
 msgstr "Yeni Parolayı Onayla"
 
@@ -1520,7 +1791,7 @@ msgstr "Birimler ve Değerler"
 msgid "Account & Security"
 msgstr "Hesap ve Güvenlik"
 
-#: app/templates/auth/settings.html:34 app/templates/auth/settings.html:410
+#: app/templates/auth/settings.html:34 app/templates/auth/settings.html:423
 msgid "Menu & Navigation"
 msgstr "Menü ve Gezinme"
 
@@ -1532,8 +1803,8 @@ msgstr "İçe/Dışa Aktarma"
 msgid "API"
 msgstr "API"
 
-#: app/templates/auth/settings.html:58 app/templates/auth/settings.html:343
-#: app/templates/auth/settings.html:767
+#: app/templates/auth/settings.html:58 app/templates/auth/settings.html:356
+#: app/templates/auth/settings.html:796
 msgid "Integrations"
 msgstr "Entegrasyonlar"
 
@@ -1545,7 +1816,7 @@ msgstr "Bildirimler"
 msgid "Branding"
 msgstr "Marka"
 
-#: app/templates/auth/settings.html:84 app/templates/auth/settings.html:1647
+#: app/templates/auth/settings.html:84 app/templates/auth/settings.html:1771
 msgid "About"
 msgstr "Hakkında"
 
@@ -1561,20 +1832,65 @@ msgstr "Dil"
 msgid "Date Format"
 msgstr "Tarih Biçimi"
 
-#: app/templates/auth/settings.html:135 app/templates/fuel/form.html:62
-#: app/templates/fuel/index.html:28 app/templates/fuel/quick.html:56
+#: app/templates/auth/settings.html:118
+msgid "DD/MM/YYYY"
+msgstr "GG/AA/YYYY"
+
+#: app/templates/auth/settings.html:119
+msgid "MM/DD/YYYY"
+msgstr "AA/GG/YYYY"
+
+#: app/templates/auth/settings.html:120
+msgid "YYYY-MM-DD"
+msgstr "YYYY-AA-GG"
+
+#: app/templates/auth/settings.html:121
+msgid "DD.MM.YYYY"
+msgstr "GG.AA.YYYY"
+
+#: app/templates/auth/settings.html:135 app/templates/fuel/form.html:68
+#: app/templates/fuel/index.html:45 app/templates/fuel/quick.html:57
 msgid "Volume"
 msgstr "Hacim"
+
+#: app/templates/auth/settings.html:138
+#: app/templates/vehicles/part_form.html:58
+msgid "Liters (L)"
+msgstr "Litre (L)"
+
+#: app/templates/auth/settings.html:139
+msgid "UK Gallons (gal)"
+msgstr "İngiliz galonu (gal)"
+
+#: app/templates/auth/settings.html:140
+msgid "US Gallons (gal)"
+msgstr "ABD galonu (gal)"
 
 #: app/templates/auth/settings.html:145
 msgid "Fuel Consumption"
 msgstr "Yakıt Tüketimi"
 
+#: app/templates/auth/settings.html:148
+msgid "L/100km"
+msgstr "L/100 km"
+
+#: app/templates/auth/settings.html:149
+msgid "MPG (UK)"
+msgstr "MPG (İngiliz)"
+
+#: app/templates/auth/settings.html:150
+msgid "MPG (US)"
+msgstr "MPG (ABD)"
+
+#: app/templates/auth/settings.html:151
+msgid "km/L"
+msgstr "km/L"
+
 #: app/templates/auth/settings.html:156
 msgid "Thousand Separator"
 msgstr "Binlik ayırıcı"
 
-#: app/templates/auth/settings.html:159 app/templates/vehicles/form.html:72
+#: app/templates/auth/settings.html:159 app/templates/vehicles/form.html:73
 msgid "None"
 msgstr "Yok"
 
@@ -1619,176 +1935,248 @@ msgid "Your account details"
 msgstr "Hesap bilgileriniz"
 
 #: app/templates/auth/settings.html:239
+msgid ""
+"Your account can see the data but cannot change it. Ask an administrator if "
+"you need more access."
+msgstr ""
+"Hesabınız verileri görebilir ancak değiştiremez. Daha fazla erişime "
+"ihtiyacınız varsa bir yöneticiye başvurun."
+
+#: app/templates/auth/settings.html:241
+msgid ""
+"Your account can record fuel fill-ups and charging sessions. Ask an "
+"administrator if you need more access."
+msgstr ""
+"Hesabınız yakıt alımlarını ve şarj oturumlarını kaydedebilir. Daha fazla "
+"erişime ihtiyacınız varsa bir yöneticiye başvurun."
+
+#: app/templates/auth/settings.html:252
 msgid "Member Since"
 msgstr "Üyelik Tarihi"
 
-#: app/templates/auth/settings.html:246
+#: app/templates/auth/settings.html:259
 msgid "Save Email"
 msgstr "E-postayı Kaydet"
 
-#: app/templates/auth/settings.html:254
+#: app/templates/auth/settings.html:267
 msgid "Appearance"
 msgstr "Görünüm"
 
-#: app/templates/auth/settings.html:255
+#: app/templates/auth/settings.html:268
 msgid "Customize how the app looks"
 msgstr "Uygulamanın görünümünü özelleştirin"
 
-#: app/templates/auth/settings.html:261
+#: app/templates/auth/settings.html:274
 msgid "Dark Mode"
 msgstr "Karanlık Mod"
 
-#: app/templates/auth/settings.html:262
+#: app/templates/auth/settings.html:275
 msgid "Use dark theme for the interface"
 msgstr "Arayüz için karanlık tema kullan"
 
-#: app/templates/auth/settings.html:277
+#: app/templates/auth/settings.html:290
 msgid "User Management"
 msgstr "Kullanıcı Yönetimi"
 
-#: app/templates/auth/settings.html:278
+#: app/templates/auth/settings.html:291
 msgid "Manage users and permissions"
 msgstr "Kullanıcıları ve izinleri yönetin"
 
-#: app/templates/auth/settings.html:284 app/templates/auth/users.html:2
+#: app/templates/auth/settings.html:297 app/templates/auth/users.html:2
 msgid "Users"
 msgstr "Kullanıcılar"
 
-#: app/templates/auth/settings.html:285
+#: app/templates/auth/settings.html:298
 msgid "View and manage all users"
 msgstr "Tüm kullanıcıları görüntüleyin ve yönetin"
 
-#: app/templates/auth/settings.html:289
+#: app/templates/auth/settings.html:302
 msgid "Manage Users"
 msgstr "Kullanıcıları Yönet"
 
-#: app/templates/auth/settings.html:295
+#: app/templates/auth/settings.html:308
 msgid "Allow Registration"
 msgstr "Kayda İzin Ver"
 
-#: app/templates/auth/settings.html:296
+#: app/templates/auth/settings.html:309
 msgid "Allow new users to create accounts"
 msgstr "Yeni kullanıcıların hesap oluşturmasına izin ver"
 
-#: app/templates/auth/settings.html:330
+#: app/templates/auth/settings.html:343
 msgid "Admin Settings"
 msgstr "Yönetici Ayarları"
 
-#: app/templates/auth/settings.html:331
+#: app/templates/auth/settings.html:344
 msgid "Configure system-wide settings for all users:"
 msgstr "Tüm kullanıcılar için sistem genelindeki ayarları yapılandırın:"
 
-#: app/templates/auth/settings.html:335
+#: app/templates/auth/settings.html:348
 msgid "SMTP / Notifications"
 msgstr "SMTP / Bildirimler"
 
-#: app/templates/auth/settings.html:339
+#: app/templates/auth/settings.html:352
 msgid "Branding / Appearance"
 msgstr "Marka / Görünüm"
 
-#: app/templates/auth/settings.html:352
+#: app/templates/auth/settings.html:365
 msgid "Change Password"
 msgstr "Parolayı Değiştir"
 
-#: app/templates/auth/settings.html:353
+#: app/templates/auth/settings.html:366
 msgid "Update your password to keep your account secure"
 msgstr "Hesabınızın güvenliğini korumak için parolanızı güncelleyin"
 
-#: app/templates/auth/settings.html:375
+#: app/templates/auth/settings.html:388
 msgid "Update Password"
 msgstr "Parolayı Güncelle"
 
-#: app/templates/auth/settings.html:383 app/templates/vehicles/view.html:887
+#: app/templates/auth/settings.html:396 app/templates/vehicles/view.html:1054
 msgid "Danger Zone"
 msgstr "Tehlikeli Bölge"
 
-#: app/templates/auth/settings.html:384
+#: app/templates/auth/settings.html:397
 msgid "Irreversible actions"
 msgstr "Geri alınamaz işlemler"
 
-#: app/templates/auth/settings.html:390 app/templates/auth/settings.html:395
+#: app/templates/auth/settings.html:403 app/templates/auth/settings.html:408
 msgid "Delete Account"
 msgstr "Hesabı Sil"
 
-#: app/templates/auth/settings.html:391
+#: app/templates/auth/settings.html:404
 msgid "Permanently delete your account and all data"
 msgstr "Hesabınızı ve tüm verilerinizi kalıcı olarak silin"
 
-#: app/templates/auth/settings.html:411
+#: app/templates/auth/settings.html:424
 msgid "Customize which menu items to show and your start page"
 msgstr ""
 "Hangi menü öğelerinin gösterileceğini ve başlangıç sayfanızı özelleştirin"
 
-#: app/templates/auth/settings.html:417
+#: app/templates/auth/settings.html:430
 msgid "Start Page"
 msgstr "Başlangıç Sayfası"
 
-#: app/templates/auth/settings.html:418
+#: app/templates/auth/settings.html:431
 msgid "Which page to show when you log in"
 msgstr "Giriş yaptığınızda hangi sayfanın gösterileceği"
 
-#: app/templates/auth/settings.html:428 app/templates/auth/settings.html:498
+#: app/templates/auth/settings.html:441 app/templates/auth/settings.html:511
 #: app/templates/recurring/index.html:2 app/templates/recurring/index.html:7
 msgid "Recurring Expenses"
 msgstr "Tekrarlanan Giderler"
 
-#: app/templates/auth/settings.html:440
+#: app/templates/auth/settings.html:453
 #: app/templates/trips/template_form.html:27
 msgid "Default Vehicle"
 msgstr "Varsayılan Araç"
 
-#: app/templates/auth/settings.html:441
+#: app/templates/auth/settings.html:454
 msgid ""
 "Pre-selected vehicle when adding fuel logs, expenses, trips, and charging "
 "sessions"
 msgstr ""
 "Yakıt kaydı, gider, yolculuk ve şarj seansı eklerken önceden seçilecek araç"
 
-#: app/templates/auth/settings.html:444
+#: app/templates/auth/settings.html:457
 msgid "No default"
 msgstr "Varsayılan yok"
 
-#: app/templates/auth/settings.html:454
+#: app/templates/auth/settings.html:467
 msgid "Quick Entry Button"
 msgstr "Hızlı Giriş Düğmesi"
 
-#: app/templates/auth/settings.html:455
+#: app/templates/auth/settings.html:468
 msgid "Show a quick fuel entry button in the navigation bar for rapid logging"
 msgstr "Hızlı kayıt için gezinme çubuğunda hızlı yakıt girişi düğmesi göster"
 
-#: app/templates/auth/settings.html:466
+#: app/templates/auth/settings.html:479
 msgid "Show Menu Items"
 msgstr "Menü Öğelerini Göster"
 
-#: app/templates/auth/settings.html:467
+#: app/templates/auth/settings.html:480
 msgid "Choose which items appear in the navigation menu"
 msgstr "Gezinme menüsünde hangi öğelerin görüneceğini seçin"
 
-#: app/templates/auth/settings.html:537 app/templates/auth/settings.html:1352
+#: app/templates/auth/settings.html:555 app/templates/auth/settings.html:1476
 msgid "Save Preferences"
 msgstr "Tercihleri Kaydet"
 
-#: app/templates/auth/settings.html:550
+#: app/templates/auth/settings.html:568
 msgid "Import Data"
 msgstr "Veri İçe Aktar"
 
-#: app/templates/auth/settings.html:551
-msgid "Import your data from other fuel tracking applications"
-msgstr "Verilerinizi diğer yakıt takip uygulamalarından içe aktarın"
+#: app/templates/auth/settings.html:569
+msgid ""
+"Restore a May backup, or import your data from other fuel tracking "
+"applications"
+msgstr ""
+"Bir May yedeğini geri yükleyin veya verilerinizi diğer yakıt takip "
+"uygulamalarından içe aktarın"
 
-#: app/templates/auth/settings.html:630
+#: app/templates/auth/settings.html:575
+msgid "Restore May Backup"
+msgstr "May Yedeğini Geri Yükle"
+
+#: app/templates/auth/settings.html:576
+msgid ""
+"Restore a JSON export (.json) or full backup (.zip) from another May "
+"instance"
+msgstr ""
+"Başka bir May kurulumundan JSON dışa aktarımını (.json) veya tam yedeği "
+"(.zip) geri yükleyin"
+
+#: app/templates/auth/settings.html:580
+msgid "Restore"
+msgstr "Geri yükle"
+
+#: app/templates/auth/settings.html:587
+msgid "Import from Hammond SQLite database (.db file)"
+msgstr "Hammond SQLite veritabanından içe aktar (.db dosyası)"
+
+#: app/templates/auth/settings.html:595 app/templates/auth/settings.html:611
+#: app/templates/auth/settings.html:627 app/templates/auth/settings.html:639
+msgid "Import"
+msgstr "İçe aktar"
+
+#: app/templates/auth/settings.html:603
+msgid "Import from Clarkson MySQL dump (.sql file)"
+msgstr "Clarkson MySQL dökümünden içe aktar (.sql dosyası)"
+
+#: app/templates/auth/settings.html:619
+msgid "Import from Fuelly CSV export (.csv file)"
+msgstr "Fuelly CSV dışa aktarımından içe aktar (.csv dosyası)"
+
+#: app/templates/auth/settings.html:634 app/templates/import/csv_upload.html:2
+msgid "CSV Import"
+msgstr "CSV İçe Aktarma"
+
+#: app/templates/auth/settings.html:635
+msgid ""
+"Import fuel logs, expenses, trips, or charging sessions from any CSV file"
+msgstr ""
+"Herhangi bir CSV dosyasından yakıt alımlarını, giderleri, seyahatleri veya "
+"şarj oturumlarını içe aktarın"
+
+#: app/templates/auth/settings.html:646
+msgid "Import from Drivvo backup files"
+msgstr "Drivvo yedek dosyalarından içe aktar"
+
+#: app/templates/auth/settings.html:650
+msgid "Soon"
+msgstr "Yakında"
+
+#: app/templates/auth/settings.html:659
 msgid "Export Data"
 msgstr "Veri Dışa Aktar"
 
-#: app/templates/auth/settings.html:631
+#: app/templates/auth/settings.html:660
 msgid "Download your data for backup or migration"
 msgstr "Yedekleme veya taşıma için verilerinizi indirin"
 
-#: app/templates/auth/settings.html:637
+#: app/templates/auth/settings.html:666
 msgid "Export as CSV"
 msgstr "CSV Olarak Dışa Aktar"
 
-#: app/templates/auth/settings.html:638
+#: app/templates/auth/settings.html:667
 msgid ""
 "Download all your vehicles, fuel logs, and expenses as CSV files (ZIP "
 "archive)"
@@ -1796,27 +2184,27 @@ msgstr ""
 "Tüm araçlarınızı, yakıt kayıtlarınızı ve giderlerinizi CSV dosyaları olarak "
 "indirin (ZIP arşivi)"
 
-#: app/templates/auth/settings.html:642
+#: app/templates/auth/settings.html:671
 msgid "Download CSV"
 msgstr "CSV İndir"
 
-#: app/templates/auth/settings.html:648
+#: app/templates/auth/settings.html:677
 msgid "Export as JSON"
 msgstr "JSON Olarak Dışa Aktar"
 
-#: app/templates/auth/settings.html:649
+#: app/templates/auth/settings.html:678
 msgid "Download a complete backup of your data in JSON format"
 msgstr "Verilerinizin tam bir yedeğini JSON biçiminde indirin"
 
-#: app/templates/auth/settings.html:653
+#: app/templates/auth/settings.html:682
 msgid "Download JSON"
 msgstr "JSON İndir"
 
-#: app/templates/auth/settings.html:659
+#: app/templates/auth/settings.html:688
 msgid "Full Backup"
 msgstr "Tam Yedek"
 
-#: app/templates/auth/settings.html:660
+#: app/templates/auth/settings.html:689
 msgid ""
 "Download all data and files (images, documents, attachments) as a ZIP "
 "archive"
@@ -1824,48 +2212,48 @@ msgstr ""
 "Tüm verileri ve dosyaları (görseller, belgeler, ekler) ZIP arşivi olarak "
 "indirin"
 
-#: app/templates/auth/settings.html:664
+#: app/templates/auth/settings.html:693
 msgid "Download ZIP"
 msgstr "ZIP İndir"
 
-#: app/templates/auth/settings.html:680
+#: app/templates/auth/settings.html:709
 msgid "API Access"
 msgstr "API Erişimi"
 
-#: app/templates/auth/settings.html:681
+#: app/templates/auth/settings.html:710
 msgid "Generate API keys to connect external applications"
 msgstr "Harici uygulamaları bağlamak için API anahtarı oluşturun"
 
-#: app/templates/auth/settings.html:683
+#: app/templates/auth/settings.html:712
 msgid "View API Docs"
 msgstr "API Belgelerini Görüntüle"
 
-#: app/templates/auth/settings.html:692
+#: app/templates/auth/settings.html:721
 msgid "Your API Key"
 msgstr "API Anahtarınız"
 
-#: app/templates/auth/settings.html:711 app/templates/auth/settings.html:748
-#: app/templates/auth/settings.html:902 app/templates/auth/settings.html:916
+#: app/templates/auth/settings.html:740 app/templates/auth/settings.html:777
+#: app/templates/auth/settings.html:953 app/templates/auth/settings.html:967
 msgid "Copy"
 msgstr "Kopyala"
 
-#: app/templates/auth/settings.html:714
+#: app/templates/auth/settings.html:743
 msgid "Created"
 msgstr "Oluşturuldu"
 
-#: app/templates/auth/settings.html:718
+#: app/templates/auth/settings.html:747
 msgid "Regenerate Key"
 msgstr "Anahtarı Yeniden Oluştur"
 
-#: app/templates/auth/settings.html:722
+#: app/templates/auth/settings.html:751
 msgid "Revoke Key"
 msgstr "Anahtarı İptal Et"
 
-#: app/templates/auth/settings.html:729
+#: app/templates/auth/settings.html:758
 msgid "API Key"
 msgstr "API Anahtarı"
 
-#: app/templates/auth/settings.html:730
+#: app/templates/auth/settings.html:759
 msgid ""
 "Generate an API key to access May programmatically. You can use it to "
 "integrate with other applications or build your own tools."
@@ -1874,95 +2262,112 @@ msgstr ""
 " uygulamalarla entegrasyon kurmak veya kendi araçlarınızı geliştirmek için "
 "kullanabilirsiniz."
 
-#: app/templates/auth/settings.html:733
+#: app/templates/auth/settings.html:762
 msgid "Generate API Key"
 msgstr "API Anahtarı Oluştur"
 
-#: app/templates/auth/settings.html:742
+#: app/templates/auth/settings.html:771
 msgid "API Key Generated"
 msgstr "API Anahtarı Oluşturuldu"
 
-#: app/templates/auth/settings.html:743
+#: app/templates/auth/settings.html:772
 msgid "Copy your API key now. For security, it won't be shown in full again."
 msgstr ""
 "API anahtarınızı şimdi kopyalayın. Güvenlik nedeniyle bir daha tam olarak "
 "gösterilmeyecektir."
 
-#: app/templates/auth/settings.html:754
+#: app/templates/auth/settings.html:783
 msgid "Done"
 msgstr "Tamam"
 
-#: app/templates/auth/settings.html:768
+#: app/templates/auth/settings.html:797
 msgid "Connect May with external services and applications"
 msgstr "May'i harici hizmetlere ve uygulamalara bağlayın"
 
-#: app/templates/auth/settings.html:782
+#: app/templates/auth/settings.html:811
 msgid "Calendar"
 msgstr "Takvim"
 
-#: app/templates/auth/settings.html:785
+#: app/templates/auth/settings.html:814
 msgid "Subscribe to reminders in your calendar app"
 msgstr "Hatırlatıcılara takvim uygulamanızdan abone olun"
 
-#: app/templates/auth/settings.html:787 app/templates/auth/settings.html:808
+#: app/templates/auth/settings.html:816 app/templates/auth/settings.html:837
 msgid "Ready"
 msgstr "Hazır"
 
-#: app/templates/auth/settings.html:789 app/templates/auth/settings.html:810
+#: app/templates/auth/settings.html:818 app/templates/auth/settings.html:839
 msgid "Requires API key"
 msgstr "API anahtarı gerektirir"
 
-#: app/templates/auth/settings.html:803 app/templates/auth/settings.html:968
+#: app/templates/auth/settings.html:832 app/templates/auth/settings.html:1019
 msgid "Home Assistant"
 msgstr "Home Assistant"
 
-#: app/templates/auth/settings.html:806 app/templates/auth/settings.html:969
+#: app/templates/auth/settings.html:835 app/templates/auth/settings.html:1020
 msgid "Create sensors and automations for your vehicles"
 msgstr "Araçlarınız için sensörler ve otomasyonlar oluşturun"
 
-#: app/templates/auth/settings.html:825
+#: app/templates/auth/settings.html:854
 msgid "DVLA"
 msgstr "DVLA"
 
-#: app/templates/auth/settings.html:826 app/templates/auth/settings.html:848
-#: app/templates/auth/settings.html:1368
+#: app/templates/auth/settings.html:855 app/templates/auth/settings.html:877
+#: app/templates/auth/settings.html:899 app/templates/auth/settings.html:1492
 msgid "Admin"
 msgstr "Yönetici"
 
-#: app/templates/auth/settings.html:829 app/templates/auth/settings.html:1064
+#: app/templates/auth/settings.html:858 app/templates/auth/settings.html:1115
 msgid "Look up UK vehicle MOT and tax status"
 msgstr "İngiltere araç muayene ve vergi durumunu sorgulayın"
 
-#: app/templates/auth/settings.html:831 app/templates/auth/settings.html:853
+#: app/templates/auth/settings.html:860 app/templates/auth/settings.html:882
 msgid "Configured"
 msgstr "Yapılandırıldı"
 
-#: app/templates/auth/settings.html:833 app/templates/auth/settings.html:855
+#: app/templates/auth/settings.html:862 app/templates/auth/settings.html:884
 msgid "Not configured"
 msgstr "Yapılandırılmadı"
 
-#: app/templates/auth/settings.html:847
+#: app/templates/auth/settings.html:876
 msgid "Tessie"
 msgstr "Tessie"
 
-#: app/templates/auth/settings.html:851
+#: app/templates/auth/settings.html:880
 msgid "Sync Tesla vehicle odometer and battery"
 msgstr "Tesla araç kilometre sayacını ve bataryasını senkronize edin"
 
-#: app/templates/auth/settings.html:869 app/templates/auth/settings.html:955
-#: app/templates/auth/settings.html:1050 app/templates/auth/settings.html:1121
+#: app/templates/auth/settings.html:898 app/templates/auth/settings.html:1265
+msgid "UK Fuel Prices"
+msgstr "Birleşik Krallık Yakıt Fiyatları"
+
+#: app/templates/auth/settings.html:902 app/templates/auth/settings.html:1266
+msgid "Pull live forecourt prices for saved stations"
+msgstr "Kayıtlı istasyonlar için canlı istasyon fiyatlarını çek"
+
+#: app/templates/auth/settings.html:904
+msgid "Enabled"
+msgstr "Etkin"
+
+#: app/templates/auth/settings.html:906
+msgid "Disabled"
+msgstr "Devre dışı"
+
+#: app/templates/auth/settings.html:920 app/templates/auth/settings.html:1006
+#: app/templates/auth/settings.html:1101 app/templates/auth/settings.html:1172
+#: app/templates/auth/settings.html:1252
 msgid "Back to Integrations"
 msgstr "Entegrasyonlara dön"
 
-#: app/templates/auth/settings.html:882
+#: app/templates/auth/settings.html:933
 msgid "Calendar Subscription"
 msgstr "Takvim Aboneliği"
 
-#: app/templates/auth/settings.html:883
+#: app/templates/auth/settings.html:934
 msgid "Subscribe to your reminders in any calendar app"
 msgstr "Hatırlatıcılarınıza herhangi bir takvim uygulamasından abone olun"
 
-#: app/templates/auth/settings.html:891
+#: app/templates/auth/settings.html:942
 msgid ""
 "Add this calendar to Apple Calendar, Google Calendar, Outlook, or any other "
 "calendar app that supports iCal subscriptions."
@@ -1970,58 +2375,58 @@ msgstr ""
 "Bu takvimi Apple Takvim, Google Takvim, Outlook veya iCal aboneliklerini "
 "destekleyen başka bir takvim uygulamasına ekleyin."
 
-#: app/templates/auth/settings.html:894
+#: app/templates/auth/settings.html:945
 msgid "Webcal URL"
 msgstr "Webcal URL'si"
 
-#: app/templates/auth/settings.html:895
+#: app/templates/auth/settings.html:946
 msgid "Use this URL for most calendar apps (Apple Calendar, Outlook, etc.)"
 msgstr ""
 "Bu URL'yi çoğu takvim uygulaması için kullanın (Apple Takvim, Outlook vb.)"
 
-#: app/templates/auth/settings.html:908
+#: app/templates/auth/settings.html:959
 msgid "HTTPS URL"
 msgstr "HTTPS URL'si"
 
-#: app/templates/auth/settings.html:909
+#: app/templates/auth/settings.html:960
 msgid "Use this URL for Google Calendar"
 msgstr "Bu URL'yi Google Takvim için kullanın"
 
-#: app/templates/auth/settings.html:922
+#: app/templates/auth/settings.html:973
 msgid "What's included in the calendar?"
 msgstr "Takvimde neler yer alıyor?"
 
-#: app/templates/auth/settings.html:924
+#: app/templates/auth/settings.html:975
 msgid "Maintenance schedules"
 msgstr "Bakım planları"
 
-#: app/templates/auth/settings.html:925
+#: app/templates/auth/settings.html:976
 msgid "Recurring expense due dates"
 msgstr "Tekrarlanan gider vade tarihleri"
 
-#: app/templates/auth/settings.html:926
+#: app/templates/auth/settings.html:977
 msgid "Document expiry dates"
 msgstr "Belge son kullanma tarihleri"
 
-#: app/templates/auth/settings.html:927
+#: app/templates/auth/settings.html:978
 msgid "Custom reminders"
 msgstr "Özel hatırlatıcılar"
 
-#: app/templates/auth/settings.html:936 app/templates/auth/settings.html:1030
+#: app/templates/auth/settings.html:987 app/templates/auth/settings.html:1081
 msgid "API Key Required"
 msgstr "API Anahtarı Gerekli"
 
-#: app/templates/auth/settings.html:937
+#: app/templates/auth/settings.html:988
 msgid "Generate an API key in the API section to enable calendar integration."
 msgstr ""
 "Takvim entegrasyonunu etkinleştirmek için API bölümünden bir API anahtarı "
 "oluşturun."
 
-#: app/templates/auth/settings.html:940 app/templates/auth/settings.html:1034
+#: app/templates/auth/settings.html:991 app/templates/auth/settings.html:1085
 msgid "Go to API Settings"
 msgstr "API Ayarlarına Git"
 
-#: app/templates/auth/settings.html:977
+#: app/templates/auth/settings.html:1028
 msgid ""
 "Add the following configuration to your Home Assistant configuration.yaml to"
 " create vehicle sensors."
@@ -2029,50 +2434,50 @@ msgstr ""
 "Araç sensörleri oluşturmak için aşağıdaki yapılandırmayı Home Assistant "
 "configuration.yaml dosyanıza ekleyin."
 
-#: app/templates/auth/settings.html:980
+#: app/templates/auth/settings.html:1031
 msgid "REST Sensor Configuration"
 msgstr "REST Sensör Yapılandırması"
 
-#: app/templates/auth/settings.html:996
+#: app/templates/auth/settings.html:1047
 msgid "Copy configuration"
 msgstr "Yapılandırmayı kopyala"
 
-#: app/templates/auth/settings.html:1000
+#: app/templates/auth/settings.html:1051
 msgid "Available API Endpoints"
 msgstr "Kullanılabilir API Uç Noktaları"
 
-#: app/templates/auth/settings.html:1004
+#: app/templates/auth/settings.html:1055
 msgid "API health check"
 msgstr "API durum kontrolü"
 
-#: app/templates/auth/settings.html:1008
+#: app/templates/auth/settings.html:1059
 msgid "List all vehicles"
 msgstr "Tüm araçları listele"
 
-#: app/templates/auth/settings.html:1012
+#: app/templates/auth/settings.html:1063
 msgid "Vehicle statistics"
 msgstr "Araç istatistikleri"
 
-#: app/templates/auth/settings.html:1016
+#: app/templates/auth/settings.html:1067
 msgid "Upcoming reminders"
 msgstr "Yaklaşan hatırlatıcılar"
 
-#: app/templates/auth/settings.html:1020
+#: app/templates/auth/settings.html:1071
 msgid "Combined summary"
 msgstr "Birleşik özet"
 
-#: app/templates/auth/settings.html:1031
+#: app/templates/auth/settings.html:1082
 msgid ""
 "Generate an API key in the API section to enable Home Assistant integration."
 msgstr ""
 "Home Assistant entegrasyonunu etkinleştirmek için API bölümünden bir API "
 "anahtarı oluşturun."
 
-#: app/templates/auth/settings.html:1063
+#: app/templates/auth/settings.html:1114
 msgid "DVLA Vehicle Lookup"
 msgstr "DVLA Araç Sorgulama"
 
-#: app/templates/auth/settings.html:1072
+#: app/templates/auth/settings.html:1123
 msgid ""
 "The DVLA Vehicle Enquiry Service allows you to look up MOT status, tax "
 "status, and vehicle details for UK registered vehicles. This enables "
@@ -2082,52 +2487,52 @@ msgstr ""
 "durumunu, vergi durumunu ve araç bilgilerini sorgulamanızı sağlar. Bu, yeni "
 "araç eklerken araç bilgilerinin otomatik olarak doldurulmasını sağlar."
 
-#: app/templates/auth/settings.html:1076
+#: app/templates/auth/settings.html:1127
 msgid "How to get an API key"
 msgstr "API anahtarı nasıl alınır"
 
-#: app/templates/auth/settings.html:1078
+#: app/templates/auth/settings.html:1129
 msgid "Visit the"
 msgstr "Şu adresi ziyaret edin:"
 
-#: app/templates/auth/settings.html:1078
+#: app/templates/auth/settings.html:1129
 msgid "DVLA Developer Portal"
 msgstr "DVLA Geliştirici Portalı"
 
-#: app/templates/auth/settings.html:1079
+#: app/templates/auth/settings.html:1130
 msgid "Register for a free account"
 msgstr "Ücretsiz bir hesap için kayıt olun"
 
-#: app/templates/auth/settings.html:1080
+#: app/templates/auth/settings.html:1131
 msgid "Subscribe to the Vehicle Enquiry Service API"
 msgstr "Vehicle Enquiry Service API'sine abone olun"
 
-#: app/templates/auth/settings.html:1081
+#: app/templates/auth/settings.html:1132
 msgid "Copy your API key and paste it below"
 msgstr "API anahtarınızı kopyalayıp aşağıya yapıştırın"
 
-#: app/templates/auth/settings.html:1088
+#: app/templates/auth/settings.html:1139
 msgid "DVLA API Key"
 msgstr "DVLA API Anahtarı"
 
-#: app/templates/auth/settings.html:1096 app/templates/auth/settings.html:1176
-#: app/templates/auth/settings.html:1453
+#: app/templates/auth/settings.html:1147 app/templates/auth/settings.html:1227
+#: app/templates/auth/settings.html:1577
 msgid "Test"
 msgstr "Test Et"
 
-#: app/templates/auth/settings.html:1105
+#: app/templates/auth/settings.html:1156
 msgid "Save DVLA Settings"
 msgstr "DVLA Ayarlarını Kaydet"
 
-#: app/templates/auth/settings.html:1134 app/templates/vehicles/form.html:268
+#: app/templates/auth/settings.html:1185 app/templates/vehicles/form.html:269
 msgid "Tessie Integration"
 msgstr "Tessie Entegrasyonu"
 
-#: app/templates/auth/settings.html:1135
+#: app/templates/auth/settings.html:1186
 msgid "Sync Tesla vehicle data via Tessie"
 msgstr "Tessie üzerinden Tesla araç verilerini senkronize edin"
 
-#: app/templates/auth/settings.html:1143
+#: app/templates/auth/settings.html:1194
 msgid ""
 "Tessie allows you to automatically sync odometer readings, battery level, "
 "and range from your Tesla vehicles. When enabled for a vehicle, odometer "
@@ -2137,142 +2542,207 @@ msgstr ""
 "seviyesini ve menzili otomatik olarak senkronize etmenizi sağlar. Bir araç "
 "için etkinleştirildiğinde kilometre sayacı takibi otomatik hale gelir."
 
-#: app/templates/auth/settings.html:1147
+#: app/templates/auth/settings.html:1198
 msgid "Important"
 msgstr "Önemli"
 
-#: app/templates/auth/settings.html:1149
+#: app/templates/auth/settings.html:1200
 msgid "Tessie subscription required ($6.99/month per vehicle)"
 msgstr "Tessie aboneliği gereklidir (araç başına ayda 6,99 $)"
 
-#: app/templates/auth/settings.html:1150
+#: app/templates/auth/settings.html:1201
 msgid "Your Tesla must be connected to Tessie"
 msgstr "Tesla'nızın Tessie'ye bağlı olması gerekir"
 
-#: app/templates/auth/settings.html:1151
+#: app/templates/auth/settings.html:1202
 msgid "When enabled, manual odometer entry is disabled"
 msgstr "Etkinleştirildiğinde manuel kilometre sayacı girişi devre dışı kalır"
 
-#: app/templates/auth/settings.html:1156
+#: app/templates/auth/settings.html:1207
 msgid "How to get an API token"
 msgstr "API belirteci nasıl alınır"
 
-#: app/templates/auth/settings.html:1158
+#: app/templates/auth/settings.html:1209
 msgid "Sign up at"
 msgstr "Şu adresten kayıt olun:"
 
-#: app/templates/auth/settings.html:1159
+#: app/templates/auth/settings.html:1210
 msgid "Connect your Tesla account"
 msgstr "Tesla hesabınızı bağlayın"
 
-#: app/templates/auth/settings.html:1160
+#: app/templates/auth/settings.html:1211
 msgid "Go to Settings and create an API token"
 msgstr "Ayarlar'a gidin ve bir API belirteci oluşturun"
 
-#: app/templates/auth/settings.html:1161
+#: app/templates/auth/settings.html:1212
 msgid "Paste the token below"
 msgstr "Belirteci aşağıya yapıştırın"
 
-#: app/templates/auth/settings.html:1168
+#: app/templates/auth/settings.html:1219
 msgid "Tessie API Token"
 msgstr "Tessie API Belirteci"
 
-#: app/templates/auth/settings.html:1185
+#: app/templates/auth/settings.html:1236
 msgid "Save Tessie Settings"
 msgstr "Tessie Ayarlarını Kaydet"
 
-#: app/templates/auth/settings.html:1204
+#: app/templates/auth/settings.html:1274
+msgid ""
+"UK retailers publish forecourt prices under the government fuel price "
+"transparency scheme. May matches your saved stations to those forecourts by "
+"postcode and records the prices, so price history and Cheapest Fuel stay up "
+"to date without manual entry."
+msgstr ""
+"Birleşik Krallık'taki satıcılar, devletin yakıt fiyatı şeffaflık programı "
+"kapsamında istasyon fiyatlarını yayımlar. May, kayıtlı istasyonlarınızı "
+"posta koduna göre bu istasyonlarla eşleştirir ve fiyatları kaydeder; böylece"
+" fiyat geçmişi ve En Ucuz Yakıt elle giriş yapmadan güncel kalır."
+
+#: app/templates/auth/settings.html:1278
+msgid "Before you start"
+msgstr "Başlamadan önce"
+
+#: app/templates/auth/settings.html:1280
+msgid "No API key is needed; the feeds are open data"
+msgstr "API anahtarı gerekmez; akışlar açık veridir"
+
+#: app/templates/auth/settings.html:1281
+msgid "Give each station a postcode so it can be matched to a forecourt"
+msgstr "Bir istasyonla eşleştirilebilmesi için her istasyona posta kodu girin"
+
+#: app/templates/auth/settings.html:1282
+msgid ""
+"Prices refresh automatically every few hours, or on demand from the Fuel "
+"Stations page"
+msgstr ""
+"Fiyatlar birkaç saatte bir otomatik olarak veya Yakıt İstasyonları "
+"sayfasından istek üzerine yenilenir"
+
+#: app/templates/auth/settings.html:1283
+msgid "See the"
+msgstr "Bakınız:"
+
+#: app/templates/auth/settings.html:1283
+msgid "gov.uk guidance"
+msgstr "gov.uk kılavuzu"
+
+#: app/templates/auth/settings.html:1283
+msgid "for the current retailer list"
+msgstr "güncel satıcı listesi için"
+
+#: app/templates/auth/settings.html:1293
+msgid "Enable UK fuel price updates"
+msgstr "Birleşik Krallık yakıt fiyatı güncellemelerini etkinleştir"
+
+#: app/templates/auth/settings.html:1297
+msgid "Retailer feeds (optional)"
+msgstr "Satıcı akışları (isteğe bağlı)"
+
+#: app/templates/auth/settings.html:1302
+#, python-format
+msgid ""
+"One feed per line. Leave blank to use the built-in list (%(count)s "
+"retailers)."
+msgstr ""
+"Her satıra bir akış. Yerleşik listeyi kullanmak için boş bırakın (%(count)s "
+"satıcı)."
+
+#: app/templates/auth/settings.html:1309
+msgid "Save UK Fuel Price Settings"
+msgstr "Birleşik Krallık Yakıt Fiyatı Ayarlarını Kaydet"
+
+#: app/templates/auth/settings.html:1328
 msgid "Notification Preferences"
 msgstr "Bildirim Tercihleri"
 
-#: app/templates/auth/settings.html:1205
+#: app/templates/auth/settings.html:1329
 msgid "Configure how you receive reminders about your vehicles"
 msgstr "Araçlarınızla ilgili hatırlatıcıları nasıl alacağınızı yapılandırın"
 
-#: app/templates/auth/settings.html:1212
+#: app/templates/auth/settings.html:1336
 msgid "Enable Reminders"
 msgstr "Hatırlatıcıları Etkinleştir"
 
-#: app/templates/auth/settings.html:1213
+#: app/templates/auth/settings.html:1337
 msgid "Receive notifications for upcoming reminders"
 msgstr "Yaklaşan hatırlatıcılar için bildirim al"
 
-#: app/templates/auth/settings.html:1225
+#: app/templates/auth/settings.html:1349
 msgid "Default Reminder Lead Time"
 msgstr "Varsayılan Hatırlatma Süresi"
 
-#: app/templates/auth/settings.html:1226
+#: app/templates/auth/settings.html:1350
 msgid "How many days before the due date should you be notified?"
 msgstr "Vade tarihinden kaç gün önce bildirim almalısınız?"
 
-#: app/templates/auth/settings.html:1229 app/templates/reminders/form.html:108
+#: app/templates/auth/settings.html:1353 app/templates/reminders/form.html:108
 msgid "On the due date"
 msgstr "Vade tarihinde"
 
-#: app/templates/auth/settings.html:1230 app/templates/reminders/form.html:109
+#: app/templates/auth/settings.html:1354 app/templates/reminders/form.html:109
 msgid "1 day before"
 msgstr "1 gün önce"
 
-#: app/templates/auth/settings.html:1231 app/templates/reminders/form.html:110
+#: app/templates/auth/settings.html:1355 app/templates/reminders/form.html:110
 msgid "3 days before"
 msgstr "3 gün önce"
 
-#: app/templates/auth/settings.html:1232 app/templates/reminders/form.html:111
+#: app/templates/auth/settings.html:1356 app/templates/reminders/form.html:111
 msgid "1 week before"
 msgstr "1 hafta önce"
 
-#: app/templates/auth/settings.html:1233 app/templates/reminders/form.html:112
+#: app/templates/auth/settings.html:1357 app/templates/reminders/form.html:112
 msgid "2 weeks before"
 msgstr "2 hafta önce"
 
-#: app/templates/auth/settings.html:1234 app/templates/reminders/form.html:113
+#: app/templates/auth/settings.html:1358 app/templates/reminders/form.html:113
 msgid "1 month before"
 msgstr "1 ay önce"
 
-#: app/templates/auth/settings.html:1240
+#: app/templates/auth/settings.html:1364
 msgid "Notification Method"
 msgstr "Bildirim Yöntemi"
 
-#: app/templates/auth/settings.html:1241
+#: app/templates/auth/settings.html:1365
 msgid "Choose how you want to receive notifications"
 msgstr "Bildirimleri nasıl almak istediğinizi seçin"
 
-#: app/templates/auth/settings.html:1246 app/templates/auth/settings.html:1250
+#: app/templates/auth/settings.html:1370 app/templates/auth/settings.html:1374
 msgid "not configured"
 msgstr "yapılandırılmadı"
 
-#: app/templates/auth/settings.html:1248
+#: app/templates/auth/settings.html:1372
 msgid "ntfy (Push Notifications)"
 msgstr "ntfy (Anlık Bildirimler)"
 
-#: app/templates/auth/settings.html:1250 app/templates/auth/settings.html:1466
+#: app/templates/auth/settings.html:1374 app/templates/auth/settings.html:1590
 msgid "Pushover"
 msgstr "Pushover"
 
-#: app/templates/auth/settings.html:1252
+#: app/templates/auth/settings.html:1376
 msgid "Webhook (HTTP POST)"
 msgstr "Webhook (HTTP POST)"
 
-#: app/templates/auth/settings.html:1262
+#: app/templates/auth/settings.html:1386
 msgid "Notifications will be sent to"
 msgstr "Bildirimler şu adrese gönderilecek:"
 
-#: app/templates/auth/settings.html:1269
+#: app/templates/auth/settings.html:1393
 msgid "Email not configured. Ask an administrator to configure SMTP settings."
 msgstr ""
 "E-posta yapılandırılmadı. Bir yöneticiden SMTP ayarlarını yapılandırmasını "
 "isteyin."
 
-#: app/templates/auth/settings.html:1278
+#: app/templates/auth/settings.html:1402
 msgid "is a simple pub-sub notification service. Enter your topic below."
 msgstr ""
 "basit bir yayınla-abone ol bildirim servisidir. Konunuzu aşağıya girin."
 
-#: app/templates/auth/settings.html:1281
+#: app/templates/auth/settings.html:1405
 msgid "ntfy Topic or Server URL"
 msgstr "ntfy Konusu veya Sunucu URL'si"
 
-#: app/templates/auth/settings.html:1286
+#: app/templates/auth/settings.html:1410
 msgid ""
 "For ntfy.sh, just enter your topic name. For self-hosted, enter the full "
 "URL."
@@ -2280,15 +2750,15 @@ msgstr ""
 "ntfy.sh için yalnızca konu adınızı girin. Kendi sunucunuz için tam URL'yi "
 "girin."
 
-#: app/templates/auth/settings.html:1289
+#: app/templates/auth/settings.html:1413
 msgid "ntfy Access Token"
 msgstr "ntfy Erişim Belirteci"
 
-#: app/templates/auth/settings.html:1291
+#: app/templates/auth/settings.html:1415
 msgid "Token saved — enter a new one to replace it"
 msgstr "Belirteç kaydedildi — değiştirmek için yenisini girin"
 
-#: app/templates/auth/settings.html:1294
+#: app/templates/auth/settings.html:1418
 msgid ""
 "Optional — only needed for self-hosted ntfy servers with authentication "
 "enabled. Leave blank to keep the saved token."
@@ -2296,107 +2766,107 @@ msgstr ""
 "İsteğe bağlı — yalnızca kimlik doğrulaması etkin, kendi barındırdığınız ntfy"
 " sunucuları için gereklidir. Kayıtlı belirteci korumak için boş bırakın."
 
-#: app/templates/auth/settings.html:1299
+#: app/templates/auth/settings.html:1423
 msgid "Remove the saved token"
 msgstr "Kayıtlı belirteci kaldır"
 
-#: app/templates/auth/settings.html:1309
+#: app/templates/auth/settings.html:1433
 msgid "sends notifications to your devices. Enter your User Key below."
 msgstr ""
 "bildirimleri cihazlarınıza gönderir. Kullanıcı Anahtarınızı aşağıya girin."
 
-#: app/templates/auth/settings.html:1312
+#: app/templates/auth/settings.html:1436
 msgid "Pushover User Key"
 msgstr "Pushover Kullanıcı Anahtarı"
 
-#: app/templates/auth/settings.html:1317
+#: app/templates/auth/settings.html:1441
 msgid "Find your User Key on your Pushover dashboard."
 msgstr "Kullanıcı Anahtarınızı Pushover panelinizde bulabilirsiniz."
 
-#: app/templates/auth/settings.html:1324
+#: app/templates/auth/settings.html:1448
 msgid "Notifications will be sent as JSON POST requests to your webhook URL."
 msgstr ""
 "Bildirimler, webhook URL'nize JSON POST istekleri olarak gönderilecektir."
 
-#: app/templates/auth/settings.html:1327
+#: app/templates/auth/settings.html:1451
 msgid "Webhook URL"
 msgstr "Webhook URL'si"
 
-#: app/templates/auth/settings.html:1332
+#: app/templates/auth/settings.html:1456
 #, python-brace-format
 msgid "JSON payload: {title, message, reminder_id, vehicle_name, due_date}"
 msgstr "JSON yükü: {title, message, reminder_id, vehicle_name, due_date}"
 
-#: app/templates/auth/settings.html:1343
+#: app/templates/auth/settings.html:1467
 msgid "Send Test Notification"
 msgstr "Test Bildirimi Gönder"
 
-#: app/templates/auth/settings.html:1367
+#: app/templates/auth/settings.html:1491
 msgid "Notification Services"
 msgstr "Bildirim Servisleri"
 
-#: app/templates/auth/settings.html:1370
+#: app/templates/auth/settings.html:1494
 msgid "Configure notification services available to all users"
 msgstr ""
 "Tüm kullanıcılar için kullanılabilir bildirim servislerini yapılandırın"
 
-#: app/templates/auth/settings.html:1383
+#: app/templates/auth/settings.html:1507
 msgid "Email (SMTP)"
 msgstr "E-posta (SMTP)"
 
-#: app/templates/auth/settings.html:1395
+#: app/templates/auth/settings.html:1519
 msgid "SMTP Host"
 msgstr "SMTP Sunucusu"
 
-#: app/templates/auth/settings.html:1402
+#: app/templates/auth/settings.html:1526
 msgid "SMTP Port"
 msgstr "SMTP Portu"
 
-#: app/templates/auth/settings.html:1409
+#: app/templates/auth/settings.html:1533
 msgid "SMTP Username"
 msgstr "SMTP Kullanıcı Adı"
 
-#: app/templates/auth/settings.html:1416
+#: app/templates/auth/settings.html:1540
 msgid "SMTP Password"
 msgstr "SMTP Parolası"
 
-#: app/templates/auth/settings.html:1423
+#: app/templates/auth/settings.html:1547
 msgid "Sender Email"
 msgstr "Gönderen E-postası"
 
-#: app/templates/auth/settings.html:1430
+#: app/templates/auth/settings.html:1554
 msgid "Sender Name"
 msgstr "Gönderen Adı"
 
-#: app/templates/auth/settings.html:1443
+#: app/templates/auth/settings.html:1567
 msgid "Use TLS"
 msgstr "TLS Kullan"
 
-#: app/templates/auth/settings.html:1449
+#: app/templates/auth/settings.html:1573
 msgid "Use SSL"
 msgstr "SSL Kullan"
 
-#: app/templates/auth/settings.html:1477
+#: app/templates/auth/settings.html:1601
 msgid "sends push notifications to iOS and Android devices."
 msgstr "iOS ve Android cihazlara anlık bildirim gönderir."
 
-#: app/templates/auth/settings.html:1480
+#: app/templates/auth/settings.html:1604
 msgid "Application Token"
 msgstr "Uygulama Belirteci"
 
-#: app/templates/auth/settings.html:1485
+#: app/templates/auth/settings.html:1609
 msgid "Create an application at pushover.net to get your token"
 msgstr "Belirtecinizi almak için pushover.net üzerinde bir uygulama oluşturun"
 
-#: app/templates/auth/settings.html:1495
+#: app/templates/auth/settings.html:1619
 msgid "ntfy"
 msgstr "ntfy"
 
-#: app/templates/auth/settings.html:1496 app/templates/auth/settings.html:1511
+#: app/templates/auth/settings.html:1620 app/templates/auth/settings.html:1635
 msgid "Always available"
 msgstr "Her zaman kullanılabilir"
 
-#: app/templates/auth/settings.html:1500
+#: app/templates/auth/settings.html:1624
 msgid ""
 "is a free, open-source notification service that requires no admin "
 "configuration. Users can set their own topic."
@@ -2404,11 +2874,11 @@ msgstr ""
 "yönetici yapılandırması gerektirmeyen, ücretsiz ve açık kaynaklı bir "
 "bildirim servisidir. Kullanıcılar kendi konularını ayarlayabilir."
 
-#: app/templates/auth/settings.html:1510
+#: app/templates/auth/settings.html:1634
 msgid "Webhook"
 msgstr "Webhook"
 
-#: app/templates/auth/settings.html:1514
+#: app/templates/auth/settings.html:1638
 msgid ""
 "Webhooks allow users to integrate with any service that accepts HTTP POST "
 "requests (Home Assistant, Discord, Slack, etc.)"
@@ -2416,232 +2886,224 @@ msgstr ""
 "Webhook'lar, kullanıcıların HTTP POST isteklerini kabul eden herhangi bir "
 "servisle entegrasyon kurmasını sağlar (Home Assistant, Discord, Slack vb.)"
 
-#: app/templates/auth/settings.html:1521
+#: app/templates/auth/settings.html:1645
 msgid "Save Notification Settings"
 msgstr "Bildirim Ayarlarını Kaydet"
 
-#: app/templates/auth/settings.html:1532
+#: app/templates/auth/settings.html:1656
 msgid "Manage Reminders"
 msgstr "Hatırlatıcıları Yönet"
 
-#: app/templates/auth/settings.html:1533
+#: app/templates/auth/settings.html:1657
 msgid "View and manage your upcoming reminders"
 msgstr "Yaklaşan hatırlatıcılarınızı görüntüleyin ve yönetin"
 
-#: app/templates/auth/settings.html:1538
+#: app/templates/auth/settings.html:1662
 msgid "View all reminders"
 msgstr "Tüm hatırlatıcıları görüntüle"
 
-#: app/templates/auth/settings.html:1555
+#: app/templates/auth/settings.html:1679
 msgid "Application Branding"
 msgstr "Uygulama Markası"
 
-#: app/templates/auth/settings.html:1556
+#: app/templates/auth/settings.html:1680
 msgid "Customize how May appears to all users"
 msgstr "May'in tüm kullanıcılara nasıl görüneceğini özelleştirin"
 
-#: app/templates/auth/settings.html:1562
+#: app/templates/auth/settings.html:1686
 msgid "Application Name"
 msgstr "Uygulama Adı"
 
-#: app/templates/auth/settings.html:1570
+#: app/templates/auth/settings.html:1694
 msgid "Tagline"
 msgstr "Slogan"
 
-#: app/templates/auth/settings.html:1578
+#: app/templates/auth/settings.html:1702
 msgid "Primary Color"
 msgstr "Ana Renk"
 
-#: app/templates/auth/settings.html:1590
+#: app/templates/auth/settings.html:1714
 msgid "Logo"
 msgstr "Logo"
 
-#: app/templates/auth/settings.html:1594 app/templates/auth/settings.html:1595
+#: app/templates/auth/settings.html:1718 app/templates/auth/settings.html:1719
 msgid "Current logo"
 msgstr "Mevcut logo"
 
-#: app/templates/auth/settings.html:1607
+#: app/templates/auth/settings.html:1731
 msgid "Remove Logo"
 msgstr "Logoyu Kaldır"
 
-#: app/templates/auth/settings.html:1612
+#: app/templates/auth/settings.html:1736
 msgid "Are you sure you want to remove the logo?"
 msgstr "Logoyu kaldırmak istediğinizden emin misiniz?"
 
-#: app/templates/auth/settings.html:1635
+#: app/templates/auth/settings.html:1759
 msgid "Save Branding"
 msgstr "Markayı Kaydet"
 
-#: app/templates/auth/settings.html:1648
+#: app/templates/auth/settings.html:1772
 msgid "Version information and updates"
 msgstr "Sürüm bilgisi ve güncellemeler"
 
-#: app/templates/auth/settings.html:1655
+#: app/templates/auth/settings.html:1779
 msgid "Current Version"
 msgstr "Mevcut Sürüm"
 
-#: app/templates/auth/settings.html:1678
+#: app/templates/auth/settings.html:1802
 msgid "Check for Updates"
 msgstr "Güncellemeleri Denetle"
 
-#: app/templates/auth/settings.html:1679
+#: app/templates/auth/settings.html:1803
 msgid "Click to check for newer versions"
 msgstr "Daha yeni sürümleri denetlemek için tıklayın"
 
-#: app/templates/auth/settings.html:1686
+#: app/templates/auth/settings.html:1810
 msgid "Check Now"
 msgstr "Şimdi Denetle"
 
-#: app/templates/auth/settings.html:1697
+#: app/templates/auth/settings.html:1821
 msgid "Update Available"
 msgstr "Güncelleme Mevcut"
 
-#: app/templates/auth/settings.html:1699
+#: app/templates/auth/settings.html:1823
 msgid "Version"
 msgstr "Sürüm"
 
-#: app/templates/auth/settings.html:1699
+#: app/templates/auth/settings.html:1823
 msgid "is available"
 msgstr "kullanılabilir"
 
-#: app/templates/auth/settings.html:1703
+#: app/templates/auth/settings.html:1827
 msgid "View Release Notes"
 msgstr "Sürüm Notlarını Görüntüle"
 
-#: app/templates/auth/settings.html:1710
+#: app/templates/auth/settings.html:1834
 msgid "To update (Docker):"
 msgstr "Güncellemek için (Docker):"
 
-#: app/templates/auth/settings.html:1713
+#: app/templates/auth/settings.html:1837
 msgid "Or use Watchtower for automatic updates."
 msgstr "Ya da otomatik güncellemeler için Watchtower kullanın."
 
-#: app/templates/auth/settings.html:1725
+#: app/templates/auth/settings.html:1849
 msgid "You are running the latest version"
 msgstr "En son sürümü kullanıyorsunuz"
 
-#: app/templates/auth/settings.html:1732
+#: app/templates/auth/settings.html:1856
 msgid "Resources"
 msgstr "Kaynaklar"
 
-#: app/templates/auth/settings.html:1739
+#: app/templates/auth/settings.html:1863
 msgid "Source Code"
 msgstr "Kaynak Kod"
 
-#: app/templates/auth/settings.html:1746
+#: app/templates/auth/settings.html:1870
 msgid "Report an Issue"
 msgstr "Sorun Bildir"
 
-#: app/templates/auth/settings.html:1753
+#: app/templates/auth/settings.html:1877
 msgid "All Releases"
 msgstr "Tüm Sürümler"
 
-#: app/templates/auth/settings.html:1760
+#: app/templates/auth/settings.html:1884
 msgid "Documentation"
 msgstr "Belgeler"
 
-#: app/templates/auth/settings.html:2168
+#: app/templates/auth/settings.html:2292
 msgid "Checking..."
 msgstr "Denetleniyor..."
 
-#: app/templates/auth/settings.html:2180
+#: app/templates/auth/settings.html:2304
 msgid "A newer version is available"
 msgstr "Daha yeni bir sürüm mevcut"
 
-#: app/templates/auth/settings.html:2185
+#: app/templates/auth/settings.html:2309
 msgid "Last checked just now"
 msgstr "Son denetleme az önce"
 
-#: app/templates/auth/settings.html:2189
+#: app/templates/auth/settings.html:2313
 msgid "Could not check for updates"
 msgstr "Güncellemeler denetlenemedi"
 
-#: app/templates/auth/settings.html:2194
+#: app/templates/auth/settings.html:2318
 msgid "Error checking for updates"
 msgstr "Güncellemeler denetlenirken hata oluştu"
 
-#: app/templates/charging/form.html:2 app/templates/charging/form.html:8
+#: app/templates/charging/form.html:2 app/templates/charging/form.html:11
 msgid "Edit Charging Session"
 msgstr "Şarj Seansını Düzenle"
 
-#: app/templates/charging/form.html:2 app/templates/charging/form.html:8
-#: app/templates/charging/form.html:158
+#: app/templates/charging/form.html:2 app/templates/charging/form.html:11
+#: app/templates/charging/form.html:163
 msgid "Log Charging Session"
 msgstr "Şarj Seansı Kaydet"
 
-#: app/templates/charging/form.html:7
+#: app/templates/charging/form.html:10
 msgid "Back to charging sessions"
 msgstr "Şarj seanslarına dön"
 
-#: app/templates/charging/form.html:39
+#: app/templates/charging/form.html:44
 msgid "Charger Type"
 msgstr "Şarj Cihazı Türü"
 
-#: app/templates/charging/form.html:42
+#: app/templates/charging/form.html:47
 msgid "Select type..."
 msgstr "Tür seçin..."
 
-#: app/templates/charging/form.html:50
+#: app/templates/charging/form.html:55
 msgid "Start Time"
 msgstr "Başlangıç Saati"
 
-#: app/templates/charging/form.html:57
+#: app/templates/charging/form.html:62
 msgid "End Time"
 msgstr "Bitiş Saati"
 
-#: app/templates/charging/form.html:64 app/templates/fuel/index.html:117
+#: app/templates/charging/form.html:69 app/templates/fuel/index.html:149
 msgid "Location"
 msgstr "Konum"
 
-#: app/templates/charging/form.html:67
+#: app/templates/charging/form.html:72
 msgid "e.g., Home, Walmart, ChargePoint Station"
 msgstr "ör. Ev, Migros, ChargePoint İstasyonu"
 
-#: app/templates/charging/form.html:72
+#: app/templates/charging/form.html:77
 msgid "Network"
 msgstr "Ağ"
 
-#: app/templates/charging/form.html:75
+#: app/templates/charging/form.html:80
 msgid "e.g., ChargePoint, Electrify America"
 msgstr "ör. ChargePoint, Electrify America"
 
-#: app/templates/charging/form.html:81 app/templates/expenses/form.html:62
-#: app/templates/expenses/index.html:30 app/templates/fuel/form.html:45
-#: app/templates/fuel/index.html:27 app/templates/fuel/index.html:114
-#: app/templates/fuel/quick.html:34 app/templates/maintenance/form.html:106
-#: app/templates/notes/form.html:37 app/templates/notes/index.html:29
-#: app/templates/vehicles/view.html:349
-msgid "Odometer"
-msgstr "Kilometre Sayacı"
-
-#: app/templates/charging/form.html:99
+#: app/templates/charging/form.html:104
 msgid "Energy & State of Charge"
 msgstr "Enerji ve Şarj Durumu"
 
-#: app/templates/charging/form.html:102
+#: app/templates/charging/form.html:107
 msgid "Energy Added"
 msgstr "Eklenen Enerji"
 
-#: app/templates/charging/form.html:109
+#: app/templates/charging/form.html:114
 msgid "Start SOC"
 msgstr "Başlangıç Şarj Yüzdesi"
 
-#: app/templates/charging/form.html:115
+#: app/templates/charging/form.html:120
 msgid "End SOC"
 msgstr "Bitiş Şarj Yüzdesi"
 
-#: app/templates/charging/form.html:125 app/templates/expenses/form.html:55
-#: app/templates/expenses/index.html:31 app/templates/fuel/index.html:30
-#: app/templates/fuel/index.html:116
+#: app/templates/charging/form.html:130 app/templates/expenses/form.html:69
+#: app/templates/expenses/index.html:33 app/templates/fuel/index.html:47
+#: app/templates/fuel/index.html:148 app/templates/tires/form.html:61
+#: app/templates/tires/index.html:62
 msgid "Cost"
 msgstr "Maliyet"
 
-#: app/templates/charging/form.html:128
+#: app/templates/charging/form.html:133
 msgid "Cost per kWh"
 msgstr "kWh Başına Maliyet"
 
 #: app/templates/charging/index.html:2 app/templates/charging/index.html:7
-#: app/templates/search/index.html:144
+#: app/templates/search/index.html:152
 msgid "Charging Sessions"
 msgstr "Şarj Seansları"
 
@@ -2649,39 +3111,39 @@ msgstr "Şarj Seansları"
 msgid "Track your EV charging sessions"
 msgstr "Elektrikli araç şarj seanslarınızı takip edin"
 
-#: app/templates/charging/index.html:15
+#: app/templates/charging/index.html:16
 msgid "Log Charge"
 msgstr "Şarj Kaydet"
 
-#: app/templates/charging/index.html:22
+#: app/templates/charging/index.html:24
 msgid "Total Energy"
 msgstr "Toplam Enerji"
 
-#: app/templates/charging/index.html:38 app/templates/documents/index.html:23
-#: app/templates/reminders/index.html:27 app/templates/trips/index.html:53
+#: app/templates/charging/index.html:40 app/templates/documents/index.html:25
+#: app/templates/reminders/index.html:29 app/templates/trips/index.html:55
 msgid "All Vehicles"
 msgstr "Tüm Araçlar"
 
-#: app/templates/charging/index.html:45 app/templates/reminders/index.html:48
-#: app/templates/trips/index.html:78
+#: app/templates/charging/index.html:47 app/templates/reminders/index.html:50
+#: app/templates/trips/index.html:80
 msgid "Filter"
 msgstr "Filtrele"
 
-#: app/templates/charging/index.html:49 app/templates/trips/index.html:82
+#: app/templates/charging/index.html:51 app/templates/trips/index.html:84
 msgid "Clear"
 msgstr "Temizle"
 
-#: app/templates/charging/index.html:139
+#: app/templates/charging/index.html:145
 msgid "No charging sessions"
 msgstr "Şarj seansı yok"
 
-#: app/templates/charging/index.html:140
+#: app/templates/charging/index.html:146
 msgid "Start tracking your EV charging to monitor energy usage and costs."
 msgstr ""
 "Enerji kullanımını ve maliyetleri takip etmek için elektrikli araç şarjınızı"
 " kaydetmeye başlayın."
 
-#: app/templates/charging/index.html:147
+#: app/templates/charging/index.html:154
 msgid "Log Your First Charge"
 msgstr "İlk Şarjınızı Kaydedin"
 
@@ -2690,8 +3152,8 @@ msgid "Edit Document"
 msgstr "Belgeyi Düzenle"
 
 #: app/templates/documents/form.html:2 app/templates/documents/form.html:13
-#: app/templates/documents/index.html:15
-#: app/templates/documents/index.html:108
+#: app/templates/documents/index.html:16
+#: app/templates/documents/index.html:111
 msgid "Upload Document"
 msgstr "Belge Yükle"
 
@@ -2699,7 +3161,7 @@ msgstr "Belge Yükle"
 msgid "Back to Documents"
 msgstr "Belgelere dön"
 
-#: app/templates/documents/form.html:33 app/templates/documents/view.html:70
+#: app/templates/documents/form.html:33 app/templates/documents/view.html:72
 msgid "File"
 msgstr "Dosya"
 
@@ -2707,7 +3169,7 @@ msgstr "Dosya"
 msgid "PDF, images, Word, Excel, text files, or ePub (max 300MB)"
 msgstr "PDF, görsel, Word, Excel, metin dosyası veya ePub (en fazla 300MB)"
 
-#: app/templates/documents/form.html:48 app/templates/notes/form.html:44
+#: app/templates/documents/form.html:48 app/templates/notes/form.html:48
 #: app/templates/reminders/form.html:44
 msgid "Title"
 msgstr "Başlık"
@@ -2716,13 +3178,14 @@ msgstr "Başlık"
 msgid "e.g., Insurance Policy 2024"
 msgstr "ör. Sigorta Poliçesi 2024"
 
-#: app/templates/documents/form.html:56 app/templates/maintenance/form.html:43
-#: app/templates/reminders/form.html:53 app/templates/reminders/index.html:34
-#: app/templates/vehicles/form.html:26 app/templates/vehicles/view.html:51
+#: app/templates/documents/form.html:56 app/templates/maintenance/form.html:54
+#: app/templates/reminders/form.html:53 app/templates/reminders/index.html:36
+#: app/templates/tires/form.html:43 app/templates/vehicles/form.html:26
+#: app/templates/vehicles/view.html:89
 msgid "Type"
 msgstr "Tür"
 
-#: app/templates/documents/form.html:68 app/templates/documents/view.html:64
+#: app/templates/documents/form.html:68 app/templates/documents/view.html:66
 msgid "Reference Number"
 msgstr "Referans Numarası"
 
@@ -2730,11 +3193,11 @@ msgstr "Referans Numarası"
 msgid "e.g., Policy number, certificate ID"
 msgstr "ör. Poliçe numarası, belge kimliği"
 
-#: app/templates/documents/form.html:77 app/templates/documents/view.html:79
+#: app/templates/documents/form.html:77 app/templates/documents/view.html:81
 msgid "Issue Date"
 msgstr "Düzenlenme Tarihi"
 
-#: app/templates/documents/form.html:83 app/templates/documents/view.html:86
+#: app/templates/documents/form.html:83 app/templates/documents/view.html:88
 msgid "Expiry Date"
 msgstr "Son Kullanma Tarihi"
 
@@ -2750,7 +3213,7 @@ msgstr "Son kullanma tarihinden önce hatırlat"
 msgid "Days before to remind"
 msgstr "Kaç gün önce hatırlatılacağı"
 
-#: app/templates/documents/form.html:126
+#: app/templates/documents/form.html:126 app/templates/vehicles/view.html:304
 msgid "Upload"
 msgstr "Yükle"
 
@@ -2762,243 +3225,307 @@ msgstr "Bu belge silinsin mi?"
 msgid "Vehicle documents, insurance, MOT certificates"
 msgstr "Araç belgeleri, sigorta, muayene belgeleri"
 
-#: app/templates/documents/index.html:74
+#: app/templates/documents/index.html:76
 msgid "Expires"
 msgstr "Son Kullanma"
 
-#: app/templates/documents/index.html:82 app/templates/documents/view.html:26
+#: app/templates/documents/index.html:84 app/templates/documents/view.html:26
 msgid "Download"
 msgstr "İndir"
 
-#: app/templates/documents/index.html:100
+#: app/templates/documents/index.html:102
 msgid "No documents"
 msgstr "Belge yok"
 
-#: app/templates/documents/index.html:101
+#: app/templates/documents/index.html:103
 msgid ""
 "Store your vehicle documents, insurance policies, and MOT certificates."
 msgstr ""
 "Araç belgelerinizi, sigorta poliçelerinizi ve muayene belgelerinizi "
 "saklayın."
 
-#: app/templates/documents/view.html:44
+#: app/templates/documents/view.html:46
 msgid "This document has expired!"
 msgstr "Bu belgenin süresi doldu!"
 
-#: app/templates/documents/view.html:55
+#: app/templates/documents/view.html:57
 msgid "This document is expiring soon."
 msgstr "Bu belgenin süresi yakında dolacak."
 
-#: app/templates/documents/view.html:104
+#: app/templates/documents/view.html:106
 msgid "Preview"
 msgstr "Önizleme"
 
-#: app/templates/expenses/form.html:2 app/templates/expenses/form.html:8
+#: app/templates/expenses/form.html:2 app/templates/expenses/form.html:11
 msgid "Edit Expense"
 msgstr "Gideri Düzenle"
 
-#: app/templates/expenses/form.html:2 app/templates/expenses/form.html:8
-#: app/templates/expenses/form.html:130 app/templates/expenses/index.html:15
-#: app/templates/expenses/index.html:107 app/templates/vehicles/view.html:192
+#: app/templates/expenses/form.html:2 app/templates/expenses/form.html:11
+#: app/templates/expenses/form.html:150 app/templates/expenses/index.html:16
+#: app/templates/expenses/index.html:125 app/templates/vehicles/view.html:263
 msgid "Add Expense"
 msgstr "Gider Ekle"
 
-#: app/templates/expenses/form.html:7
+#: app/templates/expenses/form.html:10
 msgid "Back to expenses"
 msgstr "Giderlere dön"
 
-#: app/templates/expenses/form.html:37 app/templates/expenses/index.html:28
+#: app/templates/expenses/form.html:20
+#, python-format
+msgid "Saving this expense will also complete the reminder \"%(title)s\"."
+msgstr "Bu gideri kaydetmek \"%(title)s\" hatırlatmasını da tamamlar."
+
+#: app/templates/expenses/form.html:22
+msgid "Its next occurrence will be scheduled."
+msgstr "Bir sonraki tekrarı planlanacak."
+
+#: app/templates/expenses/form.html:51 app/templates/expenses/index.html:30
 #: app/templates/recurring/form.html:42
 msgid "Category"
 msgstr "Kategori"
 
-#: app/templates/expenses/form.html:50
+#: app/templates/expenses/form.html:64
 msgid "e.g., Oil change, Annual service"
 msgstr "ör. Yağ değişimi, Yıllık bakım"
 
-#: app/templates/expenses/form.html:69
+#: app/templates/expenses/form.html:83
 msgid "Vendor / Service Provider"
 msgstr "Satıcı / Hizmet Sağlayıcı"
 
-#: app/templates/expenses/form.html:72
+#: app/templates/expenses/form.html:86
 msgid "e.g., Local Garage"
 msgstr "ör. Yerel Servis"
 
-#: app/templates/expenses/form.html:85
+#: app/templates/expenses/form.html:99
 msgid "Mark Maintenance as Performed"
 msgstr "Bakımı yapıldı olarak işaretle"
 
-#: app/templates/expenses/form.html:88
+#: app/templates/expenses/form.html:102
 msgid "— none —"
 msgstr "— yok —"
 
-#: app/templates/expenses/form.html:93
+#: app/templates/expenses/form.html:107
 msgid "Optional — records the schedule as performed on the expense date"
 msgstr "İsteğe bağlı — bakım planını gider tarihinde yapılmış olarak kaydeder"
 
-#: app/templates/expenses/form.html:104 app/templates/fuel/form.html:149
-msgid "Receipt / Attachment"
-msgstr "Fiş / Ek"
+#: app/templates/expenses/form.html:118
+msgid "Receipts / Attachments"
+msgstr "Fişler / ekler"
 
-#: app/templates/expenses/form.html:111 app/templates/fuel/form.html:156
+#: app/templates/expenses/form.html:125 app/templates/fuel/form.html:181
 msgid "Delete this attachment?"
 msgstr "Bu ek silinsin mi?"
+
+#: app/templates/expenses/form.html:133
+msgid "You can select more than one file"
+msgstr "Birden fazla dosya seçebilirsiniz"
 
 #: app/templates/expenses/index.html:8
 msgid "Track maintenance, repairs, insurance, and other costs"
 msgstr "Bakım, onarım, sigorta ve diğer maliyetleri takip edin"
 
-#: app/templates/expenses/index.html:62 app/templates/vehicles/view.html:864
+#: app/templates/expenses/index.html:68 app/templates/vehicles/view.html:1030
 msgid "Delete this expense?"
 msgstr "Bu gider silinsin mi?"
 
-#: app/templates/expenses/index.html:75
+#: app/templates/expenses/index.html:82
 msgid "Vendor / Provider:"
 msgstr "Satıcı / Sağlayıcı:"
 
-#: app/templates/expenses/index.html:81
+#: app/templates/expenses/index.html:88
 msgid "Notes:"
 msgstr "Notlar:"
 
-#: app/templates/expenses/index.html:99
+#: app/templates/expenses/index.html:94
+msgid "Receipts:"
+msgstr "Fişler:"
+
+#: app/templates/expenses/index.html:116
 msgid "No expenses"
 msgstr "Gider yok"
 
-#: app/templates/expenses/index.html:100
+#: app/templates/expenses/index.html:117
 msgid "Start tracking your vehicle expenses."
 msgstr "Araç giderlerinizi kaydetmeye başlayın."
 
-#: app/templates/expenses/index.html:117
+#: app/templates/expenses/index.html:136
 msgid "Spend by Vendor"
 msgstr "Satıcıya göre harcama"
 
-#: app/templates/expenses/index.html:122
-#: app/templates/maintenance/index.html:146
+#: app/templates/expenses/index.html:142
+#: app/templates/maintenance/index.html:151
 msgid "Vendor"
 msgstr "Satıcı"
 
-#: app/templates/expenses/index.html:124 app/templates/trips/report.html:126
+#: app/templates/expenses/index.html:144
+#: app/templates/import/backup_preview.html:53
+#: app/templates/trips/report.html:126
 msgid "Total"
 msgstr "Toplam"
 
-#: app/templates/fuel/form.html:2 app/templates/fuel/form.html:8
+#: app/templates/fuel/form.html:2 app/templates/fuel/form.html:11
 msgid "Edit Fuel Log"
 msgstr "Yakıt Kaydını Düzenle"
 
-#: app/templates/fuel/form.html:2 app/templates/fuel/form.html:8
-#: app/templates/fuel/form.html:175 app/templates/fuel/index.html:15
-#: app/templates/fuel/index.html:87 app/templates/vehicles/view.html:168
+#: app/templates/fuel/form.html:2 app/templates/fuel/form.html:11
+#: app/templates/fuel/form.html:205 app/templates/fuel/index.html:16
+#: app/templates/fuel/index.html:116 app/templates/vehicles/view.html:233
 msgid "Add Fuel Log"
 msgstr "Yakıt Kaydı Ekle"
 
-#: app/templates/fuel/form.html:7
+#: app/templates/fuel/form.html:10
 msgid "Back to fuel logs"
 msgstr "Yakıt kayıtlarına dön"
 
-#: app/templates/fuel/form.html:33 app/templates/trips/form.html:48
+#: app/templates/fuel/form.html:39 app/templates/fuel/form.html:213
+#: app/templates/trips/form.html:56 app/templates/trips/form.html:183
+msgid "Last engine hours"
+msgstr "Son motor saati"
+
+#: app/templates/fuel/form.html:39 app/templates/fuel/form.html:212
+#: app/templates/trips/form.html:56 app/templates/trips/form.html:182
 msgid "Last odometer"
 msgstr "Son kilometre sayacı"
 
-#: app/templates/fuel/form.html:50 app/templates/fuel/quick.html:139
+#: app/templates/fuel/form.html:56 app/templates/fuel/quick.html:140
 msgid "From Tessie"
 msgstr "Tessie'den"
 
-#: app/templates/fuel/form.html:57
+#: app/templates/fuel/form.html:63
 msgid "Odometer is automatically tracked via Tessie for this vehicle."
 msgstr ""
 "Bu araç için kilometre sayacı Tessie üzerinden otomatik olarak takip edilir."
 
-#: app/templates/fuel/form.html:70 app/templates/fuel/quick.html:65
-#: app/templates/vehicles/view.html:1019
+#: app/templates/fuel/form.html:76 app/templates/fuel/quick.html:66
+#: app/templates/vehicles/view.html:1234
 msgid "Price per"
 msgstr "Birim Fiyat"
 
-#: app/templates/fuel/form.html:78
+#: app/templates/fuel/form.html:84
 msgid "Discount per"
 msgstr "Birim İndirim"
 
-#: app/templates/fuel/form.html:84
+#: app/templates/fuel/form.html:90
 msgid "Optional loyalty discount, subtracted from the price per unit."
 msgstr "İsteğe bağlı sadakat indirimi, birim fiyattan düşülür."
 
-#: app/templates/fuel/form.html:95 app/templates/fuel/quick.html:93
+#: app/templates/fuel/form.html:101
+msgid "Sales Tax"
+msgstr "Satış vergisi"
+
+#: app/templates/fuel/form.html:106
+msgid ""
+"Optional. Sales tax shown on the receipt, already included in the total "
+"cost. Add the amounts together where more than one tax applies."
+msgstr ""
+"İsteğe bağlı. Fişte görünen ve toplam maliyete zaten dahil olan vergi. "
+"Birden fazla vergi varsa tutarları toplayın."
+
+#: app/templates/fuel/form.html:110 app/templates/fuel/quick.html:94
 msgid "Station"
 msgstr "İstasyon"
 
-#: app/templates/fuel/form.html:99 app/templates/fuel/quick.html:97
+#: app/templates/fuel/form.html:114 app/templates/fuel/quick.html:98
 msgid "Select station or enter manually..."
 msgstr "İstasyon seçin veya elle girin..."
 
-#: app/templates/fuel/form.html:110
+#: app/templates/fuel/form.html:125
 msgid "e.g., Shell, BP"
 msgstr "ör. Shell, BP"
 
-#: app/templates/fuel/form.html:114
+#: app/templates/fuel/form.html:129
 msgid "Add saved stations"
 msgstr "Kayıtlı istasyon ekleyin"
 
-#: app/templates/fuel/form.html:114
+#: app/templates/fuel/form.html:129
 msgid "for quick selection and price tracking"
 msgstr "hızlı seçim ve fiyat takibi için"
 
-#: app/templates/fuel/form.html:120 app/templates/vehicles/form.html:59
+#: app/templates/fuel/form.html:135 app/templates/fuel/index.html:44
+#: app/templates/vehicles/form.html:59
 msgid "Fuel Type"
 msgstr "Yakıt Türü"
 
-#: app/templates/fuel/form.html:131
+#: app/templates/fuel/form.html:143
+msgid "Distance on this fuel"
+msgstr "Bu yakıtla gidilen mesafe"
+
+#: app/templates/fuel/form.html:148
+msgid ""
+"Distance run on this fuel since your last fill-up of it. The odometer can’t "
+"tell the fuels apart, so consumption for a dual-fuel vehicle needs this."
+msgstr ""
+"Bu yakıtı en son doldurduğunuzdan beri bu yakıtla gidilen mesafe. Kilometre "
+"sayacı yakıtları ayırt edemez, bu yüzden çift yakıtlı araçlarda tüketim için"
+" bu gerekir."
+
+#: app/templates/fuel/form.html:156
 msgid "Full tank fill-up"
 msgstr "Tam depo dolumu"
 
-#: app/templates/fuel/form.html:138
+#: app/templates/fuel/form.html:163
 msgid "Missed fill-up (incomplete data)"
 msgstr "Eksik dolum (eksik veri)"
+
+#: app/templates/fuel/form.html:174
+msgid "Receipt / Attachment"
+msgstr "Fiş / Ek"
 
 #: app/templates/fuel/index.html:8
 msgid "Track your fuel fill-ups and consumption"
 msgstr "Yakıt dolumlarınızı ve tüketiminizi takip edin"
 
-#: app/templates/fuel/index.html:29
+#: app/templates/fuel/index.html:23
+msgid "Sales Tax Paid"
+msgstr "Ödenen vergi"
+
+#: app/templates/fuel/index.html:46
 msgid "Price/Unit"
 msgstr "Fiyat/birim"
 
-#: app/templates/fuel/index.html:31 app/templates/vehicles/view.html:985
+#: app/templates/fuel/index.html:48
 msgid "Consumption"
 msgstr "Tüketim"
 
-#: app/templates/fuel/index.html:48
+#: app/templates/fuel/index.html:66
 msgid "Full"
 msgstr "Tam"
 
-#: app/templates/fuel/index.html:51
+#: app/templates/fuel/index.html:69
 msgid "Missed"
 msgstr "Eksik"
 
-#: app/templates/fuel/index.html:63 app/templates/vehicles/view.html:820
+#: app/templates/fuel/index.html:76
+#, python-format
+msgid "incl. tax %(amount)s"
+msgstr "vergi dahil %(amount)s"
+
+#: app/templates/fuel/index.html:89 app/templates/vehicles/view.html:981
 msgid "Delete this fuel log?"
 msgstr "Bu yakıt kaydı silinsin mi?"
 
-#: app/templates/fuel/index.html:79
+#: app/templates/fuel/index.html:107
 msgid "No fuel logs"
 msgstr "Yakıt kaydı yok"
 
-#: app/templates/fuel/index.html:80
+#: app/templates/fuel/index.html:108
 msgid "Start tracking your fuel fill-ups."
 msgstr "Yakıt dolumlarınızı kaydetmeye başlayın."
 
-#: app/templates/fuel/index.html:96
+#: app/templates/fuel/index.html:126
 msgid "Charging History"
 msgstr "Şarj Geçmişi"
 
-#: app/templates/fuel/index.html:97
+#: app/templates/fuel/index.html:127
 msgid "Sessions logged for your electric and plug-in hybrid vehicles"
 msgstr ""
 "Elektrikli ve şarj edilebilir hibrit araçlarınız için kaydedilen seanslar"
 
-#: app/templates/fuel/index.html:104
+#: app/templates/fuel/index.html:135
 msgid "Add Charging Session"
 msgstr "Şarj Seansı Ekle"
 
-#: app/templates/fuel/index.html:115
+#: app/templates/fuel/index.html:147
 msgid "kWh"
 msgstr "kWh"
 
@@ -3006,38 +3533,150 @@ msgstr "kWh"
 msgid "Fast fuel logging for mobile"
 msgstr "Mobil için hızlı yakıt kaydı"
 
-#: app/templates/fuel/quick.html:49 app/templates/fuel/quick.html:138
+#: app/templates/fuel/quick.html:50 app/templates/fuel/quick.html:139
 msgid "Last"
 msgstr "Son"
 
-#: app/templates/fuel/quick.html:88
+#: app/templates/fuel/quick.html:89
 msgid "Full tank"
 msgstr "Tam depo"
 
-#: app/templates/fuel/quick.html:107 app/templates/maintenance/index.html:130
-#: app/templates/maintenance/index.html:149
+#: app/templates/fuel/quick.html:108 app/templates/maintenance/index.html:135
+#: app/templates/maintenance/index.html:154
 msgid "Optional"
 msgstr "İsteğe bağlı"
 
-#: app/templates/fuel/quick.html:118
+#: app/templates/fuel/quick.html:119
 msgid "Save"
 msgstr "Kaydet"
 
-#: app/templates/fuel/quick.html:125
+#: app/templates/fuel/quick.html:126
 msgid "Save & Add Another"
 msgstr "Kaydet ve Yeni Ekle"
 
-#: app/templates/fuel/quick.html:132
+#: app/templates/fuel/quick.html:133
 msgid "Need more options? Use full form"
 msgstr "Daha fazla seçenek mi gerekiyor? Tam formu kullanın"
+
+#: app/templates/import/backup_preview.html:2
+#: app/templates/import/backup_preview.html:94
+#: app/templates/import/backup_upload.html:2
+msgid "Restore Backup"
+msgstr "Yedeği Geri Yükle"
+
+#: app/templates/import/backup_preview.html:7
+msgid "Choose a different file"
+msgstr "Başka bir dosya seç"
+
+#: app/templates/import/backup_preview.html:8
+msgid "Restore Preview"
+msgstr "Geri yükleme önizlemesi"
+
+#: app/templates/import/backup_preview.html:10
+msgid ""
+"Nothing has been changed yet. This is what will be added to your account."
+msgstr "Henüz hiçbir şey değişmedi. Hesabınıza eklenecek olanlar şunlar."
+
+#: app/templates/import/backup_preview.html:17
+msgid "Backup type"
+msgstr "Yedek türü"
+
+#: app/templates/import/backup_preview.html:18
+msgid "Full backup (with files)"
+msgstr "Tam yedek (dosyalarla)"
+
+#: app/templates/import/backup_preview.html:18
+msgid "JSON export"
+msgstr "JSON dışa aktarımı"
+
+#: app/templates/import/backup_preview.html:21
+msgid "Exported"
+msgstr "Dışa aktarıldı"
+
+#: app/templates/import/backup_preview.html:22
+#: app/templates/import/backup_preview.html:26
+msgid "Unknown"
+msgstr "Bilinmiyor"
+
+#: app/templates/import/backup_preview.html:25
+msgid "Exported by"
+msgstr "Dışa aktaran"
+
+#: app/templates/import/backup_preview.html:36
+msgid "Data"
+msgstr "Veriler"
+
+#: app/templates/import/backup_preview.html:37
+msgid "Will be added"
+msgstr "Eklenecek"
+
+#: app/templates/import/backup_preview.html:38
+msgid "Already present"
+msgstr "Zaten mevcut"
+
+#: app/templates/import/backup_preview.html:64
+msgid "Vehicles in this backup"
+msgstr "Bu yedekteki araçlar"
+
+#: app/templates/import/backup_preview.html:70
+msgid "will be added"
+msgstr "eklenecek"
+
+#: app/templates/import/backup_preview.html:72
+msgid "already in your account — its records will be merged"
+msgstr "zaten hesabınızda — kayıtları birleştirilecek"
+
+#: app/templates/import/backup_preview.html:82
+msgid ""
+"Everything in this backup is already in your account. Restoring it will "
+"change nothing."
+msgstr ""
+"Bu yedekteki her şey zaten hesabınızda. Geri yüklemek hiçbir şeyi "
+"değiştirmez."
+
+#: app/templates/import/backup_upload.html:8
+msgid "Restore a May Backup"
+msgstr "Bir May Yedeğini Geri Yükle"
+
+#: app/templates/import/backup_upload.html:9
+msgid "Restore a JSON export or a full backup ZIP produced by May."
+msgstr ""
+"May tarafından oluşturulan bir JSON dışa aktarımını veya tam yedek ZIP "
+"dosyasını geri yükleyin."
+
+#: app/templates/import/backup_upload.html:14
+msgid ""
+"The backup is merged into your account. Nothing is deleted or overwritten, "
+"and records that are already here are skipped rather than duplicated. You "
+"will see a summary of what will be added before anything is written."
+msgstr ""
+"Yedek hesabınızla birleştirilir. Hiçbir şey silinmez veya üzerine yazılmaz; "
+"hâlihazırda burada olan kayıtlar çoğaltılmak yerine atlanır. Hiçbir şey "
+"yazılmadan önce nelerin ekleneceğinin özetini görürsünüz."
+
+#: app/templates/import/backup_upload.html:17
+msgid ""
+"Documents, attachments and vehicle images can only be restored from a full "
+"backup ZIP, because a JSON export does not contain the files."
+msgstr ""
+"Belgeler, ekler ve araç görselleri yalnızca tam yedek ZIP dosyasından geri "
+"yüklenebilir, çünkü JSON dışa aktarımı dosyaları içermez."
+
+#: app/templates/import/backup_upload.html:24
+msgid "Backup File"
+msgstr "Yedek dosyası"
+
+#: app/templates/import/backup_upload.html:27
+msgid "Accepts may_backup_*.json and may_full_backup_*.zip files."
+msgstr "may_backup_*.json ve may_full_backup_*.zip dosyalarını kabul eder."
+
+#: app/templates/import/backup_upload.html:33
+msgid "Next: Preview"
+msgstr "Sonraki: önizleme"
 
 #: app/templates/import/csv_mapping.html:2
 msgid "CSV Import - Map Columns"
 msgstr "CSV İçe Aktarma - Sütunları Eşleştir"
-
-#: app/templates/import/csv_upload.html:2
-msgid "CSV Import"
-msgstr "CSV İçe Aktarma"
 
 #: app/templates/maintenance/form.html:2
 #: app/templates/maintenance/form.html:12
@@ -3053,25 +3692,26 @@ msgstr "Yeni Bakım Planı"
 msgid "Back to Maintenance"
 msgstr "Bakıma dön"
 
-#: app/templates/maintenance/form.html:34 app/templates/recurring/form.html:34
-#: app/templates/stations/form.html:20 app/templates/vehicles/form.html:18
+#: app/templates/maintenance/form.html:45 app/templates/recurring/form.html:34
+#: app/templates/stations/form.html:20 app/templates/tires/form.html:35
+#: app/templates/vehicles/form.html:18
 #: app/templates/vehicles/part_form.html:29
 msgid "Name"
 msgstr "Ad"
 
-#: app/templates/maintenance/form.html:37
+#: app/templates/maintenance/form.html:48
 msgid "e.g., Oil Change"
 msgstr "ör. Yağ Değişimi"
 
-#: app/templates/maintenance/form.html:60
+#: app/templates/maintenance/form.html:71
 msgid "Optional notes or instructions"
 msgstr "İsteğe bağlı notlar veya talimatlar"
 
-#: app/templates/maintenance/form.html:65
+#: app/templates/maintenance/form.html:76
 msgid "Service Interval"
 msgstr "Servis Aralığı"
 
-#: app/templates/maintenance/form.html:66
+#: app/templates/maintenance/form.html:77
 msgid ""
 "Set how often this maintenance should be performed. You can set distance, "
 "time, or both."
@@ -3079,67 +3719,83 @@ msgstr ""
 "Bu bakımın ne sıklıkla yapılması gerektiğini ayarlayın. Mesafe, süre veya "
 "ikisini birden belirleyebilirsiniz."
 
-#: app/templates/maintenance/form.html:70
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "Her (saat)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "ör. 250"
+
+#: app/templates/maintenance/form.html:86
+msgid ""
+"This vehicle is metered in engine hours, so its service interval is counted "
+"in hours."
+msgstr ""
+"Bu araç motor saati ile ölçülür, bu nedenle servis aralığı saat cinsinden "
+"sayılır."
+
+#: app/templates/maintenance/form.html:89
 msgid "Every (km)"
 msgstr "Her (km)"
 
-#: app/templates/maintenance/form.html:73
+#: app/templates/maintenance/form.html:92
 msgid "e.g., 10000"
 msgstr "ör. 10000"
 
-#: app/templates/maintenance/form.html:77
+#: app/templates/maintenance/form.html:96
 msgid "Every (miles)"
 msgstr "Her (mil)"
 
-#: app/templates/maintenance/form.html:80
+#: app/templates/maintenance/form.html:99
 msgid "e.g., 6000"
 msgstr "ör. 6000"
 
-#: app/templates/maintenance/form.html:84
+#: app/templates/maintenance/form.html:103
 msgid "Every (months)"
 msgstr "Her (ay)"
 
-#: app/templates/maintenance/form.html:87
+#: app/templates/maintenance/form.html:106
 msgid "e.g., 12"
 msgstr "ör. 12"
 
-#: app/templates/maintenance/form.html:95
+#: app/templates/maintenance/form.html:114
 msgid "Last Performed"
 msgstr "Son Yapıldığı Tarih"
 
-#: app/templates/maintenance/form.html:96
+#: app/templates/maintenance/form.html:115
 msgid "When was this maintenance last done? Leave blank if never."
 msgstr "Bu bakım en son ne zaman yapıldı? Hiç yapılmadıysa boş bırakın."
 
-#: app/templates/maintenance/form.html:109
+#: app/templates/maintenance/form.html:130
 msgid "e.g., 50000"
 msgstr "ör. 50000"
 
-#: app/templates/maintenance/form.html:117
+#: app/templates/maintenance/form.html:138
 msgid "Additional Settings"
 msgstr "Ek Ayarlar"
 
-#: app/templates/maintenance/form.html:121
+#: app/templates/maintenance/form.html:142
 msgid "Estimated Cost"
 msgstr "Tahmini Maliyet"
 
-#: app/templates/maintenance/form.html:128
+#: app/templates/maintenance/form.html:149
 msgid "Remind Days Before"
 msgstr "Kaç Gün Önce Hatırlatılacağı"
 
-#: app/templates/maintenance/form.html:139
+#: app/templates/maintenance/form.html:160
 msgid "Automatically create reminder when due"
 msgstr "Vadesi geldiğinde otomatik olarak hatırlatıcı oluştur"
 
-#: app/templates/maintenance/form.html:148
+#: app/templates/maintenance/form.html:169
 msgid "Delete Schedule"
 msgstr "Planı Sil"
 
-#: app/templates/maintenance/form.html:160
+#: app/templates/maintenance/form.html:181
 msgid "Create Schedule"
 msgstr "Plan Oluştur"
 
-#: app/templates/maintenance/form.html:172
+#: app/templates/maintenance/form.html:220
 msgid "Delete this maintenance schedule?"
 msgstr "Bu bakım planı silinsin mi?"
 
@@ -3152,81 +3808,81 @@ msgstr "Bakım Planları"
 msgid "Set up recurring maintenance with automatic reminders"
 msgstr "Otomatik hatırlatıcılarla tekrarlanan bakım ayarlayın"
 
-#: app/templates/maintenance/index.html:15
+#: app/templates/maintenance/index.html:16
 msgid "Add Schedule"
 msgstr "Plan Ekle"
 
-#: app/templates/maintenance/index.html:33
+#: app/templates/maintenance/index.html:35
 msgid "Due Now"
 msgstr "Şimdi Vadesi Doldu"
 
-#: app/templates/maintenance/index.html:37
+#: app/templates/maintenance/index.html:39
 msgid "Due Soon"
 msgstr "Yakında Vadesi Dolacak"
 
-#: app/templates/maintenance/index.html:76
+#: app/templates/maintenance/index.html:77
 msgid "Mark Complete"
 msgstr "Tamamlandı Olarak İşaretle"
 
-#: app/templates/maintenance/index.html:99
+#: app/templates/maintenance/index.html:102
 msgid "No maintenance schedules"
 msgstr "Bakım planı yok"
 
-#: app/templates/maintenance/index.html:100
+#: app/templates/maintenance/index.html:103
 msgid "Set up recurring maintenance reminders for your vehicles."
 msgstr "Araçlarınız için tekrarlanan bakım hatırlatıcıları ayarlayın."
 
-#: app/templates/maintenance/index.html:107
+#: app/templates/maintenance/index.html:111
 msgid "Add Maintenance Schedule"
 msgstr "Bakım Planı Ekle"
 
-#: app/templates/maintenance/index.html:119
+#: app/templates/maintenance/index.html:124
 msgid "Mark as Completed"
 msgstr "Tamamlandı Olarak İşaretle"
 
-#: app/templates/maintenance/index.html:122
+#: app/templates/maintenance/index.html:127
 msgid "Completed on"
 msgstr "Tamamlanma tarihi"
 
-#: app/templates/maintenance/index.html:127
+#: app/templates/maintenance/index.html:132
 msgid "Current Odometer"
 msgstr "Güncel Kilometre Sayacı"
 
-#: app/templates/maintenance/index.html:136
+#: app/templates/maintenance/index.html:141
 msgid "Create expense entry"
 msgstr "Gider kaydı oluştur"
 
-#: app/templates/maintenance/index.html:141
+#: app/templates/maintenance/index.html:146
 msgid "Actual Cost"
 msgstr "Gerçek Maliyet"
 
-#: app/templates/maintenance/index.html:161
+#: app/templates/maintenance/index.html:166
 msgid "Complete"
 msgstr "Tamamla"
 
-#: app/templates/notes/form.html:2 app/templates/notes/form.html:8
+#: app/templates/notes/form.html:2 app/templates/notes/form.html:11
 msgid "Edit Note"
 msgstr "Notu Düzenle"
 
-#: app/templates/notes/form.html:2 app/templates/notes/form.html:8
-#: app/templates/notes/form.html:67 app/templates/notes/index.html:15
-#: app/templates/notes/index.html:85
+#: app/templates/notes/form.html:2 app/templates/notes/form.html:11
+#: app/templates/notes/form.html:76 app/templates/notes/index.html:16
+#: app/templates/notes/index.html:92
 msgid "Add Note"
 msgstr "Not Ekle"
 
-#: app/templates/notes/form.html:7
+#: app/templates/notes/form.html:10
 msgid "Back to notes"
 msgstr "Notlara dön"
 
-#: app/templates/notes/form.html:47
+#: app/templates/notes/form.html:51
 msgid "e.g., DPF regeneration"
 msgstr "ör. DPF rejenerasyonu"
 
-#: app/templates/notes/form.html:52 app/templates/notes/index.html:28
+#: app/templates/notes/form.html:56 app/templates/notes/index.html:30
 msgid "Note"
 msgstr "Not"
 
-#: app/templates/notes/form.html:54
+#: app/templates/notes/form.html:58
 msgid "What happened?"
 msgstr "Ne oldu?"
 
@@ -3237,15 +3893,15 @@ msgstr ""
 "Yakıt, gider veya bakım kategorilerine uymayan olayları ve gözlemleri "
 "kaydedin"
 
-#: app/templates/notes/index.html:54
+#: app/templates/notes/index.html:59
 msgid "Delete this note?"
 msgstr "Bu not silinsin mi?"
 
-#: app/templates/notes/index.html:77
+#: app/templates/notes/index.html:83
 msgid "No notes"
 msgstr "Not yok"
 
-#: app/templates/notes/index.html:78
+#: app/templates/notes/index.html:84
 msgid "Jot down anything worth remembering about your vehicles."
 msgstr "Araçlarınızla ilgili hatırlanmaya değer her şeyi not edin."
 
@@ -3254,7 +3910,7 @@ msgid "Edit Recurring Expense"
 msgstr "Tekrarlanan Gideri Düzenle"
 
 #: app/templates/recurring/form.html:2 app/templates/recurring/form.html:13
-#: app/templates/recurring/index.html:126
+#: app/templates/recurring/index.html:135
 msgid "Add Recurring Expense"
 msgstr "Tekrarlanan Gider Ekle"
 
@@ -3306,7 +3962,7 @@ msgstr "Vadesi geldiğinde otomatik olarak gider oluştur"
 msgid "Remind days before"
 msgstr "Kaç gün önce hatırlatılacağı"
 
-#: app/templates/recurring/form.html:132 app/templates/recurring/index.html:15
+#: app/templates/recurring/form.html:132 app/templates/recurring/index.html:16
 msgid "Add Recurring"
 msgstr "Tekrarlanan Ekle"
 
@@ -3318,31 +3974,60 @@ msgstr "Bu tekrarlanan gider silinsin mi?"
 msgid "Auto-generate regular expenses"
 msgstr "Düzenli giderleri otomatik oluştur"
 
-#: app/templates/recurring/index.html:64
+#: app/templates/recurring/index.html:66
 msgid "Next due"
 msgstr "Sonraki vade"
 
-#: app/templates/recurring/index.html:76
+#: app/templates/recurring/index.html:79
 msgid "Generate Expense"
 msgstr "Gider Oluştur"
 
-#: app/templates/recurring/index.html:87
+#: app/templates/recurring/index.html:92
 msgid "Pause"
 msgstr "Duraklat"
 
-#: app/templates/recurring/index.html:87
+#: app/templates/recurring/index.html:92
 msgid "Activate"
 msgstr "Etkinleştir"
 
-#: app/templates/recurring/index.html:118
+#: app/templates/recurring/index.html:126
 msgid "No recurring expenses"
 msgstr "Tekrarlanan gider yok"
 
-#: app/templates/recurring/index.html:119
+#: app/templates/recurring/index.html:127
 msgid ""
 "Set up recurring expenses like insurance, road tax, or parking permits."
 msgstr ""
 "Sigorta, taşıt vergisi veya park izni gibi tekrarlanan giderler ayarlayın."
+
+#: app/templates/reminders/_reminder_row.html:67
+#: app/templates/reminders/index.html:116
+msgid "Completed"
+msgstr "Tamamlandı"
+
+#: app/templates/reminders/_reminder_row.html:69
+#, python-format
+msgid "%(num)d days overdue"
+msgstr "%(num)d gün gecikmiş"
+
+#: app/templates/reminders/_reminder_row.html:71
+#: app/templates/vehicles/view.html:693
+msgid "Due today"
+msgstr "Bugün vadesi doluyor"
+
+#: app/templates/reminders/_reminder_row.html:73
+#: app/templates/vehicles/view.html:695
+msgid "Due tomorrow"
+msgstr "Yarın vadesi doluyor"
+
+#: app/templates/reminders/_reminder_row.html:75
+#, python-format
+msgid "In %(num)d days"
+msgstr "%(num)d gün içinde"
+
+#: app/templates/reminders/_reminder_row.html:85
+msgid "Log expense"
+msgstr "Gider kaydet"
 
 #: app/templates/reminders/form.html:2 app/templates/reminders/form.html:18
 msgid "Edit Reminder"
@@ -3404,44 +4089,40 @@ msgstr "Hatırlatıcı Oluştur"
 msgid "Keep track of important dates for your vehicles"
 msgstr "Araçlarınızla ilgili önemli tarihleri takip edin"
 
-#: app/templates/reminders/index.html:16
-#: app/templates/reminders/index.html:138 app/templates/vehicles/view.html:199
+#: app/templates/reminders/index.html:17
+#: app/templates/reminders/index.html:141 app/templates/vehicles/view.html:272
 msgid "Add Reminder"
 msgstr "Hatırlatıcı Ekle"
 
-#: app/templates/reminders/index.html:36
+#: app/templates/reminders/index.html:38
 msgid "All Types"
 msgstr "Tüm Türler"
 
-#: app/templates/reminders/index.html:45
+#: app/templates/reminders/index.html:47
 msgid "Show completed"
 msgstr "Tamamlananları göster"
 
-#: app/templates/reminders/index.html:51
+#: app/templates/reminders/index.html:53
 msgid "Clear filters"
 msgstr "Filtreleri temizle"
 
-#: app/templates/reminders/index.html:63 app/templates/vehicles/view.html:637
+#: app/templates/reminders/index.html:65 app/templates/vehicles/view.html:778
 msgid "Overdue"
 msgstr "Vadesi Geçmiş"
 
-#: app/templates/reminders/index.html:80
+#: app/templates/reminders/index.html:82
 msgid "Upcoming"
 msgstr "Yaklaşan"
 
-#: app/templates/reminders/index.html:97
+#: app/templates/reminders/index.html:99
 msgid "Later"
 msgstr "Daha Sonra"
 
-#: app/templates/reminders/index.html:114
-msgid "Completed"
-msgstr "Tamamlandı"
-
-#: app/templates/reminders/index.html:130
+#: app/templates/reminders/index.html:132
 msgid "No reminders"
 msgstr "Hatırlatıcı yok"
 
-#: app/templates/reminders/index.html:131
+#: app/templates/reminders/index.html:133
 msgid "Get started by adding a reminder for your vehicle."
 msgstr "Aracınız için bir hatırlatıcı ekleyerek başlayın."
 
@@ -3473,23 +4154,15 @@ msgstr "Bitiş"
 msgid "%(count)s results"
 msgstr "%(count)s sonuç"
 
-#: app/templates/search/index.html:71
-msgid "Fuel Log"
-msgstr "Yakıt kaydı"
-
-#: app/templates/search/index.html:131
+#: app/templates/search/index.html:138
 msgid "Trip"
 msgstr "Yolculuk"
 
-#: app/templates/search/index.html:151
-msgid "Charging Session"
-msgstr "Şarj oturumu"
-
-#: app/templates/search/index.html:167
+#: app/templates/search/index.html:177
 msgid "No results"
 msgstr "Sonuç bulunamadı"
 
-#: app/templates/search/index.html:168
+#: app/templates/search/index.html:178
 msgid "Try a different search term or a wider date range."
 msgstr "Farklı bir arama terimi veya daha geniş bir tarih aralığı deneyin."
 
@@ -3521,7 +4194,7 @@ msgstr ""
 "Kayıtlı istasyonlarda yakıt kaydı girdiğinizde fiyatlar otomatik olarak "
 "takip edilir."
 
-#: app/templates/stations/cheapest.html:76
+#: app/templates/stations/cheapest.html:77
 msgid "Add a Station"
 msgstr "İstasyon Ekle"
 
@@ -3573,8 +4246,8 @@ msgstr "ör. İyi fiyatlar, 24 saat açık"
 msgid "Mark as favorite"
 msgstr "Favori olarak işaretle"
 
-#: app/templates/stations/form.html:105 app/templates/stations/index.html:23
-#: app/templates/stations/index.html:90
+#: app/templates/stations/form.html:105 app/templates/stations/index.html:36
+#: app/templates/stations/index.html:107
 msgid "Add Station"
 msgstr "İstasyon Ekle"
 
@@ -3586,42 +4259,51 @@ msgstr "Bu istasyon silinsin mi?"
 msgid "Your favorite fuel stations"
 msgstr "Favori yakıt istasyonlarınız"
 
-#: app/templates/stations/index.html:56
-msgid "Used"
-msgstr "Kullanım"
+#: app/templates/stations/index.html:15 app/templates/stations/prices.html:26
+msgid "Fetch live prices from UK retailer feeds"
+msgstr "Birleşik Krallık satıcı akışlarından canlı fiyatları çek"
 
-#: app/templates/stations/index.html:59 app/templates/stations/prices.html:2
+#: app/templates/stations/index.html:19 app/templates/stations/prices.html:30
+msgid "Update UK Prices"
+msgstr "Birleşik Krallık Fiyatlarını Güncelle"
+
+#: app/templates/stations/index.html:70
+#, python-format
+msgid "Used %(count)dx"
+msgstr "%(count)dx kullanıldı"
+
+#: app/templates/stations/index.html:73 app/templates/stations/prices.html:2
 #: app/templates/stations/prices.html:21
 msgid "Price History"
 msgstr "Fiyat Geçmişi"
 
-#: app/templates/stations/index.html:82
+#: app/templates/stations/index.html:98
 msgid "No fuel stations"
 msgstr "Yakıt istasyonu yok"
 
-#: app/templates/stations/index.html:83
+#: app/templates/stations/index.html:99
 msgid "Save your favorite stations for quick access when logging fuel."
 msgstr ""
 "Yakıt kaydı girerken hızlı erişim için favori istasyonlarınızı kaydedin."
 
-#: app/templates/stations/prices.html:44
+#: app/templates/stations/prices.html:56
 msgid "Delete this price entry? This cannot be undone."
 msgstr "Bu fiyat kaydı silinsin mi? Bu işlem geri alınamaz."
 
-#: app/templates/stations/prices.html:47
+#: app/templates/stations/prices.html:59
 msgid "Delete this entry"
 msgstr "Bu kaydı sil"
 
-#: app/templates/stations/prices.html:60
+#: app/templates/stations/prices.html:72
 msgid "No price history available for this station."
 msgstr "Bu istasyon için fiyat geçmişi yok."
 
-#: app/templates/stations/prices.html:61
+#: app/templates/stations/prices.html:73
 msgid "Prices are automatically recorded when you log fuel at this station."
 msgstr ""
 "Bu istasyonda yakıt kaydı girdiğinizde fiyatlar otomatik olarak kaydedilir."
 
-#: app/templates/timeline/index.html:2 app/templates/vehicles/view.html:213
+#: app/templates/timeline/index.html:2 app/templates/vehicles/view.html:287
 msgid "Timeline"
 msgstr "Zaman Çizelgesi"
 
@@ -3645,72 +4327,225 @@ msgstr "Aylık Maliyetler"
 msgid "Activity Timeline"
 msgstr "Etkinlik Zaman Çizelgesi"
 
-#: app/templates/timeline/index.html:86
+#: app/templates/timeline/index.html:98
 msgid "No activity recorded for this vehicle yet."
 msgstr "Bu araç için henüz etkinlik kaydedilmedi."
 
-#: app/templates/timeline/index.html:114
+#: app/templates/timeline/index.html:126
 msgid "Charging"
 msgstr "Şarj"
 
-#: app/templates/trips/form.html:2 app/templates/trips/form.html:8
+#: app/templates/tires/form.html:2 app/templates/tires/form.html:8
+msgid "Edit Tire Set"
+msgstr "Lastik Takımını Düzenle"
+
+#: app/templates/tires/form.html:2 app/templates/tires/form.html:8
+#: app/templates/tires/form.html:107 app/templates/tires/index.html:16
+#: app/templates/tires/index.html:183
+msgid "Add Tire Set"
+msgstr "Lastik Takımı Ekle"
+
+#: app/templates/tires/form.html:7
+msgid "Back to tires"
+msgstr "Lastiklere dön"
+
+#: app/templates/tires/form.html:38
+msgid "e.g., Michelin Alpin 6"
+msgstr "örn. Michelin Alpin 6"
+
+#: app/templates/tires/form.html:53
+msgid "Size"
+msgstr "Ebat"
+
+#: app/templates/tires/form.html:56
+msgid "e.g., 205/55 R16 91H"
+msgstr "örn. 205/55 R16 91H"
+
+#: app/templates/tires/form.html:68
+msgid "Purchase date"
+msgstr "Satın alma tarihi"
+
+#: app/templates/tires/form.html:75 app/templates/tires/form.html:117
+msgid "Engine hours when bought"
+msgstr "Satın alındığındaki motor saati"
+
+#: app/templates/tires/form.html:75 app/templates/tires/form.html:116
+#: app/templates/tires/index.html:58
+msgid "Odometer when bought"
+msgstr "Satın alındığındaki kilometre"
+
+#: app/templates/tires/form.html:79
+msgid ""
+"Optional. Kept for reference; the distance covered comes from when the set "
+"is on the vehicle."
+msgstr ""
+"İsteğe bağlı. Bilgi amaçlı tutulur; gidilen mesafe, takım araçtayken "
+"hesaplanır."
+
+#: app/templates/tires/form.html:93
+msgid "Retired (worn out or sold)"
+msgstr "Kullanımdan kaldırıldı (yıprandı veya satıldı)"
+
+#: app/templates/tires/index.html:8
+msgid ""
+"Track each set of tires on and off the vehicle, and the distance it has "
+"covered"
+msgstr ""
+"Her lastik takımının takılıp sökülmesini ve gittiği mesafeyi takip edin"
+
+#: app/templates/tires/index.html:34
+msgid "Fitted"
+msgstr "Takılı"
+
+#: app/templates/tires/index.html:36
+msgid "Retired"
+msgstr "Kullanımdan kaldırıldı"
+
+#: app/templates/tires/index.html:38
+msgid "In storage"
+msgstr "Depoda"
+
+#: app/templates/tires/index.html:48
+msgid "Total distance on this set"
+msgstr "Bu takımla gidilen toplam mesafe"
+
+#: app/templates/tires/index.html:54
+msgid "Purchased"
+msgstr "Satın alındı"
+
+#: app/templates/tires/index.html:66 app/templates/vehicles/form.html:246
+msgid "Status"
+msgstr "Durum"
+
+#: app/templates/tires/index.html:69
+#, python-format
+msgid "On since %(date)s"
+msgstr "%(date)s tarihinden beri takılı"
+
+#: app/templates/tires/index.html:71
+msgid "Not on the vehicle"
+msgstr "Araçta değil"
+
+#: app/templates/tires/index.html:96
+msgid "Take Off"
+msgstr "Sök"
+
+#: app/templates/tires/index.html:111
+msgid "Put On"
+msgstr "Tak"
+
+#: app/templates/tires/index.html:120
+msgid "Fitting history"
+msgstr "Takma geçmişi"
+
+#: app/templates/tires/index.html:125
+msgid "On"
+msgstr "Takıldı"
+
+#: app/templates/tires/index.html:126
+msgid "Off"
+msgstr "Söküldü"
+
+#: app/templates/tires/index.html:136
+msgid "Still on"
+msgstr "Hâlâ takılı"
+
+#: app/templates/tires/index.html:142
+msgid "Delete this fitting record?"
+msgstr "Bu takma kaydı silinsin mi?"
+
+#: app/templates/tires/index.html:160
+msgid "Delete this tire set and its fitting history?"
+msgstr "Bu lastik takımı ve takma geçmişi silinsin mi?"
+
+#: app/templates/tires/index.html:174
+msgid "No tire sets"
+msgstr "Lastik takımı yok"
+
+#: app/templates/tires/index.html:175
+msgid "Add a set of tires to track when it goes on and off the vehicle."
+msgstr ""
+"Araca ne zaman takıldığını ve söküldüğünü izlemek için bir lastik takımı "
+"ekleyin."
+
+#: app/templates/trips/form.html:2 app/templates/trips/form.html:13
 msgid "Edit Trip"
 msgstr "Yolculuğu Düzenle"
 
-#: app/templates/trips/form.html:2 app/templates/trips/form.html:8
-#: app/templates/trips/form.html:131 app/templates/trips/index.html:30
-#: app/templates/vehicles/view.html:185
+#: app/templates/trips/form.html:2 app/templates/trips/form.html:13
+#: app/templates/trips/form.html:156 app/templates/trips/index.html:31
+#: app/templates/vehicles/view.html:254
 msgid "Log Trip"
 msgstr "Yolculuk Kaydet"
 
-#: app/templates/trips/form.html:7 app/templates/trips/report.html:12
+#: app/templates/trips/form.html:12 app/templates/trips/report.html:12
 #: app/templates/trips/templates_index.html:7
 msgid "Back to trips"
 msgstr "Yolculuklara dön"
 
-#: app/templates/trips/form.html:14
+#: app/templates/trips/form.html:19
 msgid "Load template"
 msgstr "Şablon yükle"
 
-#: app/templates/trips/form.html:17
+#: app/templates/trips/form.html:22
 msgid "— choose a template —"
 msgstr "— bir şablon seçin —"
 
-#: app/templates/trips/form.html:22
+#: app/templates/trips/form.html:27
 msgid "Manage"
 msgstr "Yönet"
 
-#: app/templates/trips/form.html:66 app/templates/trips/index.html:60
+#: app/templates/trips/form.html:74 app/templates/trips/index.html:62
 #: app/templates/trips/report.html:100
 #: app/templates/trips/template_form.html:42
 msgid "Purpose"
 msgstr "Amaç"
 
-#: app/templates/trips/form.html:76
+#: app/templates/trips/form.html:84 app/templates/trips/form.html:185
+msgid "Start Hours"
+msgstr "Başlangıç motor saati"
+
+#: app/templates/trips/form.html:84 app/templates/trips/form.html:184
 msgid "Start Odometer"
 msgstr "Başlangıç Kilometre Sayacı"
 
-#: app/templates/trips/form.html:84
+#: app/templates/trips/form.html:92 app/templates/trips/form.html:187
+msgid "End Hours"
+msgstr "Bitiş motor saati"
+
+#: app/templates/trips/form.html:92 app/templates/trips/form.html:186
 msgid "End Odometer"
 msgstr "Bitiş Kilometre Sayacı"
 
-#: app/templates/trips/form.html:93 app/templates/trips/template_form.html:52
+#: app/templates/trips/form.html:101
+msgid "Start Fuel Level"
+msgstr "Başlangıç yakıt seviyesi"
+
+#: app/templates/trips/form.html:109
+msgid "End Fuel Level"
+msgstr "Bitiş yakıt seviyesi"
+
+#: app/templates/trips/form.html:114 app/templates/trips/index.html:125
+msgid "Fuel used"
+msgstr "Kullanılan yakıt"
+
+#: app/templates/trips/form.html:118 app/templates/trips/template_form.html:52
 msgid "Start Location"
 msgstr "Başlangıç Konumu"
 
-#: app/templates/trips/form.html:96 app/templates/trips/template_form.html:55
+#: app/templates/trips/form.html:121 app/templates/trips/template_form.html:55
 msgid "e.g., Home, Office"
 msgstr "ör. Ev, Ofis"
 
-#: app/templates/trips/form.html:101 app/templates/trips/template_form.html:60
+#: app/templates/trips/form.html:126 app/templates/trips/template_form.html:60
 msgid "End Location"
 msgstr "Bitiş Konumu"
 
-#: app/templates/trips/form.html:104 app/templates/trips/template_form.html:63
+#: app/templates/trips/form.html:129 app/templates/trips/template_form.html:63
 msgid "e.g., Client Site, Airport"
 msgstr "ör. Müşteri Sahası, Havalimanı"
 
-#: app/templates/trips/form.html:112
+#: app/templates/trips/form.html:137
 msgid "e.g., Client meeting, Site visit"
 msgstr "ör. Müşteri toplantısı, Saha ziyareti"
 
@@ -3726,33 +4561,33 @@ msgstr "Şablonlar"
 msgid "Report"
 msgstr "Rapor"
 
-#: app/templates/trips/index.html:42 app/templates/trips/report.html:39
+#: app/templates/trips/index.html:44 app/templates/trips/report.html:39
 msgid "Business Distance"
 msgstr "İş Mesafesi"
 
-#: app/templates/trips/index.html:62
+#: app/templates/trips/index.html:64
 msgid "All Purposes"
 msgstr "Tüm Amaçlar"
 
-#: app/templates/trips/index.html:69 app/templates/vehicles/form.html:97
+#: app/templates/trips/index.html:71 app/templates/vehicles/form.html:98
 msgid "Year"
 msgstr "Yıl"
 
-#: app/templates/trips/index.html:71
+#: app/templates/trips/index.html:73
 msgid "All Years"
 msgstr "Tüm Yıllar"
 
-#: app/templates/trips/index.html:151
+#: app/templates/trips/index.html:162
 msgid "No trips logged"
 msgstr "Kayıtlı yolculuk yok"
 
-#: app/templates/trips/index.html:152
+#: app/templates/trips/index.html:163
 msgid "Start logging your trips for mileage tracking and tax deductions."
 msgstr ""
 "Kilometre takibi ve vergi indirimleri için yolculuklarınızı kaydetmeye "
 "başlayın."
 
-#: app/templates/trips/index.html:159
+#: app/templates/trips/index.html:171
 msgid "Log Your First Trip"
 msgstr "İlk Yolculuğunuzu Kaydedin"
 
@@ -3803,7 +4638,7 @@ msgstr "Şablonu Düzenle"
 
 #: app/templates/trips/template_form.html:2
 #: app/templates/trips/template_form.html:9
-#: app/templates/trips/templates_index.html:16
+#: app/templates/trips/templates_index.html:17
 msgid "New Template"
 msgstr "Yeni Şablon"
 
@@ -3820,7 +4655,7 @@ msgid "e.g., Office Commute, Client Visit"
 msgstr "ör. İşe Gidiş-Geliş, Müşteri Ziyareti"
 
 #: app/templates/trips/template_form.html:30
-#: app/templates/trips/templates_index.html:38
+#: app/templates/trips/templates_index.html:40
 msgid "Any vehicle"
 msgstr "Herhangi bir araç"
 
@@ -3847,25 +4682,25 @@ msgstr ""
 "Yolculuk bilgilerini hızlıca doldurmak için sık kullanılan güzergahları "
 "kaydedin"
 
-#: app/templates/trips/templates_index.html:50
+#: app/templates/trips/templates_index.html:53
 msgid "Use"
 msgstr "Kullan"
 
-#: app/templates/trips/templates_index.html:59
+#: app/templates/trips/templates_index.html:66
 msgid "Delete this template?"
 msgstr "Bu şablon silinsin mi?"
 
-#: app/templates/trips/templates_index.html:78
+#: app/templates/trips/templates_index.html:86
 msgid "No templates yet"
 msgstr "Henüz şablon yok"
 
-#: app/templates/trips/templates_index.html:79
+#: app/templates/trips/templates_index.html:87
 msgid "Save common routes as templates to log trips faster."
 msgstr ""
 "Yolculukları daha hızlı kaydetmek için sık kullanılan güzergahları şablon "
 "olarak kaydedin."
 
-#: app/templates/trips/templates_index.html:86
+#: app/templates/trips/templates_index.html:95
 msgid "Create Your First Template"
 msgstr "İlk Şablonunuzu Oluşturun"
 
@@ -3873,8 +4708,8 @@ msgstr "İlk Şablonunuzu Oluşturun"
 msgid "Edit Vehicle"
 msgstr "Aracı Düzenle"
 
-#: app/templates/vehicles/form.html:2 app/templates/vehicles/form.html:325
-#: app/templates/vehicles/index.html:32 app/templates/vehicles/index.html:113
+#: app/templates/vehicles/form.html:2 app/templates/vehicles/form.html:326
+#: app/templates/vehicles/index.html:33 app/templates/vehicles/index.html:116
 msgid "Add Vehicle"
 msgstr "Araç Ekle"
 
@@ -3918,11 +4753,11 @@ msgstr ""
 "Bu araç için kilometre sayacı birimini geçersiz kılın. Farklı kilometre "
 "sayacı birimlerine sahip araçlarınız olduğunda kullanışlıdır."
 
-#: app/templates/vehicles/form.html:69
+#: app/templates/vehicles/form.html:70
 msgid "Secondary Fuel Type"
 msgstr "İkincil Yakıt Türü"
 
-#: app/templates/vehicles/form.html:77
+#: app/templates/vehicles/form.html:78
 msgid ""
 "Optional. Use for vehicles with a secondary fluid to track, e.g. AdBlue "
 "alongside Diesel."
@@ -3930,79 +4765,79 @@ msgstr ""
 "İsteğe bağlı. Takip edilecek ikincil bir sıvısı olan araçlar için kullanın, "
 "ör. Dizel yanında AdBlue."
 
-#: app/templates/vehicles/form.html:81
+#: app/templates/vehicles/form.html:82
 msgid "Make"
 msgstr "Marka"
 
-#: app/templates/vehicles/form.html:84
+#: app/templates/vehicles/form.html:85
 msgid "e.g., Toyota"
 msgstr "ör. Toyota"
 
-#: app/templates/vehicles/form.html:89
+#: app/templates/vehicles/form.html:90
 msgid "Model"
 msgstr "Model"
 
-#: app/templates/vehicles/form.html:92
+#: app/templates/vehicles/form.html:93
 msgid "e.g., Corolla"
 msgstr "ör. Corolla"
 
-#: app/templates/vehicles/form.html:101
+#: app/templates/vehicles/form.html:102
 msgid "e.g., 2020"
 msgstr "ör. 2020"
 
-#: app/templates/vehicles/form.html:106
+#: app/templates/vehicles/form.html:107
 msgid "Tank Capacity (L)"
 msgstr "Depo Kapasitesi (L)"
 
-#: app/templates/vehicles/form.html:109
+#: app/templates/vehicles/form.html:110
 msgid "e.g., 50"
 msgstr "ör. 50"
 
-#: app/templates/vehicles/form.html:116
+#: app/templates/vehicles/form.html:117
 msgid "Identification"
 msgstr "Kimlik Bilgileri"
 
-#: app/templates/vehicles/form.html:120
+#: app/templates/vehicles/form.html:121
 msgid "Registration / License Plate"
 msgstr "Tescil / Plaka"
 
-#: app/templates/vehicles/form.html:123
+#: app/templates/vehicles/form.html:124
 msgid "e.g., ABC 123"
 msgstr "ör. 34 ABC 123"
 
-#: app/templates/vehicles/form.html:128 app/templates/vehicles/view.html:393
+#: app/templates/vehicles/form.html:129 app/templates/vehicles/view.html:528
 msgid "VIN"
 msgstr "Şasi Numarası (VIN)"
 
-#: app/templates/vehicles/form.html:131
+#: app/templates/vehicles/form.html:132
 msgid "Vehicle Identification Number"
 msgstr "Araç Tanımlama Numarası"
 
-#: app/templates/vehicles/form.html:138
+#: app/templates/vehicles/form.html:139
 msgid "Photo"
 msgstr "Fotoğraf"
 
-#: app/templates/vehicles/form.html:141
+#: app/templates/vehicles/form.html:142
 msgid "Vehicle Image"
 msgstr "Araç Görseli"
 
-#: app/templates/vehicles/form.html:155 app/templates/vehicles/view.html:589
+#: app/templates/vehicles/form.html:156 app/templates/vehicles/view.html:730
 msgid "Specifications"
 msgstr "Teknik Özellikler"
 
-#: app/templates/vehicles/form.html:156
+#: app/templates/vehicles/form.html:157
 msgid "Add technical details like tire sizes, oil type, wiper sizes, etc."
 msgstr "Lastik ebadı, yağ tipi, silecek ebadı gibi teknik detaylar ekleyin."
 
-#: app/templates/vehicles/form.html:190
+#: app/templates/vehicles/form.html:191
 msgid "Add Specification"
 msgstr "Özellik Ekle"
 
-#: app/templates/vehicles/form.html:195
+#: app/templates/vehicles/form.html:196
 msgid "Annual Mileage Tracking"
 msgstr "Yıllık Kilometre Takibi"
 
-#: app/templates/vehicles/form.html:196
+#: app/templates/vehicles/form.html:197
 msgid ""
 "Set a yearly distance limit to track progress — useful for leasing contracts"
 " or insurance policies."
@@ -4010,58 +4845,54 @@ msgstr ""
 "İlerlemeyi takip etmek için yıllık bir mesafe sınırı belirleyin — kiralama "
 "sözleşmeleri veya sigorta poliçeleri için kullanışlıdır."
 
-#: app/templates/vehicles/form.html:201
+#: app/templates/vehicles/form.html:202
 msgid "Annual Limit"
 msgstr "Yıllık Sınır"
 
-#: app/templates/vehicles/form.html:206
+#: app/templates/vehicles/form.html:207
 msgid "e.g. 25000"
 msgstr "ör. 25000"
 
-#: app/templates/vehicles/form.html:210
+#: app/templates/vehicles/form.html:211
 msgid "Period Start Date"
 msgstr "Dönem Başlangıç Tarihi"
 
-#: app/templates/vehicles/form.html:214
+#: app/templates/vehicles/form.html:215
 msgid "e.g. the date your lease or insurance starts"
 msgstr "ör. kiralama veya sigortanızın başladığı tarih"
 
-#: app/templates/vehicles/form.html:216
+#: app/templates/vehicles/form.html:217
 msgid "Tracking resets on this date each year."
 msgstr "Takip her yıl bu tarihte sıfırlanır."
 
-#: app/templates/vehicles/form.html:225
+#: app/templates/vehicles/form.html:226
 msgid "General Notes"
 msgstr "Genel Notlar"
 
-#: app/templates/vehicles/form.html:227
+#: app/templates/vehicles/form.html:228
 msgid "Any additional notes about this vehicle..."
 msgstr "Bu araçla ilgili ek notlar..."
 
-#: app/templates/vehicles/form.html:232
+#: app/templates/vehicles/form.html:233
 msgid "Default Trip Type"
 msgstr "Varsayılan Yolculuk Türü"
 
-#: app/templates/vehicles/form.html:239
+#: app/templates/vehicles/form.html:240
 msgid "Pre-selected when logging a new trip for this vehicle"
 msgstr "Bu araç için yeni bir yolculuk kaydedilirken önceden seçilir"
 
-#: app/templates/vehicles/form.html:245
-msgid "Status"
-msgstr "Durum"
-
-#: app/templates/vehicles/form.html:250
+#: app/templates/vehicles/form.html:251
 msgid "Active (show in lists and calculations)"
 msgstr "Aktif (listelerde ve hesaplamalarda göster)"
 
-#: app/templates/vehicles/form.html:256
+#: app/templates/vehicles/form.html:257
 msgid ""
 "Shared — all users on this instance can view and log against this vehicle"
 msgstr ""
 "Paylaşılan — bu sunucudaki tüm kullanıcılar bu aracı görüntüleyebilir ve "
 "buna kayıt girebilir"
 
-#: app/templates/vehicles/form.html:272
+#: app/templates/vehicles/form.html:273
 msgid ""
 "Link this vehicle to Tessie for automatic odometer and battery tracking. "
 "When enabled, manual odometer entry will be disabled."
@@ -4070,25 +4901,25 @@ msgstr ""
 "bağlayın. Etkinleştirildiğinde manuel kilometre sayacı girişi devre dışı "
 "kalır."
 
-#: app/templates/vehicles/form.html:276
+#: app/templates/vehicles/form.html:277
 msgid "Tessie VIN"
 msgstr "Tessie Şasi Numarası"
 
-#: app/templates/vehicles/form.html:280
+#: app/templates/vehicles/form.html:281
 msgid "Enter Tesla VIN or select from list"
 msgstr "Tesla şasi numarasını girin veya listeden seçin"
 
-#: app/templates/vehicles/form.html:288
+#: app/templates/vehicles/form.html:289
 msgid "Lookup"
 msgstr "Sorgula"
 
-#: app/templates/vehicles/form.html:299
+#: app/templates/vehicles/form.html:300
 msgid "Enable Tessie tracking (disables manual odometer entry)"
 msgstr ""
 "Tessie takibini etkinleştir (manuel kilometre sayacı girişini devre dışı "
 "bırakır)"
 
-#: app/templates/vehicles/form.html:309
+#: app/templates/vehicles/form.html:310
 msgid "Tessie tracking is active for this vehicle"
 msgstr "Bu araç için Tessie takibi etkin"
 
@@ -4109,19 +4940,19 @@ msgstr "Aktif Araçlar"
 msgid "Archived"
 msgstr "Arşivlenmiş"
 
-#: app/templates/vehicles/index.html:84
+#: app/templates/vehicles/index.html:86
 msgid "Inactive"
 msgstr "Pasif"
 
-#: app/templates/vehicles/index.html:87
+#: app/templates/vehicles/index.html:89
 msgid "Shared"
 msgstr "Paylaşılan"
 
-#: app/templates/vehicles/index.html:105
+#: app/templates/vehicles/index.html:107
 msgid "No vehicles"
 msgstr "Araç yok"
 
-#: app/templates/vehicles/index.html:106
+#: app/templates/vehicles/index.html:108
 msgid "Get started by adding your first vehicle."
 msgstr "İlk aracınızı ekleyerek başlayın."
 
@@ -4133,7 +4964,7 @@ msgstr "Parçayı Düzenle"
 #: app/templates/vehicles/part_form.html:2
 #: app/templates/vehicles/part_form.html:8
 #: app/templates/vehicles/part_form.html:102
-#: app/templates/vehicles/parts.html:19 app/templates/vehicles/view.html:732
+#: app/templates/vehicles/parts.html:20 app/templates/vehicles/view.html:874
 msgid "Add Part"
 msgstr "Parça Ekle"
 
@@ -4168,51 +4999,6 @@ msgstr "Birim"
 #: app/templates/vehicles/part_form.html:57
 msgid "Select unit..."
 msgstr "Birim seçin..."
-
-#: app/templates/auth/settings.html:138
-#: app/templates/vehicles/part_form.html:58
-msgid "Liters (L)"
-msgstr "Litre (L)"
-
-#: app/templates/auth/settings.html:118
-msgid "DD/MM/YYYY"
-msgstr "GG/AA/YYYY"
-
-#: app/templates/auth/settings.html:119
-msgid "MM/DD/YYYY"
-msgstr "AA/GG/YYYY"
-
-#: app/templates/auth/settings.html:120
-msgid "YYYY-MM-DD"
-msgstr "YYYY-AA-GG"
-
-#: app/templates/auth/settings.html:121
-msgid "DD.MM.YYYY"
-msgstr "GG.AA.YYYY"
-
-#: app/templates/auth/settings.html:139
-msgid "UK Gallons (gal)"
-msgstr "İngiliz galonu (gal)"
-
-#: app/templates/auth/settings.html:140
-msgid "US Gallons (gal)"
-msgstr "ABD galonu (gal)"
-
-#: app/templates/auth/settings.html:149
-msgid "MPG (UK)"
-msgstr "MPG (İngiliz)"
-
-#: app/templates/auth/settings.html:150
-msgid "MPG (US)"
-msgstr "MPG (ABD)"
-
-#: app/templates/auth/settings.html:148
-msgid "L/100km"
-msgstr "L/100 km"
-
-#: app/templates/auth/settings.html:151
-msgid "km/L"
-msgstr "km/L"
 
 #: app/templates/vehicles/part_form.html:59
 msgid "Milliliters (ml)"
@@ -4255,29 +5041,29 @@ msgid "Link to purchase this part"
 msgstr "Bu parçayı satın almak için bağlantı"
 
 #: app/templates/vehicles/parts.html:2 app/templates/vehicles/parts.html:11
-#: app/templates/vehicles/view.html:680
+#: app/templates/vehicles/view.html:821
 msgid "Parts & Consumables"
 msgstr "Parçalar ve Sarf Malzemeleri"
 
-#: app/templates/vehicles/parts.html:47
+#: app/templates/vehicles/parts.html:49
 msgid "Qty:"
 msgstr "Adet:"
 
-#: app/templates/vehicles/parts.html:94
+#: app/templates/vehicles/parts.html:100
 msgid "No parts added"
 msgstr "Parça eklenmedi"
 
-#: app/templates/vehicles/parts.html:95
+#: app/templates/vehicles/parts.html:101
 msgid "Track the parts and consumables needed for servicing this vehicle."
 msgstr ""
 "Bu aracın servisi için gereken parçaları ve sarf malzemelerini takip edin."
 
-#: app/templates/vehicles/parts.html:102
+#: app/templates/vehicles/parts.html:109
 msgid "Add First Part"
 msgstr "İlk Parçayı Ekle"
 
 #: app/templates/vehicles/share.html:2 app/templates/vehicles/share.html:20
-#: app/templates/vehicles/view.html:44
+#: app/templates/vehicles/view.html:81
 msgid "Share"
 msgstr "Paylaş"
 
@@ -4310,236 +5096,276 @@ msgstr "Kaldır"
 msgid "This vehicle is not shared with anyone yet."
 msgstr "Bu araç henüz kimseyle paylaşılmadı."
 
-#: app/templates/vehicles/view.html:32
+#: app/templates/vehicles/view.html:31
+msgid "Previous photo"
+msgstr "Önceki fotoğraf"
+
+#: app/templates/vehicles/view.html:38
+msgid "Next photo"
+msgstr "Sonraki fotoğraf"
+
+#: app/templates/vehicles/view.html:58
 msgid "Download PDF Report"
 msgstr "PDF Rapor İndir"
 
-#: app/templates/vehicles/view.html:56 app/templates/vehicles/view.html:60
+#: app/templates/vehicles/view.html:66
+msgid "Download PDF Report with receipt images"
+msgstr "Fiş görselleriyle PDF raporunu indir"
+
+#: app/templates/vehicles/view.html:70
+msgid "PDF + Receipts"
+msgstr "PDF + fişler"
+
+#: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Ayarlanmadı"
 
-#: app/templates/vehicles/view.html:63
+#: app/templates/vehicles/view.html:101
 msgid "Last Odometer"
 msgstr "Son Kilometre Sayacı"
 
-#: app/templates/vehicles/view.html:111
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "Toplam Saat"
+
+#: app/templates/vehicles/view.html:172
 msgid "Avg. Consumption"
 msgstr "Ort. Tüketim"
 
-#: app/templates/vehicles/view.html:118
+#: app/templates/vehicles/view.html:179
 msgid "A missed fill-up in the range means we can’t calculate this honestly."
 msgstr ""
 "Aralıktaki eksik bir dolum, bunu doğru hesaplayamayacağımız anlamına gelir."
 
-#: app/templates/vehicles/view.html:120
+#: app/templates/vehicles/view.html:181
+msgid ""
+"Consumption can’t be worked out until the distance run on each fuel is "
+"recorded — the odometer can’t tell petrol from LPG. Add it to your fill-ups."
+msgstr ""
+"Her yakıtla gidilen mesafe kaydedilmeden tüketim hesaplanamaz — kilometre "
+"sayacı benzinle LPG'yi ayırt edemez. Bunu yakıt alımlarınıza ekleyin."
+
+#: app/templates/vehicles/view.html:183
 msgid "Not enough distance or fuel data yet to calculate this."
 msgstr "Bunu hesaplamak için henüz yeterli mesafe veya yakıt verisi yok."
 
-#: app/templates/vehicles/view.html:122
+#: app/templates/vehicles/view.html:185
 msgid "Needs at least two full-tank fill-ups."
 msgstr "En az iki tam depo dolumu gereklidir."
 
-#: app/templates/vehicles/view.html:131
+#: app/templates/vehicles/view.html:195
 msgid "Avg. Charging"
 msgstr "Ort. Şarj"
 
-#: app/templates/vehicles/view.html:143
+#: app/templates/vehicles/view.html:207
 msgid "Fuel Used"
 msgstr "Kullanılan yakıt"
 
-#: app/templates/vehicles/view.html:148
+#: app/templates/vehicles/view.html:212
 msgid "CO₂ Emissions"
 msgstr "CO₂ emisyonları"
 
-#: app/templates/vehicles/view.html:151
+#: app/templates/vehicles/view.html:215
 msgid "tonnes (estimated)"
 msgstr "ton (tahmini)"
 
-#: app/templates/vehicles/view.html:154
+#: app/templates/vehicles/view.html:218
 msgid "kg (estimated)"
 msgstr "kg (tahmini)"
 
-#: app/templates/vehicles/view.html:177
+#: app/templates/vehicles/view.html:244
 msgid "Add Charging"
 msgstr "Şarj Ekle"
 
-#: app/templates/vehicles/view.html:206
+#: app/templates/vehicles/view.html:280
 msgid "Parts"
 msgstr "Parçalar"
 
-#: app/templates/vehicles/view.html:225
+#: app/templates/vehicles/view.html:294
+msgid "Photos"
+msgstr "Fotoğraflar"
+
+#: app/templates/vehicles/view.html:321
+msgid "Main"
+msgstr "Ana"
+
+#: app/templates/vehicles/view.html:326
+msgid "Set as main"
+msgstr "Ana fotoğraf yap"
+
+#: app/templates/vehicles/view.html:335
+msgid "Delete this photo?"
+msgstr "Bu fotoğraf silinsin mi?"
+
+#: app/templates/vehicles/view.html:347
+msgid "No photos yet."
+msgstr "Henüz fotoğraf yok."
+
+#: app/templates/vehicles/view.html:360
 msgid "DVLA Status"
 msgstr "DVLA Durumu"
 
-#: app/templates/vehicles/view.html:232 app/templates/vehicles/view.html:341
+#: app/templates/vehicles/view.html:367 app/templates/vehicles/view.html:476
 msgid "Refresh"
 msgstr "Yenile"
 
-#: app/templates/vehicles/view.html:239
+#: app/templates/vehicles/view.html:374
 msgid "MOT Status"
 msgstr "Muayene Durumu"
 
-#: app/templates/vehicles/view.html:257
+#: app/templates/vehicles/view.html:392
 msgid "MOT Expiry"
 msgstr "Muayene Bitiş Tarihi"
 
-#: app/templates/vehicles/view.html:267
+#: app/templates/vehicles/view.html:402
 msgid "Tax Status"
 msgstr "Vergi Durumu"
 
-#: app/templates/vehicles/view.html:285
+#: app/templates/vehicles/view.html:420
 msgid "Tax Due"
 msgstr "Vergi Vadesi"
 
-#: app/templates/vehicles/view.html:296 app/templates/vehicles/view.html:398
+#: app/templates/vehicles/view.html:431 app/templates/vehicles/view.html:533
 msgid "Last updated"
 msgstr "Son güncelleme"
 
-#: app/templates/vehicles/view.html:300
+#: app/templates/vehicles/view.html:435
 msgid "No DVLA data available for this vehicle."
 msgstr "Bu araç için DVLA verisi yok."
 
-#: app/templates/vehicles/view.html:306
+#: app/templates/vehicles/view.html:441
 msgid "Fetch from DVLA"
 msgstr "DVLA'dan Getir"
 
-#: app/templates/vehicles/view.html:323
+#: app/templates/vehicles/view.html:458
 msgid "Tessie Status"
 msgstr "Tessie Durumu"
 
-#: app/templates/vehicles/view.html:325
+#: app/templates/vehicles/view.html:460
 msgid "Live"
 msgstr "Canlı"
 
-#: app/templates/vehicles/view.html:334
+#: app/templates/vehicles/view.html:469
 msgid "Import Charges"
 msgstr "Şarjları İçe Aktar"
 
-#: app/templates/vehicles/view.html:363
+#: app/templates/vehicles/view.html:498
 msgid "Battery Level"
 msgstr "Batarya Seviyesi"
 
-#: app/templates/vehicles/view.html:379
+#: app/templates/vehicles/view.html:514
 msgid "Est. Range"
 msgstr "Tahmini Menzil"
 
-#: app/templates/vehicles/view.html:402
+#: app/templates/vehicles/view.html:537
 msgid "No Tessie data available for this vehicle yet."
 msgstr "Bu araç için henüz Tessie verisi yok."
 
-#: app/templates/vehicles/view.html:408
+#: app/templates/vehicles/view.html:543
 msgid "Fetch from Tessie"
 msgstr "Tessie'den Getir"
 
-#: app/templates/vehicles/view.html:423
+#: app/templates/vehicles/view.html:558
 msgid ""
 "This vehicle is archived. It won't appear in regular lists or calculations."
 msgstr ""
 "Bu araç arşivlenmiş. Normal listelerde veya hesaplamalarda görünmeyecektir."
 
-#: app/templates/vehicles/view.html:437
+#: app/templates/vehicles/view.html:572
 msgid "Annual Mileage"
 msgstr "Yıllık Kilometre"
 
-#: app/templates/vehicles/view.html:442
+#: app/templates/vehicles/view.html:577
 msgid "Over limit"
 msgstr "Sınırı Aştı"
 
-#: app/templates/vehicles/view.html:446
+#: app/templates/vehicles/view.html:581
 msgid "Approaching limit"
 msgstr "Sınıra Yaklaşıyor"
 
-#: app/templates/vehicles/view.html:450
+#: app/templates/vehicles/view.html:585
 msgid "On pace"
 msgstr "Hedefte"
 
-#: app/templates/vehicles/view.html:454
+#: app/templates/vehicles/view.html:589
 msgid "Over pace"
 msgstr "Hedefin Üzerinde"
 
-#: app/templates/vehicles/view.html:470 app/templates/vehicles/view.html:477
+#: app/templates/vehicles/view.html:607 app/templates/vehicles/view.html:614
 msgid "Time elapsed"
 msgstr "Geçen Süre"
 
-#: app/templates/vehicles/view.html:477
+#: app/templates/vehicles/view.html:614
 msgid "of year elapsed"
 msgstr "yılın geçen kısmı"
 
-#: app/templates/vehicles/view.html:486
+#: app/templates/vehicles/view.html:623
 msgid "remaining"
 msgstr "kaldı"
 
-#: app/templates/vehicles/view.html:490
+#: app/templates/vehicles/view.html:627
 msgid "days remaining"
 msgstr "gün kaldı"
 
-#: app/templates/vehicles/view.html:494
+#: app/templates/vehicles/view.html:631
 msgid "projected year-end"
 msgstr "yıl sonu tahmini"
 
-#: app/templates/vehicles/view.html:498
+#: app/templates/vehicles/view.html:635
 msgid "expected at this point"
 msgstr "bu noktada beklenen"
 
-#: app/templates/vehicles/view.html:513
+#: app/templates/vehicles/view.html:650
 msgid "Upcoming Reminders"
 msgstr "Yaklaşan Hatırlatıcılar"
 
-#: app/templates/vehicles/view.html:525
+#: app/templates/vehicles/view.html:663
 msgid "Mark as completed"
 msgstr "Tamamlandı olarak işaretle"
 
-#: app/templates/vehicles/view.html:552
+#: app/templates/vehicles/view.html:691
 #, python-format
 msgid "%(days)s days overdue"
 msgstr "%(days)s gün gecikti"
 
-#: app/templates/vehicles/view.html:554
-msgid "Due today"
-msgstr "Bugün vadesi doluyor"
-
-#: app/templates/vehicles/view.html:556
-msgid "Due tomorrow"
-msgstr "Yarın vadesi doluyor"
-
-#: app/templates/vehicles/view.html:558
+#: app/templates/vehicles/view.html:697
 #, python-format
 msgid "In %(days)s days"
 msgstr "%(days)s gün içinde"
 
-#: app/templates/vehicles/view.html:623
+#: app/templates/vehicles/view.html:764
 msgid "Upcoming Maintenance"
 msgstr "Yaklaşan Bakım"
 
-#: app/templates/vehicles/view.html:639
+#: app/templates/vehicles/view.html:780
 msgid "Due soon"
 msgstr "Yakında vadesi doluyor"
 
-#: app/templates/vehicles/view.html:673
+#: app/templates/vehicles/view.html:814
 msgid "Toggle section"
 msgstr "Bölümü aç/kapat"
 
-#: app/templates/vehicles/view.html:726
+#: app/templates/vehicles/view.html:867
 msgid "No parts added yet."
 msgstr "Henüz parça eklenmedi."
 
-#: app/templates/vehicles/view.html:761
+#: app/templates/vehicles/view.html:904
 msgid "Fuel Consumption Trend"
 msgstr "Yakıt Tüketimi Eğilimi"
 
-#: app/templates/vehicles/view.html:774
+#: app/templates/vehicles/view.html:917
 msgid "Fuel Price Trend"
 msgstr "Yakıt fiyatı trendi"
 
-#: app/templates/vehicles/view.html:803
+#: app/templates/vehicles/view.html:961
 msgid "(Full)"
 msgstr "(Tam)"
 
-#: app/templates/vehicles/view.html:895
+#: app/templates/vehicles/view.html:1062
 msgid "Archive this vehicle"
 msgstr "Bu aracı arşivle"
 
-#: app/templates/vehicles/view.html:896
+#: app/templates/vehicles/view.html:1063
 msgid ""
 "Archived vehicles won't appear in regular lists or calculations. You can "
 "restore them later."
@@ -4547,30 +5373,30 @@ msgstr ""
 "Arşivlenmiş araçlar normal listelerde veya hesaplamalarda görünmez. Daha "
 "sonra geri yükleyebilirsiniz."
 
-#: app/templates/vehicles/view.html:898
+#: app/templates/vehicles/view.html:1065
 msgid "Restore this vehicle"
 msgstr "Bu aracı geri yükle"
 
-#: app/templates/vehicles/view.html:899
+#: app/templates/vehicles/view.html:1066
 msgid ""
 "Restore this vehicle to make it active again and include it in calculations."
 msgstr ""
 "Bu aracı tekrar aktif hale getirmek ve hesaplamalara dahil etmek için geri "
 "yükleyin."
 
-#: app/templates/vehicles/view.html:907
+#: app/templates/vehicles/view.html:1075
 msgid "Archive Vehicle"
 msgstr "Aracı Arşivle"
 
-#: app/templates/vehicles/view.html:915
+#: app/templates/vehicles/view.html:1085
 msgid "Restore Vehicle"
 msgstr "Aracı Geri Yükle"
 
-#: app/templates/vehicles/view.html:925
+#: app/templates/vehicles/view.html:1096
 msgid "Delete this vehicle"
 msgstr "Bu aracı sil"
 
-#: app/templates/vehicles/view.html:926
+#: app/templates/vehicles/view.html:1097
 msgid ""
 "Once you delete a vehicle, there is no going back. This will also delete all"
 " associated fuel logs and expenses."
@@ -4578,16 +5404,16 @@ msgstr ""
 "Bir aracı sildiğinizde geri dönüş yoktur. Bu işlem, araçla ilişkili tüm "
 "yakıt kayıtlarını ve giderleri de siler."
 
-#: app/templates/vehicles/view.html:929
+#: app/templates/vehicles/view.html:1101
 msgid ""
 "Are you sure you want to delete this vehicle? This action cannot be undone."
 msgstr "Bu aracı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
 
-#: app/templates/vehicles/view.html:933
+#: app/templates/vehicles/view.html:1105
 msgid "Delete Vehicle"
 msgstr "Aracı Sil"
 
-#: app/templates/vehicles/view.html:1009
+#: app/templates/vehicles/view.html:1224
 msgid ""
 "Not enough data to show consumption trend. Add more fuel logs with full tank"
 " fills."
@@ -4595,27 +5421,6 @@ msgstr ""
 "Tüketim eğilimini göstermek için yeterli veri yok. Depoyu tam dolduran daha "
 "fazla yakıt kaydı ekleyin."
 
-#: app/templates/vehicles/view.html:1043
+#: app/templates/vehicles/view.html:1262
 msgid "No fuel prices recorded yet."
 msgstr "Henüz kaydedilmiş yakıt fiyatı yok."
-
-#: app/models.py:388 app/templates/maintenance/form.html:115
-msgid "Engine hours"
-msgstr "Motor saati"
-
-#: app/templates/maintenance/form.html:81
-msgid "Every (hours)"
-msgstr "Her (saat)"
-
-#: app/templates/maintenance/form.html:84
-msgid "e.g., 250"
-msgstr "ör. 250"
-
-#: app/templates/vehicles/view.html:162
-msgid "Total Hours"
-msgstr "Toplam Saat"
-
-#: app/templates/maintenance/form.html:86
-msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
-msgstr "Bu araç motor saati ile ölçülür, bu nedenle servis aralığı saat cinsinden sayılır."
-

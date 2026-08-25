@@ -584,7 +584,7 @@
                             <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-white">Hammond</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Import from Hammond SQLite database (.db file)</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Import from Hammond SQLite database (.db file)') }}</p>
                                 </div>
                                 <form method="POST" action="{{ url_for('api.import_hammond') }}" enctype="multipart/form-data" class="flex items-center gap-2">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -592,7 +592,7 @@
                                            class="text-sm text-gray-500 dark:text-gray-400 file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-gray-100 dark:bg-gray-600 dark:file:bg-gray-600 file:text-gray-700 dark:text-gray-300 dark:file:text-gray-200 hover:file:bg-gray-200 dark:hover:file:bg-gray-50 dark:bg-gray-7000">
                                     <button type="submit"
                                             class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 dark:bg-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
-                                        Import
+                                        {{ _('Import') }}
                                     </button>
                                 </form>
                             </div>
@@ -600,7 +600,7 @@
                             <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-white">Clarkson</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Import from Clarkson MySQL dump (.sql file)</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Import from Clarkson MySQL dump (.sql file)') }}</p>
                                 </div>
                                 <form method="POST" action="{{ url_for('api.import_clarkson') }}" enctype="multipart/form-data" class="flex items-center gap-2">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -608,7 +608,7 @@
                                            class="text-sm text-gray-500 dark:text-gray-400 file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-gray-100 dark:bg-gray-600 dark:file:bg-gray-600 file:text-gray-700 dark:text-gray-300 dark:file:text-gray-200 hover:file:bg-gray-200 dark:hover:file:bg-gray-50 dark:bg-gray-7000">
                                     <button type="submit"
                                             class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 dark:bg-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
-                                        Import
+                                        {{ _('Import') }}
                                     </button>
                                 </form>
                             </div>
@@ -616,7 +616,7 @@
                             <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-white">Fuelly</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Import from Fuelly CSV export (.csv file)</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Import from Fuelly CSV export (.csv file)') }}</p>
                                 </div>
                                 <form method="POST" action="{{ url_for('api.import_fuelly') }}" enctype="multipart/form-data" class="flex items-center gap-2">
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -624,30 +624,30 @@
                                            class="text-sm text-gray-500 dark:text-gray-400 file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-sm file:bg-gray-100 dark:bg-gray-600 dark:file:bg-gray-600 file:text-gray-700 dark:text-gray-300 dark:file:text-gray-200 hover:file:bg-gray-200 dark:hover:file:bg-gray-50 dark:bg-gray-7000">
                                     <button type="submit"
                                             class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 dark:bg-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
-                                        Import
+                                        {{ _('Import') }}
                                     </button>
                                 </form>
                             </div>
 
                             <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
-                                    <h3 class="text-sm font-medium text-gray-900 dark:text-white">CSV Import</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Import fuel logs, expenses, trips, or charging sessions from any CSV file</p>
+                                    <h3 class="text-sm font-medium text-gray-900 dark:text-white">{{ _('CSV Import') }}</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Import fuel logs, expenses, trips, or charging sessions from any CSV file') }}</p>
                                 </div>
                                 <a href="{{ url_for('api.csv_import_upload') }}"
                                    class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 dark:bg-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600">
-                                    Import
+                                    {{ _('Import') }}
                                 </a>
                             </div>
 
                             <div class="flex items-center justify-between py-3 border-t border-gray-200 dark:border-gray-700">
                                 <div>
                                     <h3 class="text-sm font-medium text-gray-900 dark:text-white">Drivvo</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Import from Drivvo backup files</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ _('Import from Drivvo backup files') }}</p>
                                 </div>
                                 <button type="button" disabled
                                         class="w-24 text-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-400 dark:text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 cursor-not-allowed">
-                                    Soon
+                                    {{ _('Soon') }}
                                 </button>
                             </div>
                         </div>
