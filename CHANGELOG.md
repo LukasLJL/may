@@ -10,14 +10,27 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.41.0] - 2026-08-25
+
+### Added
+
+- Each fill-up of a dual-fuel vehicle can record the **distance run on this
+  fuel** since the last fill-up of it, entered in the vehicle's own unit. The
+  odometer alone cannot say which miles were run on which fuel, so this is the
+  only way to work out a consumption figure for a stretch of history in which
+  both fuels were used. The field appears only for vehicles that genuinely burn
+  two fuels.
+- The fuel type and the distance attributed to it are included in the CSV and
+  JSON exports and in backups, so a dual-fuel history survives a restore, and
+  both `fuel_type` and `fuel_distance` can now be set on a fill-up over the REST
+  API as well as read. ([#221](https://github.com/dannymcc/may/issues/221))
+
 ### Fixed
 
 - A dual-fuel vehicle — a petrol car converted to run on LPG, say — now gets a
   separate average consumption for each fuel on its vehicle page, instead of
   one figure that mixed petrol litres and LPG litres over the same odometer
-  span and so described neither. Each fill-up of such a vehicle can record the
-  **distance run on this fuel** since the last fill-up of it, because the
-  odometer alone cannot say which miles were run on which fuel.
+  span and so described neither.
 
   This is a visible change for dual-fuel vehicles: a stretch of history where
   both fuels were used will explain that the figure cannot be worked out,
@@ -29,9 +42,6 @@ This file starts at 0.28.0. Notes for earlier releases are on the
   page (totals, spend, price history and the per-fill-up records) is
   unchanged. Vehicles running a single fuel are unaffected, as are diesels
   tracking AdBlue, which propels nothing.
-
-  The fuel type and the distance attributed to it are now included in CSV and
-  JSON exports and in backups, so a dual-fuel history survives a restore.
   ([#221](https://github.com/dannymcc/may/issues/221))
 
 ## [0.40.0] - 2026-08-25

@@ -229,6 +229,14 @@ keeps its earlier petrol figures. Where the two fuels are mixed and that
 distance is missing, the page says the figure cannot be worked out without it
 rather than showing one derived from the wrong distance.
 
+The distance is entered in the vehicle's own unit, the one its odometer reads
+in. Both the fuel type and the distance attributed to it appear in the CSV and
+JSON exports, in backups and over the REST API, where they can be set on a
+fill-up as well as read. The `average_consumption` figure in the API's vehicle
+stats covers the vehicle's primary fuel; the per-fuel figures are on the vehicle
+page. A diesel tracking AdBlue is not a dual-fuel vehicle for this purpose —
+AdBlue propels nothing — so it is never asked for the distance.
+
 ### EV Charging
 Log charging sessions for electric and plug-in hybrid vehicles:
 - Date, optional start and end times, and the odometer reading
