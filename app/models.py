@@ -368,6 +368,47 @@ class Vehicle(db.Model):
             return self.owner.distance_unit
         return 'km'
 
+    def get_reading_unit(self):
+        """The unit to print beside one of this vehicle's readings (#282).
+
+        'h' for a vehicle metered in engine hours, otherwise its effective
+        odometer unit. This is a display label: never pass it to
+        :func:`_distance_in` or any other conversion, which want
+        :meth:`get_effective_odometer_unit`.
+        """
+        if self.tracks_hours():
+            return 'h'
+        return self.get_effective_odometer_unit()
+
+    def get_reading_label(self):
+        """What this vehicle's readings are called (#282).
+
+        A machine metered in hours has no odometer to read, so calling the
+        field "Odometer" on its forms is what the reporter of #282 ran into.
+        """
+        if self.tracks_hours():
+            return _l('Engine hours')
+        return _l('Odometer')
+
+    def get_span_label(self):
+        """What the gap between two of this vehicle's readings is called (#282)."""
+        if self.tracks_hours():
+            return _l('Hours')
+        return _l('Distance')
+
+    def get_consumption_unit(self):
+        """The unit to print beside :meth:`get_average_consumption` (#282).
+
+        An hours-tracked vehicle is averaged in litres per engine hour
+        whatever the account's preferred consumption unit says, because mpg,
+        km/L and L/100km are each named for a distance it never records.
+        Returns None for any other vehicle, so callers fall back to the
+        account preference they already hold.
+        """
+        if self.tracks_hours():
+            return 'L / h'
+        return None
+
     def get_total_fuel_cost(self):
         return sum(log.total_cost for log in self.fuel_logs.all() if log.total_cost)
 
@@ -1393,8 +1434,19 @@ TIRE_TYPES = [
 ]
 
 
+# How many engine hours ahead of a service still counts as "due soon" for a
+# vehicle metered in hours (issue #282). Distance-tracked vehicles use 500,
+# in whichever of km or miles their odometer reads.
+MAINTENANCE_DUE_SOON_HOURS = 25
+
+
 class MaintenanceSchedule(db.Model):
-    """Predefined maintenance schedules with mileage/time intervals"""
+    """Predefined maintenance schedules with reading/time intervals.
+
+    The reading-based interval is stated in the owning vehicle's own unit:
+    kilometres or miles for a vehicle tracked by distance, engine hours for
+    one tracked by hours (issue #282).
+    """
     __tablename__ = 'maintenance_schedules'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -1408,6 +1460,7 @@ class MaintenanceSchedule(db.Model):
     # Interval settings (either or both)
     interval_miles = db.Column(db.Integer)  # e.g., every 5000 miles
     interval_km = db.Column(db.Integer)  # e.g., every 8000 km
+    interval_hours = db.Column(db.Integer)  # e.g., every 250 engine hours (#282)
     interval_months = db.Column(db.Integer)  # e.g., every 12 months
 
     # Last performed
@@ -1443,6 +1496,14 @@ class MaintenanceSchedule(db.Model):
             self.next_due_date = self.last_performed_date + relativedelta(months=self.interval_months)
 
         if self.last_performed_odometer:
+            if self.tracks_hours():
+                # This vehicle's readings are engine hours, so the only
+                # interval that means anything is one stated in hours, and no
+                # distance factor may touch it (issue #282).
+                if self.interval_hours:
+                    self.next_due_odometer = (
+                        self.last_performed_odometer + self.interval_hours)
+                return
             # last_performed_odometer is stored in the vehicle's effective
             # odometer unit (the same unit next_due_odometer is displayed and
             # compared in). Convert the interval into that same unit before
@@ -1455,20 +1516,49 @@ class MaintenanceSchedule(db.Model):
                 interval = _distance_in(self.interval_miles, 'mi', unit)
                 self.next_due_odometer = self.last_performed_odometer + interval
 
-    def _effective_odometer_unit(self):
-        """Resolve the odometer unit for this schedule's vehicle.
+    def _resolve_vehicle(self):
+        """The vehicle this schedule belongs to, or None.
 
         Uses the loaded ``vehicle`` relationship when available, otherwise
         looks it up by ``vehicle_id`` (calculate_next_due runs on new
         schedules before they are flushed, so the relationship may be unset).
-        Defaults to 'km' when no vehicle can be resolved.
         """
-        vehicle = self.vehicle
-        if vehicle is None and self.vehicle_id:
-            vehicle = db.session.get(Vehicle, self.vehicle_id)
+        if self.vehicle is not None:
+            return self.vehicle
+        if self.vehicle_id:
+            return db.session.get(Vehicle, self.vehicle_id)
+        return None
+
+    def tracks_hours(self):
+        """True when this schedule's vehicle is metered in engine hours (#282)."""
+        vehicle = self._resolve_vehicle()
+        return vehicle is not None and vehicle.tracks_hours()
+
+    def _effective_odometer_unit(self):
+        """Resolve the odometer unit for this schedule's vehicle.
+
+        Defaults to 'km' when no vehicle can be resolved. Only meaningful for
+        a vehicle tracked by distance; see :meth:`tracks_hours`.
+        """
+        vehicle = self._resolve_vehicle()
         if vehicle:
             return vehicle.get_effective_odometer_unit()
         return 'km'
+
+    def get_interval(self):
+        """The reading-based interval, in the vehicle's own unit (#282).
+
+        Returns an ``(amount, unit)`` pair — ``(250, 'h')`` for an
+        hours-tracked machine — or None when no reading-based interval is
+        set. Time-based intervals are reported separately.
+        """
+        if self.tracks_hours():
+            return (self.interval_hours, 'h') if self.interval_hours else None
+        if self.interval_km:
+            return (self.interval_km, 'km')
+        if self.interval_miles:
+            return (self.interval_miles, 'mi')
+        return None
 
     def is_due(self, current_odometer=None):
         """Check if maintenance is due"""
@@ -1485,8 +1575,15 @@ class MaintenanceSchedule(db.Model):
 
         return False
 
-    def is_due_soon(self, current_odometer=None, days=14, distance=500):
-        """Check if maintenance is due soon"""
+    def is_due_soon(self, current_odometer=None, days=14, distance=None):
+        """Check if maintenance is due soon.
+
+        ``distance`` is how far ahead of the next-due reading still counts as
+        soon, in the vehicle's own unit. Left unset it is 500 km or miles for
+        a distance-tracked vehicle and 25 engine hours for an hours-tracked
+        one — 500 hours would put a tractor's every service permanently in
+        the amber (issue #282).
+        """
         from datetime import date, timedelta
 
         # Check date-based
@@ -1496,6 +1593,8 @@ class MaintenanceSchedule(db.Model):
 
         # Check odometer-based
         if self.next_due_odometer and current_odometer:
+            if distance is None:
+                distance = MAINTENANCE_DUE_SOON_HOURS if self.tracks_hours() else 500
             if current_odometer >= (self.next_due_odometer - distance):
                 return True
 

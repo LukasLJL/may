@@ -45,10 +45,9 @@
                         <span class="capitalize">{{ dict(maintenance_types).get(schedule.maintenance_type, schedule.maintenance_type) }}</span>
                     </p>
                     <div class="mt-1 flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
-                        {% if schedule.interval_km %}
-                        <span>Every {{ "{:,}".format(schedule.interval_km) }} km</span>
-                        {% elif schedule.interval_miles %}
-                        <span>Every {{ "{:,}".format(schedule.interval_miles) }} miles</span>
+                        {% set interval = schedule.get_interval() %}
+                        {% if interval %}
+                        <span>Every {{ "{:,}".format(interval[0]) }} {{ interval[1] }}</span>
                         {% endif %}
                         {% if schedule.interval_months %}
                         <span>Every {{ schedule.interval_months }} month{% if schedule.interval_months > 1 %}s{% endif %}</span>
@@ -63,7 +62,7 @@
                     {% endif %}
                     {% if schedule.next_due_odometer %}
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                        @ {{ "{:,.0f}".format(schedule.next_due_odometer) }} {{ current_user.distance_unit }}
+                        @ {{ "{:,.0f}".format(schedule.next_due_odometer) }} {{ schedule.vehicle.get_reading_unit() }}
                     </p>
                     {% endif %}
                     {% if schedule.estimated_cost %}

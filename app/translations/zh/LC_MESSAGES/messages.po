@@ -4477,6 +4477,26 @@ msgstr "数据不足，无法显示消耗趋势。请添加更多满箱加油记
 msgid "No fuel prices recorded yet."
 msgstr "尚未记录任何燃油价格。"
 
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr "发动机小时"
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr "每 (小时)"
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr "例如：250"
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr "总运行小时"
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr "此车辆以发动机小时计量，因此保养间隔按小时计算。"
+
 #~ msgid "Quarterly (3 months)"
 #~ msgstr "每季度（每3个月）"
 

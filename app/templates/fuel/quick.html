@@ -18,7 +18,7 @@
                 {% for vehicle in vehicles %}
                 <option value="{{ vehicle.id }}"
                         data-odometer="{{ vehicle.get_last_odometer(vehicle.get_effective_odometer_unit()) }}"
-                        data-odometer-unit="{{ vehicle.get_effective_odometer_unit() }}"
+                        data-odometer-unit="{{ vehicle.get_reading_unit() }}"
                         data-uses-tessie="{{ 'true' if vehicle.uses_tessie_odometer() else 'false' }}"
                         data-tessie-odometer="{% if vehicle.tessie_last_odometer %}{% if vehicle.get_effective_odometer_unit() == 'mi' %}{{ (vehicle.tessie_last_odometer * 0.621371)|round|int }}{% else %}{{ vehicle.tessie_last_odometer|round|int }}{% endif %}{% endif %}"
                         {% if selected_vehicle_id and selected_vehicle_id|int == vehicle.id %}selected{% endif %}>

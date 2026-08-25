@@ -57,6 +57,7 @@ def new():
             description=request.form.get('description'),
             interval_km=int(request.form.get('interval_km')) if request.form.get('interval_km') else None,
             interval_miles=int(request.form.get('interval_miles')) if request.form.get('interval_miles') else None,
+            interval_hours=int(request.form.get('interval_hours')) if request.form.get('interval_hours') else None,
             interval_months=int(request.form.get('interval_months')) if request.form.get('interval_months') else None,
             estimated_cost=parse_decimal(request.form.get('estimated_cost')) if request.form.get('estimated_cost') else None,
             auto_remind=request.form.get('auto_remind') == 'on',
@@ -112,6 +113,7 @@ def edit(schedule_id):
         schedule.description = request.form.get('description')
         schedule.interval_km = int(request.form.get('interval_km')) if request.form.get('interval_km') else None
         schedule.interval_miles = int(request.form.get('interval_miles')) if request.form.get('interval_miles') else None
+        schedule.interval_hours = int(request.form.get('interval_hours')) if request.form.get('interval_hours') else None
         schedule.interval_months = int(request.form.get('interval_months')) if request.form.get('interval_months') else None
         schedule.estimated_cost = parse_decimal(request.form.get('estimated_cost')) if request.form.get('estimated_cost') else None
         schedule.auto_remind = request.form.get('auto_remind') == 'on'

@@ -4495,3 +4495,24 @@ msgstr ""
 #: app/templates/fuel/index.html:76
 msgid "incl. tax %(amount)s"
 msgstr ""
+
+#: app/models.py:388 app/templates/maintenance/form.html:115
+msgid "Engine hours"
+msgstr ""
+
+#: app/templates/maintenance/form.html:81
+msgid "Every (hours)"
+msgstr ""
+
+#: app/templates/maintenance/form.html:84
+msgid "e.g., 250"
+msgstr ""
+
+#: app/templates/vehicles/view.html:162
+msgid "Total Hours"
+msgstr ""
+
+#: app/templates/maintenance/form.html:86
+msgid "This vehicle is metered in engine hours, so its service interval is counted in hours."
+msgstr ""
+
