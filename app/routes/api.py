@@ -3408,6 +3408,41 @@ def _cleanup_temp_file(path):
     except OSError:
         pass
 
+def _is_duplicate(data_type, record, vehicle_id):
+    """Check whether a record with the same key fields already exists."""
+    if data_type == 'fuel_logs':
+        return db.session.query(FuelLog.id).filter_by(
+            vehicle_id=vehicle_id, date=record.date, odometer=record.odometer,
+        ).first() is not None
+    if data_type == 'expenses':
+        filters = dict(
+            vehicle_id=vehicle_id, date=record.date,
+            cost=record.cost, description=record.description,
+        )
+        # Tighten the key with optional fields when mapped, so two
+        # identical toll charges at different odometers aren't dropped.
+        if record.odometer is not None:
+            filters['odometer'] = record.odometer
+        if record.vendor is not None:
+            filters['vendor'] = record.vendor
+        return db.session.query(Expense.id).filter_by(**filters).first() is not None
+    if data_type == 'trips':
+        return db.session.query(Trip.id).filter_by(
+            vehicle_id=vehicle_id, date=record.date,
+            start_odometer=record.start_odometer,
+            end_odometer=record.end_odometer,
+        ).first() is not None
+    if data_type == 'charging_sessions':
+        return db.session.query(ChargingSession.id).filter_by(
+            vehicle_id=vehicle_id, date=record.date,
+            start_time=record.start_time, end_time=record.end_time,
+            odometer=record.odometer,
+            kwh_added=record.kwh_added,
+            total_cost=record.total_cost,
+            location=record.location, network=record.network,
+        ).first() is not None
+    return False
+
 
 def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_date_format=None):
     """Create a model instance from a mapped CSV row."""
@@ -3662,6 +3697,7 @@ def csv_import_execute():
             rows = list(reader)
 
         imported = 0
+        skipped = 0
         errors = []
         max_errors = 50
 
@@ -3672,6 +3708,9 @@ def csv_import_execute():
                     mapped_row[field_name] = row.get(csv_col, '')
 
                 record = create_record(data_type, mapped_row, vehicle_id, current_user.id, date_format, current_user.date_format)
+                if _is_duplicate(data_type, record, vehicle_id):
+                    skipped += 1
+                    continue
                 db.session.add(record)
                 imported += 1
             except (ValueError, KeyError) as e:
@@ -3682,6 +3721,9 @@ def csv_import_execute():
 
         label = DATA_TYPE_LABELS.get(data_type, data_type)
         flash(_('CSV import complete: %(count)s %(label)s imported.') % {'count': imported, 'label': label.lower()}, 'success')
+
+        if skipped:
+            flash(_('%(count)s duplicate(s) skipped.') % {'count': skipped}, 'info')
 
         if errors:
             error_summary = f'{len(errors)} row(s) skipped due to errors.'
