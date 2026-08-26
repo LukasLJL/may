@@ -5,6 +5,7 @@ from flask_login import LoginManager, current_user
 from flask_wtf.csrf import CSRFProtect
 from flask_babel import Babel, gettext as _
 from config import Config
+from app.i18n import ensure_catalogues_compiled
 from app.utils import first_day_of_week
 import os
 import secrets
@@ -301,7 +302,10 @@ def create_app(config_class=Config):
     # save (issues #217, #241).
     app.jinja_env.finalize = lambda value: '' if value is None else value
 
-    # Babel configuration
+    # Babel configuration. The compiled catalogues are build artefacts rather
+    # than tracked files (#344), so bring any that are missing or older than
+    # their .po up to date before Babel reads them.
+    ensure_catalogues_compiled()
     app.config['BABEL_DEFAULT_LOCALE'] = 'en'
     app.config['BABEL_SUPPORTED_LOCALES'] = list(LANGUAGES.keys())
 

@@ -120,6 +120,10 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
+# Compile the translation catalogues (the .mo files are build artefacts and
+# are not in the repository; the app also rebuilds stale ones on startup)
+pybabel compile -d app/translations
+
 # Run the application
 python run.py
 ```
@@ -471,8 +475,13 @@ Translations were generated with AI assistance and may contain inaccuracies. If 
 1. Translation files are located in `app/translations/<lang>/LC_MESSAGES/messages.po`
 2. Edit the `msgstr` value for any incorrect entry
 3. Recompile with `pybabel compile -d app/translations` — the app reads the
-   compiled `messages.mo`, so a `.po` edit on its own changes nothing
-4. Submit a pull request with both the `.po` and the `.mo`
+   compiled `messages.mo`, so a `.po` edit on its own changes nothing until it
+   is rebuilt
+4. Submit a pull request with the `.po` only. The compiled `messages.mo` is a
+   build artefact: it is not tracked, the container image builds it, and a
+   local run rebuilds it whenever it is older than its `.po`. Git cannot merge
+   a binary, so tracking it meant two people editing the same language
+   collided with a conflict neither could resolve
 
 ### Adding a Language
 
@@ -480,8 +489,8 @@ A new catalogue is not offered until the language is registered:
 
 1. Create `app/translations/<lang>/LC_MESSAGES/messages.po` from
    `app/translations/messages.pot` and translate it
-2. Compile it with `pybabel compile -d app/translations` so a `messages.mo`
-   sits beside the `.po`
+2. Compile it with `pybabel compile -d app/translations` to check it builds —
+   the resulting `messages.mo` is a build artefact and stays out of the commit
 3. Add the code and its native name to `LANGUAGES` in `app/__init__.py` — this
    is what the settings picker and the browser language negotiation read, so a
    catalogue that is not listed there can never be selected
@@ -528,7 +537,8 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 2. Create a virtual environment: `python3 -m venv venv`
 3. Activate it: `source venv/bin/activate`
 4. Install dependencies: `pip install -r requirements.txt`
-5. Run in development mode: `python run.py`
+5. Build the translation catalogues: `pybabel compile -d app/translations`
+6. Run in development mode: `python run.py`
 
 ## 📝 License
 

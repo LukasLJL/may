@@ -110,6 +110,15 @@ what is outstanding and applies translations in bulk. One English string means
 one sense — if two unrelated places need the same English word, give one of
 them its own wording.
 
+The `.po` files are the tracked source; the compiled `messages.mo` beside each
+one is a build artefact and is ignored, not committed (#344). Git cannot merge
+a binary, so a tracked `.mo` made every concurrent translation change conflict
+unresolvably, and it could drift from the `.po` without anything noticing.
+Commit `.po` changes only. The catalogues are built by the `pybabel compile`
+step in the Dockerfile, by `tests/conftest.py` before collection, and by
+`app.i18n.ensure_catalogues_compiled()` on startup for anything missing or
+older than its source — so a bare checkout still comes up translated.
+
 ## Database
 
 SQLite database stored at `/data/may.db`. The project uses Flask-Migrate (Alembic) for database migrations.

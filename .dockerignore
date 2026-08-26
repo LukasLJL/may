@@ -17,3 +17,4 @@ data/
 *.log
 .idea
 .vscode
+app/translations/*/LC_MESSAGES/messages.mo

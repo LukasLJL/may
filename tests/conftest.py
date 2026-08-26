@@ -10,6 +10,13 @@ from datetime import date
 # still control what the child sees.
 os.environ.setdefault('SECRET_KEY', 'test-secret')
 
+# The compiled catalogues are build artefacts, not tracked files (#344), so a
+# fresh checkout has none. Build them before collection: several i18n tests
+# read the .mo straight off disk without ever going through create_app.
+from app.i18n import compile_catalogues
+
+compile_catalogues()
+
 from app import create_app, db as _db_ext
 from app.models import User, Vehicle, FuelLog, Expense, Trip, ChargingSession
 

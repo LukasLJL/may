@@ -10,6 +10,20 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+### Changed
+
+- Compiled translation catalogues (`app/translations/*/LC_MESSAGES/messages.mo`)
+  are treated as build artefacts instead of tracked files. Git cannot merge a
+  compiled catalogue, so two translation contributions touching the same
+  language conflicted unresolvably, and a committed binary could drift from the
+  `.po` the interface is meant to be showing. The `.po` files remain the tracked
+  source; the container image compiles them during the build, the test suite
+  compiles them before collection, and the app rebuilds any catalogue that is
+  missing or older than its source on startup. Translation pull requests should
+  now carry the `.po` only. Anyone running from a source checkout can build them
+  explicitly with `pybabel compile -d app/translations`.
+  ([#344](https://github.com/dannymcc/may/issues/344))
+
 ## [0.41.3] - 2026-08-26
 
 ### Fixed

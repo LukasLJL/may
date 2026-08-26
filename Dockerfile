@@ -18,6 +18,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Compile the translation catalogues. The .mo files are build artefacts rather
+# than tracked files (#344), so the image builds them from the .po sources.
+RUN pybabel compile -d app/translations
+
 # Create non-root user and set up directories
 RUN useradd --create-home --shell /bin/bash may \
     && mkdir -p /app/data/uploads \
