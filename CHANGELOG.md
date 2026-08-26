@@ -10,6 +10,19 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.41.3] - 2026-08-26
+
+### Fixed
+
+- The number-plate label on the vehicle detail page no longer shares a
+  translatable string with the "Registration" expense category (the
+  registration/road-tax fee). The label is now "Registration plate" with its
+  own catalogue entry, translated in the plate sense for all 19 shipped
+  languages — German now reads "Kennzeichen" rather than "Registrierung",
+  Czech "Registrační značka" rather than "Registrace", and so on. The expense
+  category keeps its existing wording and translations.
+  ([#342](https://github.com/dannymcc/may/issues/342))
+
 ## [0.41.2] - 2026-08-25
 
 ### Fixed

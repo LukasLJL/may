@@ -91,6 +91,25 @@ may/
 `tests/test_warning_hygiene.py` enforces both, so the suite stays quiet enough for
 real failures to be legible in the merge gate (#302).
 
+## Translations
+
+Regenerate the catalogue template from the repository root, and pass `-k _l` so
+the lazy strings in `app/models.py` are picked up — without it every `_l()`
+msgid silently drops out of the `.pot`:
+
+```bash
+pybabel extract -F babel.cfg -k _l -o app/translations/messages.pot .
+pybabel update -i app/translations/messages.pot -d app/translations --ignore-obsolete -N
+pybabel compile -d app/translations
+```
+
+`-N` keeps Babel from fuzzy-matching a new msgid onto a near-identical old one,
+which is how a plate label ends up translated as "registering" (#342). Every
+shipped catalogue is expected to be fully filled; `scripts/fill_po.py` reports
+what is outstanding and applies translations in bulk. One English string means
+one sense — if two unrelated places need the same English word, give one of
+them its own wording.
+
 ## Database
 
 SQLite database stored at `/data/may.db`. The project uses Flask-Migrate (Alembic) for database migrations.

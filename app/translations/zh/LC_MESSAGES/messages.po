@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: zh <LL@li.org>\n"
@@ -162,7 +162,7 @@ msgstr "保险"
 msgid "Road Tax"
 msgstr "车船税"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "登记"
 
@@ -4957,6 +4957,10 @@ msgstr "PDF + 收据"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "未设置"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "车牌号"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"

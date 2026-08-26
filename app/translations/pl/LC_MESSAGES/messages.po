@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: pl <LL@li.org>\n"
@@ -164,7 +164,7 @@ msgstr "Ubezpieczenie"
 msgid "Road Tax"
 msgstr "Podatek drogowy"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "Rejestracja"
 
@@ -5105,6 +5105,10 @@ msgstr "PDF + paragony"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Nieustawione"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "Numer rejestracyjny"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"
