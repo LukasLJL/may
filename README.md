@@ -517,6 +517,14 @@ A new catalogue is not offered until the language is registered:
 - Ensure the directory exists and is writable
 - For schema updates, the app handles migrations automatically
 
+### Interface Not Translated
+- The compiled catalogues (`app/translations/<lang>/LC_MESSAGES/messages.mo`)
+  are build artefacts, not repository files. The app rebuilds any that are
+  missing or older than their `.po` on startup
+- If `app/translations` is read-only, the rebuild is skipped and a warning is
+  logged; build them where the files are writable with
+  `pybabel compile -d app/translations`
+
 ### Notification Issues
 - **Email**: Verify SMTP settings and credentials in admin settings
 - **ntfy**: Check your topic name is correct
