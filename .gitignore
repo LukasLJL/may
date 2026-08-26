@@ -32,3 +32,7 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Compiled translation catalogues -- build artefacts, produced from the
+# tracked .po files by "pybabel compile -d app/translations" (#344)
+app/translations/*/LC_MESSAGES/messages.mo
