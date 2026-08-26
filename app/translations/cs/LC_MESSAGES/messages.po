@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: May\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-03-08 17:23+0000\n"
 "Last-Translator: javlk <jv.vlk83@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/may/may-0-15-0/cs/>\n"
@@ -162,7 +162,7 @@ msgstr "Pojištění"
 msgid "Road Tax"
 msgstr "Silniční daň"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "Registrace"
 
@@ -5102,6 +5102,10 @@ msgstr "PDF + účtenky"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Nenastaveno"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "Registrační značka"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"

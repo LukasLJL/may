@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: May 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-04-28 12:00+0000\n"
 "Last-Translator: FleischpiratLanguage: de\n"
 "Language-Team: German\n"
@@ -165,7 +165,7 @@ msgstr "Versicherung"
 msgid "Road Tax"
 msgstr "KfZ-Steuer"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "Registrierung"
 
@@ -5162,6 +5162,10 @@ msgstr "PDF + Belege"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Nicht gesetzt"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "Kennzeichen"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"

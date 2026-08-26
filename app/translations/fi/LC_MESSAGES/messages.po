@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-02-17 20:56+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: fi <LL@li.org>\n"
@@ -163,7 +163,7 @@ msgstr "Vakuutus"
 msgid "Road Tax"
 msgstr "Ajoneuvovero"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "Rekisteröinti"
 
@@ -5096,6 +5096,10 @@ msgstr "PDF + kuitit"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Ei asetettu"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "Rekisterinumero"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"

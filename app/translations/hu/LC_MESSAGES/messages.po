@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-08-25 18:55+0000\n"
+"POT-Creation-Date: 2026-08-26 00:16+0000\n"
 "PO-Revision-Date: 2026-08-12 17:06+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -163,7 +163,7 @@ msgstr "Biztosítás"
 msgid "Road Tax"
 msgstr "Adó"
 
-#: app/models.py:1383 app/templates/vehicles/view.html:97
+#: app/models.py:1383
 msgid "Registration"
 msgstr "Regisztráció"
 
@@ -5132,6 +5132,10 @@ msgstr "PDF + nyugták"
 #: app/templates/vehicles/view.html:94 app/templates/vehicles/view.html:98
 msgid "Not set"
 msgstr "Nincs beállítva"
+
+#: app/templates/vehicles/view.html:97
+msgid "Registration plate"
+msgstr "Rendszám"
 
 #: app/templates/vehicles/view.html:101
 msgid "Last Odometer"
