@@ -3419,14 +3419,19 @@ def create_record(data_type, mapped_row, vehicle_id, user_id, date_format, user_
         odometer = parse_float_value(mapped_row.get('odometer'))
         if odometer is None:
             raise ValueError('Missing or invalid odometer')
+        volume = parse_float_value(mapped_row.get('volume'))
+        price_per_unit = parse_float_value(mapped_row.get('price_per_unit'))
+        total_cost = parse_float_value(mapped_row.get('total_cost'))
+        if price_per_unit is None and volume not in (None, 0) and total_cost is not None:
+            price_per_unit = round(total_cost / volume, 4)
         return FuelLog(
             vehicle_id=vehicle_id,
             user_id=user_id,
             date=date_val,
             odometer=odometer,
-            volume=parse_float_value(mapped_row.get('volume')),
-            price_per_unit=parse_float_value(mapped_row.get('price_per_unit')),
-            total_cost=parse_float_value(mapped_row.get('total_cost')),
+            volume=volume,
+            price_per_unit=price_per_unit,
+            total_cost=total_cost,
             sales_tax=parse_float_value(mapped_row.get('sales_tax')),
             is_full_tank=parse_bool_value(mapped_row.get('is_full_tank')) if mapped_row.get('is_full_tank') else True,
             is_missed=parse_bool_value(mapped_row.get('is_missed')),
