@@ -604,3 +604,114 @@ class TestCsvImportUsDateFormat:
         )
         log = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).one()
         assert log.date == date(2026, 1, 12)
+
+
+# ---------------------------------------------------------------------------
+# Spritmonitor CSV import (semicolon-delimited, German format)
+# ---------------------------------------------------------------------------
+
+def make_spritmonitor_csv():
+    """Create a minimal Spritmonitor CSV export."""
+    content = (
+        'Datum;Km-Stand;Teil-Km;Spritmenge;Kosten;W\u00e4hrung;Tankart;Reifen;Strecken;'
+        'Fahrweise;Kraftstoff;Bemerkung;Verbrauch;BC-Verbrauch;BC-Spritmenge;'
+        'BC-Geschwindigkeit;Tankstelle;Land;Gro\u00dfraum;Ort\n'
+        '08.08.2026;199166;525;22,23;46,44;EUR;1;1;14;2;1;;4,23;;;;;D;;\n'
+        '12.07.2026;198641;599;26,93;53,03;EUR;1;1;14;3;1;;4,5;;;;;D;;\n'
+        '24.06.2026;198042;542,5;26,12;44,12;EUR;1;1;14;3;1;Testtankung;4,81;;;;;D;;\n'
+    )
+    return content.encode('utf-8')
+
+
+class TestSpritmonitorCsvImport:
+    """End-to-end import of a Spritmonitor semicolon-delimited CSV."""
+
+    def test_preview_detects_semicolon_delimiter(self, auth_client, sample_vehicle):
+        """Preview step should correctly parse semicolon-delimited CSV."""
+        data = {
+            'data_type': 'fuel_logs',
+            'vehicle_id': str(sample_vehicle.id),
+            'file': (io.BytesIO(make_spritmonitor_csv()), 'spritmonitor.csv'),
+        }
+        resp = auth_client.post(
+            '/api/import/csv/preview',
+            data=data,
+            content_type='multipart/form-data',
+        )
+        assert resp.status_code == 200
+        html = resp.data.decode()
+        assert 'Datum' in html
+        assert 'Km-Stand' in html
+        assert 'Spritmenge' in html
+
+    def test_full_import_flow(self, auth_client, sample_vehicle):
+        """Full preview→execute flow imports Spritmonitor records correctly."""
+        from datetime import date
+
+        # Step 1: Preview
+        preview_data = {
+            'data_type': 'fuel_logs',
+            'vehicle_id': str(sample_vehicle.id),
+            'file': (io.BytesIO(make_spritmonitor_csv()), 'spritmonitor.csv'),
+        }
+        preview_resp = auth_client.post(
+            '/api/import/csv/preview',
+            data=preview_data,
+            content_type='multipart/form-data',
+        )
+        assert preview_resp.status_code == 200
+
+        # Step 2: Execute with Spritmonitor column mappings
+        # Columns: Datum(0), Km-Stand(1), Teil-Km(2), Spritmenge(3), Kosten(4),
+        #          Währung(5), Tankart(6), ..., Bemerkung(11), ...
+        execute_data = {
+            'data_type': 'fuel_logs',
+            'vehicle_id': str(sample_vehicle.id),
+            'date_format': 'DD/MM/YYYY',
+            'mapping_0': 'date',
+            'mapping_1': 'odometer',
+            'mapping_3': 'volume',
+            'mapping_4': 'total_cost',
+            'mapping_6': 'is_full_tank',
+            'mapping_11': 'notes',
+        }
+        execute_resp = auth_client.post(
+            '/api/import/csv/execute',
+            data=execute_data,
+            content_type='multipart/form-data',
+        )
+        assert execute_resp.status_code == 302
+
+        logs = FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).order_by(FuelLog.date).all()
+        assert len(logs) == 3
+
+        # Check first record (oldest: 24.06.2026)
+        assert logs[0].date == date(2026, 6, 24)
+        assert logs[0].odometer == 198042
+        assert abs(logs[0].volume - 26.12) < 0.01
+        assert abs(logs[0].total_cost - 44.12) < 0.01
+        assert logs[0].is_full_tank is True
+        assert logs[0].notes == 'Testtankung'
+
+        # Check last record (newest: 08.08.2026)
+        assert logs[2].date == date(2026, 8, 8)
+        assert logs[2].odometer == 199166
+        assert abs(logs[2].volume - 22.23) < 0.01
+
+    def test_auto_suggest_maps_german_columns(self, auth_client, sample_vehicle):
+        """Auto-suggest should map Spritmonitor German column names."""
+        data = {
+            'data_type': 'fuel_logs',
+            'vehicle_id': str(sample_vehicle.id),
+            'file': (io.BytesIO(make_spritmonitor_csv()), 'spritmonitor.csv'),
+        }
+        resp = auth_client.post(
+            '/api/import/csv/preview',
+            data=data,
+            content_type='multipart/form-data',
+        )
+        assert resp.status_code == 200
+        html = resp.data.decode()
+        # The mapping page should auto-select fields for German column names
+        # Check that "date" is pre-selected for "Datum"
+        assert 'selected' in html

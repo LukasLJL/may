@@ -3231,16 +3231,23 @@ def get_import_fields(data_type):
 
 # Common aliases for auto-suggesting column mappings
 _COLUMN_ALIASES = {
-    'date': ['date', 'fuelup date', 'fill date', 'trip date', 'charge date', 'session date', 'expense date'],
-    'odometer': ['odometer', 'odo', 'mileage', 'miles', 'km', 'kilometers', 'distance'],
-    'volume': ['volume', 'litres', 'liters', 'gallons', 'gal', 'fuel', 'qty', 'quantity'],
+    'date': ['date', 'fuelup date', 'fill date', 'trip date', 'charge date', 'session date', 'expense date',
+             'datum'],
+    'odometer': ['odometer', 'odo', 'mileage', 'miles', 'km', 'kilometers', 'distance',
+                 'km stand', 'kilometerstand', 'tachostand'],
+    'volume': ['volume', 'litres', 'liters', 'gallons', 'gal', 'fuel', 'qty', 'quantity',
+               'spritmenge', 'menge', 'liter', 'tankmenge'],
     'price_per_unit': ['price per unit', 'unit price', 'price/l', 'price/gal', 'price', 'rate'],
-    'total_cost': ['total cost', 'total', 'cost', 'price paid', 'total price'],
+    'total_cost': ['total cost', 'total', 'cost', 'price paid', 'total price',
+                   'kosten', 'gesamtkosten', 'betrag'],
     'sales_tax': ['sales tax', 'sales taxes', 'tax', 'taxes', 'vat', 'gst', 'hst', 'pst', 'qst'],
-    'is_full_tank': ['full tank', 'full', 'complete', 'full fill'],
+    'is_full_tank': ['full tank', 'full', 'complete', 'full fill',
+                     'tankart'],
     'is_missed': ['missed', 'missed fill', 'skipped'],
-    'station': ['station', 'gas station', 'fuel station'],
-    'notes': ['notes', 'note', 'comments', 'comment', 'remarks', 'memo'],
+    'station': ['station', 'gas station', 'fuel station',
+                'tankstelle'],
+    'notes': ['notes', 'note', 'comments', 'comment', 'remarks', 'memo',
+              'bemerkung', 'bemerkungen', 'notiz', 'notizen'],
     'category': ['category', 'type', 'expense type', 'expense category'],
     'description': ['description', 'desc', 'title', 'name', 'item', 'service'],
     'cost': ['cost', 'amount', 'total', 'price', 'expense'],
@@ -3553,7 +3560,15 @@ def csv_import_preview():
 
     try:
         content = file.read().decode('utf-8-sig', errors='ignore')
-        reader = csv.DictReader(io.StringIO(content))
+
+        # Auto-detect delimiter (comma vs semicolon)
+        try:
+            dialect = csv.Sniffer().sniff(content[:2048], delimiters=',;\t')
+            delimiter = dialect.delimiter
+        except csv.Error:
+            delimiter = ','
+
+        reader = csv.DictReader(io.StringIO(content), delimiter=delimiter)
         csv_columns = reader.fieldnames
 
         if not csv_columns:
@@ -3579,6 +3594,7 @@ def csv_import_preview():
         tmp.write(content)
         tmp.close()
         session['csv_import_temp_file'] = tmp.name
+        session['csv_import_delimiter'] = delimiter
 
         target_fields = get_import_fields(data_type)
         suggestions = auto_suggest_mappings(csv_columns, target_fields)
@@ -3610,6 +3626,7 @@ def csv_import_execute():
     vehicle_id = request.form.get('vehicle_id', type=int)
     date_format = request.form.get('date_format', 'auto')
     temp_file = session.pop('csv_import_temp_file', None)
+    delimiter = session.pop('csv_import_delimiter', ',')
 
     if data_type not in DATA_TYPE_LABELS:
         flash(_('Invalid data type.'), 'error')
@@ -3627,7 +3644,7 @@ def csv_import_execute():
     try:
         # Read temp CSV
         with open(temp_file, 'r', encoding='utf-8-sig', errors='ignore') as f:
-            reader = csv.DictReader(f)
+            reader = csv.DictReader(f, delimiter=delimiter)
             csv_columns = reader.fieldnames or []
 
             # Build column mapping from form: mapping_0, mapping_1, etc.
