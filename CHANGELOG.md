@@ -10,6 +10,8 @@ This file starts at 0.28.0. Notes for earlier releases are on the
 
 ## [Unreleased]
 
+## [0.41.3] - 2026-08-26
+
 ### Fixed
 
 - The number-plate label on the vehicle detail page no longer shares a
