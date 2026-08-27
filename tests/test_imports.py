@@ -5,7 +5,7 @@ import sqlite3
 import tempfile
 import pytest
 from app import db as _db_ext
-from app.models import Vehicle, FuelLog
+from app.models import Vehicle, FuelLog, Expense, Trip, ChargingSession
 
 
 # ---------------------------------------------------------------------------
@@ -690,6 +690,7 @@ class TestSpritmonitorCsvImport:
         assert logs[0].odometer == 198042
         assert abs(logs[0].volume - 26.12) < 0.01
         assert abs(logs[0].total_cost - 44.12) < 0.01
+        assert logs[0].price_per_unit == pytest.approx(44.12 / 26.12, abs=0.001)
         assert logs[0].is_full_tank is True
         assert logs[0].notes == 'Testtankung'
 
@@ -715,3 +716,97 @@ class TestSpritmonitorCsvImport:
         # The mapping page should auto-select fields for German column names
         # Check that "date" is pre-selected for "Datum"
         assert 'selected' in html
+
+
+# ---------------------------------------------------------------------------
+# Duplicate detection during CSV import
+# ---------------------------------------------------------------------------
+
+class TestCsvImportDuplicateDetection:
+    """Importing the same CSV twice should skip duplicates on the second run."""
+
+    def _preview_and_execute(self, auth_client, vehicle_id, data_type, csv_bytes,
+                             mappings, date_format='auto'):
+        """Run preview→execute and return the final (followed) response."""
+        preview_resp = auth_client.post(
+            '/api/import/csv/preview',
+            data={
+                'data_type': data_type,
+                'vehicle_id': str(vehicle_id),
+                'file': (io.BytesIO(csv_bytes), 'import.csv'),
+            },
+            content_type='multipart/form-data',
+        )
+        assert preview_resp.status_code == 200
+        form = {'data_type': data_type, 'vehicle_id': str(vehicle_id),
+                'date_format': date_format}
+        form.update(mappings)
+        return auth_client.post(
+            '/api/import/csv/execute', data=form,
+            content_type='multipart/form-data',
+            follow_redirects=True,
+        )
+
+    def test_fuel_logs_skips_duplicates(self, auth_client, sample_vehicle):
+        csv = b'date,odometer,volume,total_cost\n2024-03-01,20000,35.0,52.50\n'
+        mappings = {'mapping_0': 'date', 'mapping_1': 'odometer',
+                    'mapping_2': 'volume', 'mapping_3': 'total_cost'}
+
+        self._preview_and_execute(auth_client, sample_vehicle.id,
+                                  'fuel_logs', csv, mappings)
+        assert FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+        resp = self._preview_and_execute(auth_client, sample_vehicle.id,
+                                         'fuel_logs', csv, mappings)
+        html = resp.data.decode()
+        assert '0 fuel logs imported' in html.lower()
+        assert '1 duplicate' in html.lower()
+        assert FuelLog.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+    def test_expenses_skips_duplicates(self, auth_client, sample_vehicle):
+        csv = b'date,category,description,cost\n2024-03-01,maintenance,Oil change,75.00\n'
+        mappings = {'mapping_0': 'date', 'mapping_1': 'category',
+                    'mapping_2': 'description', 'mapping_3': 'cost'}
+
+        self._preview_and_execute(auth_client, sample_vehicle.id,
+                                  'expenses', csv, mappings)
+        assert Expense.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+        resp = self._preview_and_execute(auth_client, sample_vehicle.id,
+                                         'expenses', csv, mappings)
+        html = resp.data.decode()
+        assert '0 expenses imported' in html.lower()
+        assert '1 duplicate' in html.lower()
+        assert Expense.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+    def test_trips_skips_duplicates(self, auth_client, sample_vehicle):
+        csv = b'date,start_odometer,end_odometer,purpose\n2024-03-01,20000,20050,business\n'
+        mappings = {'mapping_0': 'date', 'mapping_1': 'start_odometer',
+                    'mapping_2': 'end_odometer', 'mapping_3': 'purpose'}
+
+        self._preview_and_execute(auth_client, sample_vehicle.id,
+                                  'trips', csv, mappings)
+        assert Trip.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+        resp = self._preview_and_execute(auth_client, sample_vehicle.id,
+                                         'trips', csv, mappings)
+        html = resp.data.decode()
+        assert '0 trips imported' in html.lower()
+        assert '1 duplicate' in html.lower()
+        assert Trip.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+    def test_charging_sessions_skips_duplicates(self, auth_client, sample_vehicle):
+        csv = b'date,kwh_added,total_cost,location\n2024-03-01,40.0,12.00,Home\n'
+        mappings = {'mapping_0': 'date', 'mapping_1': 'kwh_added',
+                    'mapping_2': 'total_cost', 'mapping_3': 'location'}
+
+        self._preview_and_execute(auth_client, sample_vehicle.id,
+                                  'charging_sessions', csv, mappings)
+        assert ChargingSession.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
+
+        resp = self._preview_and_execute(auth_client, sample_vehicle.id,
+                                         'charging_sessions', csv, mappings)
+        html = resp.data.decode()
+        assert '0 charging sessions imported' in html.lower()
+        assert '1 duplicate' in html.lower()
+        assert ChargingSession.query.filter_by(vehicle_id=sample_vehicle.id).count() == 1
